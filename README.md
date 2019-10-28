@@ -6,6 +6,21 @@ This project is for the most part all functional codebase wise. No imperative st
 
 Pretty much just plug and play.
 
+#### Dependencies:
+
+Name                      | Version
+------------------------- | -------
+TypeScript                | 3.6.4
+TypeScript Compiler (TSC) | 1.20150623.0
+Concurrently              | 5.0.0
+Nodemon                   | 1.19.4
+
+One line install command:
+
+```npm i -g typescript tsc concurrently nodemon```
+
+The TypeScript compiler should come bundled with TypeScript however it doesn't hurt to be sure.
+
 #### Windows
 
 * navigate to the cloned directory
@@ -14,7 +29,7 @@ Pretty much just plug and play.
 
 #### Linux 
 
-The following was tested on Ubunut 18.04 but should work across the board.
+The following was tested on Ubuntu 18.04 but should work across the board.
 
 * navigate to the cloned directory
 * run ```npm i``` to install all packages
