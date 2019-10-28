@@ -1,0 +1,26 @@
+{
+  "name": "ffk-voting",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "start-dev": "nodemon --inspect app.js",
+    "compile": "tsc",
+    "compile-watch": "tsc --watch",
+    "initialise-dev": "concurrently \" npm run start-dev \" \" npm run compile-watch \""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.1",
+    "@types/mssql": "^4.3.1",
+    "express": "^4.17.1",
+    "funfix-core": "^7.0.1",
+    "immutable": "^4.0.0-rc.12",
+    "moment": "^2.24.0",
+    "mssql": "^5.1.0",
+    "rxjs": "^6.5.3"
+  }
+}
