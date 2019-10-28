@@ -2,3 +2,4 @@
 /.idea
 
 *.js
+package-lock.json
