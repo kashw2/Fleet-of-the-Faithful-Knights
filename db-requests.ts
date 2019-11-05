@@ -1,23 +1,13 @@
 import {List} from "immutable";
 import {IRecordSet} from "mssql";
+import {JsonSerializer} from "./core/models/json-serializer";
+import {unwrapper} from "./core/utils/object-utils";
 import {Database} from "./db";
-import {JsonSerializer} from "./models/json-serializer";
-import {UserJsonSerializer} from "./models/user";
-import {unwrapper} from "./utils/object-utils";
 
 export class DbRequests {
 
     constructor(readonly db: Database) {
-        this.r();
-    }
 
-    async r() {
-        const c = await this.runSingleSerialised(
-            "ssp_json_GetUser",
-            List.of("@Username = 'Keanu'", "@Password = '09ea7be9b22606b0c4abffd59ec5eb58abcad3536f33d734effafc74c38ae1e9'"),
-            UserJsonSerializer.instance,
-        );
-        console.log(c);
     }
 
     async runProcedure(
