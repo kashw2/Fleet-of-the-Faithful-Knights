@@ -1,4 +1,7 @@
 import {None, Option} from "funfix-core";
+import {idKey, nameKey} from "../keys/json-keys";
+import {OptionUtils} from "../utils/option-utils";
+import {JsonSerializer} from "./json-serializer";
 
 export class Rank {
 
@@ -63,6 +66,18 @@ export class Rank {
     isSergeant1stClass(): boolean {
         return this.getName()
             .contains("Sergeant 1st Class");
+    }
+
+}
+
+export class RankJsonSerializer extends JsonSerializer<Rank> {
+    static instance: RankJsonSerializer = new RankJsonSerializer();
+
+    fromJson(obj: any): Rank {
+        return new Rank(
+            OptionUtils.parseNumber(obj[idKey]),
+            OptionUtils.parseString(obj[nameKey]),
+        );
     }
 
 }

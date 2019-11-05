@@ -1,7 +1,24 @@
 import {None, Option} from "funfix-core";
 import {List} from "immutable";
 import {Moment} from "moment";
-import {User} from "./user";
+import {
+    assignedKey,
+    dateKey,
+    dateOfLastRankAssignmentKey,
+    dateOfMembershipKey,
+    idKey,
+    notesKey,
+    primaryOrgKey,
+    sponsoredRankKey,
+    timeKey,
+    userKey,
+    vetoKey,
+    votersKey,
+} from "../keys/json-keys";
+import {CollectionUtils} from "../utils/collection-utils";
+import {OptionUtils} from "../utils/option-utils";
+import {JsonSerializer} from "./json-serializer";
+import {User, UserJsonSerializer} from "./user";
 
 export class Vote {
 
@@ -111,6 +128,28 @@ export class Vote {
     isVetod(): boolean {
         return this.getVeto()
             .contains(true);
+    }
+
+}
+
+export class VoteJsonSerializer extends JsonSerializer<Vote> {
+    static instance: VoteJsonSerializer = new VoteJsonSerializer();
+
+    fromJson(obj: any): Vote {
+        return new Vote(
+            OptionUtils.parseNumber(obj[idKey]),
+            OptionUtils.parseSerialised(obj[userKey], UserJsonSerializer.instance),
+            OptionUtils.parseMoment(obj[timeKey]),
+            OptionUtils.parseBoolean(obj[primaryOrgKey]),
+            OptionUtils.parseMoment(obj[dateOfMembershipKey]),
+            OptionUtils.parseMoment(obj[dateOfLastRankAssignmentKey]),
+            OptionUtils.parseString(obj[sponsoredRankKey]),
+            OptionUtils.parseString(obj[notesKey]),
+            CollectionUtils.parseIterableSerialised(obj[votersKey], UserJsonSerializer.instance),
+            OptionUtils.parseMoment(obj[dateKey]),
+            OptionUtils.parseBoolean(obj[assignedKey]),
+            OptionUtils.parseBoolean(obj[vetoKey]),
+        );
     }
 
 }
