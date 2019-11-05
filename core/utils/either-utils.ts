@@ -2,7 +2,7 @@ import {Either, Left, Option, Right} from "funfix-core";
 
 export class EitherUtils {
 
-    flatMap2<A, B, C, D>(
+    static flatMap2<A, B, C, D>(
         fn1: Either<A, B>,
         fn2: Either<A, C>,
         f: (a: B, b: C) => Either<A, D>,
@@ -17,11 +17,18 @@ export class EitherUtils {
         throw new Error("Either flatMap2 error");
     }
 
-    liftEither<A>(val: A, error: string): Either<string, A> {
+    static leftTap<A, B>(val: Either<B, A>, f: (b: B) => void): Either<B, A> {
+        if (val.isLeft()) {
+            f(val.value);
+        }
+        return val;
+    }
+
+    static liftEither<A>(val: A, error: string): Either<string, A> {
         return this.toEither(Option.of(val), error);
     }
 
-    toEither<A>(opt: Option<A>, error: string): Either<string, A> {
+    static toEither<A>(opt: Option<A>, error: string): Either<string, A> {
         if (opt.isEmpty()) {
             return Left(error);
         }
