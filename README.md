@@ -41,7 +41,9 @@ In some cases you may need to run ```sudo npm i``` to install the dependencies. 
 
 Q: Why is the console outputting Database connection reset errors?
 
-A: Assuming nothing has changed internally to cause this issue it is most likely due to tedious and another dependency version conflict. At the time of writing (11/10/19) Node 12 users will have this issue and node-mssql does not yet support tedious 6 which adds support for Node 12.
+~~A: Assuming nothing has changed internally to cause this issue it is most likely due to tedious and another dependency version conflict. At the time of writing (11/10/19) Node 12 users will have this issue and node-mssql does not yet support tedious 6 which adds support for Node 12.~~
+
+A: The above was fixed with version 6 of node_mssql. Please check both your node_mssql version as well and make sure there is no dependency overlap with it's bundled version of tedious or another dependency. 
 
 Q: Why handlebars?
 
