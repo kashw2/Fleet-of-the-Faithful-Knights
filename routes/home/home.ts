@@ -8,6 +8,10 @@ export class Home extends GetEndpoint {
         super("/home");
     }
 
+    canAccess(): boolean {
+        return false;
+    }
+
     runRequest(req: Request, res: Response): void {
         res.sendfile("views/home.hbs");
     }
