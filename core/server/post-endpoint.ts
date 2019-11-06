@@ -1,9 +1,8 @@
 import {Request, Response, Router} from "express";
 
-export class PostEndpoint {
+export abstract class PostEndpoint {
 
     constructor(readonly endpoint: string) {
-
     }
 
     getEndpoint(): string {
@@ -14,8 +13,6 @@ export class PostEndpoint {
         router.post(this.getEndpoint(), (req, res) => this.runRequest(req, res));
     }
 
-    runRequest(req: Request, res: Response): void {
-
-    }
+    abstract runRequest(req: Request, res: Response): void;
 
 }
