@@ -10,8 +10,7 @@ Pretty much just plug and play.
 
 Name                      | Version
 ------------------------- | -------
-TypeScript                | 3.6.4
-TypeScript Compiler (TSC) | 1.20150623.0
+TypeScript                | 3.7.2
 Concurrently              | 5.0.0
 Nodemon                   | 1.19.4
 Node                      | 11.x.x
