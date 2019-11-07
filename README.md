@@ -19,7 +19,7 @@ ts-loader                 | 6.2.1
 
 One line install command:
 
-```npm i -g typescript tsc concurrently nodemon```
+```npm i -g typescript tsc concurrently nodemon webpack webpack-cli && npm i -D ts-loader```
 
 The TypeScript compiler should come bundled with TypeScript however it doesn't hurt to be sure.
 
