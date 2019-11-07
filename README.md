@@ -21,7 +21,7 @@ One line install command:
 
 ```npm i -g typescript tsc concurrently nodemon webpack webpack-cli && npm i -D ts-loader```
 
-The TypeScript compiler should come bundled with TypeScript however it doesn't hurt to be sure.
+The TypeScript compiler should come bundled with TypeScript however it doesn't hurt to be sure. Webpack and Webpack CLI don't really have to be global installs and you could alternatively run webpack and webpack-cli as part of the local install script with ts-loader since ts-loader is only useful for Webpack but it doesn't hurt.
 
 #### Windows
 
@@ -54,7 +54,3 @@ A: Webpack requires that you have a version of typescript accessible from the pr
 Q: How do I debug?
 
 A: The easiest way to do this would be to ```npm run initialise-dev``` which will compile, build and run the code with node/nodemons --inspect flag enabled, from there you can connect to the specified port (usually 9229) with your debugger.
-
-Q: Why handlebars?
-
-A: I'm more experienced with it and didn't want to have to learn Jade even though it wouldn't have been hard.
