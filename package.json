@@ -8,7 +8,9 @@
     "start-dev": "nodemon --inspect app.js",
     "compile": "tsc",
     "compile-watch": "tsc --watch",
-    "initialise-dev": "concurrently \" npm run compile-watch \" \" npm run start-dev \" "
+    "build": "webpack",
+    "build-watch": "webpack -w",
+    "initialise-dev": "concurrently \" npm run compile-watch \" \" npm run start-dev \" \" npm run build-watch \""
   },
   "keywords": [],
   "author": "",
@@ -24,6 +26,9 @@
     "mssql": "^6.0.0"
   },
   "devDependencies": {
-    "webpack": "^4.41.2"
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.2",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
   }
 }
