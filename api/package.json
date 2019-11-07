@@ -1,0 +1,35 @@
+{
+  "name": "ffk-voting",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "start-dev": "nodemon --inspect app.js",
+    "compile": "tsc",
+    "compile-watch": "tsc --watch",
+    "build": "webpack",
+    "build-watch": "webpack -w",
+    "initialise-dev": "concurrently \" npm run compile-watch \" \" npm run start-dev \" \" npm run build-watch \""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.2",
+    "@types/mssql": "^4.3.1",
+    "@types/node": "^12.12.6",
+    "express": "^4.17.1",
+    "funfix-core": "^7.0.1",
+    "immutable": "^4.0.0-rc.12",
+    "moment": "^2.24.0",
+    "mssql": "^6.0.0"
+  },
+  "devDependencies": {
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.2",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "lerna": "^3.18.3"
+  }
+}
