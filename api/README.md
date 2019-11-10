@@ -16,6 +16,7 @@ Nodemon                   | 1.19.4
 Node                      | 11.x.x
 Webpack                   | 4.41.2
 ts-loader                 | 6.2.1
+Lerna                     | 3.18.4
 
 One line install command:
 

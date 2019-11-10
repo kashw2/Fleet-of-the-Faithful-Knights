@@ -1,7 +1,4 @@
 {
-  "packages": [
-    "packages/*"
-  ],
   "version": "independent",
   "parallel": true,
   "packages": [
