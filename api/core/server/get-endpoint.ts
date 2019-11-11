@@ -1,5 +1,5 @@
 import {Request, Response, Router} from "express";
-import {RouterUtil} from "../utils/router-util";
+import {RouterUtil} from "..";
 
 export abstract class GetEndpoint {
 
@@ -16,7 +16,7 @@ export abstract class GetEndpoint {
         if (this.canAccess()) {
             router.get(this.getEndpoint(), (req, res) => this.runRequest(req, res));
         } else {
-            router.get(this.getEndpoint(), (req, res) => RouterUtil.sendUnauthorisedViaRouter(req, res));
+            router.get(this.getEndpoint(), (req, res) => RouterUtil.sendUnauthorisedViaRouter(res));
         }
     }
 
