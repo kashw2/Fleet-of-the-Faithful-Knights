@@ -1,3 +1,4 @@
+import bodyParser from "body-parser";
 import express from "express";
 import {Database} from "./db";
 import {AllEndpoints} from "./routes/all-endpoints";
@@ -7,6 +8,8 @@ const router = express.Router();
 const port = process.env.PORT || 8080;
 const db = new Database();
 
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 app.use("/", router);
 
 AllEndpoints.initialiseEndpoints(db, router);
