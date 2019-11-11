@@ -1,6 +1,6 @@
 import bodyParser from "body-parser";
 import express from "express";
-import {Database} from "./db";
+import {Database} from "./database/db";
 import {AllEndpoints} from "./routes/all-endpoints";
 
 const app = express();

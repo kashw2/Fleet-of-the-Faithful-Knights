@@ -1,5 +1,5 @@
 import {Router} from "express";
-import {Database} from "../db";
+import {Database} from "../database/db";
 import {UserEndpoints} from "./users/user-endpoints";
 
 export class AllEndpoints {

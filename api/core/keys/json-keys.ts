@@ -14,3 +14,4 @@ export const dateKey = "date";
 export const assignedKey = "assigned";
 export const vetoKey = "veto";
 export const userKey = "user";
+export const passwordKey = "password";
