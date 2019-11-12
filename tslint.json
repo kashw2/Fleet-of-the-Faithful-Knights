@@ -22,7 +22,9 @@
       }
     ],
     "no-console": false,
-    "no-unused-expression": false
+    "no-unused-expression": false,
+    "no-for-in-array": false,
+    "forin": false
   },
   "rulesDirectory": []
 }
