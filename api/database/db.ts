@@ -5,7 +5,7 @@ export class Database {
 
     constructor() {
         this.connection = this.getConnection();
-        this.dbRequests = new DbRequests(this);
+        this.requests = new DbRequests(this);
     }
 
     connection: Promise<ConnectionPool>;
@@ -18,7 +18,7 @@ export class Database {
         user: "ffk",
     };
 
-    dbRequests: DbRequests;
+    requests: DbRequests;
 
     private async getConnection(): Promise<ConnectionPool> {
         const connection = await new ConnectionPool(this.dbConfig).connect();

@@ -20,7 +20,7 @@ export class DbRequests {
         return result.recordset;
     }
 
-    async runRequestSingle(
+    async runSingle(
         procedure: string,
         params: List<string>,
     ): Promise<object> {
@@ -32,7 +32,7 @@ export class DbRequests {
         params: List<string>,
         serialiser: JsonSerializer<A>,
     ): Promise<A> {
-        const result = await this.runRequestSingle(procedure, params);
+        const result = await this.runSingle(procedure, params);
         return serialiser.fromJson(result);
     }
 
