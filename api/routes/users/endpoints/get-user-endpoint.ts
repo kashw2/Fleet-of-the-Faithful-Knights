@@ -22,6 +22,12 @@ export class GetUserEndpoint extends PostEndpoint {
     }
 
     runRequest(req: Request, res: Response): void {
+        Either.map2(this.getUsername(req), this.getPassword(req), (u, p) => {
+            this.db.procedures.getUser(u, p)
+                .then(user => {
+                    RouterUtil.sendResult(user, res);
+                });
+        });
     }
 
 }

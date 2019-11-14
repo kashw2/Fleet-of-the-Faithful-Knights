@@ -1,4 +1,5 @@
 import {config, ConnectionPool} from "mssql";
+import {DbProcedures} from "./db-procedures";
 import {DbRequests} from "./db-requests";
 
 export class Database {
@@ -6,6 +7,7 @@ export class Database {
     constructor() {
         this.connection = this.getConnection();
         this.requests = new DbRequests(this);
+        this.procedures = new DbProcedures(this);
     }
 
     connection: Promise<ConnectionPool>;
@@ -17,7 +19,7 @@ export class Database {
         server: "127.0.0.1",
         user: "ffk",
     };
-
+    procedures: DbProcedures;
     requests: DbRequests;
 
     private async getConnection(): Promise<ConnectionPool> {
