@@ -3,21 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "start": "node app.js",
-    "start-dev": "nodemon --inspect app.js",
-    "compile": "tsc",
-    "compile-watch": "tsc --watch",
-    "build": "webpack",
-    "build-watch": "webpack -w",
-    "initialise-dev": "concurrently \" npm run compile-watch \" \" npm run start-dev \" \" npm run build-watch \""
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@types/body-parser": "^1.17.1",
     "@types/express": "^4.17.2",
+    "@types/moment": "^2.13.0",
     "@types/mssql": "^4.3.1",
     "@types/node": "^12.12.7",
     "body-parser": "^1.19.0",
@@ -28,7 +20,6 @@
     "mssql": "^6.0.0"
   },
   "devDependencies": {
-    "lerna": "^3.18.4",
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.2",
     "webpack": "^4.41.2",
