@@ -1,7 +1,7 @@
 import {None, Option} from "funfix-core";
 import {idKey, nameKey} from "../keys/json-keys";
 import {OptionUtils} from "../utils/option-utils";
-import {JsonSerializer} from "./json-serializer";
+import {JsonBuilder, JsonSerializer} from "./json-serializer";
 
 export class Rank {
 
@@ -74,10 +74,16 @@ export class RankJsonSerializer extends JsonSerializer<Rank> {
     static instance: RankJsonSerializer = new RankJsonSerializer();
 
     fromJson(obj: any): Rank {
-        return new Rank(
+        return Option.of(new Rank(
             OptionUtils.parseNumber(obj[idKey]),
             OptionUtils.parseString(obj[nameKey]),
-        );
+        )).map(x => this.toJsonImpl(x)).getOrElse(new Rank());
+    }
+
+    toJson(value: Rank, builder: JsonBuilder): JsonBuilder {
+        return builder
+            .addOptional(idKey, value.getId())
+            .addOptional(nameKey, value.getName());
     }
 
 }

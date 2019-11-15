@@ -10,14 +10,14 @@ import {
     notesKey,
     primaryOrgKey,
     sponsoredRankKey,
+    sponsorKey,
     timeKey,
-    userKey,
     vetoKey,
     votersKey,
 } from "../keys/json-keys";
 import {CollectionUtils} from "../utils/collection-utils";
 import {OptionUtils} from "../utils/option-utils";
-import {JsonSerializer} from "./json-serializer";
+import {JsonBuilder, JsonSerializer} from "./json-serializer";
 import {User, UserJsonSerializer} from "./user";
 
 export class Vote {
@@ -136,9 +136,9 @@ export class VoteJsonSerializer extends JsonSerializer<Vote> {
     static instance: VoteJsonSerializer = new VoteJsonSerializer();
 
     fromJson(obj: any): Vote {
-        return new Vote(
+        return Option.of(new Vote(
             OptionUtils.parseNumber(obj[idKey]),
-            OptionUtils.parseSerialised(obj[userKey], UserJsonSerializer.instance),
+            OptionUtils.parseSerialised(obj[sponsorKey], UserJsonSerializer.instance),
             OptionUtils.parseMoment(obj[timeKey]),
             OptionUtils.parseBoolean(obj[primaryOrgKey]),
             OptionUtils.parseMoment(obj[dateOfMembershipKey]),
@@ -149,7 +149,23 @@ export class VoteJsonSerializer extends JsonSerializer<Vote> {
             OptionUtils.parseMoment(obj[dateKey]),
             OptionUtils.parseBoolean(obj[assignedKey]),
             OptionUtils.parseBoolean(obj[vetoKey]),
-        );
+        )).map(x => this.toJsonImpl(x)).getOrElse(new Vote());
+    }
+
+    toJson(value: Vote, builder: JsonBuilder): JsonBuilder {
+        return builder
+            .addOptional(idKey, value.getId())
+            .addOptionalSerialized(sponsorKey, value.getSponsor(), UserJsonSerializer.instance)
+            .addOptionalMoment(timeKey, value.getTime())
+            .addOptional(primaryOrgKey, value.getPrimaryOrg())
+            .addOptionalMoment(dateOfMembershipKey, value.getDateOfMembership())
+            .addOptionalMoment(dateOfLastRankAssignmentKey, value.getDateOfLastRankAssignment())
+            .addOptional(sponsoredRankKey, value.getSponsoredRank())
+            .addOptional(notesKey, value.getNotes())
+            .addList(votersKey, value.getVoters())
+            .addOptionalMoment(dateKey, value.getDate())
+            .addOptional(assignedKey, value.getAssigned())
+            .addOptional(vetoKey, value.getVeto());
     }
 
 }
