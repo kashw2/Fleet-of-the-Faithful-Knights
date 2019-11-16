@@ -21,7 +21,7 @@ export class OptionUtils {
     static parseNumber(v: unknown): Option<number> {
        return Option.of(v)
             .flatMap(x => {
-                if (typeof x !== "number") {
+                if (typeof x !== "number" || undefined) {
                     return None;
                 }
                 return Some(x);
@@ -29,7 +29,7 @@ export class OptionUtils {
     }
 
     static parseSerialised<A, B extends A>(v: any, serialiser: JsonSerializer<A>): Option<A> {
-        return Option.of(serialiser.fromJson(v));
+        return Option.of(serialiser.toType(v));
     }
 
     static parseString(v: unknown): Option<string> {

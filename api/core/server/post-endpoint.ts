@@ -1,22 +1,31 @@
 import {Request, Response, Router} from "express";
-import {RouterUtil} from "..";
+import {Either} from "funfix-core";
+import {RouterUtil, User, UserJsonSerializer, userKey} from "..";
 
 export abstract class PostEndpoint {
 
     constructor(readonly endpoint: string) {
     }
 
-    abstract canAccess(): boolean;
+    abstract canAccess(user: User): boolean;
 
     getEndpoint(): string {
         return this.endpoint;
     }
 
+    getUser(req: Request): Either<string, User> {
+        return RouterUtil.parseSerializedBodyParam(userKey, UserJsonSerializer.instance, req);
+    }
+
     route(router: Router): void {
-        if (this.canAccess()) {
-            router.post(this.getEndpoint(), (req, res) => this.runRequest(req, res));
+        router.post(this.getEndpoint(), (req, res) => this.run(this.getUser(req).get(), req, res));
+    }
+
+    run(user: User, req: Request, res: Response): void {
+        if (this.canAccess(user)) {
+            this.runRequest(req, res);
         } else {
-            router.post(this.getEndpoint(), (req, res) => RouterUtil.sendUnauthorisedViaRouter(res));
+            RouterUtil.sendUnauthorisedViaRouter(res);
         }
     }
 
