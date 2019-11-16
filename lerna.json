@@ -2,7 +2,8 @@
   "version": "independent",
   "parallel": true,
   "packages": [
-    "./api"
+    "./api",
+    "./panel"
   ]
 
 }

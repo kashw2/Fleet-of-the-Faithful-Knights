@@ -1,0 +1,11 @@
+{
+  "name": "ffk-panel",
+  "version": "1.0.0",
+  "description": "FFK Voting Panel",
+  "main": "app.js",
+  "scripts": {
+
+  },
+  "author": "Keanu Ashwell",
+  "license": "ISC"
+}
