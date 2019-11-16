@@ -14,6 +14,7 @@ export abstract class PostEndpoint {
     }
 
     getUser(req: Request): Either<string, User> {
+        // This is still janky but works
         return RouterUtil.parseSerializedBodyParam(userKey, UserJsonSerializer.instance, req);
     }
 
