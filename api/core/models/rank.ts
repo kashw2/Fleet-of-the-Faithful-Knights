@@ -33,6 +33,11 @@ export class Rank {
             .contains("Developer");
     }
 
+    isEmpty(): boolean {
+        return this.getId().isEmpty()
+            && this.getName().isEmpty();
+    }
+
     isGrandMaster(): boolean {
         return this.getName()
             .contains("Grand Master");
@@ -84,6 +89,13 @@ export class RankJsonSerializer extends JsonSerializer<Rank> {
         return builder
             .addOptional(idKey, value.getId())
             .addOptional(nameKey, value.getName());
+    }
+
+    toType(obj: any): Rank {
+        return new Rank(
+            OptionUtils.parseNumber(obj[idKey]),
+            OptionUtils.parseString(obj[nameKey]),
+        );
     }
 
 }

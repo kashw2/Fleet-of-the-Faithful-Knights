@@ -6,7 +6,7 @@ import {Database} from "../../../database/db";
 export class GetUserEndpoint extends PostEndpoint {
 
     constructor(readonly db: Database) {
-        super("/user/");
+        super("/user");
     }
 
     canAccess(): boolean {

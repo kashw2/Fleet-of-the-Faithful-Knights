@@ -25,6 +25,12 @@ export class User {
         return this.username;
     }
 
+    isEmpty(): boolean {
+        return this.getId().isEmpty()
+            && this.getUsername().isEmpty()
+            && this.getRank().isEmpty();
+    }
+
 }
 
 export class UserJsonSerializer extends JsonSerializer<User> {
@@ -43,6 +49,14 @@ export class UserJsonSerializer extends JsonSerializer<User> {
             .addOptional(idKey, value.getId())
             .addOptional(usernameKey, value.getUsername())
             .addOptionalSerialized(rankKey, value.getRank(), RankJsonSerializer.instance);
+    }
+
+    toType(obj: any): User {
+        return new User(
+            OptionUtils.parseNumber(obj[idKey]),
+            OptionUtils.parseString(obj[usernameKey]),
+            OptionUtils.parseSerialised(obj[rankKey], RankJsonSerializer.instance),
+        );
     }
 
 }
