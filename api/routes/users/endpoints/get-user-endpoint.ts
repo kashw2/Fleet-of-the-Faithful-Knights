@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
-import {passwordKey, PostEndpoint, RouterUtil, usernameKey} from "../../../core";
+import {passwordKey, PostEndpoint, RouterUtil, User, usernameKey} from "../../../core";
 import {Database} from "../../../database/db";
 
 export class GetUserEndpoint extends PostEndpoint {
@@ -9,8 +9,10 @@ export class GetUserEndpoint extends PostEndpoint {
         super("/user");
     }
 
-    canAccess(): boolean {
-        return true;
+    canAccess(user: User): boolean {
+        return user.getRank()
+            .map(x => x.isAdmin())
+            .getOrElse(false);
     }
 
     private getPassword(req: Request): Either<string, string> {
