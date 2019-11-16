@@ -90,6 +90,21 @@ export class Vote {
         return this.voters;
     }
 
+    isEmpty(): boolean {
+        return this.getId().isEmpty()
+            && this.getSponsor().isEmpty()
+            && this.getTime().isEmpty()
+            && this.getPrimaryOrg().isEmpty()
+            && this.getDateOfMembership().isEmpty()
+            && this.getDateOfLastRankAssignment().isEmpty()
+            && this.getSponsor().isEmpty()
+            && this.getNotes().isEmpty()
+            && this.getVoters().isEmpty()
+            && this.getDate().isEmpty()
+            && this.getAssigned().isEmpty()
+            && this.getVeto().isEmpty();
+    }
+
     isSponsoredForCompanionAtArms(): boolean {
         return this.getSponsoredRank()
             .contains("Companion at Arms");
@@ -166,6 +181,23 @@ export class VoteJsonSerializer extends JsonSerializer<Vote> {
             .addOptionalMoment(dateKey, value.getDate())
             .addOptional(assignedKey, value.getAssigned())
             .addOptional(vetoKey, value.getVeto());
+    }
+
+    toType(obj: any): Vote {
+        return new Vote(
+            OptionUtils.parseNumber(obj[idKey]),
+            OptionUtils.parseSerialised(obj[sponsorKey], UserJsonSerializer.instance),
+            OptionUtils.parseMoment(obj[timeKey]),
+            OptionUtils.parseBoolean(obj[primaryOrgKey]),
+            OptionUtils.parseMoment(obj[dateOfMembershipKey]),
+            OptionUtils.parseMoment(obj[dateOfLastRankAssignmentKey]),
+            OptionUtils.parseString(obj[sponsoredRankKey]),
+            OptionUtils.parseString(obj[notesKey]),
+            CollectionUtils.parseIterableSerialised(obj[votersKey], UserJsonSerializer.instance),
+            OptionUtils.parseMoment(obj[dateKey]),
+            OptionUtils.parseBoolean(obj[assignedKey]),
+            OptionUtils.parseBoolean(obj[vetoKey]),
+        );
     }
 
 }
