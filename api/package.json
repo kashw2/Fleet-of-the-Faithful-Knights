@@ -4,6 +4,15 @@
   "description": "",
   "main": "index.js",
   "keywords": [],
+  "scripts": {
+    "start": "node app.js",
+    "start-dev": "nodemon --inspect app.js",
+    "compile": "tsc",
+    "compile-watch": "tsc --watch",
+    "build": "webpack",
+    "build-watch": "webpack -w",
+    "initialise-dev": "concurrently \" npm run compile-watch \" \" npm run start-dev \" \" npm run build-watch \""
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
