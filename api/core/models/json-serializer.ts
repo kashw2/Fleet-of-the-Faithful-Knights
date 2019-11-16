@@ -12,6 +12,8 @@ export abstract class JsonSerializer<A> {
         return this.toJson(value, new JsonBuilder()).build();
     }
 
+    abstract toType(obj: any): A;
+
 }
 
 export class JsonBuilder {
