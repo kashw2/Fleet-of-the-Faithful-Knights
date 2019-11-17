@@ -1,0 +1,95 @@
+#title {
+
+  position: relative;
+
+  top: 10px;
+  right: auto;
+  bottom: auto;
+  left: 10px;
+
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+
+  margin: 0;
+  padding: 0;
+
+}
+
+#sub-title {
+
+  position: relative;
+
+  top: 10px;
+  right: auto;
+  bottom: auto;
+  left: 10px;
+
+  font-family: 'Roboto', sans-serif;
+  font-weight: normal;
+
+  font-size: 0.80rem;
+
+  margin: 0;
+  padding: 0;
+
+}
+
+#logo {
+
+}
+
+nav {
+
+  position: absolute;
+
+  top: 15px;
+  right: 12.5%;
+  bottom: auto;
+  left: auto;
+
+  width: fit-content;
+  height: fit-content;
+
+  ul {
+
+    li {
+
+      float: left;
+
+      width: fit-content;
+
+      font-family: "Open Sans", sans-serif;
+      font-size: 0.95rem;
+
+      list-style-type: none;
+
+      cursor: pointer;
+
+      margin: 0 10px 0 10px;
+      padding: 0;
+
+      &:hover {
+
+        text-decoration: underline;
+
+      }
+
+    }
+
+  }
+
+}
+
+
+#login-pane {
+
+  ul {
+
+    li {
+
+    }
+
+  }
+
+}
+
