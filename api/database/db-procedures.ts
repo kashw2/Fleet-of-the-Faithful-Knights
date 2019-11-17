@@ -1,6 +1,6 @@
 import {Either} from "funfix-core";
 import {List} from "immutable";
-import {EitherUtils, User, UserJsonSerializer} from "../core";
+import {EitherUtils, User, UserJsonSerializer} from "../../core";
 import {Database} from "./db";
 
 export class DbProcedures {

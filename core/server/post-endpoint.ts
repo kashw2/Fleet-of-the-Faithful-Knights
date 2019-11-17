@@ -1,6 +1,6 @@
 import {Request, Response, Router} from "express";
 import {Either} from "funfix-core";
-import {RouterUtil, User, UserJsonSerializer, userKey} from "..";
+import {RouterUtil, User, UserJsonSerializer, userKey} from "../index";
 
 export abstract class PostEndpoint {
 
@@ -14,6 +14,7 @@ export abstract class PostEndpoint {
     }
 
     getUser(req: Request): Either<string, User> {
+        // This is still janky but works
         return RouterUtil.parseSerializedBodyParam(userKey, UserJsonSerializer.instance, req);
     }
 

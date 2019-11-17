@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
-import {passwordKey, PostEndpoint, RouterUtil, User, usernameKey} from "../../../core";
+import {passwordKey, PostEndpoint, RouterUtil, User, usernameKey} from "../../../../core";
 import {Database} from "../../../database/db";
 
 export class GetUserEndpoint extends PostEndpoint {

@@ -1,6 +1,6 @@
 import {None, Option, Some} from "funfix-core";
 import {Moment} from "moment";
-import {JsonSerializer} from "..";
+import {JsonSerializer} from "../index";
 
 export class OptionUtils {
 
