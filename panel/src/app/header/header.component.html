@@ -1,0 +1,24 @@
+<header>
+  <h1 id="title">Fleet of the Faithful Knights</h1>
+  <p id="sub-title">...a beacon of light in a dark verse</p>
+  <!--  <img id="logo" src="../assets/ffk-logo.png">-->
+
+  <nav>
+    <ul *ngIf="isLoggedIn()">
+      <li>Home</li>
+      <li>Sergeant Voting</li>
+      <li>Knight Voting</li>
+    </ul>
+    <ul *ngIf="!isLoggedIn()">
+      <li>Home</li>
+    </ul>
+  </nav>
+
+  <div id="login-pane" *ngIf="!isLoggedIn()">
+    <ul>
+      <li>Login</li>
+      <li>Sign Up</li>
+    </ul>
+  </div>
+
+</header>
