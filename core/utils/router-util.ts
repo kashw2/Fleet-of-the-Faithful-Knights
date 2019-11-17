@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
-import {JsonSerializer} from "..";
+import {JsonSerializer} from "../index";
 import {EitherUtils} from "./either-utils";
 
 export class RouterUtil {

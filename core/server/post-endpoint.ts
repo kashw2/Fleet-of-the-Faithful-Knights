@@ -1,8 +1,8 @@
 import {Request, Response, Router} from "express";
 import {Either} from "funfix-core";
-import {RouterUtil, User, UserJsonSerializer, userKey} from "..";
+import {RouterUtil, User, UserJsonSerializer, userKey} from "../index";
 
-export abstract class GetEndpoint {
+export abstract class PostEndpoint {
 
     constructor(readonly endpoint: string) {
     }
@@ -19,7 +19,7 @@ export abstract class GetEndpoint {
     }
 
     route(router: Router): void {
-        router.get(this.getEndpoint(), (req, res) => this.run(this.getUser(req).get(), req, res));
+        router.post(this.getEndpoint(), (req, res) => this.run(this.getUser(req).get(), req, res));
     }
 
     run(user: User, req: Request, res: Response): void {

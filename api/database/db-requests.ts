@@ -1,6 +1,6 @@
 import {List} from "immutable";
 import {IRecordSet} from "mssql";
-import {JsonSerializer} from "../core";
+import {JsonSerializer} from "../../core";
 import {Database} from "./db";
 
 export class DbRequests {
