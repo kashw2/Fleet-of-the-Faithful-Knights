@@ -1,6 +1,6 @@
 import {Request, Response, Router} from "express";
 import {Either} from "funfix-core";
-import {RouterUtil, User, UserJsonSerializer, userKey} from "../index";
+import {RouterUtil, User, UserJsonSerializer, userKey} from "..";
 
 export abstract class PostEndpoint {
 
