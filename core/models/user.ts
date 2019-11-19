@@ -55,7 +55,7 @@ export class UserJsonSerializer extends JsonSerializer<User> {
         return new User(
             OptionUtils.parseNumber(obj[idKey]),
             OptionUtils.parseString(obj[usernameKey]),
-            OptionUtils.parseSerialised(obj[rankKey], RankJsonSerializer.instance),
+            Option.of(RankJsonSerializer.instance.toType(obj[rankKey])),
         );
     }
 

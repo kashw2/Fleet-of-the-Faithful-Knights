@@ -37,7 +37,7 @@ export class RouterUtil {
         }
     }
 
-    static sendUnauthorisedViaRouter(res: Response): void {
+    static sendUnauthorised(res: Response): void {
         res.sendStatus(403);
     }
 

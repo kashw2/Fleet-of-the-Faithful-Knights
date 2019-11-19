@@ -1,6 +1,6 @@
 import {Request, Response, Router} from "express";
 import {Either} from "funfix-core";
-import {RouterUtil, User, UserJsonSerializer, userKey} from "../index";
+import {EitherUtils, RouterUtil, User, UserJsonSerializer, userKey} from "..";
 
 export abstract class GetEndpoint {
 
@@ -14,8 +14,7 @@ export abstract class GetEndpoint {
     }
 
     getUser(req: Request): Either<string, User> {
-        // This is still janky but works
-        return RouterUtil.parseSerializedBodyParam(userKey, UserJsonSerializer.instance, req);
+        return EitherUtils.liftEither(UserJsonSerializer.instance.toType(req.body[userKey]), "No user");
     }
 
     route(router: Router): void {
@@ -26,10 +25,11 @@ export abstract class GetEndpoint {
         if (this.canAccess(user)) {
             this.runRequest(req, res);
         } else {
-            RouterUtil.sendUnauthorisedViaRouter(res);
+            RouterUtil.sendUnauthorised(res);
         }
     }
 
     abstract runRequest(req: Request, res: Response): void;
+
 
 }
