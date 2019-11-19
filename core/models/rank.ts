@@ -91,7 +91,7 @@ export class RankJsonSerializer extends JsonSerializer<Rank> {
             .addOptional(nameKey, value.getName());
     }
 
-    toType(obj: any = {}): Rank {
+    toType(obj: any): Rank {
         return new Rank(
             OptionUtils.parseNumber(obj[idKey]),
             OptionUtils.parseString(obj[nameKey]),
