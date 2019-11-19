@@ -1,23 +1,21 @@
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
-import {JsonSerializer} from "../index";
 import {EitherUtils} from "./either-utils";
 
 export class RouterUtil {
 
     static parseBooleanBodyParam(key: string, req: Request): Either<string, boolean> {
+        // @ts-ignore
         return EitherUtils.liftEither(req.body[key], `error parsing body param ${key}`);
     }
 
     static parseNumberBodyParam(key: string, req: Request): Either<string, number> {
+        // @ts-ignore
         return EitherUtils.liftEither(req.body[key], `error parsing body param ${key}`);
     }
 
-    static parseSerializedBodyParam<A>(key: string, serializer: JsonSerializer<A>, req: Request): Either<string, A> {
-        return EitherUtils.liftEither(serializer.toType(req.body[key]), `error parsing body param ${key}`);
-    }
-
     static parseStringBodyParam(key: string, req: Request): Either<string, string> {
+        // @ts-ignore
         return EitherUtils.liftEither(req.body[key], `error parsing body param ${key}`);
     }
 
@@ -37,7 +35,7 @@ export class RouterUtil {
         }
     }
 
-    static sendUnauthorisedViaRouter(res: Response): void {
+    static sendUnauthorised(res: Response): void {
         res.sendStatus(403);
     }
 
