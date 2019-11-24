@@ -10,9 +10,7 @@ export class GetUserEndpoint extends PostEndpoint {
     }
 
     canAccess(user: User): boolean {
-        return user.getRank()
-            .map(x => x.isAdmin())
-            .getOrElse(false);
+       return true;
     }
 
     private getPassword(req: Request): Either<string, string> {

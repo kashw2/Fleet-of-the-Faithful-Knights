@@ -1,17 +1,17 @@
 import {None, Option, Some} from "funfix-core";
 import {Moment} from "moment";
-import {JsonSerializer} from "..";
+import {JsonSerializer} from "../models/json-serializer";
 
 export class OptionUtils {
 
-    static parseBoolean(v: unknown): Option<boolean> {
-        return Option.of(v)
-            .flatMap(x => {
-                if (typeof x !== "boolean") {
-                    return None;
-                }
-                return Some(x);
-            });
+    static parseBoolean(v: boolean): Option<boolean> {
+        if (v === undefined) {
+            return None;
+        }
+        if (typeof v !== "boolean") {
+            return None;
+        }
+        return Some(v);
     }
 
     static parseMoment(v: Moment): Option<Moment> {
@@ -19,27 +19,30 @@ export class OptionUtils {
     }
 
     static parseNumber(v: unknown): Option<number> {
-       return Option.of(v)
-            .flatMap(x => {
-                if (typeof x !== "number") {
-                    return None;
-                }
-                return Some(x);
-            });
+        if (v === undefined) {
+            return None;
+        }
+        if (typeof v !== "number") {
+            return None;
+        }
+        return Some(v);
     }
 
     static parseSerialised<A, B extends A>(v: any, serialiser: JsonSerializer<A>): Option<A> {
+        if (v === undefined) {
+            return None;
+        }
         return Option.of(serialiser.fromJson(v));
     }
 
     static parseString(v: unknown): Option<string> {
-        return Option.of(v)
-            .flatMap(x => {
-                if (typeof x !== "string") {
-                    return None;
-                }
-                return Some(x);
-            });
+        if (v === undefined) {
+            return None;
+        }
+        if (typeof v !== "string") {
+            return None;
+        }
+        return Some(v);
     }
 
 }

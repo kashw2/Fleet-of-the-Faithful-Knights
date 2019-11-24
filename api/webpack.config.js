@@ -1,14 +1,13 @@
 const path = require("path");
+const merge = require("webpack-merge");
 
-module.exports = {
+module.exports = merge({
     entry: path.resolve(__dirname, "../core"),
+    mode: "development",
+    devtool: "inline-source-map",
     output: {
-        library: "core",
-        filename: "core.js",
-        libraryTarget: "umd",
-        umdNamedDefine: true,
-        globalObject: "typeof self !== \"undefined\" ? self : this",
-        path: path.resolve(__dirname, "../core/dist")
+        filename: "lib.js",
+        path: path.resolve(__dirname, "../core/dist"),
     },
     module: {
         rules: [
@@ -18,4 +17,4 @@ module.exports = {
             },
         ],
     },
-};
+});
