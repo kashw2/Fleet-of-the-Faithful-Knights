@@ -11,6 +11,10 @@ export class HeaderComponent implements OnInit {
   constructor(private loginService: LoginService) {
   }
 
+  isLoggedIn(): boolean {
+    return true;
+  }
+
   ngOnInit() {
   }
 
