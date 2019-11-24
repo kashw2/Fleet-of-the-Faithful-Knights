@@ -1,44 +1,40 @@
-<header>
-
-  <nav class="navbar navbar-expand navbar-light bg-light">
-    <div class="col">
-      <h1 class="navbar-brand mt-1 mb-0 p-0">Fleet of the Faithful Knights</h1>
-      <p id="sub-title" class="mb-0 font-weight-lighter d-table-cell text-muted">...a beacon of light in a dark
-        verse</p>
+<nav class="navbar navbar-expand navbar-light bg-light">
+  <div class="col">
+    <h1 class="navbar-brand mt-1 mb-0 p-0">Fleet of the Faithful Knights</h1>
+    <p id="sub-title" class="mb-0 font-weight-lighter d-table-cell text-muted">...a beacon of light in a dark
+      verse</p>
+  </div>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigationSupportedContent"
+          aria-controls="navigationSupportedContent" aria-expanded="false" aria-label="toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="col-lg-auto">
+    <div class="collapse navbar-collapse" id="navigationSupportedContent">
+      <ul *ngIf="!isLoggedIn()" class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link mx-3" href="#">Home<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="navbar-item mx-3">
+          <a class="nav-link" href="#">Login</a>
+        </li>
+        <li class="navbar-item mx-3">
+          <a class="nav-link" href="#">Sign up</a>
+        </li>
+      </ul>
+      <ul *ngIf="isLoggedIn()" class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link mx-3" href="#">Home<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="navbar-item mx-2">
+          <a class="nav-link" href="#">Squire Voting</a>
+        </li>
+        <li class="navbar-item mx-2">
+          <a class="nav-link" href="#">Sergeant Voting</a>
+        </li>
+        <li class="navbar-item mx-2">
+          <a class="nav-link" href="#">Knight Voting</a>
+        </li>
+      </ul>
     </div>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigationSupportedContent"
-            aria-controls="navigationSupportedContent" aria-expanded="false" aria-label="toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="col-lg-auto">
-      <div class="collapse navbar-collapse" id="navigationSupportedContent">
-        <ul *ngIf="!isLoggedIn()" class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link mx-3" href="#">Home<span class="sr-only">(current)</span></a>
-          </li>
-          <li class="navbar-item mx-3">
-            <a class="nav-link" href="#">Login</a>
-          </li>
-          <li class="navbar-item mx-3">
-            <a class="nav-link" href="#">Sign up</a>
-          </li>
-        </ul>
-        <ul *ngIf="isLoggedIn()" class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link mx-3" href="#">Home<span class="sr-only">(current)</span></a>
-          </li>
-          <li class="navbar-item mx-2">
-            <a class="nav-link" href="#">Squire Voting</a>
-          </li>
-          <li class="navbar-item mx-2">
-            <a class="nav-link" href="#">Sergeant Voting</a>
-          </li>
-          <li class="navbar-item mx-2">
-            <a class="nav-link" href="#">Knight Voting</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-</header>
+  </div>
+</nav>
