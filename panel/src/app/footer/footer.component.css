@@ -1,0 +1,12 @@
+.footer {
+  position: absolute;
+  bottom: 0;
+}
+
+#custom-note {
+  font-family: "Roboto", sans-serif;
+  font-weight: normal;
+  font-size: small;
+}
+
+/*# sourceMappingURL=footer.component.css.map */
