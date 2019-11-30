@@ -36,6 +36,15 @@ export class DbRequests {
         return result.recordset[0];
     }
 
+    async runProcedureParsed<A>(
+        procedure: string,
+        params: List<string>,
+        parser: (v: any) => A,
+    ): Promise<A> {
+        const result = await this.runProcedure(procedure, params);
+        return parser(result);
+    }
+
     async runSingle(
         procedure: string,
         params: List<string>,

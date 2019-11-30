@@ -1,4 +1,5 @@
 import {config, ConnectionPool} from "mssql";
+import {DbCache} from "./db-cache";
 import {DbProcedures} from "./db-procedures";
 import {DbRequests} from "./db-requests";
 
@@ -8,7 +9,10 @@ export class Database {
         this.connection = this.getConnection();
         this.requests = new DbRequests(this);
         this.procedures = new DbProcedures(this);
+        this.cache = new DbCache(this);
     }
+
+    cache: DbCache;
 
     connection: Promise<ConnectionPool>;
 
