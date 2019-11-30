@@ -10,7 +10,7 @@ export class GetUserEndpoint extends PostEndpoint {
     }
 
     canAccess(user: User): boolean {
-       return true;
+        return true;
     }
 
     private getPassword(req: Request): Either<string, string> {
@@ -25,6 +25,7 @@ export class GetUserEndpoint extends PostEndpoint {
         Either.map2(this.getUsername(req), this.getPassword(req), (username, password) => {
             this.db.procedures.getUser(username, password)
                 .then(u => {
+                    u.map(id => res.send(this.db.cache.users.getById(OptionUtils.parseNumber(id).get())));
                     RouterUtil.sendResult(u, res);
                 });
         });

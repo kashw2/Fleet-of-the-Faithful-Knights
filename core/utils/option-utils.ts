@@ -19,7 +19,7 @@ export class OptionUtils {
     }
 
     static parseNumber(v: unknown): Option<number> {
-        if (v === undefined) {
+        if (v === undefined && typeof v === "undefined") {
             return None;
         }
         if (typeof v !== "number") {
