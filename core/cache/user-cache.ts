@@ -1,5 +1,6 @@
+import {Either} from "funfix-core";
 import {List} from "immutable";
-import {User} from "..";
+import {EitherUtils, User} from "..";
 
 export class UserCache {
 
@@ -8,6 +9,10 @@ export class UserCache {
 
     getById(id: number): User {
         return this.users.get(id) as User;
+    }
+
+    getByIdEither(id: number): Either<string, User> {
+        return EitherUtils.liftEither(this.users.get(id) as User, "User not found");
     }
 
 }
