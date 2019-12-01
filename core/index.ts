@@ -11,3 +11,4 @@ export * from "./models/rank";
 export * from "./models/user";
 export * from "./models/vote";
 export * from "./cache/user-cache";
+export * from "./cache/rank-cache";

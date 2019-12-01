@@ -5,7 +5,7 @@ import {Database} from "./db";
 
 export class DbRequests {
 
-    constructor(readonly db: Database) {
+    constructor(private db: Database) {
 
     }
 

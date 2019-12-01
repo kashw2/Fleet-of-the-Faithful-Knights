@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
-import {passwordKey, PostEndpoint, RouterUtil, User, usernameKey} from "../../../../core";
+import {OptionUtils, passwordKey, PostEndpoint, RouterUtil, User, usernameKey} from "../../../../core";
 import {Database} from "../../../database/db";
 
 export class GetUserEndpoint extends PostEndpoint {
@@ -22,10 +22,11 @@ export class GetUserEndpoint extends PostEndpoint {
     }
 
     runRequest(req: Request, res: Response): void {
-        Either.map2(this.getUsername(req), this.getPassword(req), (username, password) => {
+        Either.map2(this.getUsername(req), this.getPassword(req), async (username, password) => {
             this.db.procedures.getUser(username, password)
                 .then(u => {
-                    u.map(id => res.send(this.db.cache.users.getById(OptionUtils.parseNumber(id).get())));
+                    // TODO: Clean this up and do it correctly
+                    u.map(id => res.send(this.db.cache.users.getByIdEither(OptionUtils.parseNumber(id).get())));
                     RouterUtil.sendResult(u, res);
                 });
         });
