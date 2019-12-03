@@ -12,7 +12,7 @@ export class UserCache {
     }
 
     getByIdEither(id: number): Either<string, User> {
-        return EitherUtils.liftEither(this.users.get(id) as User, "User not found");
+        return EitherUtils.liftEither(this.getById(id), "User not found");
     }
 
 }

@@ -1,6 +1,15 @@
 import {Either} from "funfix-core";
 import {List} from "immutable";
-import {EitherUtils, idKey, Rank, RankJsonSerializer, User, UserJsonSerializer} from "../../core";
+import {
+    EitherUtils,
+    idKey,
+    Rank,
+    RankJsonSerializer,
+    User,
+    UserJsonSerializer,
+    Vote,
+    VoteJsonSerializer,
+} from "../../core";
 import {Database} from "./db";
 
 export class DbProcedures {
@@ -25,6 +34,15 @@ export class DbProcedures {
             UserJsonSerializer.instance,
         );
         return EitherUtils.liftEither(result, "Error serializing Users");
+    }
+
+    async getAllVotes(): Promise<Either<string, List<Vote>>> {
+        const result = await this.db.requests.runListSerialized(
+            "ssp_json_GetAllVotes",
+            List(),
+            VoteJsonSerializer.instance,
+        );
+        return EitherUtils.liftEither(result, "Error serializing Votes");
     }
 
     async getUser(username: string, password: string): Promise<Either<string, object>> {

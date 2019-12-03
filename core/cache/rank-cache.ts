@@ -12,7 +12,7 @@ export class RankCache {
     }
 
     getByIdEither(id: number): Either<string, Rank> {
-        return EitherUtils.liftEither(this.ranks.get(id) as Rank, "Rank not found");
+        return EitherUtils.liftEither(this.getById(id), "Rank not found");
     }
 
 }
