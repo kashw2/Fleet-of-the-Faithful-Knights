@@ -6,10 +6,14 @@
   "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights/tree/master/discord-bot#readme",
   "license": "ISC",
   "main": "",
-  "directories": {
-  },
-  "files": [
-  ],
+  "directories": {},
+  "files": [],
   "scripts": {
+    "start": "node app.js",
+    "start-dev": "nodemon --inspect app.js",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "discord.js": "^11.5.1"
   }
 }
