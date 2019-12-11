@@ -1,0 +1,15 @@
+{
+  "name": "ffk-discord-bot",
+  "version": "1.0.0",
+  "description": "FFK Discord Bot",
+  "author": "kashw2 <supra4keanu@hotmail.com>",
+  "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights/tree/master/discord-bot#readme",
+  "license": "ISC",
+  "main": "",
+  "directories": {
+  },
+  "files": [
+  ],
+  "scripts": {
+  }
+}
