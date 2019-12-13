@@ -14,6 +14,7 @@ export class EitherUtils {
         } else if (e2.isLeft()) {
             return e2;
         }
+        throw new Error("Either.flatMap error");
     }
 
     static flatMap3<A, B, C, D, E>(
@@ -31,6 +32,7 @@ export class EitherUtils {
         } else if (e3.isLeft()) {
             return e3;
         }
+        throw new Error("Either.flatMap error");
     }
 
     static flatMap4<A, B, C, D, E, F>(
@@ -51,6 +53,7 @@ export class EitherUtils {
         } else if (e4.isLeft()) {
             return e4;
         }
+        throw new Error("Either.flatMap error");
     }
 
     static flatMap5<A, B, C, D, E, F, G>(
@@ -74,6 +77,7 @@ export class EitherUtils {
         } else if (e5.isLeft()) {
             return e5;
         }
+        throw new Error("Either.flatMap error");
     }
 
     static leftTap<A, B>(val: Either<B, A>, f: (b: B) => void): Either<B, A> {

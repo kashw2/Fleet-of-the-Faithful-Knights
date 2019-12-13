@@ -24,7 +24,7 @@ export class DbProcedures {
             List(),
             RankJsonSerializer.instance,
         );
-        return EitherUtils.liftEither(result, "Error serializing Ranks");
+        return EitherUtils.liftEither(result, "ErrorEvent serializing Ranks");
     }
 
     async getAllUsers(): Promise<Either<string, List<User>>> {
@@ -33,7 +33,7 @@ export class DbProcedures {
             List(),
             UserJsonSerializer.instance,
         );
-        return EitherUtils.liftEither(result, "Error serializing Users");
+        return EitherUtils.liftEither(result, "ErrorEvent serializing Users");
     }
 
     async getAllVotes(): Promise<Either<string, List<Vote>>> {
@@ -42,7 +42,7 @@ export class DbProcedures {
             List(),
             VoteJsonSerializer.instance,
         );
-        return EitherUtils.liftEither(result, "Error serializing Votes");
+        return EitherUtils.liftEither(result, "ErrorEvent serializing Votes");
     }
 
     async getUser(username: string, password: string): Promise<Either<string, object>> {
@@ -51,7 +51,7 @@ export class DbProcedures {
             List.of(`@Username = '${username}'`, `@Password = '${password}'`),
         );
         // @ts-ignore
-        return EitherUtils.liftEither(result[idKey], "Error serializing User");
+        return EitherUtils.liftEither(result[idKey], "ErrorEvent serializing User");
     }
 
 }

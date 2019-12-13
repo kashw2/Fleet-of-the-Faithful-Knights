@@ -11,7 +11,9 @@
   "scripts": {
     "start": "node app.js",
     "start-dev": "nodemon --inspect app.js",
-    "build": "tsc"
+    "build": "tsc",
+    "build-watch": "tsc -w",
+    "concurrently": "concurrently \" npm run build-watch \" \" npm run start-dev \""
   },
   "dependencies": {
     "discord.js": "^11.5.1"
