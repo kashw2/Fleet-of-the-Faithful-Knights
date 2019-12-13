@@ -38,6 +38,7 @@ import {ReconnectingEvent} from "./miscellaneous/reconnecting-event";
 import {ResumeEvent} from "./miscellaneous/resume-event";
 import {VoiceStateUpdateEvent} from "./miscellaneous/voice-state-update-event";
 import {WarnEvent} from "./miscellaneous/warn-event";
+import {WebhookUpdateEvent} from "./miscellaneous/webhook-update-event";
 import {RoleCreateEvent} from "./role/role-create-event";
 import {RoleDeleteEvent} from "./role/role-delete-event";
 import {RoleUpdateEvent} from "./role/role-update-event";
@@ -45,11 +46,11 @@ import {TypingStartEvent} from "./typing/typing-start-event";
 import {TypingStopEvent} from "./typing/typing-stop-event";
 import {UserNoteUpdateEvent} from "./user/user-note-update-event";
 import {UserUpdateEvent} from "./user/user-update-event";
-import {WebhookUpdateEvent} from "./miscellaneous/webhook-update-event";
 
 export class Events {
 
     static startAllDiscordEvents(client: Client): void {
+        // Misc Events
         new ReadyEvent(client).initialiseEvent();
         new DebugEvent(client).initialiseEvent();
         new ErrorEvent(client).initialiseEvent();
@@ -61,6 +62,7 @@ export class Events {
         new VoiceStateUpdateEvent(client).initialiseEvent();
         new WarnEvent(client).initialiseEvent();
         new WebhookUpdateEvent(client).initialiseEvent();
+        // Message Events
         new MessageEvent(client).initialiseEvent();
         new MessageDeleteEvent(client).initialiseEvent();
         new MessageDeleteBuildEvent(client).initialiseEvent();
@@ -68,12 +70,15 @@ export class Events {
         new MessageReactionRemoveEvent(client).initialiseEvent();
         new MessageReactionRemoveAllEvent(client).initialiseEvent();
         new MessageUpdateEvent(client).initialiseEvent();
+        // Channel Events
         new ChannelCreateEvent(client).initialiseEvent();
         new ChannelDeleteEvent(client).initialiseEvent();
         new ChannelPinsUpdateEvent(client).initialiseEvent();
         new ChannelUpdateEvent(client).initialiseEvent();
+        // Client Events
         new ClientUserGuildSettingsUpdateEvent(client).initialiseEvent();
         new ClientUserSettingsUpdateEvent(client).initialiseEvent();
+        // Guild Events
         new GuildBanAddEvent(client).initialiseEvent();
         new GuildBanRemoveEvent(client).initialiseEvent();
         new GuildCreateEvent(client).initialiseEvent();
@@ -88,14 +93,18 @@ export class Events {
         new GuildMembersChunkEvent(client).initialiseEvent();
         new GuildUnavailableEvent(client).initialiseEvent();
         new GuildUpdateEvent(client).initialiseEvent();
+        // Emoji Events
         new EmojiCreateEvent(client).initialiseEvent();
         new EmojiDeleteEvent(client).initialiseEvent();
         new EmojiUpdateEvent(client).initialiseEvent();
+        // Role Events
         new RoleCreateEvent(client).initialiseEvent();
         new RoleDeleteEvent(client).initialiseEvent();
         new RoleUpdateEvent(client).initialiseEvent();
+        // Typing Events
         new TypingStartEvent(client).initialiseEvent();
         new TypingStopEvent(client).initialiseEvent();
+        // User Events
         new UserNoteUpdateEvent(client).initialiseEvent();
         new UserUpdateEvent(client).initialiseEvent();
     }
