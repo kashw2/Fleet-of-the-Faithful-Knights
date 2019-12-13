@@ -11,7 +11,7 @@ export class MessageEvent extends ClientEvents {
     initialiseEvent(): void {
         this.getClient()
             .on("message", message => {
-                console.log("Hello world");
+
             });
     }
 
