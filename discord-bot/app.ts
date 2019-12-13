@@ -1,17 +1,13 @@
 import * as discord from "discord.js";
-import {Option} from "funfix-core";
+import {List} from "immutable";
+import {Events} from "./events/events";
 
-const clientSecret = Option.of(process.argv[2])
-    .map(x => x.split("FFK_DISCORD_BOT_SECRET="))
-    .map(x => x[1])
-    .orElseL(() => {
-        throw new Error("Empty FFK_DISCORD_BOT_SECRET");
-    });
-
+const clientToken = List(process.argv)
+    .filter(x => x.includes("FFK_DISCORD_BOT_SECRET"))
+    .map(x => x.substring(23))
+    .join();
 const client = new discord.Client();
 
-client.on("ready", () => {
-    console.log(`Logged in as ${client.user.tag}`);
-});
+Events.startAllDiscordEvents(client);
 
-client.login(clientSecret.get() as string);
+client.login(clientToken);
