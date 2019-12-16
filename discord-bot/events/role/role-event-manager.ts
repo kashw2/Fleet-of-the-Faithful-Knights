@@ -1,5 +1,5 @@
-import {EventManager} from "../event-manager";
 import {Client} from "discord.js";
+import {EventManager} from "../event-manager";
 import {RoleCreateEvent} from "./role-create-event";
 import {RoleDeleteEvent} from "./role-delete-event";
 import {RoleUpdateEvent} from "./role-update-event";

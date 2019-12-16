@@ -6,10 +6,6 @@ import {GuildEventManager} from "./guild/guild-event-manager";
 import {MessageEventManager} from "./message/message-event-manager";
 import {MiscellaneousEventManager} from "./miscellaneous/miscellaneous-event-manager";
 import {RoleEventManager} from "./role/role-event-manager";
-import {TypingStartEvent} from "./typing/typing-start-event";
-import {TypingStopEvent} from "./typing/typing-stop-event";
-import {UserNoteUpdateEvent} from "./user/user-note-update-event";
-import {UserUpdateEvent} from "./user/user-update-event";
 import {TypingEventManager} from "./typing/typing-event-manager";
 import {UserEventManager} from "./user/user-event-manager";
 

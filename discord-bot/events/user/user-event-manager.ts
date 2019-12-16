@@ -1,5 +1,5 @@
-import {EventManager} from "../event-manager";
 import {Client} from "discord.js";
+import {EventManager} from "../event-manager";
 import {UserNoteUpdateEvent} from "./user-note-update-event";
 import {UserUpdateEvent} from "./user-update-event";
 

@@ -1,5 +1,5 @@
-import {EventManager} from "../event-manager";
 import {Client} from "discord.js";
+import {EventManager} from "../event-manager";
 import {EmojiCreateEvent} from "./emoji-create-event";
 import {EmojiDeleteEvent} from "./emoji-delete-event";
 import {EmojiUpdateEvent} from "./emoji-update-event";

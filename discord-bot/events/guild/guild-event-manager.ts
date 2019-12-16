@@ -1,5 +1,5 @@
-import {EventManager} from "../event-manager";
 import {Client} from "discord.js";
+import {EventManager} from "../event-manager";
 import {GuildBanAddEvent} from "./guild-ban-add-event";
 import {GuildBanRemoveEvent} from "./guild-ban-remove-event";
 import {GuildCreateEvent} from "./guild-create-event";
