@@ -1,8 +1,8 @@
 import {Client} from "discord.js";
 
-import {ClientEvents} from "../client-events";
+import {EventManager} from "../event-manager";
 
-export class GuildUpdateEvent extends ClientEvents {
+export class GuildUpdateEvent extends EventManager {
 
     constructor(readonly client: Client) {
         super(client);
