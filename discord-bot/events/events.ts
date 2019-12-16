@@ -46,6 +46,7 @@ import {TypingStartEvent} from "./typing/typing-start-event";
 import {TypingStopEvent} from "./typing/typing-stop-event";
 import {UserNoteUpdateEvent} from "./user/user-note-update-event";
 import {UserUpdateEvent} from "./user/user-update-event";
+import {ChannelEventManager} from "./channel/channel-event-manager";
 
 export class Events {
 
@@ -71,10 +72,7 @@ export class Events {
         new MessageReactionRemoveAllEvent(client).initialiseEvent();
         new MessageUpdateEvent(client).initialiseEvent();
         // Channel Events
-        new ChannelCreateEvent(client).initialiseEvent();
-        new ChannelDeleteEvent(client).initialiseEvent();
-        new ChannelPinsUpdateEvent(client).initialiseEvent();
-        new ChannelUpdateEvent(client).initialiseEvent();
+        new ChannelEventManager(client).initialiseEvent();
         // Client Events
         new ClientUserGuildSettingsUpdateEvent(client).initialiseEvent();
         new ClientUserSettingsUpdateEvent(client).initialiseEvent();

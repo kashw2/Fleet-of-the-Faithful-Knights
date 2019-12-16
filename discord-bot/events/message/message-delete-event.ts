@@ -1,7 +1,7 @@
 import {Client} from "discord.js";
-import {ClientEvents} from "../client-events";
+import {EventManager} from "../event-manager";
 
-export class MessageDeleteEvent extends ClientEvents {
+export class MessageDeleteEvent extends EventManager {
 
     constructor(readonly client: Client) {
         super(client);

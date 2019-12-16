@@ -1,6 +1,6 @@
 import {Client} from "discord.js";
 
-export abstract class ClientEvents {
+export abstract class EventManager {
 
     constructor(readonly client: Client) {
     }
