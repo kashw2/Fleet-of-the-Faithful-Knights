@@ -1,8 +1,8 @@
 import {Client} from "discord.js";
 import {EventManager} from "../event-manager";
-import {RoleCreateEvent} from "./role-create-event";
-import {RoleDeleteEvent} from "./role-delete-event";
-import {RoleUpdateEvent} from "./role-update-event";
+import {RoleCreateEvent} from "./events/role-create-event";
+import {RoleDeleteEvent} from "./events/role-delete-event";
+import {RoleUpdateEvent} from "./events/role-update-event";
 
 export class RoleEventManager extends EventManager {
 

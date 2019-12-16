@@ -1,7 +1,7 @@
 import {Client} from "discord.js";
 import {EventManager} from "../event-manager";
-import {ClientUserGuildSettingsUpdateEvent} from "./client-user-guild-settings-update-event";
-import {ClientUserSettingsUpdateEvent} from "./client-user-settings-update-event";
+import {ClientUserGuildSettingsUpdateEvent} from "./events/client-user-guild-settings-update-event";
+import {ClientUserSettingsUpdateEvent} from "./events/client-user-settings-update-event";
 
 export class ClientEventManager extends EventManager {
 
