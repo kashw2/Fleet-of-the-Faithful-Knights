@@ -1,8 +1,8 @@
 import {Client} from "discord.js";
 import {EventManager} from "../event-manager";
-import {EmojiCreateEvent} from "./emoji-create-event";
-import {EmojiDeleteEvent} from "./emoji-delete-event";
-import {EmojiUpdateEvent} from "./emoji-update-event";
+import {EmojiCreateEvent} from "./events/emoji-create-event";
+import {EmojiDeleteEvent} from "./events/emoji-delete-event";
+import {EmojiUpdateEvent} from "./events/emoji-update-event";
 
 export class EmojiEventManager extends EventManager {
 

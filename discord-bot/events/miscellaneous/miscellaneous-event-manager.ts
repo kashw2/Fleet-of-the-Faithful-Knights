@@ -1,16 +1,16 @@
 import {Client} from "discord.js";
 import {EventManager} from "../event-manager";
-import {DebugEvent} from "./debug-event";
-import {DisconnectEvent} from "./disconnect-event";
-import {ErrorEvent} from "./error-event";
-import {PresenceUpdateEvent} from "./presence-update-event";
-import {RateLimitEvent} from "./rate-limit-event";
-import {ReadyEvent} from "./ready-event";
-import {ReconnectingEvent} from "./reconnecting-event";
-import {ResumeEvent} from "./resume-event";
-import {VoiceStateUpdateEvent} from "./voice-state-update-event";
-import {WarnEvent} from "./warn-event";
-import {WebhookUpdateEvent} from "./webhook-update-event";
+import {DebugEvent} from "./events/debug-event";
+import {DisconnectEvent} from "./events/disconnect-event";
+import {ErrorEvent} from "./events/error-event";
+import {PresenceUpdateEvent} from "./events/presence-update-event";
+import {RateLimitEvent} from "./events/rate-limit-event";
+import {ReadyEvent} from "./events/ready-event";
+import {ReconnectingEvent} from "./events/reconnecting-event";
+import {ResumeEvent} from "./events/resume-event";
+import {VoiceStateUpdateEvent} from "./events/voice-state-update-event";
+import {WarnEvent} from "./events/warn-event";
+import {WebhookUpdateEvent} from "./events/webhook-update-event";
 
 export class MiscellaneousEventManager extends EventManager {
 

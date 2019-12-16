@@ -3,7 +3,7 @@ import {ChannelEventManager} from "./channel/channel-event-manager";
 import {ClientEventManager} from "./client/client-event-manager";
 import {EmojiEventManager} from "./emoji/emoji-event-manager";
 import {GuildEventManager} from "./guild/guild-event-manager";
-import {MessageEventManager} from "./message/message-event-manager";
+import {MessageEventManager} from "./message/events/message-event-manager";
 import {MiscellaneousEventManager} from "./miscellaneous/miscellaneous-event-manager";
 import {RoleEventManager} from "./role/role-event-manager";
 import {TypingEventManager} from "./typing/typing-event-manager";

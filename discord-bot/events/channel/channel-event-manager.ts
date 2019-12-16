@@ -1,9 +1,9 @@
 import {Client} from "discord.js";
 import {EventManager} from "../event-manager";
-import {ChannelCreateEvent} from "./channel-create-event";
-import {ChannelDeleteEvent} from "./channel-delete-event";
-import {ChannelPinsUpdateEvent} from "./channel-pins-update-event";
-import {ChannelUpdateEvent} from "./channel-update-event";
+import {ChannelCreateEvent} from "./events/channel-create-event";
+import {ChannelDeleteEvent} from "./events/channel-delete-event";
+import {ChannelPinsUpdateEvent} from "./events/channel-pins-update-event";
+import {ChannelUpdateEvent} from "./events/channel-update-event";
 
 export class ChannelEventManager extends EventManager {
 
