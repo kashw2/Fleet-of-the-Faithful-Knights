@@ -12,4 +12,4 @@ In Windows this is set by editing your environment variables (duh) (there's a na
 
 In Linux the easiest and best way to do this is to add the variable to your /etc/environment file.
 
-```echo FFK_DISCORD_BOT_SECRET (your secret without braces) >> /etc/environment```
+```echo FFK_DISCORD_BOT_SECRET=(your secret without braces) >> /etc/environment```

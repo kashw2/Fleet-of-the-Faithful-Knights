@@ -1,7 +1,7 @@
 import {Client} from "discord.js";
-import {ClientEvents} from "../client-events";
+import {EventManager} from "../event-manager";
 
-export class RoleCreateEvent extends ClientEvents {
+export class RoleCreateEvent extends EventManager {
 
     constructor(readonly client: Client) {
         super(client);
