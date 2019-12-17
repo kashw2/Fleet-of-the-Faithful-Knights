@@ -1,4 +1,4 @@
-import {Client, ClientUserSettings, DMChannel, Presence, Snowflake, User} from "discord.js";
+import {Client, ClientUserSettings, DMChannel, Guild, Presence, Snowflake, User} from "discord.js";
 import {Either, Left, Right} from "funfix-core";
 import {List} from "immutable";
 
@@ -73,6 +73,14 @@ export class Manager {
             this.getClient()
                 .user
                 .friends
+                .values(),
+        );
+    }
+
+    getClientGuilds(): List<Guild> {
+        return List(
+            this.getClient()
+                .guilds
                 .values(),
         );
     }

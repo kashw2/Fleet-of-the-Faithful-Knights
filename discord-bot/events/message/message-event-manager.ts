@@ -1,12 +1,12 @@
 import {Client} from "discord.js";
 import {EventManager} from "../event-manager";
-import {MessageDeleteBuildEvent} from "./message-delete-build-event";
-import {MessageDeleteEvent} from "./message-delete-event";
-import {MessageEvent} from "./message-event";
-import {MessageReactionAddEvent} from "./message-reaction-add-event";
-import {MessageReactionRemoveAllEvent} from "./message-reaction-remove-all-event";
-import {MessageReactionRemoveEvent} from "./message-reaction-remove-event";
-import {MessageUpdateEvent} from "./message-update-event";
+import {MessageEvent} from "./events/message-event";
+import {MessageDeleteBuildEvent} from "./events/message-delete-build-event";
+import {MessageDeleteEvent} from "./events/message-delete-event";
+import {MessageReactionAddEvent} from "./events/message-reaction-add-event";
+import {MessageReactionRemoveAllEvent} from "./events/message-reaction-remove-all-event";
+import {MessageReactionRemoveEvent} from "./events/message-reaction-remove-event";
+import {MessageUpdateEvent} from "./events/message-update-event";
 
 export class MessageEventManager extends EventManager {
 
