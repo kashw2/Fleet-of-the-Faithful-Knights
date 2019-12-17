@@ -1,4 +1,6 @@
 import {Client} from "discord.js";
+import {Some} from "funfix-core";
+import {EmbedUserLeavingMessageCommand} from "../../../commands/embed-user-leaving-message-command";
 import {EventManager} from "../../event-manager";
 
 export class GuildMemberRemoveEvent extends EventManager {
@@ -11,7 +13,7 @@ export class GuildMemberRemoveEvent extends EventManager {
     initialiseEvent(): void {
         this.getClient()
             .on("guildMemberRemove", member => {
-
+                new EmbedUserLeavingMessageCommand(this.getClient(), Some(member)).run();
             });
     }
 
