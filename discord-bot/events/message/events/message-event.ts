@@ -1,5 +1,5 @@
 import {Client} from "discord.js";
-import {EventManager} from "../event-manager";
+import {EventManager} from "../../event-manager";
 
 export class MessageEvent extends EventManager {
 
