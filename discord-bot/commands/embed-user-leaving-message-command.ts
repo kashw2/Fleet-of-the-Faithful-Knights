@@ -11,14 +11,6 @@ export class EmbedUserLeavingMessageCommand extends CommandManager {
         super(client);
     }
 
-    run(): void {
-        this.getClientGuilds()
-            .filter(x => x.name === "bot")
-            .map(x => x.channels.get("656439325096935457"))
-            // @ts-ignore
-            .map((x: GuildChannel) => x.send(this.getEmbeddedMessage()));
-    }
-
     private getEmbeddedAuthor(): string {
         return "Leaving Notification";
     }
@@ -53,6 +45,23 @@ export class EmbedUserLeavingMessageCommand extends CommandManager {
         return this.member
             .map(x => x.user.displayAvatarURL)
             .getOrElse("https://i.imgur.com/yH58efA.png");
+    }
+
+    hasPermission(guildMember: GuildMember): boolean {
+        return guildMember.user.bot;
+    }
+
+    run(): void {
+        this.member
+            .map(m => {
+                if (this.hasPermission(m)) {
+                    this.getClientGuilds()
+                        .filter(x => x.name === "bot")
+                        .map(x => x.channels.get("656439325096935457"))
+                        // @ts-ignore
+                        .map((x: GuildChannel) => x.send(this.getEmbeddedMessage()));
+                }
+            });
     }
 
 }
