@@ -1,0 +1,22 @@
+import {Channel, Collection, Guild, GuildChannel, Message, Snowflake} from "discord.js";
+import {Either} from "funfix-core";
+import {EitherUtils} from "../../core";
+
+export class ChannelUtils {
+
+    static getChannelByIdFromMessage(message: Message, channels: Collection<Snowflake, GuildChannel>): Channel {
+        return channels.get(message.channel.id)!;
+    }
+
+    static getChannelByNameFromGuild(name: string, guild: Guild): Channel {
+        return guild.channels.find(x => x.name === name);
+    }
+
+    static getChannelIdByNameFromGuild(name: string, guild: Guild): Either<string, string> {
+        return EitherUtils.liftEither(
+            guild.channels.find(x => x.name === name).id,
+            "Channel not found",
+        );
+    }
+
+}
