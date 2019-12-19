@@ -1,5 +1,6 @@
-import {Client, GuildChannel, GuildMember, Message} from "discord.js";
+import {Client, GuildMember, Message} from "discord.js";
 import {None, Option, Some} from "funfix-core";
+import {ChannelUtils} from "../utils/channel-utils";
 import {CommandManager} from "./command-manager";
 
 export class DeleteMessageCommand extends CommandManager {
@@ -49,9 +50,8 @@ export class DeleteMessageCommand extends CommandManager {
                 if (this.hasPermission(m.member)) {
                     this.getClientGuilds()
                         .filter(x => x.name === "bot")
-                        .map(x => x.channels.get(m.channel.id))
-                        // @ts-ignore
-                        .map((x: GuildChannel) => x.bulkDelete(this.getNumberOfMessagesToDelete()));
+                        .map(x => ChannelUtils.getChannelByIdFromMessage(m, x.channels))
+                        .map(x => x.bulkDelete(this.getNumberOfMessagesToDelete()));
                 }
             });
     }
