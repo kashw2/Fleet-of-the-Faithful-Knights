@@ -11,6 +11,17 @@ export class DeleteMessageCommand extends CommandManager {
         super(client);
     }
 
+    // TODO: Fix this if anything but a number is passed in
+    private getNumberOfMessagesToDelete(): number {
+        return this.message
+            .flatMap(x => {
+                if (x.content.split(" ").length > 1) {
+                    return Some(+x.content.split(" ")[1]);
+                }
+                return Some(1);
+            }).getOrElse(1);
+    }
+
     hasPermission(guildMember: GuildMember): boolean {
         return guildMember.roles.some(x => {
             switch (x.name) {
@@ -43,17 +54,6 @@ export class DeleteMessageCommand extends CommandManager {
                         .map((x: GuildChannel) => x.bulkDelete(this.getNumberOfMessagesToDelete()));
                 }
             });
-    }
-
-    // TODO: Fix this if anything but a number is passed in
-    private getNumberOfMessagesToDelete(): number {
-        return this.message
-            .flatMap(x => {
-                if (x.content.split(" ").length > 1) {
-                    return Some(+x.content.split(" ")[1]);
-                }
-                return Some(1);
-            }).getOrElse(1);
     }
 
 }
