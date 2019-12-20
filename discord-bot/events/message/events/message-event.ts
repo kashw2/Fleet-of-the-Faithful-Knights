@@ -1,7 +1,7 @@
 import {Client} from "discord.js";
-import {EventManager} from "../../event-manager";
-import {DeleteMessageCommand} from "../../../commands/delete-message-command";
 import {Some} from "funfix-core";
+import {DeleteMessageCommand} from "../../../commands/delete-message-command";
+import {EventManager} from "../../event-manager";
 
 export class MessageEvent extends EventManager {
 

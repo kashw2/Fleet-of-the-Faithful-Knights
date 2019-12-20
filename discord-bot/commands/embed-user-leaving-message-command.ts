@@ -1,8 +1,8 @@
 import {Client, GuildChannel, GuildMember, RichEmbed} from "discord.js";
 import {None, Option} from "funfix-core";
-import {CommandManager} from "./command-manager";
-import {ChannelUtils} from "../utils/channel-utils";
 import {leavingMessagesKey} from "../../core/keys/discord-channel-keys";
+import {ChannelUtils} from "../utils/channel-utils";
+import {CommandManager} from "./command-manager";
 
 export class EmbedUserLeavingMessageCommand extends CommandManager {
 
@@ -58,7 +58,7 @@ export class EmbedUserLeavingMessageCommand extends CommandManager {
             .map(m => {
                 if (this.hasPermission(m)) {
                     this.getClientGuilds()
-                        .filter(x => x.name === "bot")
+                        .filter(x => x.name === this.guild)
                         .map(x => ChannelUtils.getChannelByNameFromGuild(leavingMessagesKey, x))
                         .map(x => x.send(this.getEmbeddedMessage()));
                 }
