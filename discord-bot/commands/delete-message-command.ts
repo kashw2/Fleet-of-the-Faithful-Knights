@@ -1,6 +1,8 @@
 import {Client, GuildMember, Message} from "discord.js";
-import {None, Option, Some} from "funfix-core";
+import {Either, Left, None, Option, Right} from "funfix-core";
+import {EitherUtils} from "../../core";
 import {ChannelUtils} from "../utils/channel-utils";
+import {DiscordUtils} from "../utils/discord-utils";
 import {CommandManager} from "./command-manager";
 
 export class DeleteMessageCommand extends CommandManager {
@@ -12,15 +14,16 @@ export class DeleteMessageCommand extends CommandManager {
         super(client);
     }
 
-    // TODO: Fix this if anything but a number is passed in
-    private getNumberOfMessagesToDelete(): number {
-        return this.message
-            .flatMap(x => {
-                if (x.content.split(" ").length > 1) {
-                    return Some(+x.content.split(" ")[1]);
+    run(): void {
+        this.message
+            .map(m => {
+                if (this.hasPermission(m.member)) {
+                    this.getClientGuilds()
+                        .filter(x => x.name === this.getDevEnvironment())
+                        .map(x => ChannelUtils.getChannelByIdFromMessage(m, x.channels))
+                        .map(x => DiscordUtils.deleteMessageOrError(x, this.getNumberOfMessagesToDelete()));
                 }
-                return Some(1);
-            }).getOrElse(1);
+            });
     }
 
     hasPermission(guildMember: GuildMember): boolean {
@@ -44,15 +47,17 @@ export class DeleteMessageCommand extends CommandManager {
         });
     }
 
-    run(): void {
-        this.message
-            .map(m => {
-                if (this.hasPermission(m.member)) {
-                    this.getClientGuilds()
-                        .filter(x => x.name === "bot")
-                        .map(x => ChannelUtils.getChannelByIdFromMessage(m, x.channels))
-                        .map(x => x.bulkDelete(this.getNumberOfMessagesToDelete()));
+    private getNumberOfMessagesToDelete(): Either<string, number> {
+        return EitherUtils.toEither(this.message, "Message was not provided")
+            .flatMap(x => {
+                if (x.content.split(" ").length > 1) {
+                    // @ts-ignore
+                    if (!isNaN(x.content.split(" ")[1])) {
+                        return Right(+x.content.split(" ")[1]);
+                    }
+                    return Left(`Expected a number as second parameter but got ${typeof +x.content.split(" ")[1]}`);
                 }
+                return Left("You must imput a number of messages to delete");
             });
     }
 

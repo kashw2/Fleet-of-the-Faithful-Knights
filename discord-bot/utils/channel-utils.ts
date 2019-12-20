@@ -12,11 +12,19 @@ export class ChannelUtils {
         return guild.channels.find(x => x.name === name);
     }
 
+    static getChannelByNameFromGuildChannels(name: string, channels: Collection<Snowflake, GuildChannel>): Channel {
+        return channels.findAll("name", name)[0];
+    }
+
     static getChannelIdByNameFromGuild(name: string, guild: Guild): Either<string, string> {
         return EitherUtils.liftEither(
             guild.channels.find(x => x.name === name).id,
             "Channel not found",
         );
+    }
+
+    static getChannelsByNameFromGuildChannels(name: string, channels: Collection<Snowflake, GuildChannel>): GuildChannel[] {
+        return channels.findAll("name", name);
     }
 
 }
