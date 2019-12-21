@@ -32,4 +32,5 @@ Once you have installed the above, run ```lerna bootstrap``` from the root of th
 
 Variable               | Description
 -----------------------|------
-FFK_DISCORD_BOT_SECRET | The client secret/token of the bot provided on the [Discords Developer Portal](https://discordapp.com/developers/)
+FFK_DISCORD_BOT_SECRET | The secret/token of the bot provided on [Discords Developer Portal](https://discordapp.com/developers/).
+FFK_DISCORD_BOT_MODE   | The method to run the bot in, either dev or live. 
