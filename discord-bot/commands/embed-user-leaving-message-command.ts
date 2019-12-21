@@ -58,7 +58,7 @@ export class EmbedUserLeavingMessageCommand extends CommandManager {
             .map(m => {
                 if (this.hasPermission(m)) {
                     this.getClientGuilds()
-                        .filter(x => x.name === this.guild)
+                        .filter(x => x.name === this.getDevEnvironment())
                         .map(x => ChannelUtils.getChannelByNameFromGuild(leavingMessagesKey, x))
                         .map(x => x.send(this.getEmbeddedMessage()));
                 }

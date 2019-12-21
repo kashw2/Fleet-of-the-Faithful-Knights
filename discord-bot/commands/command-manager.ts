@@ -7,8 +7,6 @@ export abstract class CommandManager extends Manager {
         super(client);
     }
 
-    guild = this.getDevEnvironment();
-
     getDevEnvironment(): string {
         if (this.isDevEnvironment()) {
             return "bot";
@@ -19,7 +17,7 @@ export abstract class CommandManager extends Manager {
     abstract hasPermission(guildMember: GuildMember): boolean;
 
     private isDevEnvironment(): boolean {
-        return process.env.FFK_DISCORD_BOT_MODE !== "dev";
+        return process.env.FFK_DISCORD_BOT_MODE === "dev";
     }
 
     abstract run(): void;
