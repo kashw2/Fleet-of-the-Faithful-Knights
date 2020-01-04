@@ -1,1 +1,1 @@
-export const leavingMessagesKey = "leaving-messages";
+export const leavingGreetingLogsKey = "leaving-greeting-logs";
