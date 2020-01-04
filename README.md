@@ -27,3 +27,10 @@ Here's a one line install. Do note that it is a global install.
 These packages can be located at either ```AppData/npm/node_modules``` on Windows machines or ```usr/local/lib/node_modules``` on Linux.
 
 Once you have installed the above, run ```lerna bootstrap``` from the root of the repository to 'bootstrap' or install all dependencies for all projects in the repo.
+
+#### Environment Variables
+
+Variable               | Description
+-----------------------|------
+FFK_DISCORD_BOT_SECRET | The secret/token of the bot provided on [Discords Developer Portal](https://discordapp.com/developers/).
+FFK_DISCORD_BOT_MODE   | The method to run the bot in, either dev or live. 
