@@ -10,7 +10,7 @@ export class RemoveWatchingReactionCommand extends CommandManager {
         super(client);
     }
 
-    hasPermission(guildMember: GuildMember): boolean {
+    hasPermission(): boolean {
         return true;
     }
 

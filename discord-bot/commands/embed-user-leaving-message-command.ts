@@ -39,7 +39,7 @@ export class EmbedUserLeavingMessageCommand extends CommandManager {
             .setTimestamp(new Date());
     }
 
-    hasPermission(guildMember: GuildMember): boolean {
+    hasPermission(): boolean {
         return true;
     }
 
@@ -58,7 +58,7 @@ export class EmbedUserLeavingMessageCommand extends CommandManager {
     run(): void {
         this.member
             .map(m => {
-                if (this.hasPermission(m)) {
+                if (this.hasPermission()) {
                     this.getClientGuilds()
                         .filter(x => x.name === this.getDevEnvironment())
                         .map(x => ChannelUtils.getChannelByNameFromGuild(leavingGreetingLogsKey, x))

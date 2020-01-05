@@ -7,12 +7,16 @@ export type Primitive = string | number | boolean;
 export class DiscordUtils {
 
     static deleteMessageOrError(channel: Channel, message: Either<string, Primitive>): void {
+        if (channel === undefined || null) {
+            return;
+        }
+
         if (message.isLeft()) {
             channel.send(message.value);
             return;
         }
+        channel.send(`Deleted ${message.get()} messages}`);
         channel.bulkDelete(message.get());
-        channel.send(`Deleted message/s`);
         return;
     }
 

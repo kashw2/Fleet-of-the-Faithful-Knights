@@ -1,5 +1,6 @@
-import {Client, Guild, GuildMember, Message, TextChannel} from "discord.js";
+import {Client, Message, TextChannel} from "discord.js";
 import {CommandManager} from "./command-manager";
+import {ChannelUtils} from "../utils/channel-utils";
 
 export class AddWatchingReactionCommand extends CommandManager {
 
@@ -10,10 +11,6 @@ export class AddWatchingReactionCommand extends CommandManager {
         super(client);
     }
 
-    private getGuild(): Guild {
-        return this.channel.guild;
-    }
-
     private getLastMessage(): Promise<Message> {
         return this.channel.fetchMessage(this.getLastMessageId());
     }
@@ -22,14 +19,21 @@ export class AddWatchingReactionCommand extends CommandManager {
         return this.channel.lastMessageID;
     }
 
-    hasPermission(guildMember: GuildMember): boolean {
+    hasPermission(): boolean {
         return true;
     }
 
     // Emoji not visible in WebStorm
     run(): void {
         this.getLastMessage()
-            .then(m => m.react("👀"))
+            .then(m => {
+                if (this.hasPermission()) {
+                    this.getClientGuilds()
+                        .filter(x => x.name === this.getDevEnvironment())
+                        .map(x => ChannelUtils.getChannelByIdFromMessage(m, x.channels))
+                        .map(x => m.react("👀"));
+                }
+            })
             .catch(e => console.log(e));
     }
 

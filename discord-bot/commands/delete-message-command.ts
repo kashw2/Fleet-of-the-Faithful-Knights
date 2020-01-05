@@ -14,37 +14,39 @@ export class DeleteMessageCommand extends CommandManager {
         super(client);
     }
 
+    hasPermission(): boolean {
+        return this.message.map(m => {
+            return m.member.roles.some(x => {
+                switch (x.name) {
+                    case "Grand Master":
+                        return true;
+                    case "Master Commander":
+                        return true;
+                    case "Knight Commander":
+                        return true;
+                    case "Knight Lieutenant":
+                        return true;
+                    case "..":
+                        return true;
+                    case ".":
+                        return true;
+                    default:
+                        return false;
+                }
+            });
+        }).getOrElse(false);
+    }
+
     run(): void {
         this.message
             .map(m => {
-                if (this.hasPermission(m.member)) {
+                if (this.hasPermission()) {
                     this.getClientGuilds()
                         .filter(x => x.name === this.getDevEnvironment())
                         .map(x => ChannelUtils.getChannelByIdFromMessage(m, x.channels))
                         .map(x => DiscordUtils.deleteMessageOrError(x, this.getNumberOfMessagesToDelete()));
                 }
             });
-    }
-
-    hasPermission(guildMember: GuildMember): boolean {
-        return guildMember.roles.some(x => {
-            switch (x.name) {
-                case "Grand Master":
-                    return true;
-                case "Master Commander":
-                    return true;
-                case "Knight Commander":
-                    return true;
-                case "Knight Lieutenant":
-                    return true;
-                case "..":
-                    return true;
-                case ".":
-                    return true;
-                default:
-                    return false;
-            }
-        });
     }
 
     private getNumberOfMessagesToDelete(): Either<string, number> {
