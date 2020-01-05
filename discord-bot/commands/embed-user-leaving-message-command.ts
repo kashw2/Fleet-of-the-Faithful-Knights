@@ -1,6 +1,6 @@
-import {Client, GuildChannel, GuildMember, RichEmbed} from "discord.js";
+import {Client, GuildMember, RichEmbed} from "discord.js";
 import {None, Option} from "funfix-core";
-import {leavingMessagesKey} from "../../core/keys/discord-channel-keys";
+import {leavingGreetingLogsKey} from "../../core/keys/discord-channel-keys";
 import {ChannelUtils} from "../utils/channel-utils";
 import {CommandManager} from "./command-manager";
 
@@ -39,8 +39,8 @@ export class EmbedUserLeavingMessageCommand extends CommandManager {
             .setTimestamp(new Date());
     }
 
-    private getEmbeddedTitle(): string {
-        return `${this.member.getOrElse("Unknown User")} has left`;
+    hasPermission(): boolean {
+        return true;
     }
 
     private getEmbeddedUserAvartarUrl(): string {
@@ -49,17 +49,19 @@ export class EmbedUserLeavingMessageCommand extends CommandManager {
             .getOrElse("https://i.imgur.com/yH58efA.png");
     }
 
-    hasPermission(guildMember: GuildMember): boolean {
-        return guildMember.user.bot;
+    private getEmbeddedTitle(): string {
+        return `${this.member
+            .map(x => x.user.tag)
+            .getOrElse("Unknown User")} has left`;
     }
 
     run(): void {
         this.member
             .map(m => {
-                if (this.hasPermission(m)) {
+                if (this.hasPermission()) {
                     this.getClientGuilds()
                         .filter(x => x.name === this.getDevEnvironment())
-                        .map(x => ChannelUtils.getChannelByNameFromGuild(leavingMessagesKey, x))
+                        .map(x => ChannelUtils.getChannelByNameFromGuild(leavingGreetingLogsKey, x))
                         .map(x => x.send(this.getEmbeddedMessage()));
                 }
             });

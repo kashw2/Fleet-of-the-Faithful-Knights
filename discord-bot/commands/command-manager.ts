@@ -14,7 +14,7 @@ export abstract class CommandManager extends Manager {
         return "Fleet of the Faithful Knights";
     }
 
-    abstract hasPermission(guildMember: GuildMember): boolean;
+    abstract hasPermission(): boolean;
 
     private isDevEnvironment(): boolean {
         return process.env.FFK_DISCORD_BOT_MODE === "dev";

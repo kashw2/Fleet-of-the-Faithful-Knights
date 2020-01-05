@@ -132,12 +132,6 @@ export class Manager {
             .dmChannel;
     }
 
-    getLastMessageId(): string {
-        return this.getClient()
-            .user
-            .lastMessageID;
-    }
-
     async getPremiumSince(): Promise<Either<string, Date>> {
         if (this.isClientPremium()) {
             const profile = await this.getClient()

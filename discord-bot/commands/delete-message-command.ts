@@ -14,39 +14,6 @@ export class DeleteMessageCommand extends CommandManager {
         super(client);
     }
 
-    run(): void {
-        this.message
-            .map(m => {
-                if (this.hasPermission(m.member)) {
-                    this.getClientGuilds()
-                        .filter(x => x.name === this.getDevEnvironment())
-                        .map(x => ChannelUtils.getChannelByIdFromMessage(m, x.channels))
-                        .map(x => DiscordUtils.deleteMessageOrError(x, this.getNumberOfMessagesToDelete()));
-                }
-            });
-    }
-
-    hasPermission(guildMember: GuildMember): boolean {
-        return guildMember.roles.some(x => {
-            switch (x.name) {
-                case "Grand Master":
-                    return true;
-                case "Master Commander":
-                    return true;
-                case "Knight Commander":
-                    return true;
-                case "Knight Lieutenant":
-                    return true;
-                case "..":
-                    return true;
-                case ".":
-                    return true;
-                default:
-                    return false;
-            }
-        });
-    }
-
     private getNumberOfMessagesToDelete(): Either<string, number> {
         return EitherUtils.toEither(this.message, "Message was not provided")
             .flatMap(x => {
@@ -55,9 +22,44 @@ export class DeleteMessageCommand extends CommandManager {
                     if (!isNaN(x.content.split(" ")[1])) {
                         return Right(+x.content.split(" ")[1]);
                     }
-                    return Left(`Expected a number as second parameter but got ${typeof +x.content.split(" ")[1]}`);
+                    return Left(`Expected a number as second parameter but got a string`);
                 }
                 return Left("You must imput a number of messages to delete");
+            });
+    }
+
+    hasPermission(): boolean {
+        return this.message.map(m => {
+            return m.member.roles.some(x => {
+                switch (x.name) {
+                    case "Grand Master":
+                        return true;
+                    case "Master Commander":
+                        return true;
+                    case "Knight Commander":
+                        return true;
+                    case "Knight Lieutenant":
+                        return true;
+                    case "..":
+                        return true;
+                    case ".":
+                        return true;
+                    default:
+                        return false;
+                }
+            });
+        }).getOrElse(false);
+    }
+
+    run(): void {
+        this.message
+            .map(m => {
+                if (this.hasPermission()) {
+                    this.getClientGuilds()
+                        .filter(x => x.name === this.getDevEnvironment())
+                        .map(x => ChannelUtils.getChannelByIdFromMessage(m, x.channels))
+                        .map(x => DiscordUtils.deleteMessageOrError(x, this.getNumberOfMessagesToDelete()));
+                }
             });
     }
 

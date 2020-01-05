@@ -7,12 +7,17 @@ export type Primitive = string | number | boolean;
 export class DiscordUtils {
 
     static deleteMessageOrError(channel: Channel, message: Either<string, Primitive>): void {
+        // This should only happen if the bot is in dev mode and the channel is live
+        if (channel === undefined || null) {
+            return;
+        }
+
         if (message.isLeft()) {
             channel.send(message.value);
             return;
         }
         channel.bulkDelete(message.get());
-        channel.send(`Deleted message/s`);
+        channel.send(`Deleted ${message.get()} messages`);
         return;
     }
 
