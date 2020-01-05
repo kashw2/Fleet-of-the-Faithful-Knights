@@ -49,6 +49,12 @@ export class EmbedUserLeavingMessageCommand extends CommandManager {
             .getOrElse("https://i.imgur.com/yH58efA.png");
     }
 
+    private getEmbeddedTitle(): string {
+        return `${this.member
+            .map(x => x.user.tag)
+            .getOrElse("Unknown User")} has left`;
+    }
+
     run(): void {
         this.member
             .map(m => {
@@ -59,12 +65,6 @@ export class EmbedUserLeavingMessageCommand extends CommandManager {
                         .map(x => x.send(this.getEmbeddedMessage()));
                 }
             });
-    }
-
-    private getEmbeddedTitle(): string {
-        return `${this.member
-            .map(x => x.user.tag)
-            .getOrElse("Unknown User")} has left`;
     }
 
 }

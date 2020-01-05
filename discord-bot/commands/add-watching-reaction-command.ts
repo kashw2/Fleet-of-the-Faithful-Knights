@@ -10,17 +10,6 @@ export class AddWatchingReactionCommand extends CommandManager {
         super(client);
     }
 
-    hasPermission(guildMember: GuildMember): boolean {
-        return true;
-    }
-
-    // Emoji not visible in WebStorm
-    run(): void {
-        this.getLastMessage()
-            .then(m => m.react("👀"))
-            .catch(e => console.log(e));
-    }
-
     private getGuild(): Guild {
         return this.channel.guild;
     }
@@ -31,6 +20,17 @@ export class AddWatchingReactionCommand extends CommandManager {
 
     private getLastMessageId(): string {
         return this.channel.lastMessageID;
+    }
+
+    hasPermission(guildMember: GuildMember): boolean {
+        return true;
+    }
+
+    // Emoji not visible in WebStorm
+    run(): void {
+        this.getLastMessage()
+            .then(m => m.react("👀"))
+            .catch(e => console.log(e));
     }
 
 }
