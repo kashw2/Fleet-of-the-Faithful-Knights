@@ -7,6 +7,7 @@ export type Primitive = string | number | boolean;
 export class DiscordUtils {
 
     static deleteMessageOrError(channel: Channel, message: Either<string, Primitive>): void {
+        // This should only happen if the bot is in dev mode and the channel is live
         if (channel === undefined || null) {
             return;
         }
@@ -15,8 +16,8 @@ export class DiscordUtils {
             channel.send(message.value);
             return;
         }
-        channel.send(`Deleted ${message.get()} messages}`);
         channel.bulkDelete(message.get());
+        channel.send(`Deleted ${message.get()} messages`);
         return;
     }
 

@@ -14,6 +14,20 @@ export class DeleteMessageCommand extends CommandManager {
         super(client);
     }
 
+    private getNumberOfMessagesToDelete(): Either<string, number> {
+        return EitherUtils.toEither(this.message, "Message was not provided")
+            .flatMap(x => {
+                if (x.content.split(" ").length > 1) {
+                    // @ts-ignore
+                    if (!isNaN(x.content.split(" ")[1])) {
+                        return Right(+x.content.split(" ")[1]);
+                    }
+                    return Left(`Expected a number as second parameter but got a string`);
+                }
+                return Left("You must imput a number of messages to delete");
+            });
+    }
+
     hasPermission(): boolean {
         return this.message.map(m => {
             return m.member.roles.some(x => {
@@ -46,20 +60,6 @@ export class DeleteMessageCommand extends CommandManager {
                         .map(x => ChannelUtils.getChannelByIdFromMessage(m, x.channels))
                         .map(x => DiscordUtils.deleteMessageOrError(x, this.getNumberOfMessagesToDelete()));
                 }
-            });
-    }
-
-    private getNumberOfMessagesToDelete(): Either<string, number> {
-        return EitherUtils.toEither(this.message, "Message was not provided")
-            .flatMap(x => {
-                if (x.content.split(" ").length > 1) {
-                    // @ts-ignore
-                    if (!isNaN(x.content.split(" ")[1])) {
-                        return Right(+x.content.split(" ")[1]);
-                    }
-                    return Left(`Expected a number as second parameter but got ${typeof +x.content.split(" ")[1]}`);
-                }
-                return Left("You must imput a number of messages to delete");
             });
     }
 
