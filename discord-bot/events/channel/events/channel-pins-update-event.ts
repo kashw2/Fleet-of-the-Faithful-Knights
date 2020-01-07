@@ -9,7 +9,7 @@ export class ChannelPinsUpdateEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("channelPinsUpdate", (channel, time) => {
 
             });

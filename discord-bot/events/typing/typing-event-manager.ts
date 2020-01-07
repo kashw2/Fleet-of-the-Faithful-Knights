@@ -10,8 +10,8 @@ export class TypingEventManager extends EventManager {
     }
 
     initialiseEvent(): void {
-        new TypingStartEvent(this.getClient()).initialiseEvent();
-        // new TypingStopEvent(this.getClient()).initialiseEvent();
+        new TypingStartEvent(this.clientManager.getClient()).initialiseEvent();
+        new TypingStopEvent(this.clientManager.getClient()).initialiseEvent();
     }
 
 }

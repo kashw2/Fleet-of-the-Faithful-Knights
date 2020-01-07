@@ -8,7 +8,7 @@ export class UserUpdateEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("userUpdate", (oldUser, newUser) => {
 
             });

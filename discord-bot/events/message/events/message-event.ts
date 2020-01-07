@@ -11,7 +11,7 @@ export class MessageEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("message", message => {
 
                 if (!message.content.startsWith("!")) {
@@ -24,10 +24,10 @@ export class MessageEvent extends EventManager {
 
                 switch (message.content.toLowerCase().split(" ")[0]) {
                     case "!delete":
-                        new DeleteMessageCommand(this.getClient(), Some(message)).run();
+                        new DeleteMessageCommand(this.clientManager.getClient(), Some(message)).run();
                         break;
                     case "!del":
-                        new DeleteMessageCommand(this.getClient(), Some(message)).run();
+                        new DeleteMessageCommand(this.clientManager.getClient(), Some(message)).run();
                         break;
                     default:
                         console.log(message.content);

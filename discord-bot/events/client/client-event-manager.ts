@@ -10,8 +10,8 @@ export class ClientEventManager extends EventManager {
     }
 
     initialiseEvent(): void {
-        new ClientUserSettingsUpdateEvent(this.getClient()).initialiseEvent();
-        new ClientUserGuildSettingsUpdateEvent(this.getClient()).initialiseEvent();
+        new ClientUserSettingsUpdateEvent(this.clientManager.getClient()).initialiseEvent();
+        new ClientUserGuildSettingsUpdateEvent(this.clientManager.getClient()).initialiseEvent();
     }
 
 }

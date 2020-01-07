@@ -39,8 +39,10 @@ export class EmbedUserLeavingMessageCommand extends CommandManager {
             .setTimestamp(new Date());
     }
 
-    hasPermission(): boolean {
-        return true;
+    private getEmbeddedTitle(): string {
+        return `${this.member
+            .map(x => x.user.tag)
+            .getOrElse("Unknown User")} has left`;
     }
 
     private getEmbeddedUserAvartarUrl(): string {
@@ -49,17 +51,15 @@ export class EmbedUserLeavingMessageCommand extends CommandManager {
             .getOrElse("https://i.imgur.com/yH58efA.png");
     }
 
-    private getEmbeddedTitle(): string {
-        return `${this.member
-            .map(x => x.user.tag)
-            .getOrElse("Unknown User")} has left`;
+    hasPermission(): boolean {
+        return true;
     }
 
     run(): void {
         this.member
             .map(m => {
                 if (this.hasPermission()) {
-                    this.getClientGuilds()
+                    this.guildManager.getClientGuilds()
                         .filter(x => x.name === this.getDevEnvironment())
                         .map(x => ChannelUtils.getChannelByNameFromGuild(leavingGreetingLogsKey, x))
                         .map(x => x.send(this.getEmbeddedMessage()));

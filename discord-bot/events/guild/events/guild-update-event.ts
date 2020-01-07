@@ -10,7 +10,7 @@ export class GuildUpdateEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("guildUpdate", (oldGuild, newGuild) => {
 
             });

@@ -9,7 +9,7 @@ export class GuildMemberUpdateEndpoint extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("guildMemberUpdate", (oldMember, newMember) => {
 
             });

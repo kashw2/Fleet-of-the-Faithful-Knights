@@ -9,7 +9,7 @@ export class ChannelCreateEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("channelCreate", channel => {
 
             });

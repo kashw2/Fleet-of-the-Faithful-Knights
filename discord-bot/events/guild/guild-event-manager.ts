@@ -21,20 +21,20 @@ export class GuildEventManager extends EventManager {
     }
 
     initialiseEvent(): void {
-        new GuildBanAddEvent(this.getClient()).initialiseEvent();
-        new GuildBanRemoveEvent(this.getClient()).initialiseEvent();
-        new GuildCreateEvent(this.getClient()).initialiseEvent();
-        new GuildDeleteEvent(this.getClient()).initialiseEvent();
-        new GuildIntegrationsUpdateEvent(this.getClient()).initialiseEvent();
-        new GuildMemberAddEvent(this.getClient()).initialiseEvent();
-        new GuildMemberAvailableEvent(this.getClient()).initialiseEvent();
-        new GuildMemberAvailableEvent(this.getClient()).initialiseEvent();
-        new GuildMemberRemoveEvent(this.getClient()).initialiseEvent();
-        new GuildMemberSpeakingEvent(this.getClient()).initialiseEvent();
-        new GuildMemberUpdateEndpoint(this.getClient()).initialiseEvent();
-        new GuildMembersChunkEvent(this.getClient()).initialiseEvent();
-        new GuildUnavailableEvent(this.getClient()).initialiseEvent();
-        new GuildUpdateEvent(this.getClient()).initialiseEvent();
+        new GuildBanAddEvent(this.clientManager.getClient()).initialiseEvent();
+        new GuildBanRemoveEvent(this.clientManager.getClient()).initialiseEvent();
+        new GuildCreateEvent(this.clientManager.getClient()).initialiseEvent();
+        new GuildDeleteEvent(this.clientManager.getClient()).initialiseEvent();
+        new GuildIntegrationsUpdateEvent(this.clientManager.getClient()).initialiseEvent();
+        new GuildMemberAddEvent(this.clientManager.getClient()).initialiseEvent();
+        new GuildMemberAvailableEvent(this.clientManager.getClient()).initialiseEvent();
+        new GuildMemberAvailableEvent(this.clientManager.getClient()).initialiseEvent();
+        new GuildMemberRemoveEvent(this.clientManager.getClient()).initialiseEvent();
+        new GuildMemberSpeakingEvent(this.clientManager.getClient()).initialiseEvent();
+        new GuildMemberUpdateEndpoint(this.clientManager.getClient()).initialiseEvent();
+        new GuildMembersChunkEvent(this.clientManager.getClient()).initialiseEvent();
+        new GuildUnavailableEvent(this.clientManager.getClient()).initialiseEvent();
+        new GuildUpdateEvent(this.clientManager.getClient()).initialiseEvent();
     }
 
 }

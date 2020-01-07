@@ -9,7 +9,7 @@ export class WarnEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("warn", info => {
 
             });

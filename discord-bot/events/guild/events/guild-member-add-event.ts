@@ -9,7 +9,7 @@ export class GuildMemberAddEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("guildMemberAdd", member => {
 
             });

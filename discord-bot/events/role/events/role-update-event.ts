@@ -9,7 +9,7 @@ export class RoleUpdateEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("roleUpdate", (oldRole, newRole) => {
 
             });

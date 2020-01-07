@@ -9,7 +9,7 @@ export class EmojiUpdateEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("emojiUpdate", (oldEmoji, newEmoji) => {
 
             });

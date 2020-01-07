@@ -9,7 +9,7 @@ export class GuildBanAddEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("guildBanAdd", (guild, user) => {
 
             });

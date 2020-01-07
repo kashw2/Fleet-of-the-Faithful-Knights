@@ -9,7 +9,7 @@ export class RoleCreateEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("roleCreate", role => {
 
             });

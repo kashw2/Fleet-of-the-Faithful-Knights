@@ -11,9 +11,9 @@ export class GuildMemberRemoveEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("guildMemberRemove", member => {
-                new EmbedUserLeavingMessageCommand(this.getClient(), Some(member)).run();
+                new EmbedUserLeavingMessageCommand(this.clientManager.getClient(), Some(member)).run();
             });
     }
 

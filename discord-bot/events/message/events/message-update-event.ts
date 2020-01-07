@@ -9,7 +9,7 @@ export class MessageUpdateEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("messageUpdate", (oldMessage, newMessage) => {
 
             });

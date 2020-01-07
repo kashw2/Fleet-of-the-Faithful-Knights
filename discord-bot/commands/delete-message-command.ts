@@ -55,7 +55,7 @@ export class DeleteMessageCommand extends CommandManager {
         this.message
             .map(m => {
                 if (this.hasPermission()) {
-                    this.getClientGuilds()
+                    this.guildManager.getClientGuilds()
                         .filter(x => x.name === this.getDevEnvironment())
                         .map(x => ChannelUtils.getChannelByIdFromMessage(m, x.channels))
                         .map(x => DiscordUtils.deleteMessageOrError(x, this.getNumberOfMessagesToDelete()));
