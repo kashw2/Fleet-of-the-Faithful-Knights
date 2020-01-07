@@ -11,7 +11,7 @@ export class ReadyEvent extends EventManager {
     initialiseEvent(): void {
         this.clientManager.getClient()
             .on("ready", () => {
-                console.log(`Logged in as ${this.clientManager.getClientTag()}`);
+                console.log(`Logged in as ${this.userManager.getClientTag()}`);
             });
     }
 

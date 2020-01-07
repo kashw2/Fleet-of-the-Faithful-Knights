@@ -39,32 +39,32 @@ export class EmbedUserLeavingMessageCommand extends CommandManager {
             .setTimestamp(new Date());
     }
 
-    hasPermission(): boolean {
-        return true;
-    }
-
-    private getEmbeddedUserAvartarUrl(): string {
-        return this.member
-            .map(x => x.user.displayAvatarURL)
-            .getOrElse("https://i.imgur.com/yH58efA.png");
-    }
-
     private getEmbeddedTitle(): string {
         return `${this.member
             .map(x => x.user.tag)
             .getOrElse("Unknown User")} has left`;
     }
 
+    hasPermission(): boolean {
+        return true;
+    }
+
     run(): void {
         this.member
             .map(m => {
                 if (this.hasPermission()) {
-                    this.clientManager.getClientGuilds()
+                    this.guildManager.getClientGuilds()
                         .filter(x => x.name === this.getDevEnvironment())
                         .map(x => ChannelUtils.getChannelByNameFromGuild(leavingGreetingLogsKey, x))
                         .map(x => x.send(this.getEmbeddedMessage()));
                 }
             });
+    }
+
+    private getEmbeddedUserAvartarUrl(): string {
+        return this.member
+            .map(x => x.user.displayAvatarURL)
+            .getOrElse("https://i.imgur.com/yH58efA.png");
     }
 
 }
