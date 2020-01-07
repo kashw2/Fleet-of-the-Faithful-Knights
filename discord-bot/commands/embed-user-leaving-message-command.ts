@@ -45,6 +45,12 @@ export class EmbedUserLeavingMessageCommand extends CommandManager {
             .getOrElse("Unknown User")} has left`;
     }
 
+    private getEmbeddedUserAvartarUrl(): string {
+        return this.member
+            .map(x => x.user.displayAvatarURL)
+            .getOrElse("https://i.imgur.com/yH58efA.png");
+    }
+
     hasPermission(): boolean {
         return true;
     }
@@ -59,12 +65,6 @@ export class EmbedUserLeavingMessageCommand extends CommandManager {
                         .map(x => x.send(this.getEmbeddedMessage()));
                 }
             });
-    }
-
-    private getEmbeddedUserAvartarUrl(): string {
-        return this.member
-            .map(x => x.user.displayAvatarURL)
-            .getOrElse("https://i.imgur.com/yH58efA.png");
     }
 
 }
