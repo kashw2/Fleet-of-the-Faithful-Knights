@@ -9,7 +9,7 @@ export class MessageReactionRemoveEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("messageReactionRemove", (messageReaction, user) => {
 
             });

@@ -9,7 +9,7 @@ export class DisconnectEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("disconnect", event => {
 
             });

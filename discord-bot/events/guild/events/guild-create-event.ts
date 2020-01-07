@@ -9,7 +9,7 @@ export class GuildCreateEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("guildCreate", guild => {
 
             });

@@ -9,7 +9,7 @@ export class MessageReactionAddEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("messageReactionAdd", (messageReaction, user) => {
 
             });

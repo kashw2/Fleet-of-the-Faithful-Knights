@@ -9,9 +9,9 @@ export class TypingStopEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("typingStop", (channel: TextChannel, user) => {
-                new RemoveWatchingReactionCommand(channel, this.getClient()).run();
+                new RemoveWatchingReactionCommand(channel, this.clientManager.getClient()).run();
             });
     }
 

@@ -9,7 +9,7 @@ export class GuildMembersChunkEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("guildMembersChunk", (members, guild) => {
 
             });

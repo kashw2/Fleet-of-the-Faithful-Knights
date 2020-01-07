@@ -9,9 +9,9 @@ export class TypingStartEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("typingStart", (channel: TextChannel, user) => {
-                new AddWatchingReactionCommand(channel, this.getClient()).run();
+                new AddWatchingReactionCommand(channel, this.clientManager.getClient()).run();
             });
     }
 

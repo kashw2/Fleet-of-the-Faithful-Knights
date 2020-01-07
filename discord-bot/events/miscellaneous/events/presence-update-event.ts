@@ -9,7 +9,7 @@ export class PresenceUpdateEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("presenceUpdate", (oldMember, newMember) => {
 
             });

@@ -19,17 +19,17 @@ export class MiscellaneousEventManager extends EventManager {
     }
 
     initialiseEvent(): void {
-        new ReadyEvent(this.getClient()).initialiseEvent();
-        new DebugEvent(this.getClient()).initialiseEvent();
-        new ErrorEvent(this.getClient()).initialiseEvent();
-        new PresenceUpdateEvent(this.getClient()).initialiseEvent();
-        new RateLimitEvent(this.getClient()).initialiseEvent();
-        new DisconnectEvent(this.getClient()).initialiseEvent();
-        new ReconnectingEvent(this.getClient()).initialiseEvent();
-        new ResumeEvent(this.getClient()).initialiseEvent();
-        new VoiceStateUpdateEvent(this.getClient()).initialiseEvent();
-        new WarnEvent(this.getClient()).initialiseEvent();
-        new WebhookUpdateEvent(this.getClient()).initialiseEvent();
+        new ReadyEvent(this.clientManager.getClient()).initialiseEvent();
+        new DebugEvent(this.clientManager.getClient()).initialiseEvent();
+        new ErrorEvent(this.clientManager.getClient()).initialiseEvent();
+        new PresenceUpdateEvent(this.clientManager.getClient()).initialiseEvent();
+        new RateLimitEvent(this.clientManager.getClient()).initialiseEvent();
+        new DisconnectEvent(this.clientManager.getClient()).initialiseEvent();
+        new ReconnectingEvent(this.clientManager.getClient()).initialiseEvent();
+        new ResumeEvent(this.clientManager.getClient()).initialiseEvent();
+        new VoiceStateUpdateEvent(this.clientManager.getClient()).initialiseEvent();
+        new WarnEvent(this.clientManager.getClient()).initialiseEvent();
+        new WebhookUpdateEvent(this.clientManager.getClient()).initialiseEvent();
     }
 
 }

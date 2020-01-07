@@ -11,9 +11,9 @@ export class RoleEventManager extends EventManager {
     }
 
     initialiseEvent(): void {
-        new RoleCreateEvent(this.getClient()).initialiseEvent();
-        new RoleDeleteEvent(this.getClient()).initialiseEvent();
-        new RoleUpdateEvent(this.getClient()).initialiseEvent();
+        new RoleCreateEvent(this.clientManager.getClient()).initialiseEvent();
+        new RoleDeleteEvent(this.clientManager.getClient()).initialiseEvent();
+        new RoleUpdateEvent(this.clientManager.getClient()).initialiseEvent();
     }
 
 }

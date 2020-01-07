@@ -9,7 +9,7 @@ export class ChannelDeleteEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("channelDelete", channel => {
 
             });

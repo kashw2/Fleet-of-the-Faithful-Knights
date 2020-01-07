@@ -9,7 +9,7 @@ export class RoleDeleteEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("roleDelete", role => {
 
             });

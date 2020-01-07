@@ -15,13 +15,13 @@ export class MessageEventManager extends EventManager {
     }
 
     initialiseEvent(): void {
-        new MessageEvent(this.getClient()).initialiseEvent();
-        new MessageDeleteEvent(this.getClient()).initialiseEvent();
-        new MessageDeleteBuildEvent(this.getClient()).initialiseEvent();
-        new MessageReactionAddEvent(this.getClient()).initialiseEvent();
-        new MessageReactionRemoveEvent(this.getClient()).initialiseEvent();
-        new MessageReactionRemoveAllEvent(this.getClient()).initialiseEvent();
-        new MessageUpdateEvent(this.getClient()).initialiseEvent();
+        new MessageEvent(this.clientManager.getClient()).initialiseEvent();
+        new MessageDeleteEvent(this.clientManager.getClient()).initialiseEvent();
+        new MessageDeleteBuildEvent(this.clientManager.getClient()).initialiseEvent();
+        new MessageReactionAddEvent(this.clientManager.getClient()).initialiseEvent();
+        new MessageReactionRemoveEvent(this.clientManager.getClient()).initialiseEvent();
+        new MessageReactionRemoveAllEvent(this.clientManager.getClient()).initialiseEvent();
+        new MessageUpdateEvent(this.clientManager.getClient()).initialiseEvent();
     }
 
 }

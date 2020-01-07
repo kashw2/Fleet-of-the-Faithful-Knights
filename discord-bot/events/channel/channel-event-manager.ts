@@ -12,10 +12,10 @@ export class ChannelEventManager extends EventManager {
     }
 
     initialiseEvent(): void {
-        new ChannelCreateEvent(this.getClient()).initialiseEvent();
-        new ChannelDeleteEvent(this.getClient()).initialiseEvent();
-        new ChannelPinsUpdateEvent(this.getClient()).initialiseEvent();
-        new ChannelUpdateEvent(this.getClient()).initialiseEvent();
+        new ChannelCreateEvent(this.clientManager.getClient()).initialiseEvent();
+        new ChannelDeleteEvent(this.clientManager.getClient()).initialiseEvent();
+        new ChannelPinsUpdateEvent(this.clientManager.getClient()).initialiseEvent();
+        new ChannelUpdateEvent(this.clientManager.getClient()).initialiseEvent();
     }
 
 }

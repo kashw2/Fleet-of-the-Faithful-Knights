@@ -9,7 +9,7 @@ export class WebhookUpdateEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("webhookUpdate", channel => {
 
             });

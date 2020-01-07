@@ -9,7 +9,7 @@ export class GuildIntegrationsUpdateEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("guildIntegrationsUpdate", guild => {
 
             });

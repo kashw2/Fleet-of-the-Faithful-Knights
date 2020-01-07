@@ -9,7 +9,7 @@ export class EmojiCreateEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("emojiCreate", clientUserGuildSettings => {
 
             });

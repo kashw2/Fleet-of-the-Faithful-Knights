@@ -9,7 +9,7 @@ export class ChannelUpdateEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("channelUpdate", (oldChannel, newChannel) => {
 
             });

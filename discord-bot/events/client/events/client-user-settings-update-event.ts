@@ -9,7 +9,7 @@ export class ClientUserSettingsUpdateEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("clientUserSettingsUpdate", clientUserSettings => {
 
             });

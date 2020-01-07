@@ -9,7 +9,7 @@ export class ClientUserGuildSettingsUpdateEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("clientUserGuildSettingsUpdate", clientUserGuildSettings => {
 
             });

@@ -9,7 +9,7 @@ export class MessageDeleteEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("messageDelete", message => {
 
             });

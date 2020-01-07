@@ -10,8 +10,8 @@ export class UserEventManager extends EventManager {
     }
 
     initialiseEvent(): void {
-        new UserNoteUpdateEvent(this.getClient()).initialiseEvent();
-        new UserUpdateEvent(this.getClient()).initialiseEvent();
+        new UserNoteUpdateEvent(this.clientManager.getClient()).initialiseEvent();
+        new UserUpdateEvent(this.clientManager.getClient()).initialiseEvent();
     }
 
 }

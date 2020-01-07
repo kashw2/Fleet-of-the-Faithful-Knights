@@ -9,7 +9,7 @@ export class UserNoteUpdateEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("userNoteUpdate", (user, oldNote, newNote) => {
 
             });

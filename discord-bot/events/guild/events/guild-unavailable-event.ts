@@ -9,7 +9,7 @@ export class GuildUnavailableEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("guildUnavailable", guild => {
 
             });

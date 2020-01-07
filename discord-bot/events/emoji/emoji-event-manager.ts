@@ -11,9 +11,9 @@ export class EmojiEventManager extends EventManager {
     }
 
     initialiseEvent(): void {
-        new EmojiCreateEvent(this.getClient()).initialiseEvent();
-        new EmojiDeleteEvent(this.getClient()).initialiseEvent();
-        new EmojiUpdateEvent(this.getClient()).initialiseEvent();
+        new EmojiCreateEvent(this.clientManager.getClient()).initialiseEvent();
+        new EmojiDeleteEvent(this.clientManager.getClient()).initialiseEvent();
+        new EmojiUpdateEvent(this.clientManager.getClient()).initialiseEvent();
     }
 
 }

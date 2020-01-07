@@ -9,7 +9,7 @@ export class RateLimitEvent extends EventManager {
     }
 
     initialiseEvent(): void {
-        this.getClient()
+        this.clientManager.getClient()
             .on("rateLimit", rateLimit => {
 
             });
