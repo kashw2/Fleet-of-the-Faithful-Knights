@@ -29,6 +29,9 @@ export class MessageEvent extends EventManager {
                     case "!del":
                         new DeleteMessageCommand(this.clientManager.getClient(), Some(message)).run();
                         break;
+                    case "!purge":
+                        new DeleteMessageCommand(this.clientManager.getClient(), Some(message)).run();
+                        break;
                     default:
                         console.log(message.content);
                 }

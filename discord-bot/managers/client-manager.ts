@@ -1,5 +1,4 @@
 import {Client} from "discord.js";
-import {Either, Left, Right} from "funfix-core";
 import {Manager} from "../manager";
 
 export class ClientManager {
@@ -8,7 +7,7 @@ export class ClientManager {
     }
 
     getClient(): Client {
-        return this.manager.clientManager.getClient();
+        return this.manager.client;
     }
 
 }

@@ -14,6 +14,18 @@ export class DeleteMessageCommand extends CommandManager {
         super(client);
     }
 
+    getCommandDescription(): string {
+        return "Allows the user to delete messages";
+    }
+
+    getCommandName(): string {
+        return "Delete Message";
+    }
+
+    getCommandSyntax(): string {
+        return "!delete number";
+    }
+
     private getNumberOfMessagesToDelete(): Either<string, number> {
         return EitherUtils.toEither(this.message, "Message was not provided")
             .flatMap(x => {

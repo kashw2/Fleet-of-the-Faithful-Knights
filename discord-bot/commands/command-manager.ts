@@ -7,6 +7,18 @@ export abstract class CommandManager extends Manager {
         super(client);
     }
 
+    getCommandDescription(): string {
+        return "";
+    }
+
+    getCommandName(): string {
+        return "";
+    }
+
+    getCommandSyntax(): string {
+        return "";
+    }
+
     getDevEnvironment(): string {
         if (this.isDevEnvironment()) {
             return "bot";
