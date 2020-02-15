@@ -1,11 +1,10 @@
+import {ReadUserByIdEndpoint} from "./user/read-user-by-id-endpoint";
 import {Router} from "express";
-import {Database} from "../database/db";
-import {UserEndpoints} from "./users/user-endpoints";
 
 export class AllEndpoints {
 
-    static initialiseEndpoints(db: Database, router: Router): void {
-        UserEndpoints.initialiseEndpoints(db, router);
+    static initialiseEndpoints(router: Router): void {
+        new ReadUserByIdEndpoint().routeEndpoint(router);
     }
 
 }
