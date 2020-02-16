@@ -2,6 +2,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import express from "express";
 import {AllEndpoints} from "./routes/all-endpoints";
+import {Database} from "./db/database";
 
 const app = express();
 const router = express.Router();
@@ -12,7 +13,9 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use("/", router);
 
+const db = new Database();
+
 // Initialise all the endpoints
-AllEndpoints.initialiseEndpoints(router);
+AllEndpoints.initialiseEndpoints(router, db);
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

@@ -15,5 +15,7 @@
   },
   "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights#readme",
   "dependencies": {
+    "funfix-core": "^7.0.1",
+    "immutable": "^4.0.0-rc.12"
   }
 }

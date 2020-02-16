@@ -1,9 +1,11 @@
 import {GetEndpoint} from "../get-endpoint";
 import {Request, Response} from "express";
+import {Database} from "../../db/database";
+import {List} from "immutable";
 
 export class ReadUserByIdEndpoint extends GetEndpoint {
 
-    constructor() {
+    constructor(private db: Database) {
         super('/user/:id');
     }
 
@@ -11,9 +13,9 @@ export class ReadUserByIdEndpoint extends GetEndpoint {
         return true;
     }
 
-    run(req: Request, res: Response): void {
-        res.send('Hello World');
-        return;
+    async run(req: Request, res: Response): Promise<void> {
+        const response = await this.db.requests.sendRequestEither('ssp_json_GetUser', List.of(`@UserId = 1`));
+        res.send(response.value);
     }
 
 }

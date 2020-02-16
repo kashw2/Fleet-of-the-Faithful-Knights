@@ -24,10 +24,9 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "funfix-core": "^7.0.1",
-    "immutable": "^4.0.0-rc.12",
     "mssql": "^6.0.1",
-    "passport": "^0.4.1"
+    "passport": "^0.4.1",
+    "rxjs": "^6.5.4"
   },
   "devDependencies": {
     "typescript": "^3.7.5"

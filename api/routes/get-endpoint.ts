@@ -7,6 +7,14 @@ export abstract class GetEndpoint extends RouteManager {
         super();
     }
 
+    isAuthorized(): boolean {
+        return false;
+    }
+
+    private getEndpoint(): string {
+        return this.endpoint;
+    }
+
     routeEndpoint(router: Router): void {
         router.get(this.getEndpoint(), ((req, res, next) => {
             if (this.isAuthorized()) {
@@ -20,14 +28,6 @@ export abstract class GetEndpoint extends RouteManager {
                 res.sendStatus(403);
             }
         }));
-    }
-
-    isAuthorized(): boolean {
-        return false;
-    }
-
-    private getEndpoint(): string {
-        return this.endpoint;
     }
 
     abstract run(req: Request, res: Response): void;
