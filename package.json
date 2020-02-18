@@ -15,7 +15,9 @@
   },
   "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights#readme",
   "dependencies": {
+    "@types/mssql": "^6.0.0",
     "funfix-core": "^7.0.1",
-    "immutable": "^4.0.0-rc.12"
+    "immutable": "^4.0.0-rc.12",
+    "mssql": "^6.0.1"
   }
 }

@@ -1,7 +1,8 @@
 import {Database} from "./database";
 import {ConnectionPool, IRecordSet} from "mssql";
 import {List} from 'immutable';
-import {Either, Left, Right} from "funfix-core";
+import {Either, Left} from "funfix-core";
+import {getJsonFromRecordSet} from "../../core/src/util/object-utils";
 
 export class DbRequest {
 
@@ -11,14 +12,7 @@ export class DbRequest {
         this.connection = this.db.getConnection();
     }
 
-    async sendRequest(procedure: string, params: List<string>): Promise<IRecordSet<any>> {
-        const connection = await this.connection;
-        const result = await connection.request()
-            .query(`${procedure} ${params.join(',').trim()}`);
-        return result.recordset;
-    }
-
-    async sendRequestEither(procedure: string, params: List<string>): Promise<Either<string, IRecordSet<any>>> {
+    async sendRequest(procedure: string, params: List<string>): Promise<Either<string, IRecordSet<any>>> {
         const connection = await this.connection;
         const result = await connection.request()
             .query(`${procedure} ${params.join(',').trim()}`);
@@ -26,7 +20,7 @@ export class DbRequest {
         if (result.recordsets.length < 1) {
             return Left('No data');
         }
-        return Right(result.recordset);
+        return getJsonFromRecordSet(result.recordset);
     }
 
 }
