@@ -1,9 +1,10 @@
 import {GetEndpoint} from "../get-endpoint";
 import {Request, Response} from "express";
 import {Database} from "../../db/database";
-import {List} from "immutable";
-import {UserJsonSerializer} from "../../../core/src/models/user";
-import {JsonBuilder} from "../../../core/src/misc/json-builder";
+import {Either} from "funfix-core";
+import {ApiUtils} from "../../../core/src/util/api-utils";
+import {idKey} from "../../../core/src/misc/json-keys";
+import {User} from "../../../core/src/models/user";
 
 export class ReadUserByIdEndpoint extends GetEndpoint {
 
@@ -11,14 +12,22 @@ export class ReadUserByIdEndpoint extends GetEndpoint {
         super('/user/:id');
     }
 
+    async run(req: Request, res: Response): Promise<void> {
+        this.getUserId(req)
+            .map(uid => res.send(this.getUser(uid).value));
+    }
+
+    private getUser(userId: number): Either<string, User> {
+        return this.db.cache.users.getByIdEither(userId);
+    }
+
     isAuthorized(): boolean {
         return true;
     }
 
-    async run(req: Request, res: Response): Promise<void> {
-        const response = await this.db.requests.sendRequest('ssp_json_GetUser', List.of(`@UserId = 1`));
-        response.map(x => {
-            res.send(UserJsonSerializer.instance.toJson(UserJsonSerializer.instance.fromJson(x), new JsonBuilder({})));
-        })
+    // TODO: Make a method that can return the serialized result
+
+    private getUserId(req: Request): Either<string, number> {
+        return ApiUtils.parseNumberFromPath(req, idKey);
     }
 }

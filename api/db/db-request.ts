@@ -1,12 +1,13 @@
 import {Database} from "./database";
 import {ConnectionPool, IRecordSet} from "mssql";
 import {List} from 'immutable';
-import {Either, Left} from "funfix-core";
+import {Either, Left, Right} from "funfix-core";
 import {getJsonFromRecordSet} from "../../core/src/util/object-utils";
+import {SimpleJsonSerializer} from "../../core/src/misc/simple-json-serializer";
 
 export class DbRequest {
 
-    connection: Promise<ConnectionPool>;
+    private connection: Promise<ConnectionPool>;
 
     constructor(private db: Database) {
         this.connection = this.db.getConnection();
@@ -21,6 +22,31 @@ export class DbRequest {
             return Left('No data');
         }
         return getJsonFromRecordSet(result.recordset);
+    }
+
+    async sendRequestList<A>(procedure: string, params: List<string>): Promise<Either<string, List<IRecordSet<any>>>> {
+        const connection = await this.connection;
+        const result = await connection.request()
+            .query(`${procedure} ${params.join(', ').trim()}`);
+        if (!result.recordsets) {
+            return Left('No data');
+        }
+        return Right(result.recordset[0]);
+    }
+
+    async sendRequestListSerialized<A>(procedure: string, params: List<string>, serializer: SimpleJsonSerializer<A>): Promise<Either<string, List<A>>> {
+        const result = await this.sendRequestList(procedure, params);
+        if (result.isLeft()) {
+            return Left(result.value);
+        }
+        // Fucking types man
+        // TODO: Clean this up, there's utility methods i could make to make this nice
+        return result.map(x => x.map(r => serializer.fromJson(r)));
+    }
+
+    async sendRequestSerialized<A>(procedure: string, params: List<string>, serializer: SimpleJsonSerializer<A>): Promise<Either<string, A>> {
+        const response = await this.sendRequest(procedure, params);
+        return response.map(x => serializer.fromJson(x));
     }
 
 }

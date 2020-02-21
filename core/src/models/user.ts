@@ -80,7 +80,7 @@ export class UserJsonSerializer extends SimpleJsonSerializer<User> {
         )
     }
 
-    toJson(value: User, builder: JsonBuilder): object {
+    toJsonImpl(value: User, builder: JsonBuilder): object {
         return builder
             .addOptional(value.getId(), idKey)
             .addOptional(value.getUsername(), usernameKey)

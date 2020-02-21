@@ -7,12 +7,12 @@ export abstract class PostRoute extends RouteManager {
         super();
     }
 
-    isAuthorized(): boolean {
-        return false;
-    }
-
     private getEndpoint(): string {
         return this.endpoint;
+    }
+
+    isAuthorized(): boolean {
+        return false;
     }
 
     routeEndpoint(router: Router): void {
