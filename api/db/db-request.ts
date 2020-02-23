@@ -24,14 +24,15 @@ export class DbRequest {
         return getJsonFromRecordSet(result.recordset);
     }
 
-    async sendRequestList<A>(procedure: string, params: List<string>): Promise<Either<string, List<IRecordSet<any>>>> {
+    async sendRequestList<A>(procedure: string, params: List<string>): Promise<Either<string, List<any>>> {
         const connection = await this.connection;
         const result = await connection.request()
             .query(`${procedure} ${params.join(', ').trim()}`);
         if (!result.recordsets) {
             return Left('No data');
         }
-        return Right(result.recordset[0]);
+        return getJsonFromRecordSet(result.recordset)
+            .map(x => List(x));
     }
 
     async sendRequestListSerialized<A>(procedure: string, params: List<string>, serializer: SimpleJsonSerializer<A>): Promise<Either<string, List<A>>> {
@@ -39,9 +40,7 @@ export class DbRequest {
         if (result.isLeft()) {
             return Left(result.value);
         }
-        // Fucking types man
-        // TODO: Clean this up, there's utility methods i could make to make this nice
-        return result.map(x => x.map(r => serializer.fromJson(r)));
+        return result.map(x => serializer.fromJsonArray(x));
     }
 
     async sendRequestSerialized<A>(procedure: string, params: List<string>, serializer: SimpleJsonSerializer<A>): Promise<Either<string, A>> {

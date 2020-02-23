@@ -10,7 +10,7 @@ import {IRecordSet} from "mssql";
  *
  */
 export function getJsonFromRecordSet(rs: any): Either<string, IRecordSet<any>> {
-    if (!rs || rs === '{}') {
+    if (!rs || rs === '{}' || rs === []) {
         return Left('Database returned empty resultset');
     }
     return Right(rs[0]);

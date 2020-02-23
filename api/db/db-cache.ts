@@ -19,9 +19,8 @@ export class DbCache {
         this.db.requests.sendRequestListSerialized('ssp_json_GetUsers', List.of(), UserJsonSerializer.instance)
             .then(result => {
                 result.forEach(x => {
-                    // TODO: Fix this List crap
-                    this.users = new UserCache(List(x));
-                    console.log(`Cached ${List(x).size} Users`);
+                    this.users = new UserCache(x);
+                    console.log(`Cached ${x.size} Users`);
                 });
             });
     }
