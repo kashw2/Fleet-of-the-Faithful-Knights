@@ -11,10 +11,6 @@ export abstract class GetEndpoint extends RouteManager {
         return this.endpoint;
     }
 
-    isAuthorized(): boolean {
-        return false;
-    }
-
     routeEndpoint(router: Router): void {
         router.get(this.getEndpoint(), ((req, res, next) => {
             if (this.isAuthorized()) {
