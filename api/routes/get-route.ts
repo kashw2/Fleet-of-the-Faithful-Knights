@@ -1,7 +1,7 @@
 import {RouteManager} from "./route-manager";
 import {Request, Response, Router} from "express";
 
-export abstract class GetEndpoint extends RouteManager {
+export abstract class GetRoute extends RouteManager {
 
     constructor(private endpoint: string) {
         super();
