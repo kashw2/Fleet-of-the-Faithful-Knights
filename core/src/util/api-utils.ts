@@ -11,6 +11,10 @@ export class ApiUtils {
         return EitherUtils.liftEither(+req.params[key], `${key} does not exist on object`);
     }
 
+    static parseSerializedFromBody<T>(req: Request, key: string, serializer: SimpleJsonSerializer<T>): Either<string, T> {
+        return EitherUtils.liftEither(serializer.fromJson(req.body[key]), `unable to serialize ${key} from body`);
+    }
+
     static parseStringFromPath(req: Request, key: string): Either<string, string> {
         return EitherUtils.liftEither(req.params[key], `${key} does not exist on object`);
     }
