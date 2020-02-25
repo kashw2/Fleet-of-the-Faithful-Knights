@@ -1,4 +1,4 @@
-import {Option} from "funfix-core";
+import {None, Option} from "funfix-core";
 import {List} from "immutable";
 
 export class OptionUtils {

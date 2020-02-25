@@ -1,12 +1,12 @@
-import {GetEndpoint} from "../get-endpoint";
+import {GetRoute} from "../../get-route";
 import {Request, Response} from "express";
-import {Database} from "../../db/database";
+import {Database} from "../../../db/database";
 import {Either} from "funfix-core";
-import {ApiUtils} from "../../../core/src/util/api-utils";
-import {idKey} from "../../../core/src/misc/json-keys";
-import {User, UserJsonSerializer} from "../../../core/src/models/user";
+import {ApiUtils} from "../../../../core/src/util/api-utils";
+import {idKey} from "../../../../core/src/misc/json-keys";
+import {User, UserJsonSerializer} from "../../../../core/src/models/user";
 
-export class ReadUserByIdEndpoint extends GetEndpoint {
+export class ReadUserByIdEndpoint extends GetRoute {
 
     constructor(private db: Database) {
         super('/user/id/:id');

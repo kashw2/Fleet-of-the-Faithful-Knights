@@ -1,7 +1,7 @@
 import {None, Option} from "funfix-core";
 import {SimpleJsonSerializer} from "../misc/simple-json-serializer";
 import {parseNumber, parseString} from "../util/object-utils";
-import {groupKey, idKey, passwordKey, usernameKey} from "../misc/json-keys";
+import {groupKey, idKey, passwordKey, tokenKey, usernameKey} from "../misc/json-keys";
 import {JsonBuilder} from "../misc/json-builder";
 
 export class User {
@@ -10,6 +10,7 @@ export class User {
         readonly id: Option<number> = None,
         readonly username: Option<string> = None,
         readonly password: Option<string> = None,
+        readonly token: Option<string> = None,
         readonly group: Option<string> = None,
     ) {
     }
@@ -24,6 +25,10 @@ export class User {
 
     getPassword(): Option<string> {
         return this.password;
+    }
+
+    getToken(): Option<string> {
+        return this.group;
     }
 
     getUsername(): Option<string> {
@@ -76,6 +81,7 @@ export class UserJsonSerializer extends SimpleJsonSerializer<User> {
             parseNumber(json[idKey]),
             parseString(json[usernameKey]),
             parseString(json[passwordKey]),
+            parseString(json[tokenKey]),
             parseString(json[groupKey]),
         )
     }
@@ -85,6 +91,7 @@ export class UserJsonSerializer extends SimpleJsonSerializer<User> {
             .addOptional(value.getId(), idKey)
             .addOptional(value.getUsername(), usernameKey)
             .addOptional(value.getPassword(), passwordKey)
+            .addOptional(value.getToken(), tokenKey)
             .addOptional(value.getGroup(), groupKey)
             .build();
     }
