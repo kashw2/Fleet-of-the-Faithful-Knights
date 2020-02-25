@@ -13,6 +13,10 @@ export class UserLoginEndpoint extends PostRoute {
         super('/user/login');
     }
 
+    private getUser(req: Request): Either<string, User> {
+        return ApiUtils.parseSerializedFromBody(req, userKey, UserJsonSerializer.instance);
+    }
+
     isAuthorized(): boolean {
         return true;
     }
@@ -21,15 +25,10 @@ export class UserLoginEndpoint extends PostRoute {
         this.getUser(req)
             .map(u => {
                 Option.map2(u.getUsername(), u.getPassword(), (username, password) => {
-                    // Maybe we should incorporate something from the cache here
                     this.db.requests.sendRequest('ssp_json_GetUserToken', List.of(`@Username = ${username}`, `@Password = ${password}`))
                         .then(x => ApiUtils.sendResult(x, res));
                 })
             })
-    }
-
-    private getUser(req: Request): Either<string, User> {
-        return ApiUtils.parseSerializedFromBody(req, userKey, UserJsonSerializer.instance);
     }
 
 }

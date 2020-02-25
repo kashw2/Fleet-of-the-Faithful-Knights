@@ -12,6 +12,10 @@ export class ReadUserByUsernameEndpoint extends GetRoute {
         super('/user/username/:username');
     }
 
+    private getName(req: Request): Either<string, string> {
+        return ApiUtils.parseStringFromPath(req, usernameKey)
+    }
+
     isAuthorized(): boolean {
         return true;
     }
@@ -19,10 +23,6 @@ export class ReadUserByUsernameEndpoint extends GetRoute {
     run(req: Request, res: Response): void {
         this.getName(req)
             .map(n => ApiUtils.sendSerializedResponse(this.db.cache.users.getUserByName(n), UserJsonSerializer.instance, res));
-    }
-
-    private getName(req: Request): Either<string, string> {
-        return ApiUtils.parseStringFromPath(req, usernameKey)
     }
 
 }

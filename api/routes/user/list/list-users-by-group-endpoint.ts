@@ -12,6 +12,10 @@ export class ListUsersByGroupEndpoint extends GetRoute {
         super('/users/:group');
     }
 
+    private getGroup(req: Request): Either<string, string> {
+        return ApiUtils.parseStringFromPath(req, groupKey);
+    }
+
     isAuthorized(): boolean {
         return true;
     }
@@ -19,10 +23,6 @@ export class ListUsersByGroupEndpoint extends GetRoute {
     run(req: Request, res: Response): void {
         this.getGroup(req)
             .map(g => ApiUtils.sendSerializedCollectionResult(this.db.cache.users.getUsersByGroup(g), UserJsonSerializer.instance, res));
-    }
-
-    private getGroup(req: Request): Either<string, string> {
-        return ApiUtils.parseStringFromPath(req, groupKey);
     }
 
 }
