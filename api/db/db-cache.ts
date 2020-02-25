@@ -1,8 +1,7 @@
 import {Database} from "./database";
 import {interval} from "rxjs";
 import {List} from 'immutable';
-import {UserJsonSerializer} from "../../core/src/models/user";
-import {UserCache} from "../../core/src/models/user-cache";
+import {UserCache, UserJsonSerializer} from "../../core/src";
 
 export class DbCache {
 

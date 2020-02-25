@@ -1,9 +1,8 @@
 import {Database} from "./database";
 import {ConnectionPool, IRecordSet} from "mssql";
 import {List} from 'immutable';
-import {Either, Left, Right} from "funfix-core";
-import {getJsonFromRecordSet} from "../../core/src/util/object-utils";
-import {SimpleJsonSerializer} from "../../core/src/misc/simple-json-serializer";
+import {Either, Left} from "funfix-core";
+import {getJsonFromRecordSet, SimpleJsonSerializer} from "../../core/src";
 
 export class DbRequest {
 

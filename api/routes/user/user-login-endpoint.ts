@@ -2,10 +2,8 @@ import {PostRoute} from "../post-route";
 import {Request, Response} from "express";
 import {Database} from "../../db/database";
 import {Either, Option} from "funfix-core";
-import {User, UserJsonSerializer} from "../../../core/src/models/user";
-import {ApiUtils} from "../../../core/src/util/api-utils";
-import {userKey} from "../../../core/src/misc/json-keys";
 import {List} from "immutable";
+import {ApiUtils, User, UserJsonSerializer, userKey} from "../../../core/src";
 
 export class UserLoginEndpoint extends PostRoute {
 

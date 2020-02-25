@@ -2,9 +2,7 @@ import {Database} from "../../../db/database";
 import {GetRoute} from "../../get-route";
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
-import {ApiUtils} from "../../../../core/src/util/api-utils";
-import {groupKey} from "../../../../core/src/misc/json-keys";
-import {UserJsonSerializer} from "../../../../core/src/models/user";
+import {ApiUtils, groupKey, UserJsonSerializer} from "../../../../core/src";
 
 export class ListUsersByGroupEndpoint extends GetRoute {
 

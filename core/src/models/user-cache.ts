@@ -2,7 +2,6 @@ import {User} from "./user";
 import {List} from "immutable";
 import {Either} from "funfix-core";
 import {EitherUtils} from "../util/either-utils";
-import {OptionUtils} from "../util/option-utils";
 
 // Partial builder pattern implementation
 
@@ -38,12 +37,12 @@ export class UserCache {
         return EitherUtils.liftEither(this.getUsers().find(user => user.getToken().contains(token))!, `unable to find any users matching ${token}`);
     }
 
-    getUsersByGroup(group: string): Either<string, List<User>> {
-        return EitherUtils.liftEither(this.getUsers().filter(user => user.getGroup().contains(group)), `unable to find any users with the ${group} group`);
-    }
-
     private getUsers(): List<User> {
         return this.users;
+    }
+
+    getUsersByGroup(group: string): Either<string, List<User>> {
+        return EitherUtils.liftEither(this.getUsers().filter(user => user.getGroup().contains(group)), `unable to find any users with the ${group} group`);
     }
 
 }
