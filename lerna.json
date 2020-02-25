@@ -3,6 +3,7 @@
   "parallel": true,
   "packages": [
     ".",
-    "./api"
+    "./api",
+    "./core"
   ]
 }
