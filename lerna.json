@@ -4,7 +4,6 @@
   "packages": [
     ".",
     "./api",
-    "./panel",
-    "./discord-bot"
+    "./core"
   ]
 }

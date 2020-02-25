@@ -1,0 +1,15 @@
+{
+  "name": "ffk-core",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.8.2",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
+  }
+}

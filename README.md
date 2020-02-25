@@ -2,7 +2,8 @@
 
 Fleet of the Faithful Knights (FFK) is a Star Citizen organisation that seeks to be a beacon of light in a dark universe.
 
-This is the monorepo for the entire codebase that is mine. Thus far this consists of a Discord Bot, API and Voting Panel.
+This is the monorepo for the entire codebase that is mine. Thus far this consists of just an API. 
+This will be expanded sometime in the future to include a voting panel and Discord bot.
 
 Almost all of the projects inside the repo will be written in/using a functional paradigm and as such you'll see usage of Option, Either, List, Set and Map data structures littered throughout the codebase.
 
@@ -32,5 +33,9 @@ Once you have installed the above, run ```lerna bootstrap``` from the root of th
 
 Variable               | Description
 -----------------------|------
+FFK_DB_USER            | The database login username
+FFK_DB_PASSWORD        | The database login password
+FFK_DB_NAME            | The name of the database
+FFK_DB_SERVER          | The ip or dns that the database is stored on 
 FFK_DISCORD_BOT_SECRET | The secret/token of the bot provided on [Discords Developer Portal](https://discordapp.com/developers/).
 FFK_DISCORD_BOT_MODE   | The method to run the bot in, either dev or live. 
