@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col">
+    <h1 class="font-weight-normal">Fleet of the Faithful Knights<br>Voting Panel</h1>
+    <div class="row">
+      <h5 class="font-weight-light pl-3">{{getLoggedInUsername()}}</h5>
+    </div>
+    <div class="row">
+      <h5 class="font-weight-light pl-3">{{getGroupName()}}</h5>
+    </div>
+    <app-news></app-news>
+    <div class="col">
+    </div>
+  </div>
+</div>
+
+<button (click)="showLoginToast()"></button>
+
+<router-outlet></router-outlet>
