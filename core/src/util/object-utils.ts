@@ -1,5 +1,6 @@
 import {Either, Left, None, Option, Right} from "funfix-core";
 import {IRecordSet} from "mssql";
+import {SimpleJsonSerializer} from "..";
 
 /**
  * getJsonFromRecordSet()
@@ -34,6 +35,10 @@ function parseNumberFromString(s: string): Option<number> {
         return Option.of(+s);
     }
     return None;
+}
+
+export function parseSerialized<T>(t: T, serializer: SimpleJsonSerializer<T>): Option<T> {
+    return Option.of(serializer.fromJson(t));
 }
 
 export function parseNumber(n: unknown): Option<number> {

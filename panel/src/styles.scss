@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css?family=Kanit:100,200,300,400,500,600,700,800,900|Roboto&display=swap');
+
+// regular style toast
+@import '~ngx-toastr/toastr';
+
+
+.kanit {
+  font-family: Kanit, sans-serif;
+}
+
+.roboto {
+  font-family: Roboto, sans-serif;
+}
