@@ -28,7 +28,7 @@ export class User {
     }
 
     getToken(): Option<string> {
-        return this.group;
+        return this.token;
     }
 
     getUsername(): Option<string> {

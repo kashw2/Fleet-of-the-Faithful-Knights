@@ -4,3 +4,6 @@ export const passwordKey = 'password';
 export const groupKey = 'group';
 export const tokenKey = 'token';
 export const userKey = 'user';
+export const contentKey = 'content';
+export const newsKey = 'news';
+export const dateKey = 'date';

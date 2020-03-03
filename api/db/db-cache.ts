@@ -2,16 +2,29 @@ import {Database} from "./database";
 import {interval} from "rxjs";
 import {List} from 'immutable';
 import {UserCache, UserJsonSerializer} from "../../core/src";
+import {NewsCache} from "../../core/src/models/news-cache";
+import {News, NewsJsonSerializer} from "../../core/src/models/news";
 
 export class DbCache {
-
-    users: UserCache = new UserCache(List());
 
     constructor(private db: Database) {
         this.start5MinuteCache();
 
         interval(300000)
             .subscribe(() => this.start5MinuteCache());
+    }
+
+    news: NewsCache = new NewsCache(List());
+    users: UserCache = new UserCache(List());
+
+    async cacheNews(): Promise<void> {
+        this.db.requests.sendRequestListSerialized('ssp_json_GetNews', List.of(), NewsJsonSerializer.instance)
+            .then(result => {
+                result.forEach(x => {
+                    this.news = new NewsCache(x);
+                    console.log(`Cached ${x.size} News Articles`);
+                });
+            });
     }
 
     async cacheUsers(): Promise<void> {
@@ -24,10 +37,11 @@ export class DbCache {
             });
     }
 
-    start5MinuteCache(): Promise<void> {
-        return Promise.resolve(
+    start5MinuteCache(): void {
+        Promise.resolve([
             this.cacheUsers(),
-        );
+            this.cacheNews(),
+        ]);
     }
 
 }
