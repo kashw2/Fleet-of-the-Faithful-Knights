@@ -20,6 +20,7 @@ export class ProfilePageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.showLoginToast();
   }
 
   showLoginToast(): void {
