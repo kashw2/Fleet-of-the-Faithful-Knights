@@ -52,7 +52,6 @@ export class NewsJsonSerializer extends SimpleJsonSerializer<News> {
     }
 
     toJsonImpl(value: News, builder: JsonBuilder): object {
-        const c = value.getUser();
         return builder
             .addOptional(value.getId(), idKey)
             .addOptionalSerialized(value.getUser(), newsKey, UserJsonSerializer.instance)
