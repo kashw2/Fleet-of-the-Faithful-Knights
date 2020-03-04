@@ -54,7 +54,7 @@ export class NewsJsonSerializer extends SimpleJsonSerializer<News> {
     toJsonImpl(value: News, builder: JsonBuilder): object {
         return builder
             .addOptional(value.getId(), idKey)
-            .addOptionalSerialized(value.getUser(), newsKey, UserJsonSerializer.instance)
+            .addOptionalSerialized(value.getUser(), userKey, UserJsonSerializer.instance)
             .addOptional(value.getContent(), contentKey)
             .addOptional(value.getDate(), dateKey)
             .build();

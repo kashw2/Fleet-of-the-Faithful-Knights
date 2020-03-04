@@ -5,7 +5,6 @@ export class JsonBuilder {
 
     constructor(private object: object) {
     }
-    ;
 
     add<T>(value: any, key: string): JsonBuilder {
         // @ts-ignore
@@ -24,7 +23,8 @@ export class JsonBuilder {
 
     addOptionalSerialized<T>(value: Option<T>, key: string, serializer: SimpleJsonSerializer<T>): JsonBuilder {
         if (!value.isEmpty()) {
-            return new JsonBuilder(serializer.toJson(value.get()));
+            this.object[key] = serializer.toJson(value.get());
+            return new JsonBuilder(this.object);
         }
         return new JsonBuilder(this.object);
     }
