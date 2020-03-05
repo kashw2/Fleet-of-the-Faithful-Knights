@@ -12,16 +12,16 @@ export class ListNewsEndpoint extends GetRoute {
         super('/news');
     }
 
+    private getNewsArticles(): Either<string, List<News>> {
+        return this.db.cache.news.getNewsEither()
+    }
+
     isAuthorized(): boolean {
         return true;
     }
 
     run(req: Request, res: Response): void {
         ApiUtils.sendSerializedCollectionResult(this.getNewsArticles(), NewsJsonSerializer.instance, res);
-    }
-
-    private getNewsArticles(): Either<string, List<News>> {
-        return this.db.cache.news.getNewsEither();
     }
 
 }

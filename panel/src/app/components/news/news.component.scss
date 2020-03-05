@@ -1,0 +1,47 @@
+#news-container {
+  height: 70vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#user-add-article {
+  display: inline-block;
+  font-size: 0.8rem;
+  color: #51A351;
+  cursor: pointer;
+  float: right;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+#user-edit-article {
+  font-size: 0.8rem;
+  color: #d6d300;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+#user-delete-article {
+  font-size: 0.8rem;
+  color: #ff0000;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+#user-pin-article {
+  font-size: 0.8rem;
+  color: #0094ff;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

@@ -15,57 +15,57 @@ export class User {
     ) {
     }
 
-    getGroup(): Option<string> {
+    public getGroup(): Option<string> {
         return this.group;
     }
 
-    getId(): Option<number> {
+    public getId(): Option<number> {
         return this.id;
     }
 
-    getPassword(): Option<string> {
+    public getPassword(): Option<string> {
         return this.password;
     }
 
-    getToken(): Option<string> {
+    public getToken(): Option<string> {
         return this.token;
     }
 
-    getUsername(): Option<string> {
+    public getUsername(): Option<string> {
         return this.username;
     }
 
-    isDeveloper(): boolean {
+    public isDeveloper(): boolean {
         return this.getGroup()
             .contains("Developer");
     }
 
-    isGrandMaster(): boolean {
+    public isGrandMaster(): boolean {
         return this.getGroup()
             .contains("Grand Master");
     }
 
-    isKnight(): boolean {
+    public isKnight(): boolean {
         return this.getGroup()
             .contains("Knight");
     }
 
-    isKnightCommander(): boolean {
+    public isKnightCommander(): boolean {
         return this.getGroup()
             .contains("Knight Commander");
     }
 
-    isKnightLieutenant(): boolean {
+    public isKnightLieutenant(): boolean {
         return this.getGroup()
             .contains("Knight Lieutenant");
     }
 
-    isSergeant(): boolean {
+    public isSergeant(): boolean {
         return this.getGroup()
             .contains("Sergeant");
     }
 
-    isSergeantFirstClass(): boolean {
+    public isSergeantFirstClass(): boolean {
         return this.getGroup()
             .contains("Sergeant First Class");
     }

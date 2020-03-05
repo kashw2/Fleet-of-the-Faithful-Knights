@@ -7,3 +7,4 @@ export const userKey = 'user';
 export const contentKey = 'content';
 export const newsKey = 'news';
 export const dateKey = 'date';
+export const titleKey = 'title';

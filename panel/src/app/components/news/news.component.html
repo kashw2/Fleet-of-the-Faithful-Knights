@@ -1,24 +1,29 @@
-<div class="container mt-5 mx-0">
-  <div class="row">
-    <h3 class="font-weight-normal">Panel News</h3>
-    <div class="container p-0">
-      <div class="row">
-        <div class="col">
-          <h5 class="font-weight-normal">First Post</h5>
-        </div>
-        <div class="col">
-          <p>14/01/99</p>
-        </div>
+<div class="row mt-5 ml-1">
+  <div class="col-11">
+    <div class="row">
+      <h3 class="monsterrat font-weight-bold">Panel News</h3>
+      <div class="col">
+        <p *ngIf="canCreateArticle()" class="text-right font-weight-normal align-self-center my-0"
+           id="user-add-article">New</p>
       </div>
-      <div class="row">
-        <div class="col-8">
-          <p>Donec at maximus ante. Donec eu ligula lectus. Nullam et urna congue, accumsan augue vel, auctor nulla.
-            Pellentesque finibus ornare tellus, id sodales odio scelerisque in. Aliquam at faucibus libero, eu
-            convallis quam. Mauris egestas fermentum tellus, et condimentum velit viverra ac. Suspendisse placerat
-            nulla vel accumsan accumsan. Integer posuere, lorem id feugiat porta, ligula orci pellentesque nisi, eu
-            fermentum libero nibh eget massa. Donec laoreet nisl eget felis lobortis cursus. Duis vitae dolor at
-            ligula fringilla suscipit. Maecenas tincidunt vestibulum odio sit amet bibendum. Donec eu efficitur sem,
-            sed tempor nisl. Phasellus nulla felis, accumsan nec tincidunt nec, elementum ac tellus. - Keanu</p>
+      <div class="container p-0" id="news-container">
+        <div *ngFor="let article of news" class="row">
+          <div class="col">
+            <h4 *ngIf="article.getTitle().nonEmpty()"
+                class="roboto font-weight-normal">{{article.getTitle().get()}}</h4>
+            <p *ngIf="article.getContent().nonEmpty()">{{article.getContent().get()}}</p>
+          </div>
+          <div *ngIf="article.getUser().nonEmpty()" class="col-4">
+            <h6 *ngIf="article.getUsername().nonEmpty()"
+                class="roboto font-weight-normal mb-0">{{article.getUsername().get()}}</h6>
+            <p *ngIf="article.getUserGroup().nonEmpty()"
+               class="roboto font-weight-light mb-0">{{article.getUserGroup().get()}}</p>
+            <div class="row ml-0">
+              <p *ngIf="canEditArticle()" class="font-weight-normal mr-1" id="user-edit-article">Edit</p>
+              <p *ngIf="canDeleteArticle()" class="font-weight-normal mx-1" id="user-delete-article">Delete</p>
+              <p *ngIf="canPinArticle()" class="font-weight-normal mx-1" id="user-pin-article">Pin</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

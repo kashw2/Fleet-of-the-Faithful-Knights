@@ -30,12 +30,12 @@ export class NewsCache {
             .last();
     }
 
-    getNewsEither(): Either<string, List<News>> {
-        return EitherUtils.liftEither(this.getNews(), 'No articles in news cache');
-    }
-
     private getNews(): List<News> {
         return this.news;
+    }
+
+    getNewsEither(): Either<string, List<News>> {
+        return EitherUtils.liftEither(this.getNews(), 'No articles in news cache');
     }
 
 }

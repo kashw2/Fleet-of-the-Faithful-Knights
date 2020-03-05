@@ -7,7 +7,7 @@ import {
     parseNumber,
     parseSerialized,
     parseString,
-    SimpleJsonSerializer,
+    SimpleJsonSerializer, titleKey,
     userKey
 } from "..";
 
@@ -17,24 +17,39 @@ export class News {
         readonly id: Option<number> = None,
         readonly user: Option<User> = None,
         readonly content: Option<string> = None,
+        readonly title: Option<string> = None,
         readonly date: Option<string> = None, // TODO: Use MomentJS data structure
     ) {
     }
 
-    getContent(): Option<string> {
+    public getContent(): Option<string> {
         return this.content;
     }
 
-    getDate(): Option<string> {
+    public getDate(): Option<string> {
         return this.date;
     }
 
-    getId(): Option<number> {
+    public getId(): Option<number> {
         return this.id;
     }
 
-    getUser(): Option<User> {
+    public getTitle(): Option<string> {
+        return this.title;
+    }
+
+    public getUser(): Option<User> {
         return this.user;
+    }
+
+    public getUserGroup(): Option<string> {
+        return this.getUser()
+            .flatMap(u => u.getGroup());
+    }
+
+    public getUsername(): Option<string> {
+        return this.getUser()
+            .flatMap(u => u.getUsername());
     }
 
 }
@@ -47,6 +62,7 @@ export class NewsJsonSerializer extends SimpleJsonSerializer<News> {
             parseNumber(json[idKey]),
             parseSerialized(json[userKey], UserJsonSerializer.instance),
             parseString(json[contentKey]),
+            parseString(json[titleKey]),
             parseString(json[dateKey]),
         );
     }
@@ -54,8 +70,9 @@ export class NewsJsonSerializer extends SimpleJsonSerializer<News> {
     toJsonImpl(value: News, builder: JsonBuilder): object {
         return builder
             .addOptional(value.getId(), idKey)
-            .addOptionalSerialized(value.getUser(), newsKey, UserJsonSerializer.instance)
+            .addOptionalSerialized(value.getUser(), userKey, UserJsonSerializer.instance)
             .addOptional(value.getContent(), contentKey)
+            .addOptional(value.getTitle(), titleKey)
             .addOptional(value.getDate(), dateKey)
             .build();
     }

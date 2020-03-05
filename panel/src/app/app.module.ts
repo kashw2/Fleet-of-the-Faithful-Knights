@@ -9,6 +9,8 @@ import {ProfilePageComponent} from './pages/profile-page/profile-page.component'
 import {NewsComponent} from './components/news/news.component';
 import {NotificationService} from "./services/notification.service";
 import {ToastrModule} from "ngx-toastr";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 const routes: Routes = [
   {path: '**', redirectTo: ''},
@@ -28,7 +30,9 @@ const routes: Routes = [
     BrowserModule,
     AppRoutingModule,
     RouterModule.forRoot(routes),
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    HttpClientModule,
+    BrowserAnimationsModule,
   ],
   providers: [NotificationService],
   bootstrap: [AppComponent]
