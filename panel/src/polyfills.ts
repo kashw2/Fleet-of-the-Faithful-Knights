@@ -57,6 +57,10 @@
  */
 import 'zone.js/dist/zone';  // Included with Angular CLI.
 
+// Reference https://stackoverflow.com/questions/50313745/angular-6-process-is-not-defined-when-trying-to-serve-application
+(window as any).process = {
+  env: {DEBUG: undefined},
+};
 
 /***************************************************************************************************
  * APPLICATION IMPORTS

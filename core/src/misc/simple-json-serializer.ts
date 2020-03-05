@@ -5,9 +5,10 @@ export abstract class SimpleJsonSerializer<T> {
 
     abstract fromJson(json: any): T;
 
-    fromJsonArray(collection: Collection<number, T>): List<T> {
-        return collection.map(x => this.fromJson(x))
-            .toList();
+    // TODO: Explore making a fromJsonArray that takes a collection
+
+    fromJsonArray(list: List<T>): List<T> {
+        return list.map(x => this.fromJson(x));
     }
 
     toJson(value: T): object {
