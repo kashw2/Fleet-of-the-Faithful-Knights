@@ -1,8 +1,12 @@
-<div class="row mt-5 ml-1" id="news-container">
+<div class="row mt-5 ml-1">
   <div class="col-11">
     <div class="row">
       <h3 class="monsterrat font-weight-bold">Panel News</h3>
-      <div class="container p-0">
+      <div class="col">
+        <p *ngIf="canCreateArticle()" class="text-right font-weight-normal align-self-center my-0"
+           id="user-add-article">New</p>
+      </div>
+      <div class="container p-0" id="news-container">
         <div *ngFor="let article of news" class="row">
           <div class="col">
             <h4 *ngIf="article.getTitle().nonEmpty()"
@@ -10,13 +14,14 @@
             <p *ngIf="article.getContent().nonEmpty()">{{article.getContent().get()}}</p>
           </div>
           <div *ngIf="article.getUser().nonEmpty()" class="col-4">
-            <div class="col">
-              <h6 *ngIf="article.getUsername().nonEmpty()"
-                  class="roboto font-weight-normal mb-0">{{article.getUsername().get()}}</h6>
-            </div>
-            <div class="col">
-              <p *ngIf="article.getUserGroup().nonEmpty()"
-                 class="roboto font-weight-light">{{article.getUserGroup().get()}}</p>
+            <h6 *ngIf="article.getUsername().nonEmpty()"
+                class="roboto font-weight-normal mb-0">{{article.getUsername().get()}}</h6>
+            <p *ngIf="article.getUserGroup().nonEmpty()"
+               class="roboto font-weight-light mb-0">{{article.getUserGroup().get()}}</p>
+            <div class="row ml-0">
+              <p *ngIf="canEditArticle()" class="font-weight-normal mr-1" id="user-edit-article">Edit</p>
+              <p *ngIf="canDeleteArticle()" class="font-weight-normal mx-1" id="user-delete-article">Delete</p>
+              <p *ngIf="canPinArticle()" class="font-weight-normal mx-1" id="user-pin-article">Pin</p>
             </div>
           </div>
         </div>

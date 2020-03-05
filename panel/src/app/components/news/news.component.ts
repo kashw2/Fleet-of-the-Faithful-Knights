@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {News} from "../../../../../core/src/models/news";
 import {NewsService} from "../../services/news.service";
 import {List} from "immutable";
-import {User} from "../../../../../core/src";
 
 @Component({
   selector: 'app-news',
@@ -14,6 +13,22 @@ export class NewsComponent implements OnInit {
   news: List<News>;
 
   constructor(private newsService: NewsService) {
+  }
+
+  canCreateArticle(): boolean {
+    return true;
+  }
+
+  canDeleteArticle(): boolean {
+    return true;
+  }
+
+  canEditArticle(): boolean {
+    return true;
+  }
+
+  canPinArticle(): boolean {
+    return true;
   }
 
   ngOnInit() {
