@@ -3,9 +3,11 @@ import {from, of} from "rxjs";
 import {flatMap, map} from "rxjs/operators";
 import {DbRequest} from "./db-request";
 import {DbCache} from "./db-cache";
+import {DbProcedures} from "./procedures/db-procedures";
 
 export class Database {
 
+    procedures: DbProcedures;
     cache: DbCache;
     dbConfig: config = {
         user: process.env.FFK_DB_USER,
@@ -16,7 +18,9 @@ export class Database {
     };
 
     constructor() {
+        // Stack / Sequential ordering matters
         this.requests = new DbRequest(this);
+        this.procedures = new DbProcedures(this);
         this.cache = new DbCache(this);
     }
 
