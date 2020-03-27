@@ -1,43 +1,42 @@
 import {Database} from "./database";
 import {interval} from "rxjs";
 import {List} from 'immutable';
-import {UserCache, UserJsonSerializer} from "../../core/src";
+import {UserCache} from "../../core/src";
 import {NewsCache} from "../../core/src/models/news-cache";
-import {News, NewsJsonSerializer} from "../../core/src/models/news";
 
 export class DbCache {
 
     constructor(private db: Database) {
-        this.start5MinuteCache();
+        this.start30MinuteCache();
 
-        interval(300000)
-            .subscribe(() => this.start5MinuteCache());
+        interval(1800000)
+            .subscribe(() => this.start30MinuteCache());
     }
 
     news: NewsCache = new NewsCache(List());
     users: UserCache = new UserCache(List());
 
-    async cacheNews(): Promise<void> {
-        this.db.requests.sendRequestListSerialized('ssp_json_GetNews', List.of(), NewsJsonSerializer.instance)
+    cacheNews(): void {
+        this.db.procedures.read.getNews()
             .then(result => {
                 result.forEach(x => {
-                    this.news = new NewsCache(x);
+                    this.db.cache.news = new NewsCache(x);
                     console.log(`Cached ${x.size} News Articles`);
                 });
             });
     }
 
-    async cacheUsers(): Promise<void> {
-        this.db.requests.sendRequestListSerialized('ssp_json_GetUsers', List.of(), UserJsonSerializer.instance)
+    cacheUsers(): void {
+        this.db.procedures.read.getUsers()
             .then(result => {
                 result.forEach(x => {
-                    this.users = new UserCache(x);
+                    this.db.cache.users = new UserCache(x);
                     console.log(`Cached ${x.size} Users`);
                 });
             });
     }
 
-    start5MinuteCache(): void {
+    start30MinuteCache(): void {
         Promise.resolve([
             this.cacheUsers(),
             this.cacheNews(),
