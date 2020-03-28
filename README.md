@@ -31,11 +31,13 @@ Once you have installed the above, run ```lerna bootstrap``` from the root of th
 
 #### Environment Variables
 
-Variable               | Description
------------------------|------
-FFK_DB_USER            | The database login username
-FFK_DB_PASSWORD        | The database login password
-FFK_DB_NAME            | The name of the database
-FFK_DB_SERVER          | The ip or dns that the database is stored on 
-FFK_DISCORD_BOT_SECRET | The secret/token of the bot provided on [Discords Developer Portal](https://discordapp.com/developers/).
-FFK_DISCORD_BOT_MODE   | The method to run the bot in, either dev or live. 
+Variable                    | Description
+----------------------------|------
+FFK_DB_USER                 | The database login username.
+FFK_DB_PASSWORD             | The database login password.
+FFK_DB_NAME                 | The name of the database.
+FFK_DB_SERVER               | The ip or dns that the database is stored on.
+FFK_PANEL_ADDRESS           | The host/address of the panel including the prefix.
+FFK_DISCORD_BOT_SECRET      | The secret/token of the bot provided on [Discords Developer Portal](https://discordapp.com/developers/).
+FFK_DISCORD_BOT_MODE        | The method to run the bot in, either dev or live. 
+FFK_DISOCRD_PANEL_CLIENT_ID | The respective Id of the application, this is made available via the [Discords Developer Portal](https://discordapp.com/developers/).
