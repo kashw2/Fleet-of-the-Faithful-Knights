@@ -1,11 +1,10 @@
-import {Database} from "../database";
 import {DbRead} from "./db-read";
+import {DbRequest} from "../db-request";
 
 export class DbProcedures {
 
-    constructor(private db: Database) {
-        // TODO: Pass in DbProcedures instead of entire Db
-        this.read = new DbRead(db);
+    constructor(private requests: DbRequest) {
+        this.read = new DbRead(requests);
     }
 
     read: DbRead;

@@ -3,10 +3,11 @@ import {interval} from "rxjs";
 import {List} from 'immutable';
 import {UserCache} from "../../core/src";
 import {NewsCache} from "../../core/src/models/news-cache";
+import {DbProcedures} from "./procedures/db-procedures";
 
 export class DbCache {
 
-    constructor(private db: Database) {
+    constructor(private procedures: DbProcedures) {
         this.start30MinuteCache();
 
         interval(1800000)
@@ -17,20 +18,20 @@ export class DbCache {
     users: UserCache = new UserCache(List());
 
     cacheNews(): void {
-        this.db.procedures.read.getNews()
+        this.procedures.read.getNews()
             .then(result => {
                 result.forEach(x => {
-                    this.db.cache.news = new NewsCache(x);
+                    this.news = new NewsCache(x);
                     console.log(`Cached ${x.size} News Articles`);
                 });
             });
     }
 
     cacheUsers(): void {
-        this.db.procedures.read.getUsers()
+        this.procedures.read.getUsers()
             .then(result => {
                 result.forEach(x => {
-                    this.db.cache.users = new UserCache(x);
+                    this.users = new UserCache(x);
                     console.log(`Cached ${x.size} Users`);
                 });
             });
