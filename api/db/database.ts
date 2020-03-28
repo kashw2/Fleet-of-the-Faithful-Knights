@@ -20,8 +20,8 @@ export class Database {
     constructor() {
         // Stack / Sequential ordering matters
         this.requests = new DbRequest(this);
-        this.procedures = new DbProcedures(this);
-        this.cache = new DbCache(this);
+        this.procedures = new DbProcedures(this.requests);
+        this.cache = new DbCache(this.procedures);
     }
 
     requests: DbRequest;
