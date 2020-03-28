@@ -3,27 +3,22 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {MDBBootstrapModule} from "angular-bootstrap-md";
-import {RouterModule, Routes} from "@angular/router";
-import {ProfilePageComponent} from './pages/profile-page/profile-page.component';
-import {NewsComponent} from './components/news/news.component';
-import {NotificationService} from "./services/notification.service";
-import {ToastrModule} from "ngx-toastr";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MDBBootstrapModule} from 'angular-bootstrap-md';
+import {RouterModule, Routes} from '@angular/router';
+import {NotificationService} from './services/notification.service';
+import {ToastrModule} from 'ngx-toastr';
+import {HttpClientModule} from '@angular/common/http';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {LoginService} from './services/login.service';
 
 const routes: Routes = [
   {path: '**', redirectTo: ''},
-  {path: 'home', component: ProfilePageComponent},
-  {path: 'profile', component: ProfilePageComponent},
-
+  {path: 'home', redirectTo: ''},
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProfilePageComponent,
-    NewsComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
@@ -34,7 +29,7 @@ const routes: Routes = [
     HttpClientModule,
     BrowserAnimationsModule,
   ],
-  providers: [NotificationService],
+  providers: [NotificationService, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
