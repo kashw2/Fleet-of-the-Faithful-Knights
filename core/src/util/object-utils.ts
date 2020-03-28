@@ -1,6 +1,7 @@
-import {Either, Left, None, Option, Right} from "funfix-core";
+import {Either, Left, None, Option, Right, Some} from "funfix-core";
 import {IRecordSet} from "mssql";
 import {SimpleJsonSerializer} from "..";
+import * as moment from 'moment';
 
 /**
  * getJsonFromRecordSet()
@@ -22,6 +23,22 @@ export function getJsonFromRecordSet(rs: any): Either<string, IRecordSet<any>> {
 export function parseString(s: unknown): Option<string> {
     if (typeof s === "string") {
         return Option.of(s);
+    }
+    return None;
+}
+
+export function parseMoment(s: unknown): Option<moment.Moment> {
+    switch (typeof s) {
+        case "string":
+            return parseMomentFromString(s);
+        default:
+            return None;
+    }
+}
+
+function parseMomentFromString(s: string): Option<moment.Moment> {
+    if (moment.isDate(s)) {
+        return Some(moment(s));
     }
     return None;
 }

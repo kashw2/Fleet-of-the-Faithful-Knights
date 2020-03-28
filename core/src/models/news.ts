@@ -1,13 +1,17 @@
 import {None, Option} from "funfix-core";
 import {User, UserJsonSerializer} from "./user";
+import {Moment} from 'moment';
 import {
-    contentKey, dateKey,
+    contentKey,
+    dateKey,
     idKey,
-    JsonBuilder, newsKey,
+    JsonBuilder,
+    parseMoment,
     parseNumber,
     parseSerialized,
     parseString,
-    SimpleJsonSerializer, titleKey,
+    SimpleJsonSerializer,
+    titleKey,
     userKey
 } from "..";
 
@@ -18,7 +22,7 @@ export class News {
         readonly user: Option<User> = None,
         readonly content: Option<string> = None,
         readonly title: Option<string> = None,
-        readonly date: Option<string> = None, // TODO: Use MomentJS data structure
+        readonly date: Option<Moment> = None, // TODO: Use MomentJS data structure
     ) {
     }
 
@@ -26,7 +30,7 @@ export class News {
         return this.content;
     }
 
-    public getDate(): Option<string> {
+    public getDate(): Option<Moment> {
         return this.date;
     }
 
@@ -63,7 +67,7 @@ export class NewsJsonSerializer extends SimpleJsonSerializer<News> {
             parseSerialized(json[userKey], UserJsonSerializer.instance),
             parseString(json[contentKey]),
             parseString(json[titleKey]),
-            parseString(json[dateKey]),
+            parseMoment(json[dateKey]),
         );
     }
 
