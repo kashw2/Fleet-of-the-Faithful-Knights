@@ -9,7 +9,7 @@ import {NotificationService} from './services/notification.service';
 import {ToastrModule} from 'ngx-toastr';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {LoginService} from './services/login.service';
+import {HeaderComponent} from './components/header/header.component';
 
 const routes: Routes = [
   {path: '**', redirectTo: ''},
@@ -19,6 +19,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    HeaderComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
@@ -29,7 +30,7 @@ const routes: Routes = [
     HttpClientModule,
     BrowserAnimationsModule,
   ],
-  providers: [NotificationService, LoginService],
+  providers: [NotificationService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

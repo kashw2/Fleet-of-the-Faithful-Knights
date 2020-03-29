@@ -1,8 +1,8 @@
 import {Either} from "funfix-core";
 import {EitherUtils} from "./either-utils";
 import {Request, Response} from 'express';
-import {SimpleJsonSerializer} from "../misc/simple-json-serializer";
-import {Collection, List} from "immutable";
+import {SimpleJsonSerializer} from "..";
+import {Collection} from "immutable";
 
 export class ApiUtils {
 
@@ -17,6 +17,10 @@ export class ApiUtils {
 
     static parseStringFromPath(req: Request, key: string): Either<string, string> {
         return EitherUtils.liftEither(req.params[key], `${key} does not exist on object`);
+    }
+
+    static parseStringFromQuery(req: Request, key: string): Either<string, string> {
+        return EitherUtils.liftEither(req.query[key], `${key} does not exist in query`);
     }
 
     static sendResult<A>(req: Either<string, A>, res: Response): void {

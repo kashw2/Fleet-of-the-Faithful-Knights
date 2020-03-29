@@ -1,0 +1,28 @@
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark shadow fixed-top" containerInside>
+  <mdb-navbar-brand><h3 class="font-weight-normal text-black baloo ml-0 mr-4 my-auto">FFK Panel</h3></mdb-navbar-brand>
+  <div class="btn-group" mdbDropdown>
+    <button type="button" size="sm" mdbBtn color="danger" outline="true" class="waves-effect dropdown-toggle"
+            mdbWavesEffect mdbDropdownToggle>Votes
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item py-1" href="#">Active</a>
+      <a class="dropdown-item py-1" href="#">Recent</a>
+      <div class="dropdown-divider my-1"></div>
+      <a class="dropdown-item py-1" href="#">Knight</a>
+      <a class="dropdown-item py-1" href="#">Sergeant</a>
+      <a class="dropdown-item py-1" href="#">Squire</a>
+      <a class="dropdown-item py-1" href="#">CAA</a>
+    </div>
+  </div>
+  <div class="btn-group ml-auto" mdbDropdown>
+    <button type="button" size="sm" mdbBtn color="danger" outline="true" class="dropdown-toggle ml-auto mr-5 waves-effect" mdbDropdownToggle mdbWavesEffect>User
+    </button>
+    <div class="dropdown-menu min-width-75">
+      <a class="dropdown-item py-1" href="https://discordapp.com/api/oauth2/authorize?client_id=683330765144195123&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fuser%2Flogin&response_type=code&scope=identify%20guilds">Login</a>
+      <a class="dropdown-item py-1" href="#">Profile</a>
+      <div class="dropdown-divider my-1"></div>
+      <a class="dropdown-item py-1" href="#">Settings</a>
+      <a class="dropdown-item py-1" href="#">Admin</a>
+    </div>
+  </div>
+</mdb-navbar>

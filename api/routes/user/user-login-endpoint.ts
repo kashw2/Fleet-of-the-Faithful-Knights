@@ -1,18 +1,30 @@
 import {Request, Response} from "express";
 import {Database} from "../../db/database";
-import {Either, Option} from "funfix-core";
-import {List} from "immutable";
-import {ApiUtils, User, UserJsonSerializer, userKey} from "../../../core/src";
-import {PostRoute} from "../post-route";
+import {GetRoute} from "../get-route";
+import {Either} from "funfix-core";
+import {ApiUtils, EitherUtils} from "../../../core/src";
+import {DiscordApi} from "../../../core/src/misc/discord-api";
 
-export class UserLoginEndpoint extends PostRoute {
+export class UserLoginEndpoint extends GetRoute {
 
     constructor(private db: Database) {
         super('/user/login');
     }
 
-    private getUser(req: Request): Either<string, User> {
-        return ApiUtils.parseSerializedFromBody(req, userKey, UserJsonSerializer.instance);
+    private getResponseCode(req: Request): Either<string, string> {
+        return ApiUtils.parseStringFromQuery(req, 'code');
+    }
+
+    private getPanelClientId(): Either<string, string> {
+        return EitherUtils.liftEither(process.env.FFK_DISOCRD_PANEL_CLIENT_ID!, 'FFK_DISOCRD_PANEL_CLIENT_ID is empty');
+    }
+
+    private getPanelClientSecret(): Either<string, string> {
+        return EitherUtils.liftEither(process.env.FFK_PANEL_SECRET!, 'FFK_PANEL_SECRET is empty');
+    }
+
+    private getPanelAddress(): Either<string, string> {
+        return EitherUtils.liftEither(process.env.FFK_PANEL_ADDRESS!, 'FFK_PANEL_ADDRESS is empty');
     }
 
     isAuthorized(): boolean {
@@ -20,13 +32,11 @@ export class UserLoginEndpoint extends PostRoute {
     }
 
     run(req: Request, res: Response): void {
-        this.getUser(req)
-            .map(u => {
-                Option.map2(u.getUsername(), u.getPassword(), (username, password) => {
-                    this.db.requests.sendRequest('ssp_json_GetUserToken', List.of(`@Username = ${username}`, `@Password = ${password}`))
-                        .then(x => ApiUtils.sendResult(x, res));
-                })
-            })
+        Either.map3(this.getResponseCode(req), this.getPanelClientId(), this.getPanelClientSecret(), async (code, pid, pcs) => {
+            Either.map2(await DiscordApi.getAccessToken(pid, pcs, code), this.getPanelAddress(), (tokenObj, address) => {
+                res.redirect(address);
+            });
+        });
     }
 
 }
