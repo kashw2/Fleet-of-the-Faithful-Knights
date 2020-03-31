@@ -1,6 +1,5 @@
 export const usernameKey = 'username';
 export const idKey = 'id';
-export const passwordKey = 'password';
 export const groupKey = 'group';
 export const tokenKey = 'token';
 export const userKey = 'user';
@@ -13,3 +12,4 @@ export const tokenTypeKey = 'token_type';
 export const expiresInKey = 'expires_in';
 export const refreshTokenKey = 'refresh_token';
 export const scopeKey = 'scope';
+export const discriminatorKey = 'discriminator';
