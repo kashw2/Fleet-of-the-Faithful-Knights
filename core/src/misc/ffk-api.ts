@@ -3,6 +3,7 @@ import {EitherUtils, User, UserJsonSerializer} from "..";
 import * as axios from "axios";
 import {News, NewsJsonSerializer} from "../models/news";
 import {List} from "immutable";
+import {DiscordOAuthResponse, DiscordOAuthResponseJsonSerializer} from "./discord-api";
 
 export class FfkApi {
 
@@ -14,7 +15,7 @@ export class FfkApi {
     }
 
     static getHostUrl(): Either<string, string> {
-        return EitherUtils.liftEither(process.env.FFK_API_ADDRESS, 'FFK_API_ADDRESS is empty');
+        return EitherUtils.liftEither(process.env.FFK_API_ADDRESS!, 'FFK_API_ADDRESS is empty');
     }
 
     static getUsersByGroup(group: string): Promise<Either<string, User>> {
@@ -38,6 +39,12 @@ export class FfkApi {
     static getAllNews(): Promise<Either<string, List<News>>> {
         return axios.default.get(this.getHostUrl().get().concat(`/news`))
             .then(x => Right(NewsJsonSerializer.instance.fromJsonArray(List(x.data))))
+            .catch(x => Left(x));
+    }
+
+    static loginUser(code: string): Promise<Either<string, DiscordOAuthResponse>> {
+        return axios.default.get(this.getHostUrl().get().concat(`/user/login?code=${code}`))
+            .then(x => Right(DiscordOAuthResponseJsonSerializer.instance.fromJson(x.data)))
             .catch(x => Left(x));
     }
 
