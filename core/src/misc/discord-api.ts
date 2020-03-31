@@ -2,7 +2,16 @@ import {Either, Left, None, Option, Right} from "funfix-core";
 import * as axios from 'axios';
 import {SimpleJsonSerializer} from "./simple-json-serializer";
 import {JsonBuilder} from "./json-builder";
-import {accessTokenKey, expiresInKey, parseNumber, parseString, refreshTokenKey, scopeKey, tokenTypeKey} from "..";
+import {
+    accessTokenKey,
+    expiresInKey,
+    parseNumber,
+    parseString,
+    refreshTokenKey,
+    scopeKey,
+    tokenTypeKey, User,
+    UserJsonSerializer
+} from "..";
 import * as querystring from 'querystring';
 
 export class DiscordApi {
@@ -11,7 +20,11 @@ export class DiscordApi {
         return 'https://discordapp.com/api/oauth2/token';
     }
 
-    static getAccessToken(clientId: string, clientSecret: string, code: string): Promise<Either<string, DiscordAccessToken>> {
+    static getDiscordApiUrl(): string {
+        return 'https://discordapp.com/api';
+    }
+    
+    static getAccessToken(clientId: string, clientSecret: string, code: string): Promise<Either<string, DiscordOAuthResponse>> {
         return axios.default.post(this.getTokenRequestUrl(), querystring.encode({
             client_id: clientId,
             client_secret: clientSecret,
@@ -23,13 +36,19 @@ export class DiscordApi {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             }
-        }).then(x => Right(DiscordAccessTokenJsonSerializer.instance.fromJson(x.data)))
+        }).then(x => Right(DiscordOAuthResponseJsonSerializer.instance.fromJson(x.data)))
+            .catch(x => Left(x));
+    }
+    
+    static getUser(accessCode: string): Promise<Either<string, User>> {
+        return axios.default.get(this.getDiscordApiUrl().concat('/users/@me'), {headers: {Authorization: `Bearer ${accessCode}`}})
+            .then(x => Right(UserJsonSerializer.instance.fromJson(x.data)))
             .catch(x => Left(x));
     }
 
 }
 
-export class DiscordAccessToken {
+export class DiscordOAuthResponse {
 
     constructor(
         readonly accessToken: Option<string> = None,
@@ -62,12 +81,12 @@ export class DiscordAccessToken {
 
 }
 
-export class DiscordAccessTokenJsonSerializer extends SimpleJsonSerializer<DiscordAccessToken> {
+export class DiscordOAuthResponseJsonSerializer extends SimpleJsonSerializer<DiscordOAuthResponse> {
 
-    static instance: DiscordAccessTokenJsonSerializer = new DiscordAccessTokenJsonSerializer();
+    static instance: DiscordOAuthResponseJsonSerializer = new DiscordOAuthResponseJsonSerializer();
 
-    fromJson(json: any): DiscordAccessToken {
-        return new DiscordAccessToken(
+    fromJson(json: any): DiscordOAuthResponse {
+        return new DiscordOAuthResponse(
             parseString(json[accessTokenKey]),
             parseString(json[tokenTypeKey]),
             parseNumber(json[expiresInKey]),
@@ -76,7 +95,7 @@ export class DiscordAccessTokenJsonSerializer extends SimpleJsonSerializer<Disco
         );
     }
 
-    toJsonImpl(value: DiscordAccessToken, builder: JsonBuilder): object {
+    toJsonImpl(value: DiscordOAuthResponse, builder: JsonBuilder): object {
         return builder.addOptional(value.getAccessToken(), accessTokenKey)
             .addOptional(value.getTokenType(), tokenTypeKey)
             .addOptional(value.getExpiresIn(), expiresInKey)
