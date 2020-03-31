@@ -10,10 +10,12 @@ import {ToastrModule} from 'ngx-toastr';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HeaderComponent} from './components/header/header.component';
+import {CookieService} from 'ngx-cookie-service';
 
 const routes: Routes = [
   {path: '**', redirectTo: ''},
   {path: 'home', redirectTo: ''},
+  {path: 'login', redirectTo: ''},
 ];
 
 @NgModule({
@@ -30,7 +32,7 @@ const routes: Routes = [
     HttpClientModule,
     BrowserAnimationsModule,
   ],
-  providers: [NotificationService],
+  providers: [NotificationService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -3,7 +3,7 @@ import {Database} from "../../db/database";
 import {GetRoute} from "../get-route";
 import {Either} from "funfix-core";
 import {ApiUtils, EitherUtils} from "../../../core/src";
-import {DiscordApi} from "../../../core/src/misc/discord-api";
+import {DiscordAccessTokenJsonSerializer, DiscordApi} from "../../../core/src/misc/discord-api";
 
 export class UserLoginEndpoint extends GetRoute {
 
@@ -33,9 +33,7 @@ export class UserLoginEndpoint extends GetRoute {
 
     run(req: Request, res: Response): void {
         Either.map3(this.getResponseCode(req), this.getPanelClientId(), this.getPanelClientSecret(), async (code, pid, pcs) => {
-            Either.map2(await DiscordApi.getAccessToken(pid, pcs, code), this.getPanelAddress(), (tokenObj, address) => {
-                res.redirect(address);
-            });
+            ApiUtils.sendSerializedResponse(await DiscordApi.getAccessToken(pid, pcs, code), DiscordAccessTokenJsonSerializer.instance, res);
         });
     }
 

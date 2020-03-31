@@ -17,7 +17,7 @@ export class DiscordApi {
             client_secret: clientSecret,
             grant_type: 'authorization_code',
             code: code,
-            redirect_uri: 'http://localhost:8080/user/login',
+            redirect_uri: 'http://localhost:4200/login',
             scope: 'identify guilds',
         }), {
             headers: {
