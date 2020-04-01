@@ -1,6 +1,5 @@
 import {Client, GuildMember, RichEmbed} from "discord.js";
 import {None, Option} from "funfix-core";
-import {leavingGreetingLogsKey} from "../../core/keys/discord-channel-keys";
 import {ChannelUtils} from "../utils/channel-utils";
 import {CommandManager} from "./command-manager";
 
@@ -61,7 +60,7 @@ export class EmbedUserLeavingMessageCommand extends CommandManager {
                 if (this.hasPermission()) {
                     this.guildManager.getClientGuilds()
                         .filter(x => x.name === this.getDevEnvironment())
-                        .map(x => ChannelUtils.getChannelByNameFromGuild(leavingGreetingLogsKey, x))
+                        .map(x => ChannelUtils.getChannelByNameFromGuild('leavingGreetingLogsKey', x))
                         .map(x => x.send(this.getEmbeddedMessage()));
                 }
             });

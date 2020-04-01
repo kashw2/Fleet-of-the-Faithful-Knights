@@ -1,6 +1,6 @@
 import {Channel, Collection, Guild, GuildChannel, Message, Snowflake} from "discord.js";
 import {Either} from "funfix-core";
-import {EitherUtils} from "../../core";
+import {EitherUtils} from "../../core/src";
 
 export class ChannelUtils {
 

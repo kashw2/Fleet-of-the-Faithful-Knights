@@ -5,4 +5,5 @@ const client = new discord.Client();
 
 Events.startAllDiscordEvents(client);
 
-client.login(process.env.FFK_DISCORD_BOT_SECRET);
+// TODO: Make use of a monad on the below
+client.login(process.env.FFK_DISCORD_PANEL_BOT_TOKEN!);
