@@ -2,6 +2,7 @@ import {Either, Left, None, Option, Right, Some} from "funfix-core";
 import {IRecordSet} from "mssql";
 import {SimpleJsonSerializer} from "..";
 import * as moment from 'moment';
+import {List} from "immutable";
 
 /**
  * getJsonFromRecordSet()
@@ -56,6 +57,13 @@ function parseNumberFromString(s: string): Option<number> {
 
 export function parseSerialized<T>(t: T, serializer: SimpleJsonSerializer<T>): Option<T> {
     return Option.of(serializer.fromJson(t));
+}
+
+// TODO: I made this at 12:23, there needs to be a Monadic variation of this.
+export function parseListString(list: List<string>): List<string> {
+    return list.map(x => parseString(x))
+        .filter(x => x.nonEmpty())
+        .map(x => x.get());
 }
 
 export function parseNumber(n: unknown): Option<number> {

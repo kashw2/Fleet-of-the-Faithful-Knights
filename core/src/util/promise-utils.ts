@@ -1,4 +1,4 @@
-import {None, Option, Some} from "funfix-core";
+import {Either, Left, None, Option, Right, Some} from "funfix-core";
 
 export class PromiseUtils {
 
@@ -7,6 +7,13 @@ export class PromiseUtils {
             return  Promise.resolve(Option.of(await opt.get()));
         }
         return None;
+    }
+
+    static async deliverPromiseEither<A>(opt: Either<string, Promise<A>>): Promise<Either<string, A>> {
+        if (opt.isRight()) {
+            return  Promise.resolve(Right(await opt.get()));
+        }
+        return Left('Unable to deliver promise of Either');
     }
 
 }
