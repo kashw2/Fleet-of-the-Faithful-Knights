@@ -5,6 +5,7 @@
     ".",
     "./api",
     "./core",
-    "./panel"
+    "./panel",
+    "./discord-bot"
   ]
 }

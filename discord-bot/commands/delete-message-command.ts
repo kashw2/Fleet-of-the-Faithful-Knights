@@ -1,9 +1,9 @@
-import {Client, GuildMember, Message} from "discord.js";
+import {Client, Message} from "discord.js";
 import {Either, Left, None, Option, Right} from "funfix-core";
-import {EitherUtils} from "../../core";
 import {ChannelUtils} from "../utils/channel-utils";
 import {DiscordUtils} from "../utils/discord-utils";
 import {CommandManager} from "./command-manager";
+import {EitherUtils} from "../../core/src";
 
 export class DeleteMessageCommand extends CommandManager {
 

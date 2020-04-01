@@ -13,3 +13,5 @@ export const expiresInKey = 'expires_in';
 export const refreshTokenKey = 'refresh_token';
 export const scopeKey = 'scope';
 export const discriminatorKey = 'discriminator';
+export const nameKey = 'name';
+export const rolesKey = 'roles';

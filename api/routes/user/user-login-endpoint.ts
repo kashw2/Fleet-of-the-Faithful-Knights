@@ -8,7 +8,7 @@ import {DiscordOAuthResponseJsonSerializer, DiscordApi} from "../../../core/src/
 export class UserLoginEndpoint extends GetRoute {
 
     constructor(private db: Database) {
-        super('/user/login');
+        super('/user/register');
     }
 
     private getResponseCode(req: Request): Either<string, string> {
@@ -20,11 +20,7 @@ export class UserLoginEndpoint extends GetRoute {
     }
 
     private getPanelClientSecret(): Either<string, string> {
-        return EitherUtils.liftEither(process.env.FFK_PANEL_SECRET!, 'FFK_PANEL_SECRET is empty');
-    }
-
-    private getPanelAddress(): Either<string, string> {
-        return EitherUtils.liftEither(process.env.FFK_PANEL_ADDRESS!, 'FFK_PANEL_ADDRESS is empty');
+        return EitherUtils.liftEither(process.env.FFK_DISCORD_PANEL_SECRET!, 'FFK_PANEL_SECRET is empty');
     }
 
     isAuthorized(): boolean {
@@ -33,7 +29,22 @@ export class UserLoginEndpoint extends GetRoute {
 
     run(req: Request, res: Response): void {
         Either.map3(this.getResponseCode(req), this.getPanelClientId(), this.getPanelClientSecret(), async (code, pid, pcs) => {
-            ApiUtils.sendSerializedResponse(await DiscordApi.getAccessToken(pid, pcs, code), DiscordOAuthResponseJsonSerializer.instance, res);
+            const oAuthResponse = await DiscordApi.getOAuth(pid, pcs, code);
+            oAuthResponse.map(auth => auth.getAccessToken()
+                .map(async accessToken => {
+                    const user = await DiscordApi.getUser(accessToken);
+                    user.map(usr => usr.getId()
+                        .map(async uid => {
+                            const guilds  = await DiscordApi.getUserGuilds(uid, accessToken);
+                            const guild = guilds.map(guildList => guildList.find(guild => guild.getId().contains('539188746114039818'))!);
+                            guild.map(g => g.getId()
+                                .map(async gid => {
+                                    const userRoles = await DiscordApi.getGuildMember(uid, gid, accessToken);
+                                    ApiUtils.sendResult(userRoles, res);
+                                }))
+                        }))
+                })
+            )
         });
     }
 

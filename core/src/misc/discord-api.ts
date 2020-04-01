@@ -9,10 +9,14 @@ import {
     parseString,
     refreshTokenKey,
     scopeKey,
-    tokenTypeKey, User,
+    tokenTypeKey,
+    User,
     UserJsonSerializer
 } from "..";
 import * as querystring from 'querystring';
+import {List} from "immutable";
+import {Guild, GuildJsonSerializer} from "../models/discord/guild";
+import {GuildMember, GuildMemberJsonSerializer} from "../models/discord/guild-member";
 
 export class DiscordApi {
 
@@ -23,8 +27,13 @@ export class DiscordApi {
     static getDiscordApiUrl(): string {
         return 'https://discordapp.com/api';
     }
-    
-    static getAccessToken(clientId: string, clientSecret: string, code: string): Promise<Either<string, DiscordOAuthResponse>> {
+
+    static getDiscordPanelBotToken(): string {
+        // TODO: Make this an Either
+        return process.env.FFK_DISCORD_PANEL_BOT_TOKEN!
+    }
+
+    static getOAuth(clientId: string, clientSecret: string, code: string): Promise<Either<string, DiscordOAuthResponse>> {
         return axios.default.post(this.getTokenRequestUrl(), querystring.encode({
             client_id: clientId,
             client_secret: clientSecret,
@@ -36,13 +45,35 @@ export class DiscordApi {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             }
-        }).then(x => Right(DiscordOAuthResponseJsonSerializer.instance.fromJson(x.data)))
+        })
+            .then(x => Right(DiscordOAuthResponseJsonSerializer.instance.fromJson(x.data)))
             .catch(x => Left(x));
     }
-    
+
     static getUser(accessCode: string): Promise<Either<string, User>> {
         return axios.default.get(this.getDiscordApiUrl().concat('/users/@me'), {headers: {Authorization: `Bearer ${accessCode}`}})
             .then(x => Right(UserJsonSerializer.instance.fromJson(x.data)))
+            .catch(x => Left(x));
+    }
+
+    static getUserGuilds(userId: string, accessCode: string): Promise<Either<string, List<Guild>>> {
+        return axios.default.get(this.getDiscordApiUrl().concat('/users/@me/guilds'), {headers: {Authorization: `Bearer ${accessCode}`}})
+            .then(x => Right(GuildJsonSerializer.instance.fromJsonArray(List(x.data))))
+            .catch(x => Left(x));
+    }
+
+    static getGuildMember(userId: string, guildId: string, accessToken: string): Promise<Either<string, GuildMember>> {
+        const c = this.getDiscordPanelBotToken();
+        return axios.default.get('https://discordapp.com/api/guilds/539188746114039818/members/178140794555727872', {
+            headers: {
+                Authorization: `Bot ${c}`,
+                access_token: accessToken
+            }
+        })
+            .then(x => {
+                console.log(GuildMemberJsonSerializer.instance.fromJson(x.data));
+                return Right(GuildMemberJsonSerializer.instance.fromJson(x.data))
+            })
             .catch(x => Left(x));
     }
 

@@ -1,19 +1,10 @@
 import {None, Option} from "funfix-core";
-import {
-    discriminatorKey,
-    groupKey,
-    idKey,
-    JsonBuilder,
-    parseNumber,
-    parseString,
-    SimpleJsonSerializer,
-    usernameKey
-} from "..";
+import {discriminatorKey, groupKey, idKey, JsonBuilder, parseString, SimpleJsonSerializer, usernameKey} from "..";
 
 export class User {
 
     constructor(
-        readonly id: Option<number> = None,
+        readonly id: Option<string> = None,
         readonly username: Option<string> = None,
         readonly discriminator: Option<string> = None,
         readonly group: Option<string> = None,
@@ -24,7 +15,7 @@ export class User {
         return this.group;
     }
 
-    public getId(): Option<number> {
+    public getId(): Option<string> {
         return this.id;
     }
 
@@ -79,7 +70,7 @@ export class UserJsonSerializer extends SimpleJsonSerializer<User> {
 
     fromJson(json: any): User {
         return new User(
-            parseNumber(json[idKey]),
+            parseString(json[idKey]),
             parseString(json[usernameKey]),
             parseString(json[discriminatorKey]),
             parseString(json[groupKey]),
