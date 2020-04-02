@@ -11,6 +11,10 @@ export abstract class SimpleJsonSerializer<T> {
         return list.map(x => this.fromJson(x));
     }
 
+    toJsonString(value: T): string {
+        return JSON.stringify(this.toJson(value));
+    }
+
     toJson(value: T): object {
         return this.toJsonImpl(value, new JsonBuilder({}));
     }
