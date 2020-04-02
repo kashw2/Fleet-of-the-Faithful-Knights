@@ -1,5 +1,5 @@
-import {JsonBuilder} from "./json-builder";
 import {Collection, List} from "immutable";
+import {JsonBuilder} from "./json-builder";
 
 export abstract class SimpleJsonSerializer<T> {
 
@@ -20,5 +20,9 @@ export abstract class SimpleJsonSerializer<T> {
     }
 
     abstract toJsonImpl(value: T, builder: JsonBuilder): object;
+
+    toJsonString(value: T): string {
+        return JSON.stringify(this.toJson(value));
+    }
 
 }

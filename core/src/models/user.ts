@@ -1,26 +1,37 @@
 import {None, Option} from "funfix-core";
-import {discriminatorKey, groupKey, idKey, JsonBuilder, parseString, SimpleJsonSerializer, usernameKey} from "..";
+import {
+    discriminatorKey,
+    groupKey,
+    idKey,
+    JsonBuilder,
+    parseNumber,
+    parseString,
+    SimpleJsonSerializer,
+    usernameKey,
+} from "..";
+import {MiscUtil} from "../util/misc-util";
+import {DiscordGuildMember} from "./discord/discord-guild-member";
 
 export class User {
 
     constructor(
-        readonly id: Option<string> = None,
+        readonly id: Option<number> = None,
         readonly username: Option<string> = None,
         readonly discriminator: Option<string> = None,
         readonly group: Option<string> = None,
     ) {
     }
 
+    public getDiscriminator(): Option<string> {
+        return this.discriminator;
+    }
+
     public getGroup(): Option<string> {
         return this.group;
     }
 
-    public getId(): Option<string> {
+    public getId(): Option<number> {
         return this.id;
-    }
-
-    public getDiscriminator(): Option<string> {
-        return this.discriminator;
     }
 
     public getUsername(): Option<string> {
@@ -70,11 +81,11 @@ export class UserJsonSerializer extends SimpleJsonSerializer<User> {
 
     fromJson(json: any): User {
         return new User(
-            parseString(json[idKey]),
+            parseNumber(json[idKey]),
             parseString(json[usernameKey]),
             parseString(json[discriminatorKey]),
             parseString(json[groupKey]),
-        )
+        );
     }
 
     toJsonImpl(value: User, builder: JsonBuilder): object {

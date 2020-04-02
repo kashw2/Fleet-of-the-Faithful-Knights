@@ -1,8 +1,8 @@
-import {Database} from "./database";
+import {List} from "immutable";
 import {interval} from "rxjs";
-import {List} from 'immutable';
 import {UserCache} from "../../core/src";
 import {NewsCache} from "../../core/src/models/news-cache";
+import {Database} from "./database";
 import {DbProcedures} from "./procedures/db-procedures";
 
 export class DbCache {

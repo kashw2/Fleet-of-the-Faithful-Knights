@@ -1,8 +1,8 @@
 import {Either, Left, None, Option, Right, Some} from "funfix-core";
+import {List} from "immutable";
+import * as moment from "moment";
 import {IRecordSet} from "mssql";
 import {SimpleJsonSerializer} from "..";
-import * as moment from 'moment';
-import {List} from "immutable";
 
 /**
  * getJsonFromRecordSet()
@@ -13,8 +13,8 @@ import {List} from "immutable";
  *
  */
 export function getJsonFromRecordSet(rs: any): Either<string, IRecordSet<any>> {
-    if (!rs || rs === '{}' || rs === []) {
-        return Left('Database returned empty resultset');
+    if (!rs || rs === "{}" || rs === []) {
+        return Left("Database returned empty resultset");
     }
     return Right(rs[0]);
 }
@@ -59,11 +59,23 @@ export function parseSerialized<T>(t: T, serializer: SimpleJsonSerializer<T>): O
     return Option.of(serializer.fromJson(t));
 }
 
+export function parseListFromArray(array: []): List<any> {
+    return List(array);
+}
+
 // TODO: I made this at 12:23, there needs to be a Monadic variation of this.
-export function parseListString(list: List<string>): List<string> {
-    return list.map(x => parseString(x))
-        .filter(x => x.nonEmpty())
-        .map(x => x.get());
+// TODO: Expand on this
+export function parseList<T>(list: T): List<T> {
+    if (Option.of(list).isEmpty()) {
+        return List();
+    }
+
+    if (list.constructor.name === "Array") {
+        // @ts-ignore
+        return parseListFromArray(list as []);
+    }
+    // @ts-ignore
+    return List(list);
 }
 
 export function parseNumber(n: unknown): Option<number> {

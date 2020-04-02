@@ -1,5 +1,5 @@
-import {RouteManager} from "./route-manager";
 import {Request, Response, Router} from "express";
+import {RouteManager} from "./route-manager";
 
 export abstract class GetRoute extends RouteManager {
 

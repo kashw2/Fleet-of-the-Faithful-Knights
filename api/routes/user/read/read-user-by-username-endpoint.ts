@@ -1,17 +1,17 @@
-import {GetRoute} from "../../get-route";
-import {Database} from "../../../db/database";
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {ApiUtils, UserJsonSerializer, usernameKey} from "../../../../core/src";
+import {Database} from "../../../db/database";
+import {GetRoute} from "../../get-route";
 
 export class ReadUserByUsernameEndpoint extends GetRoute {
 
     constructor(private db: Database) {
-        super('/user/username/:username');
+        super("/user/username/:username");
     }
 
     private getName(req: Request): Either<string, string> {
-        return ApiUtils.parseStringFromPath(req, usernameKey)
+        return ApiUtils.parseStringFromPath(req, usernameKey);
     }
 
     isAuthorized(): boolean {

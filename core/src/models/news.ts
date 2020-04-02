@@ -1,6 +1,5 @@
 import {None, Option} from "funfix-core";
-import {User, UserJsonSerializer} from "./user";
-import {Moment} from 'moment';
+import {Moment} from "moment";
 import {
     contentKey,
     dateKey,
@@ -12,8 +11,9 @@ import {
     parseString,
     SimpleJsonSerializer,
     titleKey,
-    userKey
+    userKey,
 } from "..";
+import {User, UserJsonSerializer} from "./user";
 
 export class News {
 
@@ -82,4 +82,3 @@ export class NewsJsonSerializer extends SimpleJsonSerializer<News> {
     }
 
 }
-

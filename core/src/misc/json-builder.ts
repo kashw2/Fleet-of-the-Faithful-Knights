@@ -1,6 +1,6 @@
 import {Option} from "funfix-core";
-import {SimpleJsonSerializer} from "./simple-json-serializer";
 import {List} from "immutable";
+import {SimpleJsonSerializer} from "./simple-json-serializer";
 
 export class JsonBuilder {
 
@@ -9,16 +9,7 @@ export class JsonBuilder {
 
     add<T>(value: any, key: string): JsonBuilder {
         // @ts-ignore
-        this.object[key] += value[key];
-        return new JsonBuilder(this.object);
-    }
-
-    addOptional(value: Option<any>, key: string): JsonBuilder {
-        if (!value.isEmpty()) {
-            // @ts-ignore
-            this.object[key] = value.get();
-            return new JsonBuilder(this.object);
-        }
+        this.object[key] = value;
         return new JsonBuilder(this.object);
     }
 
@@ -26,7 +17,16 @@ export class JsonBuilder {
     // Possible FIXME?
     addList<T>(value: List<T>, key: string): JsonBuilder {
         if (!value.isEmpty()) {
-            value.map((value, iteration) => this.object[key][iteration])
+            value.map((value, iteration) => this.object[key][iteration]);
+            return new JsonBuilder(this.object);
+        }
+        return new JsonBuilder(this.object);
+    }
+
+    addOptional(value: Option<any>, key: string): JsonBuilder {
+        if (!value.isEmpty()) {
+            // @ts-ignore
+            this.object[key] = value.get();
             return new JsonBuilder(this.object);
         }
         return new JsonBuilder(this.object);

@@ -25,7 +25,8 @@
     "no-unused-expression": false,
     "no-unused-variable": true,
     "no-for-in-array": false,
-    "forin": false
+    "forin": false,
+    "quotemark": true
   },
   "rulesDirectory": []
 }

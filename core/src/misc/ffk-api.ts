@@ -1,8 +1,8 @@
-import {Either, Left, Right} from "funfix-core";
-import {EitherUtils, User, UserJsonSerializer} from "..";
 import * as axios from "axios";
-import {News, NewsJsonSerializer} from "../models/news";
+import {Either, Left, Right} from "funfix-core";
 import {List} from "immutable";
+import {EitherUtils, User, UserJsonSerializer} from "..";
+import {News, NewsJsonSerializer} from "../models/news";
 import {DiscordOAuthResponse, DiscordOAuthResponseJsonSerializer} from "./discord-api";
 
 export class FfkApi {
@@ -14,14 +14,14 @@ export class FfkApi {
         }
     }
 
-    static getHostUrl(): Either<string, string> {
-        return EitherUtils.liftEither(process.env.FFK_API_ADDRESS!, 'FFK_API_ADDRESS is empty');
+    static getAllNews(): Promise<Either<string, List<News>>> {
+        return axios.default.get(this.getHostUrl().get().concat(`/news`))
+            .then(x => Right(NewsJsonSerializer.instance.fromJsonArray(List(x.data))))
+            .catch(x => Left(x));
     }
 
-    static getUsersByGroup(group: string): Promise<Either<string, User>> {
-        return axios.default.get(this.getHostUrl().get().concat(`/users/${group}`))
-            .then(x => Right(UserJsonSerializer.instance.fromJson(x.data)))
-            .catch(x => Left(x));
+    static getHostUrl(): Either<string, string> {
+        return EitherUtils.liftEither(process.env.FFK_API_ADDRESS!, "FFK_API_ADDRESS is empty");
     }
 
     static getUserById(id: number): Promise<Either<string, User>> {
@@ -36,9 +36,9 @@ export class FfkApi {
             .catch(x => Left(x));
     }
 
-    static getAllNews(): Promise<Either<string, List<News>>> {
-        return axios.default.get(this.getHostUrl().get().concat(`/news`))
-            .then(x => Right(NewsJsonSerializer.instance.fromJsonArray(List(x.data))))
+    static getUsersByGroup(group: string): Promise<Either<string, User>> {
+        return axios.default.get(this.getHostUrl().get().concat(`/users/${group}`))
+            .then(x => Right(UserJsonSerializer.instance.fromJson(x.data)))
             .catch(x => Left(x));
     }
 

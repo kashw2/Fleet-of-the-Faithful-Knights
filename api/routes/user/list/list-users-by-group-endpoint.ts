@@ -1,13 +1,13 @@
-import {Database} from "../../../db/database";
-import {GetRoute} from "../../get-route";
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {ApiUtils, groupKey, UserJsonSerializer} from "../../../../core/src";
+import {Database} from "../../../db/database";
+import {GetRoute} from "../../get-route";
 
 export class ListUsersByGroupEndpoint extends GetRoute {
 
     constructor(private db: Database) {
-        super('/users/:group');
+        super("/users/:group");
     }
 
     private getGroup(req: Request): Either<string, string> {

@@ -1,13 +1,18 @@
 import {config, ConnectionPool} from "mssql";
 import {from, of} from "rxjs";
 import {flatMap, map} from "rxjs/operators";
-import {DbRequest} from "./db-request";
 import {DbCache} from "./db-cache";
+import {DbRequest} from "./db-request";
 import {DbProcedures} from "./procedures/db-procedures";
 
 export class Database {
 
-    procedures: DbProcedures;
+    constructor() {
+        // Stack / Sequential ordering matters
+        this.requests = new DbRequest(this);
+        this.procedures = new DbProcedures(this.requests);
+        this.cache = new DbCache(this.procedures);
+    }
     cache: DbCache;
     dbConfig: config = {
         user: process.env.FFK_DB_USER,
@@ -17,12 +22,7 @@ export class Database {
         parseJSON: true,
     };
 
-    constructor() {
-        // Stack / Sequential ordering matters
-        this.requests = new DbRequest(this);
-        this.procedures = new DbProcedures(this.requests);
-        this.cache = new DbCache(this.procedures);
-    }
+    procedures: DbProcedures;
 
     requests: DbRequest;
 
