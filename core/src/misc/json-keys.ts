@@ -15,3 +15,6 @@ export const scopeKey = 'scope';
 export const discriminatorKey = 'discriminator';
 export const nameKey = 'name';
 export const rolesKey = 'roles';
+export const avatarKey = 'avatar';
+export const localeKey = 'locale';
+export const groupIdKey = 'group_id';

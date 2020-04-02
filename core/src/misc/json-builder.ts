@@ -9,7 +9,7 @@ export class JsonBuilder {
 
     add<T>(value: any, key: string): JsonBuilder {
         // @ts-ignore
-        this.object[key] += value[key];
+        this.object[key] = value;
         return new JsonBuilder(this.object);
     }
 
