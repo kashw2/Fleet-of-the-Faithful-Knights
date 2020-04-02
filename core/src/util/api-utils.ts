@@ -31,6 +31,20 @@ export class ApiUtils {
         res.send(req.get());
     }
 
+    static sendResultPromise<A>(req: Promise<Either<string, A>>, res: Response): void {
+        req.then(x => {
+            if (x.isLeft()) {
+                res.send(x.value);
+                return;
+            }
+            res.send(x);
+        })
+            .catch(x => {
+                console.error(x);
+                res.send(x).status(500);
+            });
+    }
+
     static sendSerializedCollectionResult<A>(req: Either<string, Collection<number, A>>, serializer: SimpleJsonSerializer<A>, res: Response): void {
         if (req.isLeft()) {
             res.send(req.value);

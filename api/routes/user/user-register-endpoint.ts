@@ -37,7 +37,7 @@ export class UserRegisterEndpoint extends GetRoute {
                     user.map(usr => usr.getId()
                         .map(async uid => {
                             const guilds = await DiscordApi.getUserGuilds(uid, accessToken);
-                            const guild = guilds.map(guildList => guildList.find(guild => guild.getId().contains("539188746114039818"))!);
+                            const guild = guilds.map(guildList => guildList.find(g => g.getId().contains("539188746114039818"))!);
                             guild.map(g => g.getId()
                                 .map(async gid => {
                                     const guildMember = await DiscordApi.getGuildMember(uid, gid, accessToken);
