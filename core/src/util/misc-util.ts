@@ -1,4 +1,13 @@
-export type Groups = 'Developer' | 'Guest' | 'Grand Master' | 'Master Commander' | 'Knight Commander' | 'Knight Lieutenant' | 'Knight' | 'Sergeant First Class' | 'Sergeant'
+export type Groups =
+    'Developer'
+    | 'Guest'
+    | 'Grand Master'
+    | 'Master Commander'
+    | 'Knight Commander'
+    | 'Knight Lieutenant'
+    | 'Knight'
+    | 'Sergeant First Class'
+    | 'Sergeant'
 
 export class MiscUtil {
 
@@ -25,6 +34,34 @@ export class MiscUtil {
             default:
                 console.log(`${name} is not a recognised group, defaulting to Guest`);
                 return 'Guest';
+        }
+    }
+
+    static getGroupNameFromDiscordRoleId(role: string): Groups {
+        switch (role) {
+            case "541835139701800962":
+                return "Grand Master";
+            case "541834583268917248":
+                return "Master Commander";
+            case "539194625056047106":
+                return "Knight Commander";
+            // ..
+            case "631948957664280586":
+                return "Developer";
+            case "541834732376424448":
+                return "Knight Lieutenant";
+            // .
+            case "549080433900650536":
+                return "Developer";
+            case "541839842435137577":
+                return "Knight";
+            case "539194544575741993":
+                return "Sergeant First Class";
+            case "541835663373369344":
+                return "Sergeant";
+            default:
+                console.log(`${role} os mpt a recognised discord role, defaulting to Guest`);
+                return "Guest";
         }
     }
 
