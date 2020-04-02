@@ -1,7 +1,7 @@
 import {None, Option} from "funfix-core";
 import {idKey, JsonBuilder, nameKey, parseString, SimpleJsonSerializer} from "../..";
 
-export class Guild {
+export class DiscordGuild {
 
     constructor(
         readonly id: Option<string> = None,
@@ -19,18 +19,18 @@ export class Guild {
 
 }
 
-export class GuildJsonSerializer extends SimpleJsonSerializer<Guild> {
+export class DiscordGuildJsonSerializer extends SimpleJsonSerializer<DiscordGuild> {
 
-    static instance: GuildJsonSerializer = new GuildJsonSerializer();
+    static instance: DiscordGuildJsonSerializer = new DiscordGuildJsonSerializer();
 
-    fromJson(json: any): Guild {
-        return new Guild(
+    fromJson(json: any): DiscordGuild {
+        return new DiscordGuild(
             parseString(json[idKey]),
             parseString(json[nameKey]),
         )
     }
 
-    toJsonImpl(value: Guild, builder: JsonBuilder): object {
+    toJsonImpl(value: DiscordGuild, builder: JsonBuilder): object {
         return builder.addOptional(value.getId(), idKey)
             .addOptional(value.getName(), nameKey);
     }
