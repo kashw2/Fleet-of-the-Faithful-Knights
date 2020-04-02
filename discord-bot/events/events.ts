@@ -20,7 +20,7 @@ export class Events {
         new ChannelEventManager(client).initialiseEvent();
         // Client Events
         new ClientEventManager(client).initialiseEvent();
-        // Guild Events
+        // DiscordGuild Events
         new GuildEventManager(client).initialiseEvent();
         // Emoji Events
         new EmojiEventManager(client).initialiseEvent();
