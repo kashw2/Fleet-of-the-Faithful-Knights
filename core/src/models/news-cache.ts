@@ -1,8 +1,8 @@
-import {User} from "./user";
-import {List} from "immutable";
 import {Either} from "funfix-core";
+import {List} from "immutable";
 import {EitherUtils} from "..";
 import {News} from "./news";
+import {User} from "./user";
 
 // Partial builder pattern implementation
 
@@ -35,7 +35,7 @@ export class NewsCache {
     }
 
     getNewsEither(): Either<string, List<News>> {
-        return EitherUtils.liftEither(this.getNews(), 'No articles in news cache');
+        return EitherUtils.liftEither(this.getNews(), "No articles in news cache");
     }
 
 }

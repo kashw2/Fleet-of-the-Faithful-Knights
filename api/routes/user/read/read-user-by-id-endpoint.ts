@@ -1,13 +1,13 @@
-import {GetRoute} from "../../get-route";
 import {Request, Response} from "express";
-import {Database} from "../../../db/database";
 import {Either} from "funfix-core";
 import {ApiUtils, idKey, User, UserJsonSerializer} from "../../../../core/src";
+import {Database} from "../../../db/database";
+import {GetRoute} from "../../get-route";
 
 export class ReadUserByIdEndpoint extends GetRoute {
 
     constructor(private db: Database) {
-        super('/user/id/:id');
+        super("/user/id/:id");
     }
 
     private getUser(userId: number): Either<string, User> {

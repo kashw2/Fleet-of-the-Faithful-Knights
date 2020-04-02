@@ -1,8 +1,8 @@
 import bodyParser from "body-parser";
 import cors from "cors";
 import express from "express";
-import {AllEndpoints} from "./routes/all-endpoints";
 import {Database} from "./db/database";
+import {AllEndpoints} from "./routes/all-endpoints";
 
 const app = express();
 const router = express.Router();

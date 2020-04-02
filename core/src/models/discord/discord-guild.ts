@@ -27,7 +27,7 @@ export class DiscordGuildJsonSerializer extends SimpleJsonSerializer<DiscordGuil
         return new DiscordGuild(
             parseString(json[idKey]),
             parseString(json[nameKey]),
-        )
+        );
     }
 
     toJsonImpl(value: DiscordGuild, builder: JsonBuilder): object {

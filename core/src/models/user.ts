@@ -7,10 +7,10 @@ import {
     parseNumber,
     parseString,
     SimpleJsonSerializer,
-    usernameKey
+    usernameKey,
 } from "..";
-import {DiscordGuildMember} from "./discord/discord-guild-member";
 import {MiscUtil} from "../util/misc-util";
+import {DiscordGuildMember} from "./discord/discord-guild-member";
 
 export class User {
 
@@ -22,16 +22,16 @@ export class User {
     ) {
     }
 
+    public getDiscriminator(): Option<string> {
+        return this.discriminator;
+    }
+
     public getGroup(): Option<string> {
         return this.group;
     }
 
     public getId(): Option<number> {
         return this.id;
-    }
-
-    public getDiscriminator(): Option<string> {
-        return this.discriminator;
     }
 
     public getUsername(): Option<string> {
@@ -85,7 +85,7 @@ export class UserJsonSerializer extends SimpleJsonSerializer<User> {
             parseString(json[usernameKey]),
             parseString(json[discriminatorKey]),
             parseString(json[groupKey]),
-        )
+        );
     }
 
     toJsonImpl(value: User, builder: JsonBuilder): object {

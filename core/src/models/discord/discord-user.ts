@@ -8,7 +8,7 @@ import {
     parseString,
     rolesKey,
     SimpleJsonSerializer,
-    usernameKey
+    usernameKey,
 } from "../..";
 
 export class DiscordUser {
@@ -27,24 +27,24 @@ export class DiscordUser {
         return this.avatar;
     }
 
-    getLocale(): Option<string> {
-        return this.locale;
+    getDiscriminator(): Option<string> {
+        return this.discriminator;
     }
 
     getId(): Option<string> {
         return this.id;
     }
 
-    getUsername(): Option<string> {
-        return this.username;
-    }
-
-    getDiscriminator(): Option<string> {
-        return this.discriminator;
+    getLocale(): Option<string> {
+        return this.locale;
     }
 
     getRoles(): List<string> {
         return this.roles;
+    }
+
+    getUsername(): Option<string> {
+        return this.username;
     }
 
     withRoles(roles: List<string>): DiscordUser {
@@ -72,7 +72,7 @@ export class DiscordUserJsonSerilaizer extends SimpleJsonSerializer<DiscordUser>
             parseString(json[discriminatorKey]),
             parseString(json[localeKey]),
             parseList(json[rolesKey]),
-        )
+        );
     }
 
     toJsonImpl(value: DiscordUser, builder: JsonBuilder): object {
@@ -84,6 +84,5 @@ export class DiscordUserJsonSerilaizer extends SimpleJsonSerializer<DiscordUser>
             .addList(value.getRoles(), rolesKey)
             .build();
     }
-
 
 }

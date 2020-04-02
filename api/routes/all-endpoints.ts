@@ -1,10 +1,10 @@
-import {ReadUserByIdEndpoint} from "./user/read/read-user-by-id-endpoint";
 import {Router} from "express";
 import {Database} from "../db/database";
+import {ListNewsEndpoint} from "./news/list-news-endpoint";
 import {ListUsersByGroupEndpoint} from "./user/list/list-users-by-group-endpoint";
+import {ReadUserByIdEndpoint} from "./user/read/read-user-by-id-endpoint";
 import {ReadUserByUsernameEndpoint} from "./user/read/read-user-by-username-endpoint";
 import {UserRegisterEndpoint} from "./user/user-register-endpoint";
-import {ListNewsEndpoint} from "./news/list-news-endpoint";
 
 export class AllEndpoints {
 

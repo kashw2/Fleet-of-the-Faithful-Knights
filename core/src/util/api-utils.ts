@@ -1,8 +1,8 @@
+import {Request, Response} from "express";
 import {Either} from "funfix-core";
-import {EitherUtils} from "./either-utils";
-import {Request, Response} from 'express';
-import {SimpleJsonSerializer} from "..";
 import {Collection} from "immutable";
+import {SimpleJsonSerializer} from "..";
+import {EitherUtils} from "./either-utils";
 
 export class ApiUtils {
 

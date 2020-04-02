@@ -1,7 +1,7 @@
 import {None, Option} from "funfix-core";
-import {User, UserJsonSerializer} from "../user";
 import {List} from "immutable";
 import {JsonBuilder, parseList, parseSerialized, rolesKey, SimpleJsonSerializer, userKey} from "../..";
+import {User, UserJsonSerializer} from "../user";
 import {DiscordUser, DiscordUserJsonSerilaizer} from "./discord-user";
 
 export class DiscordGuildMember {
@@ -12,19 +12,19 @@ export class DiscordGuildMember {
     ) {
     }
 
-    getUser(): Option<DiscordUser> {
-        return this.user;
-    }
-
     getRoles(): List<string> {
         return this.roles;
+    }
+
+    getUser(): Option<DiscordUser> {
+        return this.user;
     }
 
     withRole(role: string): DiscordGuildMember {
         return new DiscordGuildMember(
             this.getUser(),
-            List.of(role)
-        )
+            List.of(role),
+        );
     }
 
 }
@@ -37,7 +37,7 @@ export class DiscordGuildMemberJsonSerializer extends SimpleJsonSerializer<Disco
         return new DiscordGuildMember(
             parseSerialized(json[userKey], DiscordUserJsonSerilaizer.instance),
             parseList(json[rolesKey]),
-        )
+        );
     }
 
     toJsonImpl(value: DiscordGuildMember, builder: JsonBuilder): object {
@@ -45,6 +45,5 @@ export class DiscordGuildMemberJsonSerializer extends SimpleJsonSerializer<Disco
             .addList(value.getRoles(), rolesKey)
             .build();
     }
-
 
 }
