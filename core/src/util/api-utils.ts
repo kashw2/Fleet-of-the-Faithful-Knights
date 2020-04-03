@@ -37,7 +37,7 @@ export class ApiUtils {
                 res.send(x.value);
                 return;
             }
-            res.send(x);
+            res.send(x.get());
         })
             .catch(x => {
                 console.error(x);
