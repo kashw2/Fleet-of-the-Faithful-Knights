@@ -1,5 +1,6 @@
 import {None, Option} from "funfix-core";
 import {
+    avatarKey,
     discriminatorKey,
     groupKey,
     idKey,
@@ -9,8 +10,6 @@ import {
     SimpleJsonSerializer,
     usernameKey,
 } from "..";
-import {MiscUtil} from "../util/misc-util";
-import {DiscordGuildMember} from "./discord/discord-guild-member";
 
 export class User {
 
@@ -18,8 +17,13 @@ export class User {
         readonly id: Option<number> = None,
         readonly username: Option<string> = None,
         readonly discriminator: Option<string> = None,
+        readonly avatar: Option<string> = None,
         readonly group: Option<string> = None,
     ) {
+    }
+
+    getAvatar(): Option<string> {
+        return this.avatar;
     }
 
     public getDiscriminator(): Option<string> {
@@ -84,6 +88,7 @@ export class UserJsonSerializer extends SimpleJsonSerializer<User> {
             parseNumber(json[idKey]),
             parseString(json[usernameKey]),
             parseString(json[discriminatorKey]),
+            parseString(json[avatarKey]),
             parseString(json[groupKey]),
         );
     }
@@ -93,6 +98,7 @@ export class UserJsonSerializer extends SimpleJsonSerializer<User> {
             .addOptional(value.getId(), idKey)
             .addOptional(value.getUsername(), usernameKey)
             .addOptional(value.getDiscriminator(), discriminatorKey)
+            .addOptional(value.getUsername(), avatarKey)
             .addOptional(value.getGroup(), groupKey)
             .build();
     }
