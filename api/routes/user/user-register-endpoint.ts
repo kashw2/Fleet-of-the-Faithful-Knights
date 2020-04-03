@@ -42,7 +42,7 @@ export class UserRegisterEndpoint extends GetRoute {
                                 .map(async gid => {
                                     const guildMember = await DiscordApi.getGuildMember(uid, gid, accessToken);
                                     guildMember.map(gm => {
-                                        DbUser.fromDiscordGuildMember(gm)
+                                        DbUser.fromDiscordGuildMember(gm.withDiscordUserLocale(usr))
                                             .map(dbU => ApiUtils.sendResultPromise(this.db.procedures.insert.insertUser(dbU), res));
                                     });
                                 }));

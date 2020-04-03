@@ -1,5 +1,14 @@
 import {Option} from "funfix-core";
-import {avatarKey, discriminatorKey, groupIdKey, JsonBuilder, SimpleJsonSerializer, User, usernameKey} from "../..";
+import {
+    avatarKey,
+    discriminatorKey,
+    groupIdKey,
+    JsonBuilder,
+    localeKey,
+    SimpleJsonSerializer,
+    User,
+    usernameKey,
+} from "../..";
 import {MiscUtil} from "../../util/misc-util";
 import {DiscordGuildMember} from "../discord/discord-guild-member";
 
@@ -10,37 +19,42 @@ export class DbUser {
         readonly discriminator: string,
         readonly groupId: number,
         readonly avatar: string,
+        readonly locale: string = "en-US",
     ) {
     }
 
     static fromDiscordGuildMember(guildMember: DiscordGuildMember): Option<DbUser> {
-        return Option.map3(
+        return Option.map4(
             guildMember.getUser().flatMap(u => u.getUsername()),
             guildMember.getUser().flatMap(u => u.getDiscriminator()),
-            guildMember.getUser().flatMap(u => u.getAvatar()),
-            (username, discriminator, avatar) => {
+            guildMember.getUser().flatMap(u => u.getRequestFormedAvatarUrl()),
+            guildMember.getUser().flatMap(u => u.getLocale()),
+            (username, discriminator, avatar, locale) => {
                 return new DbUser(
                     username,
                     discriminator,
                     MiscUtil.getGroupIdFromName(MiscUtil.getGroupNameFromDiscordRoleId(guildMember.getRoles().first())),
                     avatar,
+                    locale,
                 );
             },
         );
     }
 
     static fromUser(user: User): Option<DbUser> {
-        return Option.map4(
+        return Option.map5(
             user.getUsername(),
             user.getDiscriminator(),
             user.getGroup(),
             user.getAvatar(),
-            (username, discriminator, group, avatar) => {
+            user.getLocale(),
+            (username, discriminator, group, avatar, locale) => {
                 return new DbUser(
                     username,
                     discriminator,
                     MiscUtil.getGroupIdFromName(MiscUtil.parseGroup(group)),
                     avatar,
+                    locale,
                 );
             },
         );
@@ -56,6 +70,10 @@ export class DbUser {
 
     getGroupId(): number {
         return this.groupId;
+    }
+
+    getLocale(): string {
+        return this.locale;
     }
 
     getUsername(): string {
@@ -77,6 +95,7 @@ export class DbUserJsonSerializer extends SimpleJsonSerializer<DbUser> {
             .add(value.getDiscriminator(), discriminatorKey)
             .add(value.getAvatar(), avatarKey)
             .add(value.getGroupId(), groupIdKey)
+            .add(value.getLocale(), localeKey)
             .build();
     }
 

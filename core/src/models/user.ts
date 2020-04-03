@@ -1,13 +1,13 @@
-import {None, Option} from "funfix-core";
+import {None, Option, Some} from "funfix-core";
 import {
     avatarKey,
     discriminatorKey,
     groupKey,
     idKey,
-    JsonBuilder,
+    JsonBuilder, localeKey,
     parseNumber,
     parseString,
-    SimpleJsonSerializer,
+    SimpleJsonSerializer, tokenKey,
     usernameKey,
 } from "..";
 
@@ -16,8 +16,10 @@ export class User {
     constructor(
         readonly id: Option<number> = None,
         readonly username: Option<string> = None,
-        readonly discriminator: Option<string> = None,
+        readonly locale: Option<string> = Some("en-US"),
         readonly avatar: Option<string> = None,
+        readonly token: Option<string> = None,
+        readonly discriminator: Option<string> = None,
         readonly group: Option<string> = None,
     ) {
     }
@@ -36,6 +38,14 @@ export class User {
 
     public getId(): Option<number> {
         return this.id;
+    }
+
+    getLocale(): Option<string> {
+        return this.locale;
+    }
+
+    getToken(): Option<string> {
+        return this.token;
     }
 
     public getUsername(): Option<string> {
@@ -89,6 +99,8 @@ export class UserJsonSerializer extends SimpleJsonSerializer<User> {
             parseString(json[usernameKey]),
             parseString(json[discriminatorKey]),
             parseString(json[avatarKey]),
+            parseString(json[tokenKey]),
+            parseString(json[localeKey]),
             parseString(json[groupKey]),
         );
     }
@@ -98,7 +110,9 @@ export class UserJsonSerializer extends SimpleJsonSerializer<User> {
             .addOptional(value.getId(), idKey)
             .addOptional(value.getUsername(), usernameKey)
             .addOptional(value.getDiscriminator(), discriminatorKey)
-            .addOptional(value.getUsername(), avatarKey)
+            .addOptional(value.getAvatar(), avatarKey)
+            .addOptional(value.getToken(), tokenKey)
+            .addOptional(value.getLocale(), localeKey)
             .addOptional(value.getGroup(), groupKey)
             .build();
     }
