@@ -2,7 +2,7 @@ import {List} from "immutable";
 import {interval} from "rxjs";
 import {UserCache} from "../../core/src";
 import {NewsCache} from "../../core/src/models/news-cache";
-import {Database} from "./database";
+import {VoteCache} from "../../core/src/models/vote-cache";
 import {DbProcedures} from "./procedures/db-procedures";
 
 export class DbCache {
@@ -16,6 +16,7 @@ export class DbCache {
 
     news: NewsCache = new NewsCache(List());
     users: UserCache = new UserCache(List());
+    votes: VoteCache = new VoteCache(List());
 
     cacheNews(): void {
         this.procedures.read.getNews()
@@ -37,10 +38,21 @@ export class DbCache {
             });
     }
 
+    cacheVotes(): void {
+        this.procedures.read.getVotes()
+            .then(result => {
+                result.forEach(x => {
+                    this.votes = new VoteCache(x);
+                    console.log(`Cached ${x.size} Votes`);
+                });
+            });
+    }
+
     start30MinuteCache(): void {
         Promise.resolve([
             this.cacheUsers(),
             this.cacheNews(),
+            this.cacheVotes(),
         ]);
     }
 
