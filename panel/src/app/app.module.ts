@@ -1,27 +1,30 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {NgModule} from "@angular/core";
+import {BrowserModule} from "@angular/platform-browser";
 
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
-import {MDBBootstrapModule} from 'angular-bootstrap-md';
-import {RouterModule, Routes} from '@angular/router';
-import {NotificationService} from './services/notification.service';
-import {ToastrModule} from 'ngx-toastr';
-import {HttpClientModule} from '@angular/common/http';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HeaderComponent} from './components/header/header.component';
-import {CookieService} from 'ngx-cookie-service';
+import {HttpClientModule} from "@angular/common/http";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {RouterModule, Routes} from "@angular/router";
+import {MDBBootstrapModule} from "angular-bootstrap-md";
+import {CookieService} from "ngx-cookie-service";
+import {ToastrModule} from "ngx-toastr";
+import {AppRoutingModule} from "./app-routing.module";
+import {AppComponent} from "./app.component";
+import {HeaderComponent} from "./components/header/header.component";
+import {LoginPageComponent} from "./pages/login.page/login.page.component";
+import {NotificationService} from "./services/notification.service";
 
 const routes: Routes = [
-  {path: '**', redirectTo: ''},
-  {path: 'home', redirectTo: ''},
-  {path: 'login', redirectTo: ''},
+  {path: "*", redirectTo: ""},
+  {path: "home", redirectTo: ""},
+  {path: "login", component: LoginPageComponent},
 ];
 
 @NgModule({
+  bootstrap: [AppComponent],
   declarations: [
     AppComponent,
     HeaderComponent,
+    LoginPageComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
@@ -33,7 +36,6 @@ const routes: Routes = [
     BrowserAnimationsModule,
   ],
   providers: [NotificationService, CookieService],
-  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

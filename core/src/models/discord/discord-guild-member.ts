@@ -1,7 +1,6 @@
-import {None, Option} from "funfix-core";
+import {None, Option, Some} from "funfix-core";
 import {List} from "immutable";
 import {JsonBuilder, parseList, parseSerialized, rolesKey, SimpleJsonSerializer, userKey} from "../..";
-import {User, UserJsonSerializer} from "../user";
 import {DiscordUser, DiscordUserJsonSerilaizer} from "./discord-user";
 
 export class DiscordGuildMember {
@@ -18,6 +17,13 @@ export class DiscordGuildMember {
 
     getUser(): Option<DiscordUser> {
         return this.user;
+    }
+
+    withDiscordUserLocale(user: DiscordUser): DiscordGuildMember {
+        return new DiscordGuildMember(
+            this.getUser().flatMap(u => Some(user)),
+            this.roles,
+        );
     }
 
     withRole(role: string): DiscordGuildMember {

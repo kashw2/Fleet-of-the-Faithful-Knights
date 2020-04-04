@@ -1,4 +1,4 @@
-import {None, Option} from "funfix-core";
+import {None, Option, Some} from "funfix-core";
 import {List} from "immutable";
 import {
     avatarKey,
@@ -18,7 +18,7 @@ export class DiscordUser {
         readonly username: Option<string> = None,
         readonly avatar: Option<string> = None,
         readonly discriminator: Option<string> = None,
-        readonly locale: Option<string> = None,
+        readonly locale: Option<string> = Some("en-US"),
         readonly roles: List<string> = List(),
     ) {
     }
@@ -39,6 +39,12 @@ export class DiscordUser {
         return this.locale;
     }
 
+    getRequestFormedAvatarUrl(): Option<string> {
+        return Option.map2(this.getAvatar(), this.getId(), (avatar, id) => {
+            return `/avatars/${id}/${avatar}.png`;
+        });
+    }
+
     getRoles(): List<string> {
         return this.roles;
     }
@@ -51,7 +57,7 @@ export class DiscordUser {
         return new DiscordUser(
             this.getId(),
             this.getUsername(),
-            this.getAvatar(),
+            this.getRequestFormedAvatarUrl(),
             this.getDiscriminator(),
             this.getLocale(),
             this.getRoles(),
@@ -78,7 +84,7 @@ export class DiscordUserJsonSerilaizer extends SimpleJsonSerializer<DiscordUser>
     toJsonImpl(value: DiscordUser, builder: JsonBuilder): object {
         return builder.addOptional(value.getId(), idKey)
             .addOptional(value.getUsername(), usernameKey)
-            .addOptional(value.getAvatar(), avatarKey)
+            .addOptional(value.getRequestFormedAvatarUrl(), avatarKey)
             .addOptional(value.getDiscriminator(), discriminatorKey)
             .addOptional(value.getLocale(), localeKey)
             .addList(value.getRoles(), rolesKey)

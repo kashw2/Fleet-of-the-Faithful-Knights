@@ -1,12 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
-import {Location} from '@angular/common';
+import {Location} from "@angular/common";
+import {HttpClient} from "@angular/common/http";
+import {Component, OnInit} from "@angular/core";
+import {Router} from "@angular/router";
+import {CookieService} from "ngx-cookie-service";
+import {tokenKey} from "../../../../../core/src";
+import {ToastrService} from "ngx-toastr";
+import {NotificationService} from "../../services/notification.service";
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  selector: "app-header",
+  templateUrl: "./header.component.html",
+  styleUrls: ["./header.component.scss"],
 })
 export class HeaderComponent implements OnInit {
 
@@ -14,14 +18,30 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private http: HttpClient,
     private location: Location,
+    private cookieService: CookieService,
+    private notificationService: NotificationService,
   ) {
   }
 
+  isLoggedIn(): boolean {
+    return this.cookieService.check("token");
+  }
+
   ngOnInit(): void {
-    this.http.get('http://localhost:8080'.concat(`/user/register?code=${this.location.path().split('?code=')[1]}`))
-      .subscribe(async x => {
-        console.log(x);
-      });
+    if (!this.cookieService.check("token")) {
+      this.http.get("http://localhost:8080".concat(`/user/register?code=${this.location.path().split("?code=")[1]}`))
+        .subscribe(x => {
+          // Set a cookie for 1 year
+          this.cookieService.set("token", x[tokenKey], 365);
+          console.log(`Client - Server handshake authenticated, assigned token: ${x[tokenKey]}`);
+          this.notificationService.showSuccessNotification("Handshake authenticated", "Success", 2000);
+          return;
+        });
+    } else {
+      console.log(`Client - Server handshake authenticated, assigned token ${this.cookieService.get("token")}`);
+      this.notificationService.showSuccessNotification("Handshake authenticated", "Success", 2000);
+      return;
+    }
   }
 
 }
