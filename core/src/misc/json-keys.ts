@@ -18,3 +18,7 @@ export const rolesKey = "roles";
 export const avatarKey = "avatar";
 export const localeKey = "locale";
 export const groupIdKey = "group_id";
+export const candidateKey = "candidate";
+export const notesKey = "notes";
+export const votersKey = "voters";
+export const sponsorKey = "sponsor";
