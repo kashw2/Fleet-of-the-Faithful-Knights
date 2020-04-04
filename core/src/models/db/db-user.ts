@@ -26,7 +26,7 @@ export class DbUser {
     static fromDiscordGuildMember(guildMember: DiscordGuildMember): Option<DbUser> {
         return Option.map4(
             guildMember.getUser().flatMap(u => u.getUsername()),
-            guildMember.getUser().flatMap(u => u.getDiscriminator()),
+            guildMember.getUser().flatMap(u => u.getDiscriminatorWithSymbol()),
             guildMember.getUser().flatMap(u => u.getRequestFormedAvatarUrl()),
             guildMember.getUser().flatMap(u => u.getLocale()),
             (username, discriminator, avatar, locale) => {
