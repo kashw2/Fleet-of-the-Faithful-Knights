@@ -77,6 +77,10 @@ export class DiscordApi {
 
 }
 
+/**
+ * This class should never find usage in the API cache
+ * It is purely used for a one way transaction between the Discord API and the database
+ */
 export class DiscordOAuthResponse {
 
     constructor(
@@ -110,6 +114,10 @@ export class DiscordOAuthResponse {
 
 }
 
+/**
+ * This class should never find usage in the API cache
+ * It is purely used for a one way transaction between the Discord API and the database
+ */
 export class DiscordOAuthResponseJsonSerializer extends SimpleJsonSerializer<DiscordOAuthResponse> {
 
     static instance: DiscordOAuthResponseJsonSerializer = new DiscordOAuthResponseJsonSerializer();

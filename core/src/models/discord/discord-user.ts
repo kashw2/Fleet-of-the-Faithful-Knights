@@ -11,6 +11,10 @@ import {
     usernameKey,
 } from "../..";
 
+/**
+ * This class should never find usage in the API cache
+ * It is purely used for a one way transaction between the Discord API and the database
+ */
 export class DiscordUser {
 
     constructor(
@@ -29,6 +33,11 @@ export class DiscordUser {
 
     getDiscriminator(): Option<string> {
         return this.discriminator;
+    }
+
+    getDiscriminatorWithSymbol(): Option<string> {
+        return this.getDiscriminator()
+            .map(x => "#".concat(x));
     }
 
     getId(): Option<string> {
@@ -66,6 +75,10 @@ export class DiscordUser {
 
 }
 
+/**
+ * This class should never find usage in the API cache
+ * It is purely used for a one way transaction between the Discord API and the database
+ */
 export class DiscordUserJsonSerilaizer extends SimpleJsonSerializer<DiscordUser> {
 
     static instance: DiscordUserJsonSerilaizer = new DiscordUserJsonSerilaizer();

@@ -3,6 +3,10 @@ import {List} from "immutable";
 import {JsonBuilder, parseList, parseSerialized, rolesKey, SimpleJsonSerializer, userKey} from "../..";
 import {DiscordUser, DiscordUserJsonSerilaizer} from "./discord-user";
 
+/**
+ * This class should never find usage in the API cache
+ * It is purely used for a one way transaction between the Discord API and the database
+ */
 export class DiscordGuildMember {
 
     constructor(
@@ -35,6 +39,10 @@ export class DiscordGuildMember {
 
 }
 
+/**
+ * This class should never find usage in the API cache
+ * It is purely used for a one way transaction between the Discord API and the database
+ */
 export class DiscordGuildMemberJsonSerializer extends SimpleJsonSerializer<DiscordGuildMember> {
 
     static instance: DiscordGuildMemberJsonSerializer = new DiscordGuildMemberJsonSerializer();
