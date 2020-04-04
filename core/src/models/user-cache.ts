@@ -33,6 +33,10 @@ export class UserCache {
         return EitherUtils.liftEither(this.getUsers().find(u => u.getUsername().contains(name))!, `${name} does not exist in the user cache`);
     }
 
+    getUserByToken(token: string): Either<string, User> {
+        return EitherUtils.liftEither(this.getUsers().find(u => u.getToken().contains(token))!, `unable to find any users by the token ${token}`);
+    }
+
     private getUsers(): List<User> {
         return this.users;
     }
