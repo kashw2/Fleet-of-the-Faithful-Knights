@@ -24,7 +24,7 @@ export class User {
     ) {
     }
 
-    getAvatar(): Option<string> {
+    public getAvatar(): Option<string> {
         return this.avatar;
     }
 
@@ -40,11 +40,11 @@ export class User {
         return this.id;
     }
 
-    getLocale(): Option<string> {
+    public getLocale(): Option<string> {
         return this.locale;
     }
 
-    getToken(): Option<string> {
+    public getToken(): Option<string> {
         return this.token;
     }
 

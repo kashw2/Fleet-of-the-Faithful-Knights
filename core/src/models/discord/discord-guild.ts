@@ -1,6 +1,10 @@
 import {None, Option} from "funfix-core";
 import {idKey, JsonBuilder, nameKey, parseString, SimpleJsonSerializer} from "../..";
 
+/**
+ * This class should never find usage in the API cache
+ * It is purely used for a one way transaction between the Discord API and the database
+ */
 export class DiscordGuild {
 
     constructor(
@@ -19,6 +23,10 @@ export class DiscordGuild {
 
 }
 
+/**
+ * This class should never find usage in the API cache
+ * It is purely used for a one way transaction between the Discord API and the database
+ */
 export class DiscordGuildJsonSerializer extends SimpleJsonSerializer<DiscordGuild> {
 
     static instance: DiscordGuildJsonSerializer = new DiscordGuildJsonSerializer();
