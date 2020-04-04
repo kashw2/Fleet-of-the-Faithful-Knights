@@ -30,6 +30,12 @@ export class FfkApi {
             .catch(x => Left(x));
     }
 
+    static getUserByToken(token: string): Promise<Either<string, User>> {
+        return axios.default.get(this.getHostUrl().get().concat(`/user/token/${token}`))
+            .then(x => Right(UserJsonSerializer.instance.fromJson(x.data)))
+            .catch(x => Left(x));
+    }
+
     static getUserByUsername(username: string): Promise<Either<string, User>> {
         return axios.default.get(this.getHostUrl().get().concat(`/users/username/${username}`))
             .then(x => Right(UserJsonSerializer.instance.fromJson(x.data)))
