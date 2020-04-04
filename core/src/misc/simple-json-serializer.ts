@@ -12,7 +12,7 @@ export abstract class SimpleJsonSerializer<T> {
     }
 
     toJson(value: T): object {
-        return this.toJsonImpl(value, new JsonBuilder({}));
+        return this.toJsonImpl(value, new JsonBuilder());
     }
 
     toJsonArray(collection: Collection<number, T>): object {
