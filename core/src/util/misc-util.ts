@@ -1,4 +1,4 @@
-export type Groups =
+export type Group =
     "Developer"
     | "Guest"
     | "Grand Master"
@@ -11,7 +11,7 @@ export type Groups =
 
 export class MiscUtil {
 
-    static getGroupIdFromName(name: Groups): number {
+    static getGroupIdFromName(name: Group): number {
         switch (name) {
             case "Developer":
                 return 1;
@@ -37,7 +37,7 @@ export class MiscUtil {
         }
     }
 
-    static getGroupNameFromDiscordRoleId(role: string): Groups {
+    static getGroupNameFromDiscordRoleId(role: string): Group {
         switch (role) {
             case "541835139701800962":
                 return "Grand Master";
@@ -65,7 +65,7 @@ export class MiscUtil {
         }
     }
 
-    static parseGroup(name: string): Groups {
+    static parseGroup(name: string): Group {
         switch (name) {
             case "Developer":
                 return "Developer";

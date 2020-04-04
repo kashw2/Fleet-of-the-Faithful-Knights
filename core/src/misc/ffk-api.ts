@@ -3,6 +3,7 @@ import {Either, Left, Right} from "funfix-core";
 import {List} from "immutable";
 import {EitherUtils, User, UserJsonSerializer} from "..";
 import {News, NewsJsonSerializer} from "../models/news";
+import {Vote, VoteJsonSerializer} from "../models/vote";
 import {DiscordOAuthResponse, DiscordOAuthResponseJsonSerializer} from "./discord-api";
 
 export class FfkApi {
@@ -17,6 +18,12 @@ export class FfkApi {
     static getAllNews(): Promise<Either<string, List<News>>> {
         return axios.default.get(this.getHostUrl().get().concat(`/news`))
             .then(x => Right(NewsJsonSerializer.instance.fromJsonArray(List(x.data))))
+            .catch(x => Left(x));
+    }
+
+    static getAllVotes(): Promise<Either<string, List<Vote>>> {
+        return axios.default.get(this.getHostUrl().get().concat("/votes"))
+            .then(x => Right(VoteJsonSerializer.instance.fromJsonArray(List(x.data))))
             .catch(x => Left(x));
     }
 
@@ -45,6 +52,12 @@ export class FfkApi {
     static getUsersByGroup(group: string): Promise<Either<string, User>> {
         return axios.default.get(this.getHostUrl().get().concat(`/users/${group}`))
             .then(x => Right(UserJsonSerializer.instance.fromJson(x.data)))
+            .catch(x => Left(x));
+    }
+
+    static getVoteById(voteId: number): Promise<Either<string, Vote>> {
+        return axios.default.get(this.getHostUrl().get().concat(`/vote/${voteId}`))
+            .then(x => Right(VoteJsonSerializer.instance.fromJson(x.data)))
             .catch(x => Left(x));
     }
 
