@@ -14,6 +14,20 @@
   font-family: 'Baloo Thambi 2', sans-serif;
 }
 
+.hover-red {
+  transition: color ease-in-out 150ms;
+  &:hover {
+    color: red;
+  }
+  &:active {
+    color: red;
+  }
+}
+
+.cursor-pointer {
+  cursor: default;
+}
+
 .w-30 {
   width: 30% !important;
 }
