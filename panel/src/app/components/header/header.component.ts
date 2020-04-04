@@ -33,8 +33,13 @@ export class HeaderComponent implements OnInit {
         .subscribe(x => {
           // Set a cookie for 1 year
           this.cookieService.set("token", x[tokenKey], 365);
+          if (this.cookieService.check("token")) {
           console.log(`Client - Server handshake authenticated, assigned token: ${x[tokenKey]}`);
           this.notificationService.showSuccessNotification("Handshake authenticated", "Success", 2000);
+
+          } else {
+            this.notificationService.showFailureNotification("Handshake was unobtainable");
+          }
           return;
         });
     } else {
