@@ -61,7 +61,7 @@ export class VoteJsonSerializer extends SimpleJsonSerializer<Vote> {
     fromJson(json: any): Vote {
         return new Vote(
             parseNumber(json[idKey]),
-            parseSerialized(json[sponsorKey], UserJsonSerializer.instance),
+            parseSerialized(json[userKey], UserJsonSerializer.instance),
             parseString(json[candidateKey]),
             parseString(json[groupKey]),
             parseString(json[notesKey]),
@@ -71,7 +71,7 @@ export class VoteJsonSerializer extends SimpleJsonSerializer<Vote> {
 
     toJsonImpl(value: Vote, builder: JsonBuilder): object {
         return builder.addOptional(value.getId(), idKey)
-            .addOptionalSerialized(value.getSponsor(), sponsorKey, UserJsonSerializer.instance)
+            .addOptionalSerialized(value.getSponsor(), userKey, UserJsonSerializer.instance)
             .addOptional(value.getCandidate(), candidateKey)
             .addOptional(value.getGroup(), groupKey)
             .addOptional(value.getNotes(), notesKey)

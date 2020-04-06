@@ -18,6 +18,14 @@ export class VoteCache {
         return EitherUtils.liftEither(this.getById(id), `Vote ${id} does not exist in cache`);
     }
 
+    getByUserId(userId: number): Either<string, List<Vote>> {
+        return EitherUtils.liftEither(
+            this.getVotes()
+                .filter(v => v.getSponsor().flatMap(s => s.getId()).contains(userId)),
+            `No votes by ${userId} found in cache`,
+        );
+    }
+
     getFirst(): Vote {
         return this.getVotes()
             .first();

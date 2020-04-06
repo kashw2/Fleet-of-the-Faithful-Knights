@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {ApiUtils} from "../../../../core/src";
-import {Vote} from "../../../../core/src/models/vote";
+import {Vote, VoteJsonSerializer} from "../../../../core/src/models/vote";
 import {Database} from "../../../db/database";
 import {GetRoute} from "../../get-route";
 
@@ -20,12 +20,12 @@ export class ReadVoteByIdEndpoint extends GetRoute {
     }
 
     isAuthorized(): boolean {
-        return false;
+        return true;
     }
 
     run(req: Request, res: Response): void {
         this.getVoteId(req)
-            .map(vid => ApiUtils.sendResult(this.getVote(vid), res));
+            .map(vid => ApiUtils.sendSerializedResponse(this.getVote(vid), VoteJsonSerializer.instance, res));
     }
 
 }
