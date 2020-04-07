@@ -48,7 +48,7 @@ export class User {
         return this.locale;
     }
 
-    getMemberSince(): Option<string> {
+    public getMemberSince(): Option<string> {
         return this.memberSince;
     }
 
