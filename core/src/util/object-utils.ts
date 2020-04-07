@@ -8,7 +8,7 @@ import {SimpleJsonSerializer} from "..";
  * getJsonFromRecordSet()
  *
  * Given a Recordset probably returned from a Db query/procedure
- * Return an object that doesn't have be manipulated to access data correctly
+ * Return an object that doesn't have to be manipulated to access data correctly
  * Function will probably evolve overtime, this is it in it's barebones state
  *
  */
@@ -20,6 +20,45 @@ export function getJsonFromRecordSet(rs: any): Either<string, IRecordSet<any>> {
 }
 
 // A lot of these functions will have to change and corrected lol
+
+export function parseBoolean(b: unknown): Option<boolean> {
+    switch (typeof b) {
+        case "string":
+            return parseBooleanFromString(b);
+        case "number":
+            return parseBooleanFromNumber(b);
+        case "boolean":
+            return Some(b);
+        default:
+            throw new Error(`Unable to parse ${b} to boolean`);
+    }
+}
+
+function parseBooleanFromNumber(n: number): Option<boolean> {
+    switch (n) {
+        // Falsy
+        case 0:
+            return Some(false);
+        // Truthy
+        case 1:
+            return Some(true);
+        default:
+            throw new Error(`Unable to parse ${n} to boolean`);
+    }
+}
+
+function parseBooleanFromString(s: string): Option<boolean> {
+    switch (s) {
+        case "Y":
+        case "true":
+            return Some(true);
+        case "N":
+        case "false":
+            return Some(false);
+        default:
+            throw new Error(`Unable to parse ${s} to boolean`);
+    }
+}
 
 export function parseString(s: unknown): Option<string> {
     if (typeof s === "string") {
@@ -50,7 +89,7 @@ function parseMomentFromString(s: string): Option<moment.Moment> {
  */
 function parseNumberFromString(s: string): Option<number> {
     if (s.length > 0) {
-        return Option.of(+s);
+        return Some(+s);
     }
     return None;
 }
@@ -69,7 +108,6 @@ export function parseList<T>(list: T): List<T> {
     if (Option.of(list).isEmpty()) {
         return List();
     }
-
     if (list.constructor.name === "Array") {
         // @ts-ignore
         return parseListFromArray(list as []);
@@ -83,7 +121,7 @@ export function parseNumber(n: unknown): Option<number> {
         case "string":
             return parseNumberFromString(n);
         case "number":
-            return Option.of(n);
+            return Some(n);
         default:
             return None;
     }
