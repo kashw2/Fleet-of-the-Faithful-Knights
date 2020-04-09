@@ -1,20 +1,23 @@
 import {None, Option} from "funfix-core";
 import {List} from "immutable";
-import {User, UserJsonSerializer} from "./user";
+import { Moment } from "moment";
 import {
-    candidateKey,
+    candidateKey, dateKey,
     groupKey,
     idKey,
     JsonBuilder,
     notesKey,
-    parseList,
+    parseBoolean,
+    parseList, parseMoment,
     parseNumber,
     parseSerialized,
     parseString,
-    SimpleJsonSerializer, sponsorKey,
+    passedKey,
+    SimpleJsonSerializer,
     userKey,
-    votersKey
+    votersKey,
 } from "..";
+import {User, UserJsonSerializer} from "./user";
 
 export class Vote {
 
@@ -25,31 +28,51 @@ export class Vote {
         readonly group: Option<string> = None,
         readonly notes: Option<string> = None,
         readonly voters: List<User> = List(),
+        readonly passed: Option<boolean> = None,
+        readonly createdDate: Option<string> = None,
     ) {
     }
 
-    getCandidate(): Option<string> {
+    public getCandidate(): Option<string> {
         return this.candidate;
     }
 
-    getGroup(): Option<string> {
+    public getCreatedDate(): Option<string> {
+        return this.createdDate;
+    }
+
+    public getGroup(): Option<string> {
         return this.group;
     }
 
-    getId(): Option<number> {
+    public getId(): Option<number> {
         return this.id;
     }
 
-    getNotes(): Option<string> {
+    public getNotes(): Option<string> {
         return this.notes;
     }
 
-    getSponsor(): Option<User> {
+    public getPassed(): Option<boolean> {
+        return this.passed;
+    }
+
+    public getSponsor(): Option<User> {
         return this.sponsor;
     }
 
-    getVoters(): List<User> {
+    public getSponsorUsername(): Option<string> {
+        return this.getSponsor()
+            .flatMap(s => s.getUsername());
+    }
+
+    public getVoters(): List<User> {
         return this.voters;
+    }
+
+    public hasPassed(): boolean {
+        return this.getPassed()
+            .contains(true);
     }
 
 }
@@ -66,6 +89,8 @@ export class VoteJsonSerializer extends SimpleJsonSerializer<Vote> {
             parseString(json[groupKey]),
             parseString(json[notesKey]),
             parseList(json[votersKey]),
+            parseBoolean(json[passedKey]),
+            parseString(json[dateKey]),
         );
     }
 
@@ -76,6 +101,8 @@ export class VoteJsonSerializer extends SimpleJsonSerializer<Vote> {
             .addOptional(value.getGroup(), groupKey)
             .addOptional(value.getNotes(), notesKey)
             .addList(value.getVoters(), votersKey)
+            .addOptional(value.getPassed(), passedKey)
+            .addOptional(value.getCreatedDate(), dateKey)
             .build();
     }
 

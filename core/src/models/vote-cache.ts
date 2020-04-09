@@ -1,6 +1,6 @@
 import {Either} from "funfix-core";
 import {List} from "immutable";
-import {EitherUtils} from "..";
+import {EitherUtils, OptionUtils} from "..";
 import {News} from "./news";
 import {Vote} from "./vote";
 
@@ -26,6 +26,24 @@ export class VoteCache {
         );
     }
 
+    getFailedVotes(): List<Vote> {
+        return this.getVotes()
+            .filter(v => v.getPassed().contains(false));
+    }
+
+    getFailedVotesByUser(userId: number): List<Vote> {
+        return this.getFailedVotes()
+            .filter(v => v.getSponsor().flatMap(u => u.getId()).contains(userId));
+    }
+
+    getFailedVotesByUserEither(userId: number): Either<string, List<Vote>> {
+        return EitherUtils.liftEither(this.getFailedVotesByUser(userId), `User ${userId} has no failed votes`);
+    }
+
+    getFailedVotesEither(): Either<string, List<Vote>> {
+        return EitherUtils.liftEither(this.getFailedVotes(), "No failed votes exist in the cache");
+    }
+
     getFirst(): Vote {
         return this.getVotes()
             .first();
@@ -34,6 +52,24 @@ export class VoteCache {
     getLast(): Vote {
         return this.getVotes()
             .last();
+    }
+
+    getPassedVotes(): List<Vote> {
+        return this.getVotes()
+            .filter(v => v.getPassed().contains(true));
+    }
+
+    getPassedVotesByUser(userId: number): List<Vote> {
+        return this.getPassedVotes()
+            .filter(v => v.getSponsor().flatMap(u => u.getId()).contains(userId));
+    }
+
+    getPassedVotesByUserEither(userId: number): Either<string, List<Vote>> {
+        return EitherUtils.liftEither(this.getPassedVotesByUser(userId), `User ${userId} has no passed votes`);
+    }
+
+    getPassedVotesEither(): Either<string, List<Vote>> {
+        return EitherUtils.liftEither(this.getPassedVotes(), "No passed votes exist in the cache");
     }
 
     private getVotes(): List<Vote> {

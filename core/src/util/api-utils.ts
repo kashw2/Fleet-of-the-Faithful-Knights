@@ -15,6 +15,10 @@ export class ApiUtils {
         return EitherUtils.liftEither(+req.params[key], `${key} does not exist on object`);
     }
 
+    static parseNumberFromQuery(req: Request, key: string): Either<string, number> {
+        return EitherUtils.liftEither(req.query[key], `${key} does not exist in query`);
+    }
+
     static parseSerializedFromBody<T>(req: Request, key: string, serializer: SimpleJsonSerializer<T>): Either<string, T> {
         return EitherUtils.liftEither(serializer.fromJson(req.body[key]), `unable to serialize ${key} from body`);
     }
