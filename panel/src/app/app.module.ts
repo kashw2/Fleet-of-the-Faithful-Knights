@@ -10,13 +10,13 @@ import {ToastrModule} from "ngx-toastr";
 import {AppRoutingModule} from "./app-routing.module";
 import {AppComponent} from "./app.component";
 import {HeaderComponent} from "./components/header/header.component";
-import {LoginPageComponent} from "./pages/login.page/login.page.component";
+import {ProfilePageComponent} from "./pages/login.page/profile-page.component";
 import {NotificationService} from "./services/notification.service";
 
 const routes: Routes = [
-  {path: "*", redirectTo: ""},
+  {path: "**", component: ProfilePageComponent},
   {path: "home", redirectTo: ""},
-  {path: "login", component: LoginPageComponent},
+  {path: "login", component: ProfilePageComponent},
 ];
 
 @NgModule({
@@ -24,7 +24,7 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     HeaderComponent,
-    LoginPageComponent,
+    ProfilePageComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),

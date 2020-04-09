@@ -4,10 +4,13 @@ import {
     discriminatorKey,
     groupKey,
     idKey,
-    JsonBuilder, localeKey,
+    JsonBuilder,
+    localeKey,
+    memberSinceKey,
     parseNumber,
     parseString,
-    SimpleJsonSerializer, tokenKey,
+    SimpleJsonSerializer,
+    tokenKey,
     usernameKey,
 } from "..";
 
@@ -21,6 +24,7 @@ export class User {
         readonly token: Option<string> = None,
         readonly discriminator: Option<string> = None,
         readonly group: Option<string> = None,
+        readonly memberSince: Option<string> = None,
     ) {
     }
 
@@ -42,6 +46,10 @@ export class User {
 
     public getLocale(): Option<string> {
         return this.locale;
+    }
+
+    public getMemberSince(): Option<string> {
+        return this.memberSince;
     }
 
     public getToken(): Option<string> {
@@ -97,11 +105,12 @@ export class UserJsonSerializer extends SimpleJsonSerializer<User> {
         return new User(
             parseNumber(json[idKey]),
             parseString(json[usernameKey]),
-            parseString(json[discriminatorKey]),
+            parseString(json[localeKey]),
             parseString(json[avatarKey]),
             parseString(json[tokenKey]),
-            parseString(json[localeKey]),
+            parseString(json[discriminatorKey]),
             parseString(json[groupKey]),
+            parseString(json[memberSinceKey]),
         );
     }
 
@@ -114,6 +123,7 @@ export class UserJsonSerializer extends SimpleJsonSerializer<User> {
             .addOptional(value.getToken(), tokenKey)
             .addOptional(value.getLocale(), localeKey)
             .addOptional(value.getGroup(), groupKey)
+            .addOptional(value.getMemberSince(), memberSinceKey)
             .build();
     }
 

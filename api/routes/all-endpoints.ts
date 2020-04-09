@@ -8,6 +8,8 @@ import {ReadUserByUsernameEndpoint} from "./user/read/read-user-by-username-endp
 import {UserRegisterEndpoint} from "./user/user-register-endpoint";
 import {ListVotesEndpoint} from "./votes/list/list-votes-endpoint";
 import {ReadVoteByIdEndpoint} from "./votes/read/read-vote-by-id-endpoint";
+import {ListVotesByUserEndpoint} from "./votes/list/list-votes-by-user-endpoint";
+import {ListVotesPassedEndpoint} from "./votes/list/list-votes-passed-endpoint";
 
 export class AllEndpoints {
 
@@ -20,6 +22,8 @@ export class AllEndpoints {
         new ListNewsEndpoint(db).routeEndpoint(router);
         new ListVotesEndpoint(db).routeEndpoint(router);
         new ReadVoteByIdEndpoint(db).routeEndpoint(router);
+        new ListVotesByUserEndpoint(db).routeEndpoint(router);
+        new ListVotesPassedEndpoint(db).routeEndpoint(router);
     }
 
 }

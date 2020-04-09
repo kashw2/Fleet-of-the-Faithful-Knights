@@ -11,6 +11,19 @@ export abstract class SimpleJsonSerializer<T> {
         return list.map(x => this.fromJson(x));
     }
 
+    /**
+     * Pretty much goes against the TypeScript type system.
+     * This works off the basis that you parse in what the system believes is an Object but isn't at runtime
+     * Check the 'object' and if it's not an empty object then it's something else and we treat it like a Collection
+     */
+    fromObjectToList(obj: object): List<T> {
+        // @ts-ignore
+        if (obj !== "{}") {
+            return this.fromJsonArray(List(obj as []));
+        }
+        return List();
+    }
+
     toJson(value: T): object {
         return this.toJsonImpl(value, new JsonBuilder());
     }
