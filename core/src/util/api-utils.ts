@@ -1,10 +1,14 @@
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {Collection} from "immutable";
-import {SimpleJsonSerializer} from "..";
+import {parseBoolean, SimpleJsonSerializer} from "..";
 import {EitherUtils} from "./either-utils";
 
 export class ApiUtils {
+
+    static parseBooleanFromQuery(req: Request, key: string): boolean {
+        return parseBoolean(req.query[key]).contains(true);
+    }
 
     // Don't know if these methods will show in the stacktrace so good error messages might be a requirement
     static parseNumberFromPath(req: Request, key: string): Either<string, number> {
