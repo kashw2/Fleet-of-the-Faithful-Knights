@@ -1,0 +1,54 @@
+<app-header></app-header>
+
+<div class="container-fluid">
+  <div class="row mt-5 pt-2 px-3">
+    <div class="col">
+      <h2>Greetings, <b *ngIf="getUsername().nonEmpty()">{{getUsername().get()}}</b></h2>
+      <div class="row">
+        <div class="col-auto">
+          <img *ngIf="getAvatarUrl().nonEmpty()" src="https://cdn.discordapp.com{{this.getAvatarUrl().get()}}"
+               width="200"
+               alt="">
+        </div>
+        <div class="col">
+          <h6 *ngIf="getUserId().nonEmpty()" class="mt-2">User Id: <b class="hover-red cursor-pointer">{{getUserId().get()}}</b></h6>
+          <h6 *ngIf="getUsername().nonEmpty()" class="mt-2">Username: <b class="hover-red cursor-pointer">{{getUsername().get()}}</b></h6>
+          <h6 *ngIf="getGroup().nonEmpty()">Group: <b class="hover-red cursor-pointer">{{getGroup().get()}}</b></h6>
+          <h6 *ngIf="getMemberSince().nonEmpty()">Member Since: <b class="hover-red cursor-pointer">{{getMemberSince().get()}}</b></h6>
+          <h6>Votes Created: <b class="hover-red cursor-pointer">{{getUserVoteCount()}}</b></h6>
+          <h6>Votes Passed: <b class="hover-green cursor-pointer">{{getUserPassedVoteCount()}}</b></h6>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      Column two
+    </div>
+  </div>
+  <div class="row mt-3 ml-3">
+    <h4 class="pb-0">Recent Votes</h4>
+    <div class="table-responsive">
+      <table mdbTable borderless="true" class="table">
+        <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Candidate</th>
+          <th scope="col">Sponsor</th>
+          <th scope="col">Group</th>
+          <th scope="col">Date</th>
+          <th scope="col">Passed</th>
+        </tr>
+        </thead>
+        <tbody class="mh-35">
+        <tr *ngFor="let vote of getVotes().take(10); let i = index">
+          <td scope="row" class="py-2">{{i + 1}}</td>
+          <td *ngIf="vote.getSponsorUsername().nonEmpty()" class="py-2">{{vote.getSponsorUsername().get()}}</td>
+          <td *ngIf="vote.getCandidate().nonEmpty()" class="py-2">{{vote.getCandidate().get()}}</td>
+          <td *ngIf="vote.getGroup().nonEmpty()" class="py-2">{{vote.getGroup().get()}}</td>
+          <td *ngIf="vote.getCreatedDate().nonEmpty()" class="py-2">{{getVoteDate(vote.getCreatedDate().get())}}</td>
+          <td *ngIf="vote.getPassed().nonEmpty()" class="py-2">{{vote.getPassed().get()}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

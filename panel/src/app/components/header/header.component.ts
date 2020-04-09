@@ -4,7 +4,6 @@ import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
 import {tokenKey} from "../../../../../core/src";
-import {ToastrService} from "ngx-toastr";
 import {NotificationService} from "../../services/notification.service";
 
 @Component({

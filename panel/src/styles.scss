@@ -16,12 +16,55 @@
 
 .hover-red {
   transition: color ease-in-out 150ms;
+
   &:hover {
     color: red;
   }
+
   &:active {
     color: red;
   }
+
+}
+
+.hover-green {
+  transition: color ease-in-out 150ms;
+
+  &:hover {
+    color: green;
+  }
+
+  &:active {
+    color: green;
+  }
+}
+
+.text-border {
+
+  &.top {
+      border-top: 1px solid black !important;
+  }
+
+  &.right {
+      border-right: 1px solid black !important;
+  }
+
+  &.bottom {
+      border-bottom: 1px solid black !important;
+  }
+
+  &.left {
+      border-left: 1px solid black !important;
+  }
+
+}
+
+.mh-25 {
+  max-height: 25vh;
+}
+
+.mh-35 {
+  max-height: 35vh;
 }
 
 .cursor-pointer {

@@ -18,6 +18,10 @@ export class FfkApiReadService {
     return this.http.get(this.getHostUrl().concat(`/user/token/${token}`));
   }
 
+  getVoteByStatus(userId: number, status: string): Observable<object> {
+    return this.http.get(this.getHostUrl().concat(`/votes/passed/${userId}?passed=${status}`));
+  }
+
   getVotes(): Observable<object> {
     return this.http.get(this.getHostUrl().concat("/votes"));
   }
