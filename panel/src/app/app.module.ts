@@ -14,7 +14,7 @@ import {ProfilePageComponent} from "./pages/login.page/profile-page.component";
 import {NotificationService} from "./services/notification.service";
 
 const routes: Routes = [
-  {path: "**", component: ProfilePageComponent},
+  {path: "", component: ProfilePageComponent},
   {path: "home", redirectTo: ""},
   {path: "login", component: ProfilePageComponent},
 ];

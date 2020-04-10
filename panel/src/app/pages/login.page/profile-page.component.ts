@@ -2,10 +2,10 @@ import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
 import {Option} from "funfix-core";
 import {List} from "immutable";
 import {CookieService} from "ngx-cookie-service";
-import {repeat} from "rxjs/operators";
 import {User, UserJsonSerializer} from "../../../../../core/src";
+import {News, NewsJsonSerializer} from "../../../../../core/src/models/news";
 import {Vote, VoteJsonSerializer} from "../../../../../core/src/models/vote";
-import {MomentUtils} from "../../../../../core/src/util/moment-utils";
+import {FfkDateFormat, MomentUtils} from "../../../../../core/src/util/moment-utils";
 import {FfkApiService} from "../../services/ffk-api.service";
 
 @Component({
@@ -21,6 +21,8 @@ export class ProfilePageComponent implements OnInit {
     private cookieService: CookieService,
   ) {
   }
+
+  news: List<News> = List();
   passedVotes: List<Vote> = List();
 
   user: User;
@@ -37,6 +39,10 @@ export class ProfilePageComponent implements OnInit {
   getMemberSince(): Option<string> {
     return this.user.getMemberSince()
       .map(s => MomentUtils.formatString(s, "DMY"));
+  }
+
+  getNews(): List<News> {
+    return this.news.take(3);
   }
 
   getUserId(): Option<number> {
@@ -59,8 +65,8 @@ export class ProfilePageComponent implements OnInit {
     return this.votes.size;
   }
 
-  getVoteDate(date: string): string {
-    return MomentUtils.formatString(date, "DMYHM");
+  toDateFormat(date: string, format: FfkDateFormat): string {
+    return MomentUtils.formatString(date, format);
   }
 
   getVotes(): List<Vote> {
@@ -79,6 +85,8 @@ export class ProfilePageComponent implements OnInit {
               .subscribe(votes => this.passedVotes = this.passedVotes.concat(VoteJsonSerializer.instance.fromObjectToList(votes)));
           });
       });
+    this.ffkApi.read.getNews()
+      .subscribe(news => this.news = this.news.concat(NewsJsonSerializer.instance.fromObjectToList(news)));
   }
 
 }

@@ -22,7 +22,7 @@ export class News {
         readonly user: Option<User> = None,
         readonly content: Option<string> = None,
         readonly title: Option<string> = None,
-        readonly date: Option<Moment> = None, // TODO: Use MomentJS data structure
+        readonly date: Option<string> = None, // TODO: Use MomentJS data structure
     ) {
     }
 
@@ -30,7 +30,7 @@ export class News {
         return this.content;
     }
 
-    public getDate(): Option<Moment> {
+    public getDate(): Option<string> {
         return this.date;
     }
 
@@ -67,7 +67,7 @@ export class NewsJsonSerializer extends SimpleJsonSerializer<News> {
             parseSerialized(json[userKey], UserJsonSerializer.instance),
             parseString(json[contentKey]),
             parseString(json[titleKey]),
-            parseMoment(json[dateKey]),
+            parseString(json[dateKey]),
         );
     }
 

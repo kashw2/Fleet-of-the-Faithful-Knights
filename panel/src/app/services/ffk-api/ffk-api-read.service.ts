@@ -14,6 +14,10 @@ export class FfkApiReadService {
     return "http://localhost:8080";
   }
 
+  getNews(): Observable<object> {
+    return this.http.get(this.getHostUrl().concat("/news"));
+  }
+
   getUserByToken(token: string): Observable<object> {
     return this.http.get(this.getHostUrl().concat(`/user/token/${token}`));
   }
