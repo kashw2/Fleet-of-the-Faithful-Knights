@@ -132,7 +132,7 @@ export class DiscordOAuthResponseJsonSerializer extends SimpleJsonSerializer<Dis
         );
     }
 
-    toJsonImpl(value: DiscordOAuthResponse, builder: JsonBuilder): object {
+    toJson(value: DiscordOAuthResponse, builder: JsonBuilder): object {
         return builder.addOptional(value.getAccessToken(), accessTokenKey)
             .addOptional(value.getTokenType(), tokenTypeKey)
             .addOptional(value.getExpiresIn(), expiresInKey)

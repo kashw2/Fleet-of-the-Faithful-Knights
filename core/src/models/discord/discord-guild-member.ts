@@ -54,7 +54,7 @@ export class DiscordGuildMemberJsonSerializer extends SimpleJsonSerializer<Disco
         );
     }
 
-    toJsonImpl(value: DiscordGuildMember, builder: JsonBuilder): object {
+    toJson(value: DiscordGuildMember, builder: JsonBuilder): object {
         return builder.addOptionalSerialized(value.getUser(), userKey, DiscordUserJsonSerilaizer.instance)
             .addList(value.getRoles(), rolesKey)
             .build();

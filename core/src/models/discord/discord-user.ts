@@ -94,7 +94,7 @@ export class DiscordUserJsonSerilaizer extends SimpleJsonSerializer<DiscordUser>
         );
     }
 
-    toJsonImpl(value: DiscordUser, builder: JsonBuilder): object {
+    toJson(value: DiscordUser, builder: JsonBuilder): object {
         return builder.addOptional(value.getId(), idKey)
             .addOptional(value.getUsername(), usernameKey)
             .addOptional(value.getRequestFormedAvatarUrl(), avatarKey)

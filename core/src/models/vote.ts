@@ -94,7 +94,7 @@ export class VoteJsonSerializer extends SimpleJsonSerializer<Vote> {
         );
     }
 
-    toJsonImpl(value: Vote, builder: JsonBuilder): object {
+    toJson(value: Vote, builder: JsonBuilder): object {
         return builder.addOptional(value.getId(), idKey)
             .addOptionalSerialized(value.getSponsor(), userKey, UserJsonSerializer.instance)
             .addOptional(value.getCandidate(), candidateKey)

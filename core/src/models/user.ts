@@ -114,7 +114,7 @@ export class UserJsonSerializer extends SimpleJsonSerializer<User> {
         );
     }
 
-    toJsonImpl(value: User, builder: JsonBuilder): object {
+    toJson(value: User, builder: JsonBuilder): object {
         return builder
             .addOptional(value.getId(), idKey)
             .addOptional(value.getUsername(), usernameKey)
