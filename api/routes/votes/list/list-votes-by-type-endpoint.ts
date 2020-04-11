@@ -25,7 +25,7 @@ export class ListVotesByTypeEndpoint extends GetRoute {
                         return Left("Not implemented");
                     case "Recent":
                         return Left("Not implemented");
-                        // Group Types
+                    // Group Types
                     case "Knight":
                         return this.db.cache.votes.getKnightVotes();
                     case "Sergeant First Class":

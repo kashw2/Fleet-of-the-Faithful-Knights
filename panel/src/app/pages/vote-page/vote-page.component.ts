@@ -43,30 +43,22 @@ export class VotePageComponent implements OnInit, AfterViewInit {
 
   isActiveVoting(): boolean {
     return this.getSelectedVoteType()
-        .contains("active")
-      || this.getSelectedVoteType()
-        .contains("Active");
+      .contains("Active");
   }
 
   isCAAVoting(): boolean {
     return this.getSelectedVoteType()
-        .contains("caa")
-      || this.getSelectedVoteType()
-        .contains("CAA");
+      .contains("Companion at Arms");
   }
 
   isKnightVoting(): boolean {
     return this.getSelectedVoteType()
-        .contains("knight")
-      || this.getSelectedVoteType()
-        .contains("Knight");
+      .contains("Knight");
   }
 
   isRecentVoting(): boolean {
     return this.getSelectedVoteType()
-        .contains("recent")
-      || this.getSelectedVoteType()
-        .contains("Recent");
+      .contains("Recent");
   }
 
   isRecognisedVoteType(): boolean {
@@ -81,23 +73,17 @@ export class VotePageComponent implements OnInit, AfterViewInit {
 
   isSergeantFirstClassVoting(): boolean {
     return this.getSelectedVoteType()
-        .contains("sergeant_first_class")
-      || this.getSelectedVoteType()
-        .contains("Sergeant_First_Class");
+      .contains("Sergeant First Class");
   }
 
   isSergeantVoting(): boolean {
     return this.getSelectedVoteType()
-        .contains("sergeant")
-      || this.getSelectedVoteType()
-        .contains("Sergeant");
+      .contains("Sergeant");
   }
 
   isSquireVoting(): boolean {
     return this.getSelectedVoteType()
-        .contains("squire")
-      || this.getSelectedVoteType()
-        .contains("Squire");
+      .contains("Squire");
   }
 
   ngAfterViewInit() {
