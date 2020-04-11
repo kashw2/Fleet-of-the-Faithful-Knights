@@ -16,8 +16,8 @@
           </div>
         </div>
         <div class="col">
-          <h6 *ngIf="getUserId().nonEmpty()" class="mt-2">User Id: <b class="hover-red cursor-pointer">{{getUserId().get()}}</b></h6>
-          <h6 *ngIf="getUsername().nonEmpty()" class="mt-2">Username: <b class="hover-red cursor-pointer">{{getUsername().get()}}</b></h6>
+          <h6 *ngIf="getUserId().nonEmpty()">User Id: <b class="hover-red cursor-pointer">{{getUserId().get()}}</b></h6>
+          <h6 *ngIf="getUsername().nonEmpty()">Username: <b class="hover-red cursor-pointer">{{getUsername().get()}}</b></h6>
           <h6 *ngIf="getGroup().nonEmpty()">Group: <b class="hover-red cursor-pointer">{{getGroup().get()}}</b></h6>
           <h6 *ngIf="getMemberSince().nonEmpty()">Member Since: <b class="hover-red cursor-pointer">{{getMemberSince().get()}}</b></h6>
           <h6>Votes Created: <b class="hover-red cursor-pointer">{{getUserVoteCount()}}</b></h6>
