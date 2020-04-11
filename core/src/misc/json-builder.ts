@@ -32,7 +32,7 @@ export class JsonBuilder {
 
     addOptionalSerialized<T>(value: Option<T>, key: string, serializer: SimpleJsonSerializer<T>): JsonBuilder {
         if (!value.isEmpty()) {
-            this.object[key] = serializer.toJson(value.get());
+            this.object[key] = serializer.toJsonImpl(value.get());
             return new JsonBuilder(this.object);
         }
         return new JsonBuilder(this.object);

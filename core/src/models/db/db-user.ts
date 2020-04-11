@@ -90,7 +90,7 @@ export class DbUserJsonSerializer extends SimpleJsonSerializer<DbUser> {
         throw new Error("Db classes are read only");
     }
 
-    toJsonImpl(value: DbUser, builder: JsonBuilder): object {
+    toJson(value: DbUser, builder: JsonBuilder): object {
         return builder.add(value.getUsername(), usernameKey)
             .add(value.getDiscriminator(), discriminatorKey)
             .add(value.getAvatar(), avatarKey)

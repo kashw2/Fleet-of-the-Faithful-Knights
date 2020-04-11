@@ -24,18 +24,18 @@ export abstract class SimpleJsonSerializer<T> {
         return List();
     }
 
-    toJson(value: T): object {
-        return this.toJsonImpl(value, new JsonBuilder());
-    }
+    abstract toJson(value: T, builder: JsonBuilder): object;
 
     toJsonArray(collection: Collection<number, T>): object {
-        return collection.map(x => this.toJson(x));
+        return collection.map(x => this.toJsonImpl(x));
     }
 
-    abstract toJsonImpl(value: T, builder: JsonBuilder): object;
+    toJsonImpl(value: T): object {
+        return this.toJson(value, new JsonBuilder());
+    }
 
     toJsonString(value: T): string {
-        return JSON.stringify(this.toJson(value));
+        return JSON.stringify(this.toJsonImpl(value));
     }
 
 }

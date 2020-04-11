@@ -62,7 +62,7 @@ export class FfkApi {
     }
 
     static loginUser(code: string): Promise<Either<string, DiscordOAuthResponse>> {
-        return axios.default.get(this.getHostUrl().get().concat(`/user/login?code=${code}`))
+        return axios.default.get(this.getHostUrl().get().concat(`/user/profile?code=${code}`))
             .then(x => Right(DiscordOAuthResponseJsonSerializer.instance.fromJson(x.data)))
             .catch(x => Left(x));
     }

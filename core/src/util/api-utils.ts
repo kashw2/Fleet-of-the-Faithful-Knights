@@ -66,7 +66,7 @@ export class ApiUtils {
             res.send(req.value);
             return;
         }
-        res.send(serializer.toJson(req.get()));
+        res.send(serializer.toJsonImpl(req.get()));
     }
 
 }

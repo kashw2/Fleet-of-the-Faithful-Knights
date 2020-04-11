@@ -1,12 +1,16 @@
+import {Location} from "@angular/common";
+import {HttpClient} from "@angular/common/http";
 import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
+import {Router} from "@angular/router";
 import {Option} from "funfix-core";
 import {List} from "immutable";
 import {CookieService} from "ngx-cookie-service";
-import {User, UserJsonSerializer} from "../../../../../core/src";
+import {tokenKey, User, UserJsonSerializer} from "../../../../../core/src";
 import {News, NewsJsonSerializer} from "../../../../../core/src/models/news";
 import {Vote, VoteJsonSerializer} from "../../../../../core/src/models/vote";
 import {FfkDateFormat, MomentUtils} from "../../../../../core/src/util/moment-utils";
 import {FfkApiService} from "../../services/ffk-api.service";
+import {NotificationService} from "../../services/notification.service";
 
 @Component({
   selector: "app-profile.page",
@@ -19,6 +23,10 @@ export class ProfilePageComponent implements OnInit {
   constructor(
     private ffkApi: FfkApiService,
     private cookieService: CookieService,
+    private router: Router,
+    private http: HttpClient,
+    private location: Location,
+    private notificationService: NotificationService,
   ) {
   }
 
@@ -65,15 +73,29 @@ export class ProfilePageComponent implements OnInit {
     return this.votes.size;
   }
 
-  toDateFormat(date: string, format: FfkDateFormat): string {
-    return MomentUtils.formatString(date, format);
-  }
-
   getVotes(): List<Vote> {
     return this.votes;
   }
 
   ngOnInit(): void {
+    if (!this.cookieService.check("token")) {
+      this.http.get("http://localhost:8080".concat(`/user/register?code=${this.location.path().split("?code=")[1]}`))
+        .subscribe(x => {
+          // Set a cookie for 1 year
+          this.cookieService.set("token", x[tokenKey], 365);
+          if (this.cookieService.check("token")) {
+            console.log(`Client - Server handshake authenticated, assigned token: ${x[tokenKey]}`);
+            this.notificationService.showSuccessNotification("Handshake authenticated", "Success", 2000);
+          } else {
+            this.notificationService.showFailureNotification("Handshake was unobtainable");
+          }
+          return;
+        });
+    } else {
+      console.log(`Client - Server handshake authenticated, assigned token ${this.cookieService.get("token")}`);
+      this.notificationService.showSuccessNotification("Handshake authenticated", "Success", 2000);
+    }
+
     this.ffkApi.read.getUserByToken(this.getUserToken())
       .subscribe(user => {
         this.user = UserJsonSerializer.instance.fromJson(user);
@@ -87,6 +109,12 @@ export class ProfilePageComponent implements OnInit {
       });
     this.ffkApi.read.getNews()
       .subscribe(news => this.news = this.news.concat(NewsJsonSerializer.instance.fromObjectToList(news)));
+
+  }
+
+  // TODO: Put this in a util class or something
+  toDateFormat(date: string, format: FfkDateFormat): string {
+    return MomentUtils.formatString(date, format);
   }
 
 }

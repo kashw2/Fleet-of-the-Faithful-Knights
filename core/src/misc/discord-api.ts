@@ -48,7 +48,7 @@ export class DiscordApi {
             grant_type: "authorization_code",
             // tslint:disable-next-line
             code: code,
-            redirect_uri: "http://localhost:4200/login",
+            redirect_uri: "http://localhost:4200/profile",
             scope: "identify guilds",
         }), {
             headers: {
@@ -132,7 +132,7 @@ export class DiscordOAuthResponseJsonSerializer extends SimpleJsonSerializer<Dis
         );
     }
 
-    toJsonImpl(value: DiscordOAuthResponse, builder: JsonBuilder): object {
+    toJson(value: DiscordOAuthResponse, builder: JsonBuilder): object {
         return builder.addOptional(value.getAccessToken(), accessTokenKey)
             .addOptional(value.getTokenType(), tokenTypeKey)
             .addOptional(value.getExpiresIn(), expiresInKey)

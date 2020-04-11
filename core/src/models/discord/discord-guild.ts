@@ -38,7 +38,7 @@ export class DiscordGuildJsonSerializer extends SimpleJsonSerializer<DiscordGuil
         );
     }
 
-    toJsonImpl(value: DiscordGuild, builder: JsonBuilder): object {
+    toJson(value: DiscordGuild, builder: JsonBuilder): object {
         return builder.addOptional(value.getId(), idKey)
             .addOptional(value.getName(), nameKey);
     }
