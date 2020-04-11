@@ -31,7 +31,7 @@
         <td *ngIf="vote.getSponsorUsername().nonEmpty() && i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="py-2 hover-red cursor-pointer">{{vote.getSponsorUsername().get()}}</td>
         <td *ngIf="vote.getGroup().nonEmpty() && i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="py-2 hover-red cursor-pointer">{{vote.getGroup().get()}}</td>
         <td *ngIf="vote.getCreatedDate().nonEmpty() && i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="py-2 hover-red cursor-pointer">{{toDateFormat(vote.getCreatedDate().get(), "DMY")}}</td>
-        <td *ngIf="vote.getPassed().nonEmpty() && i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="py-2 hover-red cursor-pointer">{{vote.getPassed().nonEmpty()}}</td>
+        <td *ngIf="vote.getStatus().nonEmpty() && i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="py-2 hover-red cursor-pointer">{{vote.getStatus().get()}}</td>
         <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="py-2 hover-red cursor-click">View</td>
       </tr>
       </tbody>

@@ -28,7 +28,7 @@ export class VoteCache {
 
     getFailedVotes(): List<Vote> {
         return this.getVotes()
-            .filter(v => v.getPassed().contains(false));
+            .filter(v => v.getStatus().contains(false));
     }
 
     getFailedVotesByUser(userId: number): List<Vote> {
@@ -56,7 +56,7 @@ export class VoteCache {
 
     getPassedVotes(): List<Vote> {
         return this.getVotes()
-            .filter(v => v.getPassed().contains(true));
+            .filter(v => v.getStatus().contains(true));
     }
 
     getPassedVotesByUser(userId: number): List<Vote> {

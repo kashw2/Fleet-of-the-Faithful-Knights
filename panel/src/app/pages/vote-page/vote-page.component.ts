@@ -4,7 +4,7 @@ import {MdbTableDirective, MdbTablePaginationComponent} from "angular-bootstrap-
 import {Option} from "funfix-core";
 import {List} from "immutable";
 import {CookieService} from "ngx-cookie-service";
-import {User, UserJsonSerializer} from "../../../../../core/src";
+import {User} from "../../../../../core/src";
 import {Vote, VoteJsonSerializer} from "../../../../../core/src/models/vote";
 import {FfkDateFormat, MomentUtils} from "../../../../../core/src/util/moment-utils";
 import {FfkApiService} from "../../services/ffk-api.service";
@@ -28,8 +28,6 @@ export class VotePageComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MdbTableDirective, {static: true}) mdbTable: MdbTableDirective;
   @ViewChild(MdbTablePaginationComponent, {static: true}) mdbTablePagination: MdbTablePaginationComponent;
-
-  previous: any = [];
 
   @Input()
   user: User;
@@ -126,7 +124,6 @@ export class VotePageComponent implements OnInit, AfterViewInit {
         }
         this.mdbTable.setDataSource(this.elements);
         this.elements = this.mdbTable.getDataSource();
-        this.previous = this.mdbTable.getDataSource();
       });
   }
 

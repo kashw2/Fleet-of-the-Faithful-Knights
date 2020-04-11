@@ -1,6 +1,6 @@
 import {None, Option} from "funfix-core";
 import {List} from "immutable";
-import { Moment } from "moment";
+import {Moment} from "moment";
 import {
     candidateKey, dateKey,
     groupKey,
@@ -13,7 +13,7 @@ import {
     parseSerialized,
     parseString,
     passedKey,
-    SimpleJsonSerializer,
+    SimpleJsonSerializer, statusKey,
     userKey,
     votersKey,
 } from "..";
@@ -28,7 +28,7 @@ export class Vote {
         readonly group: Option<string> = None,
         readonly notes: Option<string> = None,
         readonly voters: List<User> = List(),
-        readonly passed: Option<boolean> = None,
+        readonly status: Option<boolean> = None,
         readonly createdDate: Option<string> = None,
     ) {
     }
@@ -53,10 +53,6 @@ export class Vote {
         return this.notes;
     }
 
-    public getPassed(): Option<boolean> {
-        return this.passed;
-    }
-
     public getSponsor(): Option<User> {
         return this.sponsor;
     }
@@ -66,12 +62,16 @@ export class Vote {
             .flatMap(s => s.getUsername());
     }
 
+    public getStatus(): Option<boolean> {
+        return this.status;
+    }
+
     public getVoters(): List<User> {
         return this.voters;
     }
 
     public hasPassed(): boolean {
-        return this.getPassed()
+        return this.getStatus()
             .contains(true);
     }
 
@@ -89,7 +89,7 @@ export class VoteJsonSerializer extends SimpleJsonSerializer<Vote> {
             parseString(json[groupKey]),
             parseString(json[notesKey]),
             parseList(json[votersKey]),
-            parseBoolean(json[passedKey]),
+            parseBoolean(json[statusKey]),
             parseString(json[dateKey]),
         );
     }
@@ -101,7 +101,7 @@ export class VoteJsonSerializer extends SimpleJsonSerializer<Vote> {
             .addOptional(value.getGroup(), groupKey)
             .addOptional(value.getNotes(), notesKey)
             .addList(value.getVoters(), votersKey)
-            .addOptional(value.getPassed(), passedKey)
+            .addOptional(value.getStatus(), statusKey)
             .addOptional(value.getCreatedDate(), dateKey)
             .build();
     }
