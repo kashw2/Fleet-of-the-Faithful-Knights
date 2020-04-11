@@ -76,7 +76,7 @@
           <td *ngIf="vote.getNotes().nonEmpty()" class="py-2 hover-red cursor-pointer"><a>View Notes</a></td>
           <td *ngIf="vote.getCreatedDate().nonEmpty()"
               class="py-2 hover-red cursor-pointer">{{toDateFormat(vote.getCreatedDate().get(), "DMYHM")}}</td>
-          <td *ngIf="vote.getPassed().nonEmpty()" class="py-2 hover-red cursor-pointer">{{vote.getPassed().get()}}</td>
+          <td *ngIf="vote.getStatus().nonEmpty()" class="py-2 hover-red cursor-pointer">{{vote.getStatus().get()}}</td>
         </tr>
         </tbody>
       </table>

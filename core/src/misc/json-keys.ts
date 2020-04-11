@@ -24,3 +24,4 @@ export const votersKey = "voters";
 export const sponsorKey = "sponsor";
 export const memberSinceKey = "member_since";
 export const passedKey = "passed";
+export const statusKey = "status";

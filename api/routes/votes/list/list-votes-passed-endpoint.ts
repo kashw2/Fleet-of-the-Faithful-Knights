@@ -13,10 +13,6 @@ export class ListVotesPassedEndpoint extends GetRoute {
     }
 
     private getFailedOrPendingVotes(req: Request): Either<string, List<Vote>> {
-        const c = this.getUserId(req)
-            .flatMap(uid => this.db.cache.votes.getFailedVotesByUserEither(uid))
-            .map(vs => vs.take(this.getLimit(req)));
-        console.log(c);
         return this.getUserId(req)
             .flatMap(uid => this.db.cache.votes.getFailedVotesByUserEither(uid))
             .map(vs => vs.take(this.getLimit(req)));
