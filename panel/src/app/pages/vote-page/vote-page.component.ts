@@ -108,23 +108,24 @@ export class VotePageComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.ffkApi.read.getVotes()
-      .subscribe(votes => {
-        this.votes = this.votes.concat(VoteJsonSerializer.instance.fromObjectToList(votes));
-        for (let i = 1; i <= this.getVotes().size; i++) {
-          this.elements.push({
-            candidate: "Candidate" + i,
-            created_date: "Created Date" + i,
-            group: "Group" + i,
-            id: i.toString(),
-            other: i,
-            sponsor: "Sponsor" + i,
-            status: "Status" + i,
-          });
-        }
-        this.mdbTable.setDataSource(this.elements);
-        this.elements = this.mdbTable.getDataSource();
-      });
+    this.getSelectedVoteType()
+      .map(type => this.ffkApi.read.getVotesByType(type)
+        .subscribe(votes => {
+          this.votes = this.votes.concat(VoteJsonSerializer.instance.fromObjectToList(votes));
+          for (let i = 1; i <= this.getVotes().size; i++) {
+            this.elements.push({
+              candidate: "Candidate" + i,
+              created_date: "Created Date" + i,
+              group: "Group" + i,
+              id: i.toString(),
+              other: i,
+              sponsor: "Sponsor" + i,
+              status: "Status" + i,
+            });
+          }
+          this.mdbTable.setDataSource(this.elements);
+          this.elements = this.mdbTable.getDataSource();
+        }));
   }
 
   // TODO: Put this in a util class or something
