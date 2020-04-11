@@ -11,13 +11,14 @@ import {AppRoutingModule} from "./app-routing.module";
 import {AppComponent} from "./app.component";
 import {HeaderComponent} from "./components/header/header.component";
 import {ProfilePageComponent} from "./pages/profile-page/profile-page.component";
+import {VotePageComponent} from "./pages/vote-page/vote-page.component";
 import {NotificationService} from "./services/notification.service";
-import { VotePageComponent } from './pages/vote-page/vote-page.component';
 
 const routes: Routes = [
   {path: "", component: ProfilePageComponent},
   {path: "home", redirectTo: ""},
   {path: "profile", component: ProfilePageComponent},
+  {path: "votes", component: VotePageComponent},
 ];
 
 @NgModule({

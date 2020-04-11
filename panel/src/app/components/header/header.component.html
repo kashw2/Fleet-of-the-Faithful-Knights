@@ -5,13 +5,14 @@
             mdbWavesEffect mdbDropdownToggle>Votes
     </button>
     <div class="dropdown-menu">
-      <a class="dropdown-item py-1" href="#">Active</a>
-      <a class="dropdown-item py-1" href="#">Recent</a>
+      <a class="dropdown-item py-1" href="/votes?type=active">Active</a>
+      <a class="dropdown-item py-1" href="/votes?type=recent">Recent</a>
       <div class="dropdown-divider my-1"></div>
-      <a class="dropdown-item py-1" href="#">Knight</a>
-      <a class="dropdown-item py-1" href="#">Sergeant</a>
-      <a class="dropdown-item py-1" href="#">Squire</a>
-      <a class="dropdown-item py-1" href="#">CAA</a>
+      <a class="dropdown-item py-1" href="/votes?type=knight">Knight</a>
+      <a class="dropdown-item py-1" href="/votes?type=sergeant_first_class">Sergeant First Class</a>
+      <a class="dropdown-item py-1" href="/votes?type=sergeant">Sergeant</a>
+      <a class="dropdown-item py-1" href="/votes?type=squire">Squire</a>
+      <a class="dropdown-item py-1" href="/votes?type=caa">CAA</a>
     </div>
   </div>
   <div class="btn-group ml-auto" mdbDropdown>
@@ -19,7 +20,7 @@
     </button>
     <div class="dropdown-menu min-width-75">
       <a *ngIf="!isLoggedIn()" class="dropdown-item py-1" href="https://discordapp.com/api/oauth2/authorize?client_id=607005043043860521&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2Flogin&response_type=code&scope=identify%20guilds">Login</a>
-      <a class="dropdown-item py-1" href="#">Profile</a>
+      <a class="dropdown-item py-1" href="/profile">Profile</a>
       <div class="dropdown-divider my-1"></div>
       <a class="dropdown-item py-1" href="#">Settings</a>
       <a class="dropdown-item py-1" href="#">Admin</a>
