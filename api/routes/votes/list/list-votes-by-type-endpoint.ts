@@ -21,10 +21,12 @@ export class ListVotesByTypeEndpoint extends GetRoute {
             .flatMap(type => {
                 switch (type) {
                     // Misc Types
+                    case "All":
+                        return this.db.cache.votes.getVotesEither();
                     case "Active":
                         return Left("Not implemented");
                     case "Recent":
-                        return Left("Not implemented");
+                        return this.db.cache.votes.getLastVotes(15);
                     // Group Types
                     case "Knight":
                         return this.db.cache.votes.getKnightVotes();

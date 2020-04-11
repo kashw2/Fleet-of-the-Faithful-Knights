@@ -44,6 +44,11 @@ export class ProfilePageComponent implements OnInit {
     return this.user.getGroup();
   }
 
+  getLastVotes(amount: number): List<Vote> {
+    return this.getVotes()
+      .takeLast(amount);
+  }
+
   getMemberSince(): Option<string> {
     return this.user.getMemberSince()
       .map(s => MomentUtils.formatString(s, "DMY"));

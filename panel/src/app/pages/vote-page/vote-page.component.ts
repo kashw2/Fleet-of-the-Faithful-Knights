@@ -33,6 +33,11 @@ export class VotePageComponent implements OnInit, AfterViewInit {
   user: User;
   votes: List<Vote> = List();
 
+  getLastVotes(amount: number): List<Vote> {
+    return this.getVotes()
+      .takeLast(amount);
+  }
+
   getSelectedVoteType(): Option<string> {
     return Option.of(this.location.path().split("?type=")[1]);
   }
@@ -44,6 +49,11 @@ export class VotePageComponent implements OnInit, AfterViewInit {
   isActiveVoting(): boolean {
     return this.getSelectedVoteType()
       .contains("Active");
+  }
+
+  isAllVoting(): boolean {
+    return this.getSelectedVoteType()
+      .contains("All");
   }
 
   isCAAVoting(): boolean {

@@ -67,6 +67,11 @@ export class VoteCache {
             .last();
     }
 
+    getLastVotes(amount: number): Either<string, List<Vote>> {
+        return this.getVotesEither()
+            .map(vs => vs.reverse().take(amount));
+    }
+
     getPassedVotes(): List<Vote> {
         return this.getVotes()
             .filter(v => v.getStatus().contains(true));
