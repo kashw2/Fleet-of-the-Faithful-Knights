@@ -18,6 +18,10 @@ export class FfkApiReadService {
     return this.http.get(this.getHostUrl().concat("/news"));
   }
 
+  getRecentVotes(amount: number): Observable<object> {
+    return this.http.get(this.getHostUrl().concat(`/votes/recent/${amount}`));
+  }
+
   getUserByToken(token: string): Observable<object> {
     return this.http.get(this.getHostUrl().concat(`/user/token/${token}`));
   }
@@ -28,6 +32,10 @@ export class FfkApiReadService {
 
   getVotes(): Observable<object> {
     return this.http.get(this.getHostUrl().concat("/votes"));
+  }
+
+  getVotesByType(type: string): Observable<object> {
+    return this.http.get(this.getHostUrl().concat(`/votes/type/${type}`));
   }
 
   getVotesByUser(userId: number): Observable<object> {

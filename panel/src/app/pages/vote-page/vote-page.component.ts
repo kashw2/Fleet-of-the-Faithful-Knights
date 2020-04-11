@@ -33,6 +33,11 @@ export class VotePageComponent implements OnInit, AfterViewInit {
   user: User;
   votes: List<Vote> = List();
 
+  getLastVotes(amount: number): List<Vote> {
+    return this.getVotes()
+      .takeLast(amount);
+  }
+
   getSelectedVoteType(): Option<string> {
     return Option.of(this.location.path().split("?type=")[1]);
   }
@@ -43,30 +48,27 @@ export class VotePageComponent implements OnInit, AfterViewInit {
 
   isActiveVoting(): boolean {
     return this.getSelectedVoteType()
-        .contains("active")
-      || this.getSelectedVoteType()
-        .contains("Active");
+      .contains("Active");
+  }
+
+  isAllVoting(): boolean {
+    return this.getSelectedVoteType()
+      .contains("All");
   }
 
   isCAAVoting(): boolean {
     return this.getSelectedVoteType()
-        .contains("caa")
-      || this.getSelectedVoteType()
-        .contains("CAA");
+      .contains("Companion at Arms");
   }
 
   isKnightVoting(): boolean {
     return this.getSelectedVoteType()
-        .contains("knight")
-      || this.getSelectedVoteType()
-        .contains("Knight");
+      .contains("Knight");
   }
 
   isRecentVoting(): boolean {
     return this.getSelectedVoteType()
-        .contains("recent")
-      || this.getSelectedVoteType()
-        .contains("Recent");
+      .contains("Recent");
   }
 
   isRecognisedVoteType(): boolean {
@@ -81,23 +83,17 @@ export class VotePageComponent implements OnInit, AfterViewInit {
 
   isSergeantFirstClassVoting(): boolean {
     return this.getSelectedVoteType()
-        .contains("sergeant_first_class")
-      || this.getSelectedVoteType()
-        .contains("Sergeant_First_Class");
+      .contains("Sergeant First Class");
   }
 
   isSergeantVoting(): boolean {
     return this.getSelectedVoteType()
-        .contains("sergeant")
-      || this.getSelectedVoteType()
-        .contains("Sergeant");
+      .contains("Sergeant");
   }
 
   isSquireVoting(): boolean {
     return this.getSelectedVoteType()
-        .contains("squire")
-      || this.getSelectedVoteType()
-        .contains("Squire");
+      .contains("Squire");
   }
 
   ngAfterViewInit() {
@@ -108,23 +104,24 @@ export class VotePageComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.ffkApi.read.getVotes()
-      .subscribe(votes => {
-        this.votes = this.votes.concat(VoteJsonSerializer.instance.fromObjectToList(votes));
-        for (let i = 1; i <= this.getVotes().size; i++) {
-          this.elements.push({
-            candidate: "Candidate" + i,
-            created_date: "Created Date" + i,
-            group: "Group" + i,
-            id: i.toString(),
-            other: i,
-            sponsor: "Sponsor" + i,
-            status: "Status" + i,
-          });
-        }
-        this.mdbTable.setDataSource(this.elements);
-        this.elements = this.mdbTable.getDataSource();
-      });
+    this.getSelectedVoteType()
+      .map(type => this.ffkApi.read.getVotesByType(type)
+        .subscribe(votes => {
+          this.votes = this.votes.concat(VoteJsonSerializer.instance.fromObjectToList(votes));
+          for (let i = 1; i <= this.getVotes().size; i++) {
+            this.elements.push({
+              candidate: "Candidate" + i,
+              created_date: "Created Date" + i,
+              group: "Group" + i,
+              id: i.toString(),
+              other: i,
+              sponsor: "Sponsor" + i,
+              status: "Status" + i,
+            });
+          }
+          this.mdbTable.setDataSource(this.elements);
+          this.elements = this.mdbTable.getDataSource();
+        }));
   }
 
   // TODO: Put this in a util class or something

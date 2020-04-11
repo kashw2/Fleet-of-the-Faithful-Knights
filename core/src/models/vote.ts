@@ -75,6 +75,47 @@ export class Vote {
             .contains(true);
     }
 
+    public isCAAVote(): boolean {
+        return this.getGroup()
+            .contains("Companion at Arms");
+    }
+
+    public isKnightCommanderVote(): boolean {
+        return this.getGroup()
+            .contains("Knight Commander");
+    }
+
+    public isKnightLieutenantVote(): boolean {
+        return this.getGroup()
+            .contains("Knight Lieutenant");
+    }
+
+    public isKnightVote(): boolean {
+        return this.getGroup()
+            .contains("Knight");
+    }
+
+    public isSergeantFirstClassVote(): boolean {
+        return this.getGroup()
+            .contains("Sergeant First Class");
+    }
+
+    public isSergeantVote(): boolean {
+        return this.getGroup()
+            .contains("Sergeant");
+    }
+
+    public isSquireVote(): boolean {
+        return this.getGroup()
+            .contains("Squire");
+    }
+
+    public shouldBeInKnightVoting(): boolean {
+        return this.isKnightCommanderVote()
+            || this.isKnightLieutenantVote()
+            || this.isKnightVote();
+    }
+
 }
 
 export class VoteJsonSerializer extends SimpleJsonSerializer<Vote> {

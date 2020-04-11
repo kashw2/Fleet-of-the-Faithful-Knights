@@ -1,7 +1,6 @@
 import {Either} from "funfix-core";
 import {List} from "immutable";
-import {EitherUtils, OptionUtils} from "..";
-import {News} from "./news";
+import {EitherUtils} from "..";
 import {Vote} from "./vote";
 
 export class VoteCache {
@@ -23,6 +22,13 @@ export class VoteCache {
             this.getVotes()
                 .filter(v => v.getSponsor().flatMap(s => s.getId()).contains(userId)),
             `No votes by ${userId} found in cache`,
+        );
+    }
+
+    getCAAVotes(): Either<string, List<Vote>> {
+        return EitherUtils.liftEither(
+            this.getVotes().filter(v => v.isCAAVote()),
+            "No CAA votes found",
         );
     }
 
@@ -49,9 +55,21 @@ export class VoteCache {
             .first();
     }
 
+    getKnightVotes(): Either<string, List<Vote>> {
+        return EitherUtils.liftEither(
+            this.getVotes().filter(v => v.shouldBeInKnightVoting()),
+            "No Knight votes found",
+        );
+    }
+
     getLast(): Vote {
         return this.getVotes()
             .last();
+    }
+
+    getLastVotes(amount: number): Either<string, List<Vote>> {
+        return this.getVotesEither()
+            .map(vs => vs.reverse().take(amount));
     }
 
     getPassedVotes(): List<Vote> {
@@ -70,6 +88,27 @@ export class VoteCache {
 
     getPassedVotesEither(): Either<string, List<Vote>> {
         return EitherUtils.liftEither(this.getPassedVotes(), "No passed votes exist in the cache");
+    }
+
+    getSergeantFirstClassVotes(): Either<string, List<Vote>> {
+        return EitherUtils.liftEither(
+            this.getVotes().filter(v => v.isSergeantFirstClassVote()),
+            "No Sergeant First Class votes found",
+        );
+    }
+
+    getSergeantVotes(): Either<string, List<Vote>> {
+        return EitherUtils.liftEither(
+            this.getVotes().filter(v => v.isSergeantVote()),
+            "No Sergeant votes found",
+        );
+    }
+
+    getSquireVotes(): Either<string, List<Vote>> {
+        return EitherUtils.liftEither(
+            this.getVotes().filter(v => v.isSquireVote()),
+            "No Squire votes found",
+        );
     }
 
     private getVotes(): List<Vote> {
