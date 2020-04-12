@@ -1,12 +1,13 @@
 import {Location} from "@angular/common";
 import {AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild} from "@angular/core";
-import {MdbTableDirective, MdbTablePaginationComponent} from "angular-bootstrap-md";
+import {MDBModalRef, MDBModalService, MdbTableDirective, MdbTablePaginationComponent, ModalOptions} from "angular-bootstrap-md";
 import {Option} from "funfix-core";
 import {List} from "immutable";
 import {CookieService} from "ngx-cookie-service";
 import {User} from "../../../../../core/src";
 import {Vote, VoteJsonSerializer} from "../../../../../core/src/models/vote";
 import {FfkDateFormat, MomentUtils} from "../../../../../core/src/util/moment-utils";
+import {ViewVoteModalComponent} from "../../modals/view-vote-modal/view-vote-modal.component";
 import {FfkApiService} from "../../services/ffk-api.service";
 
 @Component({
@@ -21,6 +22,7 @@ export class VotePageComponent implements OnInit, AfterViewInit {
     private location: Location,
     private cookieService: CookieService,
     private cdRef: ChangeDetectorRef,
+    private modalService: MDBModalService,
   ) {
   }
 
@@ -31,6 +33,7 @@ export class VotePageComponent implements OnInit, AfterViewInit {
 
   @Input()
   user: User;
+
   votes: List<Vote> = List();
 
   getLastVotes(amount: number): List<Vote> {
@@ -104,24 +107,28 @@ export class VotePageComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.getSelectedVoteType()
-      .map(type => this.ffkApi.read.getVotesByType(type)
-        .subscribe(votes => {
-          this.votes = this.votes.concat(VoteJsonSerializer.instance.fromObjectToList(votes));
-          for (let i = 1; i <= this.getVotes().size; i++) {
-            this.elements.push({
-              candidate: "Candidate" + i,
-              created_date: "Created Date" + i,
-              group: "Group" + i,
-              id: i.toString(),
-              other: i,
-              sponsor: "Sponsor" + i,
-              status: "Status" + i,
-            });
-          }
-          this.mdbTable.setDataSource(this.elements);
-          this.elements = this.mdbTable.getDataSource();
-        }));
+    this.ffkApi.read.getVotesByType(this.getSelectedVoteType().getOrElse("All"))
+      .subscribe(votes => {
+        this.votes = this.votes.concat(VoteJsonSerializer.instance.fromObjectToList(votes));
+        for (let i = 1; i <= this.getVotes().size; i++) {
+          this.elements.push({
+            candidate: "Candidate" + i,
+            created_date: "Created Date" + i,
+            group: "Group" + i,
+            id: i.toString(),
+            other: i,
+            sponsor: "Sponsor" + i,
+            status: "Status" + i,
+          });
+        }
+        this.mdbTable.setDataSource(this.elements);
+        this.elements = this.mdbTable.getDataSource();
+      });
+  }
+
+  openViewVoteModal(vote: Vote): void {
+    const modalOptions: ModalOptions = {backdrop: true, animated: true, data: vote};
+    this.modalService.show(ViewVoteModalComponent, modalOptions);
   }
 
   // TODO: Put this in a util class or something
