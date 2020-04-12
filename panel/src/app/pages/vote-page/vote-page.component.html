@@ -32,7 +32,7 @@
         <td *ngIf="vote.getGroup().nonEmpty() && i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="py-2 hover-red cursor-pointer">{{vote.getGroup().get()}}</td>
         <td *ngIf="vote.getCreatedDate().nonEmpty() && i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="py-2 hover-red cursor-pointer">{{toDateFormat(vote.getCreatedDate().get(), "DMY")}}</td>
         <td *ngIf="vote.getStatus().nonEmpty() && i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="py-2 hover-red cursor-pointer">{{vote.getStatus().get()}}</td>
-        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="py-2 hover-red cursor-click">View</td>
+        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" (click)="openViewVoteModal(vote)" class="py-2 hover-red cursor-click">View</td>
       </tr>
       </tbody>
       <tfoot class="grey lighten-5 w-100">
