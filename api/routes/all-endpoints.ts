@@ -5,13 +5,14 @@ import {ListUsersByGroupEndpoint} from "./user/list/list-users-by-group-endpoint
 import {ReadUserByIdEndpoint} from "./user/read/read-user-by-id-endpoint";
 import {ReadUserByTokenEndpoint} from "./user/read/read-user-by-token-endpoint";
 import {ReadUserByUsernameEndpoint} from "./user/read/read-user-by-username-endpoint";
-import {UserRegisterEndpoint} from "./user/user-register-endpoint";
-import {ListVotesEndpoint} from "./votes/list/list-votes-endpoint";
-import {ReadVoteByIdEndpoint} from "./votes/read/read-vote-by-id-endpoint";
-import {ListVotesByUserEndpoint} from "./votes/list/list-votes-by-user-endpoint";
-import {ListVotesPassedEndpoint} from "./votes/list/list-votes-passed-endpoint";
-import {ListVotesByTypeEndpoint} from "./votes/list/list-votes-by-type-endpoint";
+import {UserRegisterEndpoint} from "./user/write/user-register-endpoint";
 import {ListRecentVotesEndpoint} from "./votes/list/list-recent-votes-endpoint";
+import {ListVotesByTypeEndpoint} from "./votes/list/list-votes-by-type-endpoint";
+import {ListVotesByUserEndpoint} from "./votes/list/list-votes-by-user-endpoint";
+import {ListVotesEndpoint} from "./votes/list/list-votes-endpoint";
+import {ListVotesPassedEndpoint} from "./votes/list/list-votes-passed-endpoint";
+import {ReadVoteByIdEndpoint} from "./votes/read/read-vote-by-id-endpoint";
+import {WriteVoteEndpoint} from "./votes/write/write-vote-endpoint";
 
 export class AllEndpoints {
 
@@ -28,6 +29,7 @@ export class AllEndpoints {
         new ListVotesPassedEndpoint(db).routeEndpoint(router);
         new ListVotesByTypeEndpoint(db).routeEndpoint(router);
         new ListRecentVotesEndpoint(db).routeEndpoint(router);
+        new WriteVoteEndpoint(db).routeEndpoint(router);
     }
 
 }

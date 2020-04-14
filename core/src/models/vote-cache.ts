@@ -28,7 +28,7 @@ export class VoteCache {
     getCAAVotes(): Either<string, List<Vote>> {
         return EitherUtils.liftEither(
             this.getVotes().filter(v => v.isCAAVote()),
-            "No CAA votes found",
+            "No Companion at Arms votes found",
         );
     }
 

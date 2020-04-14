@@ -10,7 +10,7 @@ export class FfkApiReadService {
   constructor(private http: HttpClient) {
   }
 
-  getHostUrl(): string {
+  private getHostUrl(): string {
     return "http://localhost:8080";
   }
 

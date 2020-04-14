@@ -16,6 +16,6 @@
     "concurrently": "concurrently \" npm run build-watch \" \" npm run start-dev \""
   },
   "dependencies": {
-    "discord.js": "^11.5.1"
+    "discord.js": "^11.6.4"
   }
 }

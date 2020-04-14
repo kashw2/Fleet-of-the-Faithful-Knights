@@ -2,6 +2,7 @@ import {NgModule} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 
 import {HttpClientModule} from "@angular/common/http";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {RouterModule, Routes} from "@angular/router";
 import {MDBBootstrapModule} from "angular-bootstrap-md";
@@ -10,6 +11,7 @@ import {ToastrModule} from "ngx-toastr";
 import {AppRoutingModule} from "./app-routing.module";
 import {AppComponent} from "./app.component";
 import {HeaderComponent} from "./components/header/header.component";
+import {CreateVoteModalComponent} from "./modals/create-vote-modal/create-vote-modal.component";
 import {ViewVoteModalComponent} from "./modals/view-vote-modal/view-vote-modal.component";
 import {ProfilePageComponent} from "./pages/profile-page/profile-page.component";
 import {VotePageComponent} from "./pages/vote-page/vote-page.component";
@@ -30,6 +32,7 @@ const routes: Routes = [
     ProfilePageComponent,
     VotePageComponent,
     ViewVoteModalComponent,
+    CreateVoteModalComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
@@ -39,6 +42,8 @@ const routes: Routes = [
     ToastrModule.forRoot(),
     HttpClientModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormsModule,
   ],
   providers: [NotificationService, CookieService],
 })

@@ -1,4 +1,4 @@
-import {None, Option} from "funfix-core";
+import {None, Option, Some} from "funfix-core";
 import {List} from "immutable";
 import {
     candidateKey,
@@ -12,7 +12,7 @@ import {
     parseNumber,
     parseSerialized,
     parseString,
-    SimpleJsonSerializer,
+    SimpleJsonSerializer, sponsorKey,
     statusKey,
     userKey,
     votersKey,
@@ -28,7 +28,7 @@ export class Vote {
         readonly group: Option<string> = None,
         readonly notes: Option<string> = None,
         readonly voters: List<User> = List(),
-        readonly status: Option<boolean> = None,
+        readonly status: Option<boolean> = Some(false),
         readonly createdDate: Option<string> = None,
     ) {
     }
@@ -55,6 +55,11 @@ export class Vote {
 
     public getSponsor(): Option<User> {
         return this.sponsor;
+    }
+
+    public getSponsorId(): Option<number> {
+        return this.getSponsor()
+            .flatMap(u =>  u.getId());
     }
 
     public getSponsorUsername(): Option<string> {
@@ -125,7 +130,7 @@ export class VoteJsonSerializer extends SimpleJsonSerializer<Vote> {
     fromJson(json: any): Vote {
         return new Vote(
             parseNumber(json[idKey]),
-            parseSerialized(json[userKey], UserJsonSerializer.instance),
+            parseSerialized(json[sponsorKey], UserJsonSerializer.instance),
             parseString(json[candidateKey]),
             parseString(json[groupKey]),
             parseString(json[notesKey]),
@@ -137,7 +142,7 @@ export class VoteJsonSerializer extends SimpleJsonSerializer<Vote> {
 
     toJson(value: Vote, builder: JsonBuilder): object {
         return builder.addOptional(value.getId(), idKey)
-            .addOptionalSerialized(value.getSponsor(), userKey, UserJsonSerializer.instance)
+            .addOptionalSerialized(value.getSponsor(), sponsorKey, UserJsonSerializer.instance)
             .addOptional(value.getCandidate(), candidateKey)
             .addOptional(value.getGroup(), groupKey)
             .addOptional(value.getNotes(), notesKey)

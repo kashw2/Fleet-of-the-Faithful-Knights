@@ -1,10 +1,10 @@
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
-import {ApiUtils, EitherUtils} from "../../../core/src";
-import {DiscordApi} from "../../../core/src/misc/discord-api";
-import {DbUser} from "../../../core/src/models/db/db-user";
-import {Database} from "../../db/database";
-import {GetRoute} from "../get-route";
+import {ApiUtils, EitherUtils} from "../../../../core/src";
+import {DiscordApi} from "../../../../core/src/misc/discord-api";
+import {DbUser} from "../../../../core/src/models/db/db-user";
+import {Database} from "../../../db/database";
+import {GetRoute} from "../../get-route";
 
 export class UserRegisterEndpoint extends GetRoute {
 
