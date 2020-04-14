@@ -9,6 +9,7 @@ import {Vote, VoteJsonSerializer} from "../../../../../core/src/models/vote";
 import {FfkDateFormat, MomentUtils} from "../../../../../core/src/util/moment-utils";
 import {ViewVoteModalComponent} from "../../modals/view-vote-modal/view-vote-modal.component";
 import {FfkApiService} from "../../services/ffk-api.service";
+import {CreateVoteModalComponent} from "../../modals/create-vote-modal/create-vote-modal.component";
 
 @Component({
   selector: "app-vote-page",
@@ -124,6 +125,11 @@ export class VotePageComponent implements OnInit, AfterViewInit {
         this.mdbTable.setDataSource(this.elements);
         this.elements = this.mdbTable.getDataSource();
       });
+  }
+
+  openCreateVoteModal(): void {
+    const modalOptions: ModalOptions = {backdrop: true, animated: true};
+    this.modalService.show(CreateVoteModalComponent, modalOptions);
   }
 
   openViewVoteModal(vote: Vote): void {

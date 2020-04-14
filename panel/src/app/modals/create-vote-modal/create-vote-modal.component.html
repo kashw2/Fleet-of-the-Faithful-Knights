@@ -1,0 +1,32 @@
+<div mdbModal>
+  <div class="modal-header border-0 py-1">
+    <h4 class="modal-title w-100">Create Vote</h4>
+  </div>
+  <div class="modal-body py-0">
+    <div class="md-form">
+      <input mdbInput type="text" id="candidate-name" class="form-control my-4" [(ngModel)]="candidateName">
+      <label for="candidate-name">Candidate Name</label>
+      <!-- TODO: Use something other than the default Bootstrap <select> -->
+      <select id="candidate-group" class="browser-default custom-select my-4" [(ngModel)]="candidatePromotionGroup">
+        <option selected disabled class="d-none">Choose a Group</option>
+        <option value="Master Commander">Master Commander</option>
+        <option value="Knight Commander">Knight Commander</option>
+        <option value="Knight Lieutenant">Knight Lieutenant</option>
+        <option value="Knight">Knight</option>
+        <option value="Sergeant First Class">Sergeant First Class</option>
+        <option value="Sergeant">Sergeant</option>
+        <option value="Squire">Squire</option>
+        <option value="Companion at Arms">Companion at Arms</option>
+        <option value="Guest">Guest</option>
+      </select>
+      <div class="md-form">
+        <textarea mdbInput id="candidate-notes" class="md-textarea form-control my-4" [(ngModel)]="voteNotes"></textarea>
+        <label for="candidate-notes">Notes</label>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer border-0">
+    <button mdbBtn type="button" color="danger" outline="false" class="btn waves-effect" mdbWavesEffect (click)="modalRef.hide()">Cancel</button>
+    <button mdbBtn type="button" color="success" outline="false" class="btn waves-effect" mdbWavesEffect (click)="submitVote($event)">Create</button>
+  </div>
+</div>

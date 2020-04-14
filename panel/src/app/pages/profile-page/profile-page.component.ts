@@ -114,7 +114,6 @@ export class ProfilePageComponent implements OnInit {
       });
     this.ffkApi.read.getNews()
       .subscribe(news => this.news = this.news.concat(NewsJsonSerializer.instance.fromObjectToList(news)));
-
   }
 
   // TODO: Put this in a util class or something
