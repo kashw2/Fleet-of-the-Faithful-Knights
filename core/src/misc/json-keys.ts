@@ -25,3 +25,4 @@ export const sponsorKey = "sponsor";
 export const memberSinceKey = "member_since";
 export const passedKey = "passed";
 export const statusKey = "status";
+export const sponsorIdKey = "sponsor_id";

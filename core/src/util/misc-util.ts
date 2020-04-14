@@ -7,7 +7,9 @@ export type Group =
     | "Knight Lieutenant"
     | "Knight"
     | "Sergeant First Class"
-    | "Sergeant";
+    | "Sergeant"
+    | "Companion at Arms"
+    | "Squire";
 
 export class MiscUtil {
 
@@ -31,6 +33,10 @@ export class MiscUtil {
                 return 8;
             case "Sergeant":
                 return 9;
+            case "Companion at Arms":
+                return 10;
+            case "Squire":
+                return 11;
             default:
                 console.log(`${name} is not a recognised group, defaulting to Guest`);
                 return 2;
@@ -59,6 +65,10 @@ export class MiscUtil {
                 return "Sergeant First Class";
             case "541835663373369344":
                 return "Sergeant";
+            case "539194387674955776":
+                return "Companion at Arms";
+            case "539194424001953793":
+                return "Squire";
             default:
                 console.log(`${role} os mpt a recognised discord role, defaulting to Guest`);
                 return "Guest";
@@ -85,6 +95,10 @@ export class MiscUtil {
                 return "Sergeant First Class";
             case "Sergeant":
                 return "Sergeant";
+            case "Squire":
+                return "Squire";
+            case "Companion at Arms":
+                return "Companion at Arms";
             default:
                 console.log(`${name} is not a recognised group, defaulting to Guest`);
                 return "Guest";

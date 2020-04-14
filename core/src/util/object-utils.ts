@@ -30,7 +30,8 @@ export function parseBoolean(b: unknown): Option<boolean> {
         case "boolean":
             return Some(b);
         default:
-            throw new Error(`Unable to parse ${b} to boolean`);
+            console.error(`Error parsing ${b} (unknown) to boolean`);
+            return None;
     }
 }
 
@@ -43,7 +44,8 @@ function parseBooleanFromNumber(n: number): Option<boolean> {
         case 1:
             return Some(true);
         default:
-            throw new Error(`Unable to parse ${n} to boolean`);
+            console.error(`Error parsing ${n} (number) to boolean`);
+            return None;
     }
 }
 
@@ -56,7 +58,8 @@ function parseBooleanFromString(s: string): Option<boolean> {
         case "false":
             return Some(false);
         default:
-            throw new Error(`Unable to parse ${s} to boolean`);
+            console.error(`Error parsing ${s} (string) to boolean`);
+            return None;
     }
 }
 
