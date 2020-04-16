@@ -2,7 +2,8 @@ import {Location} from "@angular/common";
 import {HttpClient} from "@angular/common/http";
 import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
-import {Option} from "funfix-core";
+import {Store} from "@ngrx/store";
+import {None, Option} from "funfix-core";
 import {List} from "immutable";
 import {CookieService} from "ngx-cookie-service";
 import {tokenKey, User, UserJsonSerializer} from "../../../../../core/src";
@@ -11,6 +12,7 @@ import {Vote, VoteJsonSerializer} from "../../../../../core/src/models/vote";
 import {FfkDateFormat, MomentUtils} from "../../../../../core/src/util/moment-utils";
 import {FfkApiService} from "../../services/ffk-api.service";
 import {NotificationService} from "../../services/notification.service";
+import {AddUserAction} from "../../store/actions/user-action";
 
 @Component({
   selector: "app-profile.page",
@@ -27,21 +29,24 @@ export class ProfilePageComponent implements OnInit {
     private http: HttpClient,
     private location: Location,
     private notificationService: NotificationService,
+    private store: Store,
   ) {
   }
 
   news: List<News> = List();
   passedVotes: List<Vote> = List();
 
-  user: User;
+  user: Option<User> = None;
   votes: List<Vote> = List();
 
   getAvatarUrl(): Option<string> {
-    return this.user.getAvatar();
+    return this.getUser()
+      .flatMap(x => x.getAvatar());
   }
 
   getGroup(): Option<string> {
-    return this.user.getGroup();
+    return this.getUser()
+      .flatMap(x => x.getGroup());
   }
 
   getLastVotes(amount: number): List<Vote> {
@@ -50,7 +55,8 @@ export class ProfilePageComponent implements OnInit {
   }
 
   getMemberSince(): Option<string> {
-    return this.user.getMemberSince()
+    return this.getUser()
+      .flatMap(x => x.getMemberSince())
       .map(s => MomentUtils.formatString(s, "DMY"));
   }
 
@@ -58,12 +64,18 @@ export class ProfilePageComponent implements OnInit {
     return this.news.take(3);
   }
 
+  getUser(): Option<User> {
+    return this.user;
+  }
+
   getUserId(): Option<number> {
-    return this.user.getId();
+    return this.getUser()
+      .flatMap(x => x.getId());
   }
 
   getUsername(): Option<string> {
-    return this.user.getUsername();
+    return this.getUser()
+      .flatMap(x => x.getUsername());
   }
 
   getUserPassedVoteCount(): number {
@@ -94,16 +106,17 @@ export class ProfilePageComponent implements OnInit {
           } else {
             this.notificationService.showFailureNotification("Handshake was unobtainable");
           }
-          return;
         });
     } else {
       console.log(`Client - Server handshake authenticated, assigned token ${this.cookieService.get("token")}`);
       this.notificationService.showSuccessNotification("Handshake authenticated", "Success", 2000);
     }
-
+    // TODO: This is disgusting, fix this
     this.ffkApi.read.getUserByToken(this.getUserToken())
       .subscribe(user => {
-        this.user = UserJsonSerializer.instance.fromJson(user);
+        this.user = Option.of(UserJsonSerializer.instance.fromJson(user));
+        // TODO: Like stated above, this is disgusting, stores should not be subject to something so yucky and grotty
+        this.store.dispatch(new AddUserAction(UserJsonSerializer.instance.fromJson(user)));
         this.getUserId()
           .map(uid => {
             this.ffkApi.read.getVotesByUser(uid)
