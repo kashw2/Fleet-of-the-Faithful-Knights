@@ -65,6 +65,17 @@ export class User {
             .contains("Developer");
     }
 
+    isEmpty(): boolean {
+        return this.getId().isEmpty()
+        && this.getUsername().isEmpty()
+        && this.getLocale().isEmpty()
+        && this.getAvatar().isEmpty()
+        && this.getToken().isEmpty()
+        && this.getDiscriminator().isEmpty()
+        && this.getGroup().isEmpty()
+        && this.getMemberSince().isEmpty();
+    }
+
     public isGrandMaster(): boolean {
         return this.getGroup()
             .contains("Grand Master");
