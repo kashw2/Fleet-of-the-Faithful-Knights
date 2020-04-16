@@ -29,6 +29,7 @@ export class UserRegisterEndpoint extends GetRoute {
     }
 
     run(req: Request, res: Response): void {
+        // Low complexity however execute time is heightened
         Either.map3(this.getResponseCode(req), this.getPanelClientId(), this.getPanelClientSecret(), async (code, clientId, clientSecret) => {
             const oAuthResponse = await DiscordApi.getOAuth(clientId, clientSecret, code);
             oAuthResponse.map(auth => auth.getAccessToken()
@@ -43,7 +44,12 @@ export class UserRegisterEndpoint extends GetRoute {
                                     const guildMember = await DiscordApi.getGuildMember(uid, gid, accessToken);
                                     guildMember.map(gm => {
                                         DbUser.fromDiscordGuildMember(gm.withDiscordUserLocale(usr))
-                                            .map(dbU => ApiUtils.sendResultPromise(this.db.procedures.insert.insertUser(dbU), res));
+                                            .map(async dbU => {
+                                                // TODO: Should be able to .then this
+                                                const insertedUser = await this.db.procedures.insert.insertUser(dbU);
+                                                ApiUtils.sendResult(insertedUser, res);
+                                                this.db.cache.cacheUsers();
+                                            });
                                     });
                                 }));
                         }));
