@@ -1,9 +1,9 @@
 <app-header></app-header>
 
-<div class="container-fluid">
+<div *ngIf="getUser().nonEmpty()" class="container-fluid">
   <div class="row mt-5 pt-2 px-3">
     <div class="col">
-      <h2>Greetings, <b *ngIf="getUsername().nonEmpty()">{{getUsername().get()}}</b></h2>
+      <h2 *ngIf="getUsername().nonEmpty()">Greetings, <b>{{getUsername().get()}}</b></h2>
       <div class="row">
         <div class="col-auto">
           <div class="view overlay">
@@ -20,8 +20,8 @@
           <h6 *ngIf="getUsername().nonEmpty()">Username: <b class="hover-red cursor-pointer">{{getUsername().get()}}</b></h6>
           <h6 *ngIf="getGroup().nonEmpty()">Group: <b class="hover-red cursor-pointer">{{getGroup().get()}}</b></h6>
           <h6 *ngIf="getMemberSince().nonEmpty()">Member Since: <b class="hover-red cursor-pointer">{{getMemberSince().get()}}</b></h6>
-          <h6>Votes Created: <b class="hover-red cursor-pointer">{{getUserVoteCount()}}</b></h6>
-          <h6>Votes Passed: <b class="hover-green cursor-pointer">{{getUserPassedVoteCount()}}</b></h6>
+          <h6 *ngIf="!getVotes().isEmpty()">Votes Created: <b class="hover-red cursor-pointer">{{getUserVoteCount()}}</b></h6>
+          <h6 *ngIf="!getVotes().isEmpty()">Votes Passed: <b class="hover-green cursor-pointer">{{getUserPassedVoteCount()}}</b></h6>
         </div>
       </div>
     </div>
@@ -52,7 +52,7 @@
       </div>
     </div>
   </div>
-  <div class="row mt-2 ml-3">
+  <div class="row mt-2 ml-3" *ngIf="!getVotes().isEmpty()">
     <h3 class="pb-0 mb-3">Recent Votes</h3>
     <div class="table-responsive">
       <table mdbTable borderless="true" class="table">

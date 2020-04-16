@@ -1,6 +1,6 @@
 <mdb-navbar SideClass="navbar navbar-expand-lg white navbar-dark shadow fixed-top" containerInside>
   <mdb-navbar-brand><h3 class="font-weight-normal text-black baloo ml-0 mr-4 my-auto">FFK Panel</h3></mdb-navbar-brand>
-  <div class="btn-group" mdbDropdown>
+  <div *ngIf="isLoggedIn()" class="btn-group" mdbDropdown>
     <button type="button" size="sm" mdbBtn color="danger" outline="true" class="waves-effect dropdown-toggle"
             mdbWavesEffect mdbDropdownToggle>Votes
     </button>
@@ -20,7 +20,7 @@
     <button type="button" size="sm" mdbBtn color="danger" outline="true" class="dropdown-toggle waves-effect" mdbDropdownToggle mdbWavesEffect>User
     </button>
     <div class="dropdown-menu min-width-75">
-      <a *ngIf="!isLoggedIn()" class="dropdown-item py-1" href="https://discordapp.com/api/oauth2/authorize?client_id=607005043043860521&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2Flogin&response_type=code&scope=identify%20guilds">Login</a>
+      <a *ngIf="!isLoggedIn()" class="dropdown-item py-1" href="https://discordapp.com/api/oauth2/authorize?client_id=607005043043860521&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2Fsso&response_type=code&scope=identify%20guilds">Login</a>
       <a class="dropdown-item py-1" href="/profile">Profile</a>
       <div class="dropdown-divider my-1"></div>
       <a class="dropdown-item py-1" href="#">Settings</a>

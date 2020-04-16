@@ -2,17 +2,7 @@ import * as axios from "axios";
 import {Either, Left, None, Option, Right} from "funfix-core";
 import {List} from "immutable";
 import * as querystring from "querystring";
-import {
-    accessTokenKey,
-    expiresInKey,
-    parseNumber,
-    parseString,
-    refreshTokenKey,
-    scopeKey,
-    tokenTypeKey,
-    User,
-    UserJsonSerializer,
-} from "..";
+import {accessTokenKey, expiresInKey, parseNumber, parseString, refreshTokenKey, scopeKey, tokenTypeKey,} from "..";
 import {DiscordGuild, DiscordGuildJsonSerializer} from "../models/discord/discord-guild";
 import {DiscordGuildMember, DiscordGuildMemberJsonSerializer} from "../models/discord/discord-guild-member";
 import {DiscordUser, DiscordUserJsonSerilaizer} from "../models/discord/discord-user";
@@ -48,7 +38,7 @@ export class DiscordApi {
             grant_type: "authorization_code",
             // tslint:disable-next-line
             code: code,
-            redirect_uri: "http://localhost:4200/profile",
+            redirect_uri: "http://localhost:4200/sso",
             scope: "identify guilds",
         }), {
             headers: {
