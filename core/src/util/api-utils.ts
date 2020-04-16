@@ -31,6 +31,12 @@ export class ApiUtils {
         return EitherUtils.liftEither(req.query[key], `${key} does not exist in query`);
     }
 
+    static sendError(req: Either<string, any>, res: Response): void {
+        if (req.isLeft()) {
+            res.send(req.value);
+        }
+    }
+
     static sendResult<A>(req: Either<string, A>, res: Response): void {
         if (req.isLeft()) {
             res.send(req.value);
