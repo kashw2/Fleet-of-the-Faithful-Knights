@@ -24,7 +24,6 @@
     "immutable": "^4.0.0-rc.12",
     "moment": "^2.24.0",
     "mssql": "^6.0.1",
-    "ngrx": "0.0.1-security",
     "rxjs": "^6.5.5"
   }
 }
