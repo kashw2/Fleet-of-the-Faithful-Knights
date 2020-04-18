@@ -5,6 +5,7 @@ import {BrowserModule} from "@angular/platform-browser";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {RouterModule, Routes} from "@angular/router";
 import {StoreModule} from "@ngrx/store";
+import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {MDBBootstrapModule} from "angular-bootstrap-md";
 import {CookieService} from "ngx-cookie-service";
 import {ToastrModule} from "ngx-toastr";
@@ -50,6 +51,9 @@ const routes: Routes = [
     FormsModule,
     StoreModule.forRoot({
       user: userReducer,
+    }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 10,
     }),
   ],
   providers: [NotificationService, CookieService],
