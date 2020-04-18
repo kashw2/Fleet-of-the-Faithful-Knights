@@ -6,13 +6,13 @@ import {Store} from "@ngrx/store";
 import {None, Option} from "funfix-core";
 import {List} from "immutable";
 import {CookieService} from "ngx-cookie-service";
-import {tokenKey, User, UserJsonSerializer} from "../../../../../core/src";
+import {User} from "../../../../../core/src";
 import {News, NewsJsonSerializer} from "../../../../../core/src/models/news";
 import {Vote, VoteJsonSerializer} from "../../../../../core/src/models/vote";
 import {FfkDateFormat, MomentUtils} from "../../../../../core/src/util/moment-utils";
 import {FfkApiService} from "../../services/ffk-api.service";
 import {NotificationService} from "../../services/notification.service";
-import {AddUserAction} from "../../store/actions/user-action";
+import {AppState} from "../../store/state/app-state";
 
 @Component({
   selector: "app-profile.page",
@@ -29,8 +29,10 @@ export class ProfilePageComponent implements OnInit {
     private http: HttpClient,
     private location: Location,
     private notificationService: NotificationService,
-    private store: Store,
+    private store: Store<AppState>,
   ) {
+    this.store.select("user")
+      .subscribe(user => this.user = Option.of(user));
   }
 
   news: List<News> = List();
@@ -95,35 +97,13 @@ export class ProfilePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.cookieService.check("token")) {
-      this.http.get("http://localhost:8080".concat(`/user/register?code=${this.location.path().split("?code=")[1]}`))
-        .subscribe(x => {
-          // Set a cookie for 1 year
-          this.cookieService.set("token", x[tokenKey], 365);
-          if (this.cookieService.check("token")) {
-            console.log(`Client - Server handshake authenticated, assigned token: ${x[tokenKey]}`);
-            this.notificationService.showSuccessNotification("Handshake authenticated", "Success", 2000);
-          } else {
-            this.notificationService.showFailureNotification("Handshake was unobtainable");
-          }
-        });
-    } else {
-      console.log(`Client - Server handshake authenticated, assigned token ${this.cookieService.get("token")}`);
-      this.notificationService.showSuccessNotification("Handshake authenticated", "Success", 2000);
-    }
-    // TODO: This is disgusting, fix this
-    this.ffkApi.read.getUserByToken(this.getUserToken())
-      .subscribe(user => {
-        this.user = Option.of(UserJsonSerializer.instance.fromJson(user));
-        // TODO: Like stated above, this is disgusting, stores should not be subject to something so yucky and grotty
-        this.store.dispatch(new AddUserAction(UserJsonSerializer.instance.fromJson(user)));
-        this.getUserId()
-          .map(uid => {
-            this.ffkApi.read.getVotesByUser(uid)
-              .subscribe(votes => this.votes = this.votes.concat(VoteJsonSerializer.instance.fromObjectToList(votes)));
-            this.ffkApi.read.getVoteByStatus(uid, "true")
-              .subscribe(votes => this.passedVotes = this.passedVotes.concat(VoteJsonSerializer.instance.fromObjectToList(votes)));
-          });
+    this.getUser()
+      .flatMap(u => u.getId())
+      .map(uid => {
+        this.ffkApi.read.getVotesByUser(uid)
+          .subscribe(votes => this.votes = this.votes.concat(VoteJsonSerializer.instance.fromObjectToList(votes)));
+        this.ffkApi.read.getVoteByStatus(uid, "true")
+          .subscribe(votes => this.passedVotes = this.passedVotes.concat(VoteJsonSerializer.instance.fromObjectToList(votes)));
       });
     this.ffkApi.read.getNews()
       .subscribe(news => this.news = this.news.concat(NewsJsonSerializer.instance.fromObjectToList(news)));
