@@ -9,8 +9,6 @@ export function userReducer(state: User, action: UserActions) {
   switch (action.type) {
     case "[USER] Add":
       return action.getData();
-    case "[USER] Read":
-      return action.getData();
     case "[USER] Remove":
       return [state, action.getData()];
     default:
