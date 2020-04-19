@@ -31,8 +31,6 @@ export class ProfilePageComponent implements OnInit {
     private notificationService: NotificationService,
     private store: Store<AppState>,
   ) {
-    this.store.select("user")
-      .subscribe(user => this.user = Option.of(user));
   }
 
   news: List<News> = List();
@@ -84,10 +82,6 @@ export class ProfilePageComponent implements OnInit {
     return this.passedVotes.size;
   }
 
-  private getUserToken(): string {
-    return this.cookieService.get("token");
-  }
-
   getUserVoteCount(): number {
     return this.votes.size;
   }
@@ -97,13 +91,19 @@ export class ProfilePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUser()
-      .flatMap(u => u.getId())
-      .map(uid => {
-        this.ffkApi.read.getVotesByUser(uid)
-          .subscribe(votes => this.votes = this.votes.concat(VoteJsonSerializer.instance.fromObjectToList(votes)));
-        this.ffkApi.read.getVoteByStatus(uid, "true")
-          .subscribe(votes => this.passedVotes = this.passedVotes.concat(VoteJsonSerializer.instance.fromObjectToList(votes)));
+    this.store.select("user")
+      .subscribe(user => {
+        this.user = Option.of(user);
+        this.getUser()
+          .flatMap(u => u.getId())
+          .map(uid => {
+            this.ffkApi.read.getVotesByUser(uid)
+              .subscribe(votes => this.votes = this.votes.concat(VoteJsonSerializer.instance.fromObjectToList(votes)));
+            this.ffkApi.read.getVoteByStatus(uid, "true")
+              .subscribe(votes => {
+                this.passedVotes = this.passedVotes.concat(VoteJsonSerializer.instance.fromObjectToList(votes));
+              });
+          });
       });
     this.ffkApi.read.getNews()
       .subscribe(news => this.news = this.news.concat(NewsJsonSerializer.instance.fromObjectToList(news)));

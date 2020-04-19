@@ -10,6 +10,8 @@ import {FfkDateFormat, MomentUtils} from "../../../../../core/src/util/moment-ut
 import {ViewVoteModalComponent} from "../../modals/view-vote-modal/view-vote-modal.component";
 import {FfkApiService} from "../../services/ffk-api.service";
 import {CreateVoteModalComponent} from "../../modals/create-vote-modal/create-vote-modal.component";
+import {Store} from "@ngrx/store";
+import {AppState} from "../../store/state/app-state";
 
 @Component({
   selector: "app-vote-page",
@@ -31,9 +33,6 @@ export class VotePageComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MdbTableDirective, {static: true}) mdbTable: MdbTableDirective;
   @ViewChild(MdbTablePaginationComponent, {static: true}) mdbTablePagination: MdbTablePaginationComponent;
-
-  @Input()
-  user: User;
 
   votes: List<Vote> = List();
 

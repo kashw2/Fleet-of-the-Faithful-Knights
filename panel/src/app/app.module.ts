@@ -19,6 +19,7 @@ import {SsoPageComponent} from "./pages/sso-page/sso-page.component";
 import {VotePageComponent} from "./pages/vote-page/vote-page.component";
 import {NotificationService} from "./services/notification.service";
 import {userReducer} from "./store/reducers/user-reducer";
+import { StatusIconComponent } from './components/status-icon/status-icon.component';
 
 const routes: Routes = [
   {path: "", component: ProfilePageComponent},
@@ -38,6 +39,7 @@ const routes: Routes = [
     ViewVoteModalComponent,
     CreateVoteModalComponent,
     SsoPageComponent,
+    StatusIconComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
