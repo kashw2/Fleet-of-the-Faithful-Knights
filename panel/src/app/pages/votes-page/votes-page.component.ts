@@ -1,24 +1,21 @@
 import {Location} from "@angular/common";
-import {AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild} from "@angular/core";
-import {MDBModalRef, MDBModalService, MdbTableDirective, MdbTablePaginationComponent, ModalOptions} from "angular-bootstrap-md";
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from "@angular/core";
+import {MDBModalService, MdbTableDirective, MdbTablePaginationComponent, ModalOptions} from "angular-bootstrap-md";
 import {Option} from "funfix-core";
 import {List} from "immutable";
 import {CookieService} from "ngx-cookie-service";
-import {User} from "../../../../../core/src";
 import {Vote, VoteJsonSerializer} from "../../../../../core/src/models/vote";
 import {FfkDateFormat, MomentUtils} from "../../../../../core/src/util/moment-utils";
+import {CreateVoteModalComponent} from "../../modals/create-vote-modal/create-vote-modal.component";
 import {ViewVoteModalComponent} from "../../modals/view-vote-modal/view-vote-modal.component";
 import {FfkApiService} from "../../services/ffk-api.service";
-import {CreateVoteModalComponent} from "../../modals/create-vote-modal/create-vote-modal.component";
-import {Store} from "@ngrx/store";
-import {AppState} from "../../store/state/app-state";
 
 @Component({
   selector: "app-vote-page",
-  templateUrl: "./vote-page.component.html",
-  styleUrls: ["./vote-page.component.scss"],
+  templateUrl: "./votes-page.component.html",
+  styleUrls: ["./votes-page.component.scss"],
 })
-export class VotePageComponent implements OnInit, AfterViewInit {
+export class VotesPageComponent implements OnInit, AfterViewInit {
 
   constructor(
     private ffkApi: FfkApiService,
@@ -109,7 +106,7 @@ export class VotePageComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.ffkApi.read.getVotesByType(this.getSelectedVoteType().getOrElse("All"))
       .subscribe(votes => {
-        this.votes = this.votes.concat(VoteJsonSerializer.instance.fromObjectToList(votes));
+        this.votes = VoteJsonSerializer.instance.fromObjectToList(votes);
         for (let i = 1; i <= this.getVotes().size; i++) {
           this.elements.push({
             candidate: "Candidate" + i,
@@ -134,6 +131,11 @@ export class VotePageComponent implements OnInit, AfterViewInit {
   openViewVoteModal(vote: Vote): void {
     const modalOptions: ModalOptions = {backdrop: true, animated: true, data: vote};
     this.modalService.show(ViewVoteModalComponent, modalOptions);
+  }
+
+  shouldTruncateRows(currentIndex: number): boolean {
+    return currentIndex + 1 >= this.mdbTablePagination.firstItemIndex
+      && currentIndex < this.mdbTablePagination.lastItemIndex;
   }
 
   // TODO: Put this in a util class or something

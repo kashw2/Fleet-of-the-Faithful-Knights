@@ -41,28 +41,29 @@
       <tbody>
       <tr *ngFor="let vote of getVotes(); let i = index">
         <th
-          *ngIf="vote.getId().nonEmpty() && i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
+          *ngIf="vote.getId().nonEmpty() && shouldTruncateRows(i)"
           class="py-2 hover-red cursor-pointer" scope="row">{{vote.getId().get()}}</th>
-        <td
-          *ngIf="vote.getCandidate().nonEmpty() && i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
-          class="py-2 hover-red cursor-pointer">{{vote.getCandidate().get()}}</td>
-        <td
-          *ngIf="vote.getSponsorUsername().nonEmpty() && i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
-          class="py-2 hover-red cursor-pointer">{{vote.getSponsorUsername().get()}}</td>
-        <td
-          *ngIf="vote.getGroup().nonEmpty() && i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
-          class="py-2 hover-red cursor-pointer">{{vote.getGroup().get()}}</td>
-        <td
-          *ngIf="vote.getCreatedDate().nonEmpty() && i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
-          class="py-2 hover-red cursor-pointer">{{toDateFormat(vote.getCreatedDate().get(), "DMY")}}</td>
-        <td
-          *ngIf="vote.getStatus().nonEmpty() && i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
-          class="py-2 hover-red cursor-pointer">
+        <td *ngIf="vote.getCandidate().nonEmpty() && shouldTruncateRows(i)"
+            class="py-2 hover-red cursor-pointer">{{vote.getCandidate().get()}}</td>
+        <td *ngIf="vote.getSponsorUsername().nonEmpty() && shouldTruncateRows(i)"
+            class="py-2 hover-red cursor-pointer">{{vote.getSponsorUsername().get()}}</td>
+        <td *ngIf="vote.getGroup().nonEmpty() && shouldTruncateRows(i)"
+            class="py-2 hover-red cursor-pointer">{{vote.getGroup().get()}}</td>
+        <td *ngIf="vote.getCreatedDate().nonEmpty() && shouldTruncateRows(i)"
+            class="py-2 hover-red cursor-pointer">{{toDateFormat(vote.getCreatedDate().get(), "DMY")}}</td>
+        <td *ngIf="vote.getStatus().nonEmpty() && shouldTruncateRows(i)"
+            class="py-2 hover-red cursor-pointer">
           <app-status-icon class="mx-2 px-1"></app-status-icon>
         </td>
-        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
+        <td *ngIf="shouldTruncateRows(i)"
             (click)="openViewVoteModal(vote)"
-            class="py-2 hover-red cursor-click">View
+            class="py-2 hover-red cursor-click">Notes
+        </td>
+        <td *ngIf="shouldTruncateRows(i)"
+            class="py-2 hover-red cursor-click">
+          <a *ngIf="vote.getId().nonEmpty()"
+             [href]="'vote/' + vote.getId().get()">View
+          </a>
         </td>
       </tr>
       </tbody>
