@@ -41,7 +41,7 @@ export class SsoPageComponent implements OnInit {
       return;
     }
 
-    this.http.get("http://localhost:8080".concat(`/user/register?code=${this.location.path().split("?code=")[1]}`))
+    this.ffkApi.write.writeUser(this.location.path().split("?code=")[1])
       .subscribe(o => {
         const token = o[tokenKey];
         this.cookieService.set("token", token, 365);
