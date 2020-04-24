@@ -1,4 +1,5 @@
 import {Component, OnInit} from "@angular/core";
+import {Store} from "@ngrx/store";
 import {MDBModalRef} from "angular-bootstrap-md";
 import {None, Option, Some} from "funfix-core";
 import {List} from "immutable";
@@ -9,7 +10,6 @@ import {idKey, User} from "../../../../../core/src";
 import {Vote, VoteJsonSerializer} from "../../../../../core/src/models/vote";
 import {FfkApiService} from "../../services/ffk-api.service";
 import {NotificationService} from "../../services/notification.service";
-import {Store} from "@ngrx/store";
 import {AppState} from "../../store/state/app-state";
 
 @Component({
@@ -53,6 +53,10 @@ export class CreateVoteModalComponent implements OnInit {
 
   private getUserToken(): string {
     return this.cookieService.get("token");
+  }
+
+  hideModal(): void {
+    this.modalRef.hide();
   }
 
   ngOnInit(): void {

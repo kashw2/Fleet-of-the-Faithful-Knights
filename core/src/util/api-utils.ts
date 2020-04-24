@@ -16,6 +16,7 @@ export class ApiUtils {
     }
 
     static parseNumberFromQuery(req: Request, key: string): Either<string, number> {
+        // @ts-ignore
         return EitherUtils.liftEither(req.query[key], `${key} does not exist in query`);
     }
 
@@ -28,6 +29,7 @@ export class ApiUtils {
     }
 
     static parseStringFromQuery(req: Request, key: string): Either<string, string> {
+        // @ts-ignore
         return EitherUtils.liftEither(req.query[key], `${key} does not exist in query`);
     }
 
