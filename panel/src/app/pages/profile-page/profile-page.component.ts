@@ -98,15 +98,13 @@ export class ProfilePageComponent implements OnInit {
           .flatMap(u => u.getId())
           .map(uid => {
             this.ffkApi.read.getVotesByUser(uid)
-              .subscribe(votes => this.votes = this.votes.concat(VoteJsonSerializer.instance.fromObjectToList(votes)));
+              .subscribe(votes => this.votes = VoteJsonSerializer.instance.fromObjectToList(votes));
             this.ffkApi.read.getVoteByStatus(uid, "true")
-              .subscribe(votes => {
-                this.passedVotes = this.passedVotes.concat(VoteJsonSerializer.instance.fromObjectToList(votes));
-              });
+              .subscribe(votes => this.passedVotes = VoteJsonSerializer.instance.fromObjectToList(votes));
           });
       });
     this.ffkApi.read.getNews()
-      .subscribe(news => this.news = this.news.concat(NewsJsonSerializer.instance.fromObjectToList(news)));
+      .subscribe(news => this.news = NewsJsonSerializer.instance.fromObjectToList(news));
   }
 
   // TODO: Put this in a util class or something
