@@ -7,7 +7,6 @@ import {CookieService} from "ngx-cookie-service";
 import {Vote, VoteJsonSerializer} from "../../../../../core/src/models/vote";
 import {FfkDateFormat, MomentUtils} from "../../../../../core/src/util/moment-utils";
 import {CreateVoteModalComponent} from "../../modals/create-vote-modal/create-vote-modal.component";
-import {ViewVoteModalComponent} from "../../modals/view-vote-modal/view-vote-modal.component";
 import {FfkApiService} from "../../services/ffk-api.service";
 
 @Component({
@@ -126,11 +125,6 @@ export class VotesPageComponent implements OnInit, AfterViewInit {
   openCreateVoteModal(): void {
     const modalOptions: ModalOptions = {backdrop: true, animated: true};
     this.modalService.show(CreateVoteModalComponent, modalOptions);
-  }
-
-  openViewVoteModal(vote: Vote): void {
-    const modalOptions: ModalOptions = {backdrop: true, animated: true, data: vote};
-    this.modalService.show(ViewVoteModalComponent, modalOptions);
   }
 
   shouldTruncateRows(currentIndex: number): boolean {

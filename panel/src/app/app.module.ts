@@ -14,7 +14,6 @@ import {AppComponent} from "./app.component";
 import {HeaderComponent} from "./components/header/header.component";
 import {StatusIconComponent} from "./components/status-icon/status-icon.component";
 import {CreateVoteModalComponent} from "./modals/create-vote-modal/create-vote-modal.component";
-import {ViewVoteModalComponent} from "./modals/view-vote-modal/view-vote-modal.component";
 import {ProfilePageComponent} from "./pages/profile-page/profile-page.component";
 import {SsoPageComponent} from "./pages/sso-page/sso-page.component";
 import {VotePageComponent} from "./pages/vote-page/vote-page.component";
@@ -38,7 +37,6 @@ const routes: Routes = [
     HeaderComponent,
     ProfilePageComponent,
     VotesPageComponent,
-    ViewVoteModalComponent,
     CreateVoteModalComponent,
     SsoPageComponent,
     StatusIconComponent,

@@ -56,10 +56,6 @@
           <app-status-icon class="mx-2 px-1"></app-status-icon>
         </td>
         <td *ngIf="shouldTruncateRows(i)"
-            (click)="openViewVoteModal(vote)"
-            class="py-2 hover-red cursor-click">Notes
-        </td>
-        <td *ngIf="shouldTruncateRows(i)"
             class="py-2 hover-red cursor-click">
           <a *ngIf="vote.getId().nonEmpty()"
              [href]="'vote/' + vote.getId().get()">View
