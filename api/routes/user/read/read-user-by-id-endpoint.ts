@@ -2,9 +2,9 @@ import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {ApiUtils, idKey, User, UserJsonSerializer} from "../../../../core/src";
 import {Database} from "../../../db/database";
-import {GetRoute} from "../../get-route";
+import {GetEndpoint} from "../../get-endpoint";
 
-export class ReadUserByIdEndpoint extends GetRoute {
+export class ReadUserByIdEndpoint extends GetEndpoint {
 
     constructor(private db: Database) {
         super("/user/id/:id");

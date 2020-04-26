@@ -3,9 +3,9 @@ import {Either} from "funfix-core";
 import {ApiUtils} from "../../../../core/src";
 import {Vote, VoteJsonSerializer} from "../../../../core/src/models/vote";
 import {Database} from "../../../db/database";
-import {GetRoute} from "../../get-route";
+import {GetEndpoint} from "../../get-endpoint";
 
-export class ReadVoteByIdEndpoint extends GetRoute {
+export class ReadVoteByIdEndpoint extends GetEndpoint {
 
     constructor(private db: Database) {
         super("/vote/id/:id");

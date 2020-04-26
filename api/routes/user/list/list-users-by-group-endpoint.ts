@@ -2,9 +2,9 @@ import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {ApiUtils, groupKey, UserJsonSerializer} from "../../../../core/src";
 import {Database} from "../../../db/database";
-import {GetRoute} from "../../get-route";
+import {GetEndpoint} from "../../get-endpoint";
 
-export class ListUsersByGroupEndpoint extends GetRoute {
+export class ListUsersByGroupEndpoint extends GetEndpoint {
 
     constructor(private db: Database) {
         super("/users/:group");

@@ -4,9 +4,9 @@ import {List} from "immutable";
 import {ApiUtils} from "../../../../core/src";
 import {Vote, VoteJsonSerializer} from "../../../../core/src/models/vote";
 import {Database} from "../../../db/database";
-import {GetRoute} from "../../get-route";
+import {GetEndpoint} from "../../get-endpoint";
 
-export class ListVotesEndpoint extends GetRoute {
+export class ListVotesEndpoint extends GetEndpoint {
 
     constructor(private db: Database) {
         super("/votes");

@@ -4,9 +4,9 @@ import {List} from "immutable";
 import {ApiUtils} from "../../../core/src";
 import {News, NewsJsonSerializer} from "../../../core/src/models/news";
 import {Database} from "../../db/database";
-import {GetRoute} from "../get-route";
+import {GetEndpoint} from "../get-endpoint";
 
-export class ListNewsEndpoint extends GetRoute {
+export class ListNewsEndpoint extends GetEndpoint {
 
     constructor(private db: Database) {
         super("/news");

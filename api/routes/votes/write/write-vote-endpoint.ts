@@ -4,9 +4,9 @@ import {ApiUtils} from "../../../../core/src";
 import {DbVote} from "../../../../core/src/models/db/db-vote";
 import {Vote, VoteJsonSerializer} from "../../../../core/src/models/vote";
 import {Database} from "../../../db/database";
-import {PostRoute} from "../../post-route";
+import {PostEndpoint} from "../../post-endpoint";
 
-export class WriteVoteEndpoint extends PostRoute {
+export class WriteVoteEndpoint extends PostEndpoint {
 
     constructor(private db: Database) {
         super("/vote/write");

@@ -1,7 +1,7 @@
 import {Request, Response, Router} from "express";
 import {RouteManager} from "./route-manager";
 
-export abstract class GetRoute extends RouteManager {
+export abstract class PostEndpoint extends RouteManager {
 
     constructor(private endpoint: string) {
         super();
@@ -12,7 +12,7 @@ export abstract class GetRoute extends RouteManager {
     }
 
     routeEndpoint(router: Router): void {
-        router.get(this.getEndpoint(), ((req, res, next) => {
+        router.post(this.getEndpoint(), ((req, res, next) => {
             if (this.isAuthorized()) {
                 try {
                     this.run(req, res);
@@ -27,5 +27,4 @@ export abstract class GetRoute extends RouteManager {
     }
 
     abstract run(req: Request, res: Response): void;
-
 }
