@@ -1,3 +1,5 @@
+import {Option} from "funfix-core";
+
 export type Group =
     "Developer"
     | "Guest"
@@ -73,6 +75,10 @@ export class MiscUtil {
                 console.log(`${role} os mpt a recognised discord role, defaulting to Guest`);
                 return "Guest";
         }
+    }
+
+    static parseGroupOption(name: string): Option<Group> {
+        return Option.of(this.parseGroup(name));
     }
 
     static parseGroup(name: string): Group {
