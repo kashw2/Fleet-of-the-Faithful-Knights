@@ -38,6 +38,11 @@ export class Vote {
         return this.candidate;
     }
 
+    public getCandidateName(): Option<string> {
+        return this.getCandidate()
+            .flatMap(c => c.getName());
+    }
+
     public getCreatedDate(): Option<string> {
         return this.createdDate;
     }
@@ -144,7 +149,7 @@ export class VoteJsonSerializer extends SimpleJsonSerializer<Vote> {
     toJson(value: Vote, builder: JsonBuilder): object {
         return builder.addOptional(value.getId(), idKey)
             .addOptionalSerialized(value.getSponsor(), sponsorKey, UserJsonSerializer.instance)
-            .addOptional(value.getCandidate(), candidateKey)
+            .addOptionalSerialized(value.getCandidate(), candidateKey, CandidateJsonSerializer.instance)
             .addOptional(value.getGroup(), groupKey)
             .addOptional(value.getNotes(), notesKey)
             .addList(value.getVoters(), votersKey)

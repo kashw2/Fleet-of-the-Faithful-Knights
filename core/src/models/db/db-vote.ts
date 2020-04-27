@@ -8,25 +8,30 @@ export class DbVote {
 
     constructor(
         private sponsorId: number,
-        private candidate: string,
+        private candidateName: string,
         private groupId: number,
         private notes: string = "",
     ) {
     }
 
     static fromVote(vote: Vote): Option<DbVote> {
-        return Option.map4(vote.getSponsorId(), vote.getCandidate(), vote.getGroup(), vote.getNotes(), (sid, c, g, n) => {
-            return new DbVote(
-                sid,
-                c,
-                MiscUtil.getGroupIdFromName(MiscUtil.parseGroup(g)),
-                n,
-            );
-        });
+        return Option.map4(
+            vote.getSponsorId(),
+            vote.getCandidateName(),
+            vote.getGroup(),
+            vote.getNotes(),
+            (sid, candidate, group, notes) => {
+                return new DbVote(
+                    sid,
+                    candidate,
+                    MiscUtil.getGroupIdFromName(MiscUtil.parseGroup(group)),
+                    notes,
+                );
+            });
     }
 
     getCandidate(): string {
-        return this.candidate;
+        return this.candidateName;
     }
 
     getGroupId(): number {

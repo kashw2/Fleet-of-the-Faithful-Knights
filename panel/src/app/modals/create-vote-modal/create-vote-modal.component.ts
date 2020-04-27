@@ -11,6 +11,7 @@ import {Vote, VoteJsonSerializer} from "../../../../../core/src/models/vote";
 import {FfkApiService} from "../../services/ffk-api.service";
 import {NotificationService} from "../../services/notification.service";
 import {AppState} from "../../store/state/app-state";
+import {Candidate} from "../../../../../core/src/models/candidate";
 
 @Component({
   selector: "app-create-vote-modal",
@@ -30,7 +31,7 @@ export class CreateVoteModalComponent implements OnInit {
       .subscribe(user => this.user = Option.of(user));
   }
 
-  candidateName: string;
+  candidate: Candidate;
   candidatePromotionGroup: string;
   user: Option<User> = None;
   voteNotes: string;
@@ -39,7 +40,7 @@ export class CreateVoteModalComponent implements OnInit {
     return new Vote(
       None,
       this.getUser(),
-      Some(this.candidateName),
+      Some(this.candidate),
       Some(this.candidatePromotionGroup),
       Some(this.voteNotes),
       List(),
