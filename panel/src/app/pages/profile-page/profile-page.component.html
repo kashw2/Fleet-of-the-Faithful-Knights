@@ -80,8 +80,8 @@
           <td scope="row" class="py-2 hover-red cursor-pointer">{{i + 1}}</td>
           <td *ngIf="vote.getSponsorUsername().nonEmpty()"
               class="py-2 hover-red cursor-pointer">{{vote.getSponsorUsername().get()}}</td>
-          <td *ngIf="vote.getCandidate().nonEmpty()"
-              class="py-2 hover-red cursor-pointer">{{vote.getCandidate().get()}}</td>
+          <td *ngIf="vote.getCandidateName().nonEmpty()"
+              class="py-2 hover-red cursor-pointer">{{vote.getCandidateName().get()}}</td>
           <td *ngIf="vote.getGroup().nonEmpty()" class="py-2 hover-red cursor-pointer">{{vote.getGroup().get()}}</td>
           <td *ngIf="vote.getNotes().nonEmpty()" class="py-2 hover-red cursor-pointer"><a>View Notes</a></td>
           <td *ngIf="vote.getCreatedDate().nonEmpty()"

@@ -43,8 +43,8 @@
         <th
           *ngIf="vote.getId().nonEmpty() && shouldTruncateRows(i)"
           class="py-2 hover-red cursor-pointer" scope="row">{{vote.getId().get()}}</th>
-        <td *ngIf="vote.getCandidate().nonEmpty() && shouldTruncateRows(i)"
-            class="py-2 hover-red cursor-pointer">{{vote.getCandidate().get()}}</td>
+        <td *ngIf="vote.getCandidateName().nonEmpty() && shouldTruncateRows(i)"
+            class="py-2 hover-red cursor-pointer">{{vote.getCandidateName().get()}}</td>
         <td *ngIf="vote.getSponsorUsername().nonEmpty() && shouldTruncateRows(i)"
             class="py-2 hover-red cursor-pointer">{{vote.getSponsorUsername().get()}}</td>
         <td *ngIf="vote.getGroup().nonEmpty() && shouldTruncateRows(i)"
