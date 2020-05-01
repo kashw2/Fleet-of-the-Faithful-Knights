@@ -4,7 +4,7 @@ import {ApiUtils, EitherUtils} from "../../../../core/src";
 import {DiscordApi} from "../../../../core/src/misc/discord-api";
 import {DbUser} from "../../../../core/src/models/db/db-user";
 import {Database} from "../../../db/database";
-import {GetEndpoint} from "../../get-endpoint";
+import {GetEndpoint} from "../../../../core/src/server/get-endpoint";
 
 export class UserRegisterEndpoint extends GetEndpoint {
 

@@ -16,7 +16,6 @@ import {StatusIconComponent} from "./components/status-icon/status-icon.componen
 import {CreateVoteModalComponent} from "./modals/create-vote-modal/create-vote-modal.component";
 import {ProfilePageComponent} from "./pages/profile-page/profile-page.component";
 import {SsoPageComponent} from "./pages/sso-page/sso-page.component";
-import {VotePageComponent} from "./pages/vote-page/vote-page.component";
 import {VotesPageComponent} from "./pages/votes-page/votes-page.component";
 import {NotificationService} from "./services/notification.service";
 import {userReducer} from "./store/reducers/user-reducer";
@@ -27,7 +26,6 @@ const routes: Routes = [
   {path: "sso", component: SsoPageComponent},
   {path: "profile", component: ProfilePageComponent},
   {path: "votes", component: VotesPageComponent},
-  {path: "vote/:id", component: VotePageComponent},
 ];
 
 @NgModule({
@@ -40,7 +38,6 @@ const routes: Routes = [
     CreateVoteModalComponent,
     SsoPageComponent,
     StatusIconComponent,
-    VotePageComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),

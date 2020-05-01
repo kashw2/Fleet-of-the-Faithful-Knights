@@ -31,7 +31,7 @@ export class CreateVoteModalComponent implements OnInit {
       .subscribe(user => this.user = Option.of(user));
   }
 
-  candidate: Candidate;
+  candidate: string;
   candidatePromotionGroup: string;
   user: Option<User> = None;
   voteNotes: string;
@@ -40,7 +40,7 @@ export class CreateVoteModalComponent implements OnInit {
     return new Vote(
       None,
       this.getUser(),
-      Some(this.candidate),
+      Some(new Candidate(None, Some(this.candidate))),
       Some(this.candidatePromotionGroup),
       Some(this.voteNotes),
       List(),
@@ -50,10 +50,6 @@ export class CreateVoteModalComponent implements OnInit {
 
   getUser(): Option<User> {
     return this.user;
-  }
-
-  private getUserToken(): string {
-    return this.cookieService.get("token");
   }
 
   hideModal(): void {

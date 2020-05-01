@@ -4,7 +4,7 @@ import {ApiUtils} from "../../../../core/src";
 import {DbVote} from "../../../../core/src/models/db/db-vote";
 import {Vote, VoteJsonSerializer} from "../../../../core/src/models/vote";
 import {Database} from "../../../db/database";
-import {PostEndpoint} from "../../post-endpoint";
+import {PostEndpoint} from "../../../../core/src/server/post-endpoint";
 
 export class WriteVoteEndpoint extends PostEndpoint {
 

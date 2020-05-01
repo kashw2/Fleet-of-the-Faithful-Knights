@@ -2,7 +2,7 @@ import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {ApiUtils, idKey, User, UserJsonSerializer} from "../../../../core/src";
 import {Database} from "../../../db/database";
-import {GetEndpoint} from "../../get-endpoint";
+import {GetEndpoint} from "../../../../core/src/server/get-endpoint";
 
 export class ReadUserByIdEndpoint extends GetEndpoint {
 
