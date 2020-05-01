@@ -4,7 +4,7 @@
   </div>
   <div class="modal-body py-0">
     <div class="md-form">
-      <input mdbInput type="text" id="candidate-name" class="form-control my-4" [(ngModel)]="candidateName">
+      <input mdbInput type="text" id="candidate-name" class="form-control my-4" [(ngModel)]="candidate">
       <label for="candidate-name">Candidate Name</label>
       <!-- TODO: Use something other than the default Bootstrap <select> -->
       <select id="candidate-group" class="browser-default custom-select my-4" [(ngModel)]="candidatePromotionGroup">
@@ -26,7 +26,7 @@
     </div>
   </div>
   <div class="modal-footer border-0">
-    <button mdbBtn type="button" color="danger" outline="false" class="btn waves-effect" mdbWavesEffect (click)="modalRef.hide()">Cancel</button>
+    <button mdbBtn type="button" color="danger" outline="false" class="btn waves-effect" mdbWavesEffect (click)="hideModal()">Cancel</button>
     <button mdbBtn type="button" color="success" outline="false" class="btn waves-effect" mdbWavesEffect (click)="submitVote($event)">Create</button>
   </div>
 </div>

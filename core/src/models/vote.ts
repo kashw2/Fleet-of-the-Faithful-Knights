@@ -12,11 +12,12 @@ import {
     parseNumber,
     parseSerialized,
     parseString,
-    SimpleJsonSerializer, sponsorKey,
+    SimpleJsonSerializer,
+    sponsorKey,
     statusKey,
-    userKey,
     votersKey,
 } from "..";
+import {Candidate, CandidateJsonSerializer} from "./candidate";
 import {User, UserJsonSerializer} from "./user";
 
 export class Vote {
@@ -24,7 +25,7 @@ export class Vote {
     constructor(
         readonly id: Option<number> = None,
         readonly sponsor: Option<User> = None,
-        readonly candidate: Option<string> = None,
+        readonly candidate: Option<Candidate> = None,
         readonly group: Option<string> = None,
         readonly notes: Option<string> = None,
         readonly voters: List<User> = List(),
@@ -33,8 +34,13 @@ export class Vote {
     ) {
     }
 
-    public getCandidate(): Option<string> {
+    public getCandidate(): Option<Candidate> {
         return this.candidate;
+    }
+
+    public getCandidateName(): Option<string> {
+        return this.getCandidate()
+            .flatMap(c => c.getName());
     }
 
     public getCreatedDate(): Option<string> {
@@ -59,7 +65,7 @@ export class Vote {
 
     public getSponsorId(): Option<number> {
         return this.getSponsor()
-            .flatMap(u =>  u.getId());
+            .flatMap(u => u.getId());
     }
 
     public getSponsorUsername(): Option<string> {
@@ -131,7 +137,7 @@ export class VoteJsonSerializer extends SimpleJsonSerializer<Vote> {
         return new Vote(
             parseNumber(json[idKey]),
             parseSerialized(json[sponsorKey], UserJsonSerializer.instance),
-            parseString(json[candidateKey]),
+            parseSerialized(json[candidateKey], CandidateJsonSerializer.instance),
             parseString(json[groupKey]),
             parseString(json[notesKey]),
             parseList(json[votersKey]),
@@ -143,7 +149,7 @@ export class VoteJsonSerializer extends SimpleJsonSerializer<Vote> {
     toJson(value: Vote, builder: JsonBuilder): object {
         return builder.addOptional(value.getId(), idKey)
             .addOptionalSerialized(value.getSponsor(), sponsorKey, UserJsonSerializer.instance)
-            .addOptional(value.getCandidate(), candidateKey)
+            .addOptionalSerialized(value.getCandidate(), candidateKey, CandidateJsonSerializer.instance)
             .addOptional(value.getGroup(), groupKey)
             .addOptional(value.getNotes(), notesKey)
             .addList(value.getVoters(), votersKey)

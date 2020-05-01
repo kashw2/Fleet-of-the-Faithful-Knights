@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VotePageComponent } from './vote-page.component';
+import { StatusIconComponent } from './status-icon.component';
 
-describe('VotePageComponent', () => {
-  let component: VotePageComponent;
-  let fixture: ComponentFixture<VotePageComponent>;
+describe('IconComponent', () => {
+  let component: StatusIconComponent;
+  let fixture: ComponentFixture<StatusIconComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VotePageComponent ]
+      declarations: [ StatusIconComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VotePageComponent);
+    fixture = TestBed.createComponent(StatusIconComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -111,6 +111,7 @@ export function parseList<T>(list: T): List<T> {
     if (Option.of(list).isEmpty()) {
         return List();
     }
+    // @ts-ignore
     if (list.constructor.name === "Array") {
         // @ts-ignore
         return parseListFromArray(list as []);

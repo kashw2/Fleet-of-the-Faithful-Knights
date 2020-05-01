@@ -4,9 +4,9 @@ import {ApiUtils, EitherUtils} from "../../../../core/src";
 import {DiscordApi} from "../../../../core/src/misc/discord-api";
 import {DbUser} from "../../../../core/src/models/db/db-user";
 import {Database} from "../../../db/database";
-import {GetRoute} from "../../get-route";
+import {GetEndpoint} from "../../../../core/src/server/get-endpoint";
 
-export class UserRegisterEndpoint extends GetRoute {
+export class UserRegisterEndpoint extends GetEndpoint {
 
     constructor(private db: Database) {
         super("/user/register");

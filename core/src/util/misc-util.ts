@@ -1,3 +1,5 @@
+import {Option} from "funfix-core";
+
 export type Group =
     "Developer"
     | "Guest"
@@ -70,7 +72,7 @@ export class MiscUtil {
             case "539194424001953793":
                 return "Squire";
             default:
-                console.log(`${role} os mpt a recognised discord role, defaulting to Guest`);
+                console.log(`${role} is not a recognised discord role, defaulting to Guest`);
                 return "Guest";
         }
     }
@@ -103,6 +105,10 @@ export class MiscUtil {
                 console.log(`${name} is not a recognised group, defaulting to Guest`);
                 return "Guest";
         }
+    }
+
+    static parseGroupOption(name: string): Option<Group> {
+        return Option.of(this.parseGroup(name));
     }
 
 }

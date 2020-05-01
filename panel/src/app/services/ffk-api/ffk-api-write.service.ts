@@ -16,6 +16,10 @@ export class FfkApiWriteService {
     return "http://localhost:8080";
   }
 
+  writeUser(code: string): Observable<object> {
+    return this.http.get(this.getHostUrl().concat(`/user/register?code=${code}`));
+  }
+
   writeVote(vote: object): Observable<object> {
     return this.http.post(this.getHostUrl().concat("/vote/write"), {vote});
   }

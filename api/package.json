@@ -7,18 +7,16 @@
   "scripts": {
     "start": "node app.js",
     "start-dev": "nodemon --inspect app.js",
-    "compile": "tsc",
-    "compile-watch": "tsc --watch",
-    "build": "webpack",
-    "build-watch": "webpack -w",
-    "initialise-dev": "concurrently \" npm run compile-watch \" \" npm run start-dev \""
+    "build": "tsc",
+    "build-watch": "tsc --watch",
+    "build-dev-watch": "concurrently \" npm run build-watch \" \" npm run start-dev \""
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@types/body-parser": "^1.19.0",
     "@types/cors": "^2.8.6",
-    "@types/node": "^13.11.1",
+    "@types/node": "^13.13.2",
     "@types/passport": "^1.0.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",

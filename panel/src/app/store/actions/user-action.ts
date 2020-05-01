@@ -1,21 +1,8 @@
 import {Action} from "@ngrx/store";
 import {User} from "../../../../../core/src";
 
-export const readUser = "[USER] Read";
 export const addUser = "[USER] Add";
 export const removeUser = "[USER] Remove";
-
-export class ReadUserAction implements Action {
-  readonly type = readUser;
-
-  constructor(public data: User) {
-  }
-
-  getData(): User {
-    return this.data;
-  }
-
-}
 
 export class AddUserAction implements Action {
   readonly type = addUser;
@@ -41,4 +28,4 @@ export class RemoveUserAction implements Action {
 
 }
 
-export type UserActions = ReadUserAction | AddUserAction | RemoveUserAction;
+export type UserActions = AddUserAction | RemoveUserAction;
