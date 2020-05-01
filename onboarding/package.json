@@ -1,0 +1,16 @@
+{
+  "name": "onboarding",
+  "version": "1.0.0",
+  "description": "Onboarding/Ingestion Server",
+  "author": "kashw2 <supra4keanu@hotmail.com>",
+  "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights/tree/master/onboarding#readme",
+  "license": "ISC",
+  "main": "lib/onboarding.js",
+  "directories": {
+  },
+  "files": [
+  ],
+  "scripts": {
+
+  }
+}
