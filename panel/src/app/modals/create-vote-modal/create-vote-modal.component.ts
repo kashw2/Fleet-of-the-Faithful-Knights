@@ -7,11 +7,11 @@ import {CookieService} from "ngx-cookie-service";
 import {fromEvent} from "rxjs";
 import {debounceTime, tap} from "rxjs/operators";
 import {idKey, User} from "../../../../../core/src";
+import {Candidate} from "../../../../../core/src/models/candidate";
 import {Vote, VoteJsonSerializer} from "../../../../../core/src/models/vote";
 import {FfkApiService} from "../../services/ffk-api.service";
 import {NotificationService} from "../../services/notification.service";
 import {AppState} from "../../store/state/app-state";
-import {Candidate} from "../../../../../core/src/models/candidate";
 
 @Component({
   selector: "app-create-vote-modal",
