@@ -1,10 +1,11 @@
 import {None, Option} from "funfix-core";
 import {
+    discordIdKey,
+    discordNameKey,
     groupKey,
     idKey,
     JsonBuilder,
     memberSinceKey,
-    nameKey,
     parseNumber,
     parseString,
     SimpleJsonSerializer,
@@ -15,10 +16,19 @@ export class Candidate {
 
     constructor(
         readonly id: Option<number> = None,
-        readonly name: Option<string> = None,
+        readonly discordId: Option<number> = None,
+        readonly discordName: Option<string> = None,
         readonly group: Option<Group> = None,
         readonly memberSince: Option<string> = None,
     ) {
+    }
+
+    public getDiscordId(): Option<number> {
+        return this.discordId;
+    }
+
+    public getDiscordName(): Option<string> {
+        return this.discordName;
     }
 
     public getGroup(): Option<Group> {
@@ -29,12 +39,8 @@ export class Candidate {
         return this.id;
     }
 
-    getMemberSince(): Option<string> {
+    public getMemberSince(): Option<string> {
         return this.memberSince;
-    }
-
-    public getName(): Option<string> {
-        return this.name;
     }
 
 }
@@ -46,7 +52,8 @@ export class CandidateJsonSerializer extends SimpleJsonSerializer<Candidate> {
     fromJson(json: any): Candidate {
         return new Candidate(
             parseNumber(json[idKey]),
-            parseString(json[nameKey]),
+            parseNumber(json[discordIdKey]),
+            parseString(json[discordNameKey]),
             MiscUtil.parseGroupOption(json[groupKey]),
             parseString(json[memberSinceKey]),
         );
@@ -54,7 +61,8 @@ export class CandidateJsonSerializer extends SimpleJsonSerializer<Candidate> {
 
     toJson(value: Candidate, builder: JsonBuilder): object {
         return builder.addOptional(value.getId(), idKey)
-            .addOptional(value.getName(), nameKey)
+            .addOptional(value.getDiscordId(), discordIdKey)
+            .addOptional(value.getDiscordName(), discordNameKey)
             .addOptional(value.getGroup(), groupKey)
             .addOptional(value.getMemberSince(), memberSinceKey)
             .build();
