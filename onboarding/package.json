@@ -6,7 +6,7 @@
   "keywords": [],
   "scripts": {
     "start": "node app.js",
-    "start-dev": "nodemon --inspect app.js",
+    "start-dev": "nodemon --inspect=9228 app.js",
     "build": "tsc",
     "build-watch": "tsc --watch",
     "build-dev-watch": "concurrently \" npm run build-watch \" \" npm run start-dev \""
