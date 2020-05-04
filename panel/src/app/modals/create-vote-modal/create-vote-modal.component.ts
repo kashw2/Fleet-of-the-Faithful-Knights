@@ -40,7 +40,7 @@ export class CreateVoteModalComponent implements OnInit {
     return new Vote(
       None,
       this.getUser(),
-      Some(new Candidate(None, Some(this.candidate))),
+      Some(new Candidate(None, None, Some(this.candidate))),
       Some(this.candidatePromotionGroup),
       Some(this.voteNotes),
       List(),

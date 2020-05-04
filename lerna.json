@@ -6,6 +6,7 @@
     "./api",
     "./core",
     "./panel",
-    "./discord-bot"
+    "./discord-bot",
+    "./onboarding"
   ]
 }
