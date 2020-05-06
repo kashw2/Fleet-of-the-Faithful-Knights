@@ -5,9 +5,6 @@
   "author": "kashw2 <supra4keanu@hotmail.com>",
   "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights/tree/master/discord-bot#readme",
   "license": "ISC",
-  "main": "",
-  "directories": {},
-  "files": [],
   "scripts": {
     "start": "node app.js",
     "start-dev": "nodemon --inspect app.js",

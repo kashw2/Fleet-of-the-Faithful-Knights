@@ -18,11 +18,11 @@
     "@types/express": "^4.17.6",
     "@types/moment": "^2.13.0",
     "@types/mssql": "^6.0.0",
-    "@types/node": "^13.13.4",
+    "@types/node": "^13.13.5",
     "express": "^4.17.1",
     "funfix-core": "^7.0.1",
     "immutable": "^4.0.0-rc.12",
-    "moment": "^2.25.1",
+    "moment": "^2.25.3",
     "mssql": "^6.0.1",
     "rxjs": "^6.5.5"
   }

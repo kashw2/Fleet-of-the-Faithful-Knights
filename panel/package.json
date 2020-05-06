@@ -20,7 +20,7 @@
     "@angular/platform-browser-dynamic": "~9.0.4",
     "@angular/router": "~9.0.4",
     "@fortawesome/fontawesome-free": "^5.13.0",
-    "@ngrx/store": "^9.1.0",
+    "@ngrx/store": "^9.1.1",
     "@types/chart.js": "^2.9.20",
     "angular-bootstrap-md": "^8.10.1",
     "animate.css": "^3.7.2",
@@ -32,7 +32,7 @@
     "ngx-cookie-service": "^3.0.4",
     "ngx-toastr": "^12.0.1",
     "rxjs": "^6.5.5",
-    "tslib": "^1.11.1",
+    "tslib": "^1.11.2",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
@@ -40,7 +40,7 @@
     "@angular/cli": "~9.0.4",
     "@angular/compiler-cli": "~9.0.4",
     "@angular/language-service": "~9.0.4",
-    "@ngrx/store-devtools": "^9.1.0",
+    "@ngrx/store-devtools": "^9.1.1",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
     "codelyzer": "^5.2.2",
