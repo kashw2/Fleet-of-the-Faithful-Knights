@@ -15,6 +15,7 @@ export class JsonBuilder {
 
     addList<T>(values: List<T>, key: string): JsonBuilder {
         if (!values.isEmpty()) {
+            // @ts-ignore
             values.map((value, iteration) => this.object[key][iteration]);
             return new JsonBuilder(this.object);
         }
@@ -32,6 +33,7 @@ export class JsonBuilder {
 
     addOptionalSerialized<T>(value: Option<T>, key: string, serializer: SimpleJsonSerializer<T>): JsonBuilder {
         if (!value.isEmpty()) {
+            // @ts-ignore
             this.object[key] = serializer.toJsonImpl(value.get());
             return new JsonBuilder(this.object);
         }
