@@ -2,7 +2,7 @@
 
 Fleet of the Faithful Knights (FFK) is a Star Citizen organisation that seeks to be a beacon of light in a dark universe.
 
-This is the monorepo for the current codebase that is used within the administrative reigns of the org. As of now this consists of a working read and write API, Voting Panel and in the future will also consist of a Discord Bot.
+This is the monorepo for the current codebase that is used within the administrative reigns of the org. As of now this consists of a working read and write API, Voting Panel, Onboarding service and in the future will also consist of a Discord Bot.
 
 Almost all the projects inside the repo will be written in/using a functional paradigm and as such you'll see usage of Option, Either, List, Set and Map data structures littered throughout the codebase.
 
