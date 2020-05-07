@@ -25,7 +25,18 @@ export class DiscordApi {
         return "539188746114039818";
     }
 
-    static getGuildMember(userId: string, guildId: string, accessToken: string): Promise<Either<string, DiscordGuildMember>> {
+    static getGuild(guildId: string = this.getFfkGuildId(), accessToken: string = this.getDiscordPanelBotToken(), count: boolean = true): Promise<Either<string, DiscordGuild>> {
+        return axios.default.get(this.getDiscordApiUrl().concat(`/guilds/${guildId}?with_counts=${count}`), {
+            headers: {
+                Authorization: `Bot ${this.getDiscordPanelBotToken()}`,
+                access_token: accessToken,
+            },
+        })
+            .then(x => Right(DiscordGuildJsonSerializer.instance.fromJson(x.data)))
+            .catch(x => Left(x));
+    }
+
+    static getGuildMember(userId: string, guildId: string = this.getFfkGuildId(), accessToken: string = this.getDiscordPanelBotToken()): Promise<Either<string, DiscordGuildMember>> {
         return axios.default.get(this.getDiscordApiUrl().concat(`/guilds/${guildId}/members/${userId}`), {
             headers: {
                 Authorization: `Bot ${this.getDiscordPanelBotToken()}`,
@@ -39,11 +50,12 @@ export class DiscordApi {
     // This function take a guildId just so anytime it's called, we can tell by the params that we need to input a guild id.
     // This is something that is intended to create ease in understanding of the codebase, some may not realise at first that you can set this using the getFfkGuildId function
     static getGuildMembers(
+        after: number = 0,
+        limit: number = 1000,
         guildId: string = this.getFfkGuildId(),
         accessToken: string = this.getDiscordPanelBotToken(),
-        limit: number = 100,
     ): Promise<Either<string, List<DiscordGuildMember>>> {
-        return axios.default.get(this.getDiscordApiUrl().concat(`/guilds/${guildId}/members?limit=${limit}`), {
+        return axios.default.get(this.getDiscordApiUrl().concat(`/guilds/${guildId}/members?limit=${limit}&after=${after}`), {
             headers: {
                 Authorization: `Bot ${this.getDiscordPanelBotToken()}`,
                 access_token: accessToken,
@@ -57,7 +69,7 @@ export class DiscordApi {
      *
      * Used to return an OAuthResponse containing the Access Code for other requests.
      * Creates the foundation for usage of the Discord API
-     * NOTE: OAuth is only used for non-bot/user requests
+     * NOTE: OAuth is only used for non-bot/users requests
      *
      * @param clientId the bot client id
      * @param clientSecret the bot client secret
