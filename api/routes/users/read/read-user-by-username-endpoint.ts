@@ -1,13 +1,13 @@
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {ApiUtils, UserJsonSerializer, usernameKey} from "../../../../core/src";
-import {Database} from "../../../db/database";
 import {GetEndpoint} from "../../../../core/src/server/get-endpoint";
+import {Database} from "../../../db/database";
 
 export class ReadUserByUsernameEndpoint extends GetEndpoint {
 
     constructor(private db: Database) {
-        super("/users/username/:username");
+        super("/user/username/:username");
     }
 
     private getName(req: Request): Either<string, string> {
