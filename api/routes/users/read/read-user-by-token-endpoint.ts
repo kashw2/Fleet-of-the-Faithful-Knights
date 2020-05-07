@@ -7,7 +7,7 @@ import {GetEndpoint} from "../../../../core/src/server/get-endpoint";
 export class ReadUserByTokenEndpoint extends GetEndpoint {
 
     constructor(private db: Database) {
-        super("/user/token/:token");
+        super("/users/token/:token");
     }
 
     private getToken(req: Request): Either<string, string> {

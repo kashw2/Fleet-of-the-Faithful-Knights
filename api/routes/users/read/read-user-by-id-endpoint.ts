@@ -7,7 +7,7 @@ import {GetEndpoint} from "../../../../core/src/server/get-endpoint";
 export class ReadUserByIdEndpoint extends GetEndpoint {
 
     constructor(private db: Database) {
-        super("/user/id/:id");
+        super("/users/id/:id");
     }
 
     private getUser(userId: number): Either<string, User> {

@@ -7,7 +7,7 @@ import {GetEndpoint} from "../../../../core/src/server/get-endpoint";
 export class ReadUserByUsernameEndpoint extends GetEndpoint {
 
     constructor(private db: Database) {
-        super("/user/username/:username");
+        super("/users/username/:username");
     }
 
     private getName(req: Request): Either<string, string> {
