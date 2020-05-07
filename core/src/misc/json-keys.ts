@@ -28,3 +28,5 @@ export const statusKey = "status";
 export const sponsorIdKey = "sponsor_id";
 export const discordIdKey = "discord_id";
 export const discordNameKey = "discord_name";
+export const approximateMemberCountKey = "approximate_member_count";
+export const joinedAtKey = "joined_at";
