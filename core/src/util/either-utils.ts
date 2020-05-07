@@ -1,4 +1,5 @@
 import {Either, Left, Option, Right} from "funfix-core";
+import {List} from "immutable";
 
 export class EitherUtils {
 
@@ -17,6 +18,14 @@ export class EitherUtils {
             return Left(exception);
         }
         return Right(value.get());
+    }
+
+    /**
+     * Verify that list items are Right and if not, return List();
+     */
+    static verifyList<A>(list: List<Either<any, A>>): List<A> {
+        return list.filter(item => item.isRight())
+            .map(x => x.get());
     }
 
 }
