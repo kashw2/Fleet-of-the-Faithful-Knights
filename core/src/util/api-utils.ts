@@ -25,7 +25,7 @@ export class ApiUtils {
     }
 
     static parseSerializedListFromBody<T>(req: Request, key: string, serializer: SimpleJsonSerializer<T>): Either<string, List<T>> {
-        return EitherUtils.liftEither(serializer.fromJsonArray(req.body[key]), `unable to serialize ${key} from body`);
+        return EitherUtils.liftEither(serializer.fromJsonArray(List(req.body[key])), `unable to serialize ${key} from body`);
     }
 
     static parseStringFromPath(req: Request, key: string): Either<string, string> {
@@ -58,6 +58,20 @@ export class ApiUtils {
                 return;
             }
             res.send(x.get());
+        })
+            .catch(x => {
+                console.error(x);
+                res.send(x).status(500);
+            });
+    }
+
+    static sendResultPromiseEffector<A>(req: Promise<Either<string, A>>, res: Response, f: (x: any) => object): void {
+        req.then(x => {
+            if (x.isLeft()) {
+                res.send(x.value);
+                return;
+            }
+            res.send(f(x.get()));
         })
             .catch(x => {
                 console.error(x);

@@ -4,6 +4,14 @@ import {List} from "immutable";
 export class EitherUtils {
 
     /**
+     * Flattens a list of Eithers to return a new list of Rights
+     */
+    static flattenList<A>(list: List<Either<any, A>>): List<A> {
+        return list.filter(item => item.isRight())
+            .map(x => x.get());
+    }
+
+    /**
      * lifts a type to an Either
      */
     static liftEither<A>(value: A, exception: string): Either<string, A> {
@@ -21,11 +29,11 @@ export class EitherUtils {
     }
 
     /**
-     * Verify that list items are Right and if not, return List();
+     * Confirmed state of an Either containing a List
+     * Returns the right side of the List if Right and an empty List if Left
      */
-    static verifyList<A>(list: List<Either<any, A>>): List<A> {
-        return list.filter(item => item.isRight())
-            .map(x => x.get());
+    static toList<T>(either: Either<any, List<T>>): List<T> {
+        return either.getOrElse(List());
     }
 
 }
