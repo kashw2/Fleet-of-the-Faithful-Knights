@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
-import {Collection} from "immutable";
+import {Collection, List} from "immutable";
 import {parseBoolean, SimpleJsonSerializer} from "..";
 import {EitherUtils} from "./either-utils";
 
@@ -22,6 +22,10 @@ export class ApiUtils {
 
     static parseSerializedFromBody<T>(req: Request, key: string, serializer: SimpleJsonSerializer<T>): Either<string, T> {
         return EitherUtils.liftEither(serializer.fromJson(req.body[key]), `unable to serialize ${key} from body`);
+    }
+
+    static parseSerializedListFromBody<T>(req: Request, key: string, serializer: SimpleJsonSerializer<T>): Either<string, List<T>> {
+        return EitherUtils.liftEither(serializer.fromJsonArray(List(req.body[key])), `unable to serialize ${key} from body`);
     }
 
     static parseStringFromPath(req: Request, key: string): Either<string, string> {
@@ -54,6 +58,20 @@ export class ApiUtils {
                 return;
             }
             res.send(x.get());
+        })
+            .catch(x => {
+                console.error(x);
+                res.send(x).status(500);
+            });
+    }
+
+    static sendResultPromiseEffector<A>(req: Promise<Either<string, A>>, res: Response, f: (x: any) => object): void {
+        req.then(x => {
+            if (x.isLeft()) {
+                res.send(x.value);
+                return;
+            }
+            res.send(f(x.get()));
         })
             .catch(x => {
                 console.error(x);

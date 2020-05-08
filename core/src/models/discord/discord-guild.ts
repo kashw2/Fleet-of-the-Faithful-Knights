@@ -1,5 +1,13 @@
 import {None, Option} from "funfix-core";
-import {idKey, JsonBuilder, nameKey, parseString, SimpleJsonSerializer} from "../..";
+import {
+    approximateMemberCountKey,
+    idKey,
+    JsonBuilder,
+    nameKey,
+    parseNumber,
+    parseString,
+    SimpleJsonSerializer
+} from "../..";
 
 /**
  * This class should never find usage in the API cache
@@ -10,7 +18,12 @@ export class DiscordGuild {
     constructor(
         readonly id: Option<string> = None,
         readonly name: Option<string> = None,
+        readonly memberCount: Option<number> = None,
     ) {
+    }
+
+    getApproximateMemberCount(): Option<number> {
+        return this.memberCount;
     }
 
     getId(): Option<string> {
@@ -35,12 +48,16 @@ export class DiscordGuildJsonSerializer extends SimpleJsonSerializer<DiscordGuil
         return new DiscordGuild(
             parseString(json[idKey]),
             parseString(json[nameKey]),
+            parseNumber(json[approximateMemberCountKey]),
         );
     }
 
     toJson(value: DiscordGuild, builder: JsonBuilder): object {
-        return builder.addOptional(value.getId(), idKey)
-            .addOptional(value.getName(), nameKey);
+        return builder
+            .addOptional(value.getId(), idKey)
+            .addOptional(value.getName(), nameKey)
+            .addOptional(value.getApproximateMemberCount(), approximateMemberCountKey)
+            .build();
     }
 
 }

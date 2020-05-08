@@ -9,7 +9,7 @@ import {GetEndpoint} from "../../../../core/src/server/get-endpoint";
 export class ListVotesByUserEndpoint extends GetEndpoint {
 
     constructor(private db: Database) {
-        super("/votes/user/:id");
+        super("/votes/users/:id");
     }
 
     private getUserId(req: Request): Either<string, number> {

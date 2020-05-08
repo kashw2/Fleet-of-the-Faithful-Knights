@@ -1,6 +1,15 @@
 import {None, Option, Some} from "funfix-core";
 import {List} from "immutable";
-import {JsonBuilder, parseList, parseSerialized, rolesKey, SimpleJsonSerializer, userKey} from "../..";
+import {
+    joinedAtKey,
+    JsonBuilder,
+    parseList,
+    parseSerialized,
+    parseString,
+    rolesKey,
+    SimpleJsonSerializer,
+    userKey
+} from "../..";
 import {DiscordUser, DiscordUserJsonSerilaizer} from "./discord-user";
 
 /**
@@ -12,7 +21,12 @@ export class DiscordGuildMember {
     constructor(
         readonly user: Option<DiscordUser> = None,
         readonly roles: List<string> = List(),
+        readonly joinedAt: Option<string> = None,
     ) {
+    }
+
+    getJoinedAt(): Option<string> {
+        return this.joinedAt;
     }
 
     getRoles(): List<string> {
@@ -26,7 +40,8 @@ export class DiscordGuildMember {
     withDiscordUserLocale(user: DiscordUser): DiscordGuildMember {
         return new DiscordGuildMember(
             this.getUser().flatMap(u => Some(user)),
-            this.roles,
+            this.getRoles(),
+            this.getJoinedAt(),
         );
     }
 
@@ -34,6 +49,7 @@ export class DiscordGuildMember {
         return new DiscordGuildMember(
             this.getUser(),
             List.of(role),
+            this.getJoinedAt(),
         );
     }
 
@@ -51,12 +67,14 @@ export class DiscordGuildMemberJsonSerializer extends SimpleJsonSerializer<Disco
         return new DiscordGuildMember(
             parseSerialized(json[userKey], DiscordUserJsonSerilaizer.instance),
             parseList(json[rolesKey]),
+            parseString(json[joinedAtKey]),
         );
     }
 
     toJson(value: DiscordGuildMember, builder: JsonBuilder): object {
         return builder.addOptionalSerialized(value.getUser(), userKey, DiscordUserJsonSerilaizer.instance)
             .addList(value.getRoles(), rolesKey)
+            .addOptional(value.getJoinedAt(), joinedAtKey)
             .build();
     }
 

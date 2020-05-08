@@ -8,4 +8,8 @@ export class OptionUtils {
             .map(x => x.get());
     }
 
+    static toList<A>(opt: Option<List<A>>): List<A> {
+        return opt.getOrElse(List());
+    }
+
 }

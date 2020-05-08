@@ -81,6 +81,7 @@ export function parseMoment(s: unknown): Option<moment.Moment> {
 
 function parseMomentFromString(s: string): Option<moment.Moment> {
     if (moment.isDate(s)) {
+        // @ts-ignore
         return Some(moment(s));
     }
     return None;
