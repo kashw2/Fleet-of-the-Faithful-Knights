@@ -5,6 +5,7 @@ import {EitherUtils, User, UserJsonSerializer} from "..";
 import {News, NewsJsonSerializer} from "../models/news";
 import {Vote, VoteJsonSerializer} from "../models/vote";
 import {DiscordOAuthResponse, DiscordOAuthResponseJsonSerializer} from "./discord-api";
+import {Candidate, CandidateJsonSerializer} from "../models/candidate";
 
 export class FfkApi {
 
@@ -64,6 +65,14 @@ export class FfkApi {
     static loginUser(code: string): Promise<Either<string, DiscordOAuthResponse>> {
         return axios.default.get(this.getHostUrl().get().concat(`/user/profile?code=${code}`))
             .then(x => Right(DiscordOAuthResponseJsonSerializer.instance.fromJson(x.data)))
+            .catch(x => Left(x));
+    }
+
+    static writeCandidates(candidates: List<Candidate>): Promise<Either<string, List<any>>> {
+        return axios.default.post(this.getHostUrl().get().concat("/candidates/write"), {
+            candidates: CandidateJsonSerializer.instance.toJsonArray(candidates),
+        })
+            .then(x => Right(List(x.data)))
             .catch(x => Left(x));
     }
 

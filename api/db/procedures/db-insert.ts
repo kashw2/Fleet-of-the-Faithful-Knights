@@ -1,6 +1,7 @@
 import {Either} from "funfix-core";
 import {List} from "immutable";
 import {IRecordSet} from "mssql";
+import {DbCandidate, DbCandidateJsonSerializer} from "../../../core/src/models/db/db-candidate";
 import {DbUser, DbUserJsonSerializer} from "../../../core/src/models/db/db-user";
 import {DbVote, DbVoteJsonSerializer} from "../../../core/src/models/db/db-vote";
 import {DbRequest} from "../db-request";
@@ -8,6 +9,13 @@ import {DbRequest} from "../db-request";
 export class DbInsert {
 
     constructor(readonly requests: DbRequest) {
+    }
+
+    insertCandidates(candidates: List<DbCandidate>, modifiedBy: string = "System"): Promise<Either<string, List<any>>> {
+        return this.requests.sendRequestList(
+            "ssp_InsertCandidates",
+            List.of(`@Candidates = ${DbCandidateJsonSerializer.instance.toJsonArrayString(candidates)}`, `@ModifiedBy = ${modifiedBy}`),
+        );
     }
 
     insertUser(user: DbUser, modifiedBy: string = "System"): Promise<Either<string, IRecordSet<any>>> {

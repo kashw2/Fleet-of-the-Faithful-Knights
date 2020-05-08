@@ -31,7 +31,7 @@ export class Candidate {
             member.getUser().flatMap(u => u.getId()),
             member.getUser().flatMap(u => u.getUsername()),
             MiscUtil.parseGroupOption(member.getRoles().first()),
-            None,
+            member.getJoinedAt(),
         );
     }
 
