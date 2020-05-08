@@ -40,7 +40,7 @@ export class Vote {
 
     public getCandidateName(): Option<string> {
         return this.getCandidate()
-            .flatMap(c => c.getDiscordName());
+            .flatMap(c => c.getDiscordUsername());
     }
 
     public getCreatedDate(): Option<string> {

@@ -1,23 +1,21 @@
 import {
     discordIdKey,
-    discordNameKey,
-    fakeIndexKey, groupIdKey,
-    groupKey,
+    discordUsernameKey,
+    fakeIndexKey,
+    groupIdKey,
     JsonBuilder,
     memberSinceKey,
     SimpleJsonSerializer,
 } from "../..";
-import {DbUser} from "./db-user";
 import {Candidate} from "../candidate";
 import {Option} from "funfix-core";
-import {List} from "immutable";
 import {MiscUtil} from "../../util/misc-util";
 
 export class DbCandidate {
 
     constructor(
         readonly discordId: string,
-        readonly discordName: string,
+        readonly discordUsername: string,
         readonly group_id: number,
         readonly memberSince: string,
         readonly fakeIdx: number = 0,
@@ -27,9 +25,9 @@ export class DbCandidate {
     static fromCandidate(candidate: Candidate, index: number): Option<DbCandidate> {
         return Option.map4(
             candidate.getDiscordId(),
-            candidate.getDiscordName(),
+            candidate.getSanitizedDiscordUsername(),
             candidate.getGroup(),
-            candidate.getMemberSince(),
+            candidate.getSanitizedMemberSince(),
             (did, dn, g, ms) => {
                 return new DbCandidate(
                     did,
@@ -46,8 +44,8 @@ export class DbCandidate {
         return this.discordId;
     }
 
-    getDiscordName(): string {
-        return this.discordName;
+    getDiscordUsername(): string {
+        return this.discordUsername;
     }
 
     getGroupId(): number {
@@ -74,7 +72,7 @@ export class DbCandidateJsonSerializer extends SimpleJsonSerializer<DbCandidate>
 
     toJson(value: DbCandidate, builder: JsonBuilder): object {
         return builder.add(value.getDiscordId(), discordIdKey)
-            .add(value.getDiscordName(), discordNameKey)
+            .add(value.getDiscordUsername(), discordUsernameKey)
             .add(value.getGroupId(), groupIdKey)
             .add(value.getMemberSince(), memberSinceKey)
             .add(value.getFakeIndex(), fakeIndexKey)
