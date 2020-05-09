@@ -2,7 +2,7 @@ import {None, Option, Some} from "funfix-core";
 import {Set} from "immutable";
 import {
     joinedAtKey,
-    JsonBuilder,
+    JsonBuilder, nicknameKey,
     parseSerialized,
     parseSet,
     parseString,
@@ -21,6 +21,7 @@ export class DiscordGuildMember {
 
     constructor(
         readonly user: Option<DiscordUser> = None,
+        readonly nickname: Option<string> = None,
         readonly roles: Set<string> = Set(),
         readonly joinedAt: Option<string> = None,
     ) {
@@ -28,6 +29,10 @@ export class DiscordGuildMember {
 
     getJoinedAt(): Option<string> {
         return this.joinedAt;
+    }
+
+    getNickname(): Option<string> {
+        return this.nickname;
     }
 
     getRoles(): Set<string> {
@@ -47,14 +52,10 @@ export class DiscordGuildMember {
         return this.user;
     }
 
-    private hasGuestRole(): boolean {
-        return this.getRoles()
-            .contains("Guest");
-    }
-
     withDiscordUserLocale(user: DiscordUser): DiscordGuildMember {
         return new DiscordGuildMember(
             this.getUser().flatMap(u => Some(user)),
+            this.getNickname(),
             this.getRoles(),
             this.getJoinedAt(),
         );
@@ -63,6 +64,7 @@ export class DiscordGuildMember {
     withRole(role: string): DiscordGuildMember {
         return new DiscordGuildMember(
             this.getUser(),
+            this.getNickname(),
             Set.of(role),
             this.getJoinedAt(),
         );
@@ -81,6 +83,7 @@ export class DiscordGuildMemberJsonSerializer extends SimpleJsonSerializer<Disco
     fromJson(json: any): DiscordGuildMember {
         return new DiscordGuildMember(
             parseSerialized(json[userKey], DiscordUserJsonSerilaizer.instance),
+            parseString(json[nicknameKey]),
             parseSet(json[rolesKey]),
             parseString(json[joinedAtKey]),
         );
@@ -88,6 +91,7 @@ export class DiscordGuildMemberJsonSerializer extends SimpleJsonSerializer<Disco
 
     toJson(value: DiscordGuildMember, builder: JsonBuilder): object {
         return builder.addOptionalSerialized(value.getUser(), userKey, DiscordUserJsonSerilaizer.instance)
+            .addOptional(value.getNickname(), nicknameKey)
             .addSet(value.getRoles(), rolesKey)
             .addOptional(value.getJoinedAt(), joinedAtKey)
             .build();
