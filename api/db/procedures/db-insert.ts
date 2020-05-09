@@ -14,7 +14,7 @@ export class DbInsert {
     insertCandidates(candidates: List<DbCandidate>, modifiedBy: string = "System"): Promise<Either<string, List<any>>> {
         return this.requests.sendRequestList(
             "ssp_InsertCandidates",
-            List.of(`@Candidates = ${DbCandidateJsonSerializer.instance.toJsonArrayString(candidates)}`, `@ModifiedBy = ${modifiedBy}`),
+            List.of(`@Candidates = '${DbCandidateJsonSerializer.instance.toJsonArrayString(candidates)}'`, `@ModifiedBy = ${modifiedBy}`),
         );
     }
 

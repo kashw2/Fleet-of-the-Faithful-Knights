@@ -1,15 +1,16 @@
 import {None, Option, Some} from "funfix-core";
-import {List} from "immutable";
+import {Set} from "immutable";
 import {
     joinedAtKey,
     JsonBuilder,
-    parseList,
     parseSerialized,
+    parseSet,
     parseString,
     rolesKey,
     SimpleJsonSerializer,
-    userKey
+    userKey,
 } from "../..";
+import {GroupUtils} from "../../util/group-utils";
 import {DiscordUser, DiscordUserJsonSerilaizer} from "./discord-user";
 
 /**
@@ -20,7 +21,7 @@ export class DiscordGuildMember {
 
     constructor(
         readonly user: Option<DiscordUser> = None,
-        readonly roles: List<string> = List(),
+        readonly roles: Set<string> = Set(),
         readonly joinedAt: Option<string> = None,
     ) {
     }
@@ -29,12 +30,26 @@ export class DiscordGuildMember {
         return this.joinedAt;
     }
 
-    getRoles(): List<string> {
+    getRoles(): Set<string> {
         return this.roles;
+    }
+
+    getRolesSortedHierarchy(): Set<string> {
+        if (GroupUtils.containsNonGuestRoles(this.getRoles())) {
+            return this.getRoles().filterNot(role => !GroupUtils.isNonGuestRole(role))
+                .map(x => GroupUtils.getGroupNameFromDiscordRoleId(x));
+        }
+        return this.getRoles()
+            .map(role => GroupUtils.getGroupNameFromDiscordRoleId(role));
     }
 
     getUser(): Option<DiscordUser> {
         return this.user;
+    }
+
+    private hasGuestRole(): boolean {
+        return this.getRoles()
+            .contains("Guest");
     }
 
     withDiscordUserLocale(user: DiscordUser): DiscordGuildMember {
@@ -48,7 +63,7 @@ export class DiscordGuildMember {
     withRole(role: string): DiscordGuildMember {
         return new DiscordGuildMember(
             this.getUser(),
-            List.of(role),
+            Set.of(role),
             this.getJoinedAt(),
         );
     }
@@ -66,14 +81,14 @@ export class DiscordGuildMemberJsonSerializer extends SimpleJsonSerializer<Disco
     fromJson(json: any): DiscordGuildMember {
         return new DiscordGuildMember(
             parseSerialized(json[userKey], DiscordUserJsonSerilaizer.instance),
-            parseList(json[rolesKey]),
+            parseSet(json[rolesKey]),
             parseString(json[joinedAtKey]),
         );
     }
 
     toJson(value: DiscordGuildMember, builder: JsonBuilder): object {
         return builder.addOptionalSerialized(value.getUser(), userKey, DiscordUserJsonSerilaizer.instance)
-            .addList(value.getRoles(), rolesKey)
+            .addSet(value.getRoles(), rolesKey)
             .addOptional(value.getJoinedAt(), joinedAtKey)
             .build();
     }

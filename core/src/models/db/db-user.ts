@@ -9,7 +9,7 @@ import {
     User,
     usernameKey,
 } from "../..";
-import {MiscUtil} from "../../util/misc-util";
+import {GroupUtils} from "../../util/group-utils";
 import {DiscordGuildMember} from "../discord/discord-guild-member";
 
 export class DbUser {
@@ -33,7 +33,7 @@ export class DbUser {
                 return new DbUser(
                     username,
                     discriminator,
-                    MiscUtil.getGroupIdFromName(MiscUtil.getGroupNameFromDiscordRoleId(guildMember.getRoles().first())),
+                    GroupUtils.getGroupIdFromName(GroupUtils.getGroupNameFromDiscordRoleId(guildMember.getRoles().first())),
                     avatar,
                     locale,
                 );
@@ -52,7 +52,7 @@ export class DbUser {
                 return new DbUser(
                     username,
                     discriminator,
-                    MiscUtil.getGroupIdFromName(MiscUtil.parseGroup(group)),
+                    GroupUtils.getGroupIdFromName(GroupUtils.parseGroup(group)),
                     avatar,
                     locale,
                 );
