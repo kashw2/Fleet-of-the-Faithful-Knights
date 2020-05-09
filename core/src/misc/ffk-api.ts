@@ -2,10 +2,10 @@ import * as axios from "axios";
 import {Either, Left, Right} from "funfix-core";
 import {List} from "immutable";
 import {EitherUtils, User, UserJsonSerializer} from "..";
+import {Candidate, CandidateJsonSerializer} from "../models/candidate";
 import {News, NewsJsonSerializer} from "../models/news";
 import {Vote, VoteJsonSerializer} from "../models/vote";
 import {DiscordOAuthResponse, DiscordOAuthResponseJsonSerializer} from "./discord-api";
-import {Candidate, CandidateJsonSerializer} from "../models/candidate";
 
 export class FfkApi {
 
@@ -14,6 +14,12 @@ export class FfkApi {
         if (FfkApi.getHostUrl().isLeft()) {
             throw new Error(FfkApi.getHostUrl().value);
         }
+    }
+
+    static getAllCandidates(): Promise<Either<string, List<Candidate>>> {
+        return axios.default.get(this.getHostUrl().get().concat(`/candidates`))
+            .then(x => Right(CandidateJsonSerializer.instance.fromJsonArray(x.data)))
+            .catch(x => Left(x));
     }
 
     static getAllNews(): Promise<Either<string, List<News>>> {

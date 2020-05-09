@@ -6,7 +6,7 @@ import {
     nameKey,
     parseNumber,
     parseString,
-    SimpleJsonSerializer
+    SimpleJsonSerializer,
 } from "../..";
 
 /**

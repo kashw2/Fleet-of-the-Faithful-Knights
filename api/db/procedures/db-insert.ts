@@ -19,11 +19,17 @@ export class DbInsert {
     }
 
     insertUser(user: DbUser, modifiedBy: string = "System"): Promise<Either<string, IRecordSet<any>>> {
-        return this.requests.sendRequest("ssp_InsertUser", List.of(`@User = '${DbUserJsonSerializer.instance.toJsonString(user)}'`, `@ModifiedBy = ${modifiedBy}`));
+        return this.requests.sendRequest(
+            "ssp_InsertUser",
+            List.of(`@User = '${DbUserJsonSerializer.instance.toJsonString(user)}'`, `@ModifiedBy = ${modifiedBy}`),
+        );
     }
 
     insertVote(vote: DbVote, modifiedBy: string = "System"): Promise<Either<string, IRecordSet<any>>> {
-        return this.requests.sendRequest("ssp_InsertVote", List.of(`@Vote = '${DbVoteJsonSerializer.instance.toJsonString(vote)}'`, `@ModifiedBy = ${modifiedBy}`));
+        return this.requests.sendRequest(
+            "ssp_InsertVote",
+            List.of(`@Vote = '${DbVoteJsonSerializer.instance.toJsonString(vote)}'`, `@ModifiedBy = ${modifiedBy}`),
+        );
     }
 
 }

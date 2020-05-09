@@ -1,5 +1,7 @@
 import {Router} from "express";
 import {Database} from "../db/database";
+import {ListCandidatesEndpoint} from "./candidates/list/list-candidates-endpoint";
+import {WriteCandidatesEndpoint} from "./candidates/write/write-candidates-endpoint";
 import {ListNewsEndpoint} from "./news/list-news-endpoint";
 import {ListUsersByGroupEndpoint} from "./users/list/list-users-by-group-endpoint";
 import {ReadUserByIdEndpoint} from "./users/read/read-user-by-id-endpoint";
@@ -13,7 +15,6 @@ import {ListVotesEndpoint} from "./votes/list/list-votes-endpoint";
 import {ListVotesPassedEndpoint} from "./votes/list/list-votes-passed-endpoint";
 import {ReadVoteByIdEndpoint} from "./votes/read/read-vote-by-id-endpoint";
 import {WriteVoteEndpoint} from "./votes/write/write-vote-endpoint";
-import {WriteCandidatesEndpoint} from "./candidates/write-candidates-endpoint";
 
 export class AllEndpoints {
 
@@ -32,6 +33,7 @@ export class AllEndpoints {
         new ListRecentVotesEndpoint(db).routeEndpoint(router);
         new WriteVoteEndpoint(db).routeEndpoint(router);
         new WriteCandidatesEndpoint(db).routeEndpoint(router);
+        new ListCandidatesEndpoint(db).routeEndpoint(router);
     }
 
 }
