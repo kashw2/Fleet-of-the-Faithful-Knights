@@ -1,5 +1,5 @@
 import {Option} from "funfix-core";
-import {List} from "immutable";
+import {List, Set} from "immutable";
 import {SimpleJsonSerializer} from "./simple-json-serializer";
 
 export class JsonBuilder {
@@ -35,6 +35,15 @@ export class JsonBuilder {
         if (!value.isEmpty()) {
             // @ts-ignore
             this.object[key] = serializer.toJsonImpl(value.get());
+            return new JsonBuilder(this.object);
+        }
+        return new JsonBuilder(this.object);
+    }
+
+    addSet<T>(values: Set<T>, key: string): JsonBuilder {
+        if (!values.isEmpty()) {
+            // @ts-ignore
+            values.map((value, iteration) => this.object[key][iteration]);
             return new JsonBuilder(this.object);
         }
         return new JsonBuilder(this.object);

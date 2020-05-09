@@ -11,7 +11,7 @@ import {
     parseString,
     SimpleJsonSerializer,
 } from "..";
-import {Group, MiscUtil} from "../util/misc-util";
+import {Group, GroupUtils} from "../util/group-utils";
 import {DiscordGuildMember} from "./discord/discord-guild-member";
 
 export class Candidate {
@@ -30,7 +30,7 @@ export class Candidate {
             None,
             member.getUser().flatMap(u => u.getId()),
             member.getUser().flatMap(u => u.getUsername()),
-            MiscUtil.parseGroupOption(member.getRoles().first()),
+            GroupUtils.parseGroupOption(member.getRolesSortedHierarchy().first()),
             member.getJoinedAt(),
         );
     }
@@ -80,7 +80,7 @@ export class CandidateJsonSerializer extends SimpleJsonSerializer<Candidate> {
             parseNumber(json[idKey]),
             parseString(json[discordIdKey]),
             parseString(json[discordUsernameKey]),
-            MiscUtil.parseGroupOption(json[groupKey]),
+            GroupUtils.parseGroupOption(json[groupKey]),
             parseString(json[memberSinceKey]),
         );
     }

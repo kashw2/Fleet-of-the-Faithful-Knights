@@ -1,6 +1,6 @@
 import {Option} from "funfix-core";
 import {candidateKey, groupIdKey, idKey, JsonBuilder, notesKey, SimpleJsonSerializer, sponsorIdKey} from "../..";
-import {MiscUtil} from "../../util/misc-util";
+import {GroupUtils} from "../../util/group-utils";
 import {Vote} from "../vote";
 import {DbUser} from "./db-user";
 
@@ -24,7 +24,7 @@ export class DbVote {
                 return new DbVote(
                     sid,
                     candidate,
-                    MiscUtil.getGroupIdFromName(MiscUtil.parseGroup(group)),
+                    GroupUtils.getGroupIdFromName(GroupUtils.parseGroup(group)),
                     notes,
                 );
             });

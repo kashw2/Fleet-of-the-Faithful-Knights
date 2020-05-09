@@ -1,5 +1,5 @@
 import {Either, Left, None, Option, Right, Some} from "funfix-core";
-import {List} from "immutable";
+import {List, Set} from "immutable";
 import * as moment from "moment";
 import {IRecordSet} from "mssql";
 import {SimpleJsonSerializer} from "..";
@@ -106,6 +106,10 @@ export function parseListFromArray(array: []): List<any> {
     return List(array);
 }
 
+export function parseSetFromArray(array: []): Set<any> {
+    return Set(array);
+}
+
 // TODO: I made this at 12:23, there needs to be a Monadic variation of this.
 // TODO: Expand on this
 export function parseList<T>(list: T): List<T> {
@@ -119,6 +123,19 @@ export function parseList<T>(list: T): List<T> {
     }
     // @ts-ignore
     return List(list);
+}
+
+export function parseSet<T>(set: T): Set<any> {
+    if (Option.of(set).isEmpty()) {
+        return Set();
+    }
+    // @ts-ignore
+    if (set.constructor.name === "Array") {
+        // @ts-ignore
+        return parseSetFromArray(set as []);
+    }
+    // @ts-ignore
+    return Set(set);
 }
 
 export function parseNumber(n: unknown): Option<number> {

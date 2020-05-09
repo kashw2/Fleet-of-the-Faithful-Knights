@@ -9,7 +9,7 @@ import {
 } from "../..";
 import {Candidate} from "../candidate";
 import {Option} from "funfix-core";
-import {MiscUtil} from "../../util/misc-util";
+import {GroupUtils} from "../../util/group-utils";
 
 export class DbCandidate {
 
@@ -32,7 +32,7 @@ export class DbCandidate {
                 return new DbCandidate(
                     did,
                     dn,
-                    MiscUtil.getGroupIdFromName(g),
+                    GroupUtils.getGroupIdFromName(g),
                     ms,
                     index
                 );

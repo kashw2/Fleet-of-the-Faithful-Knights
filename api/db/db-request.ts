@@ -24,7 +24,6 @@ export class DbRequest {
     }
 
     async sendRequestList<A>(procedure: string, params: List<string>): Promise<Either<string, List<any>>> {
-        console.log(`${procedure} '${params.join(", ").trim()}`);
         const connection = await this.connection;
         const result = await connection.request()
             .query(`${procedure} ${params.join(", ").trim()}`);
