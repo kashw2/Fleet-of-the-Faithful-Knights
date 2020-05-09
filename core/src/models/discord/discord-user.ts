@@ -1,10 +1,12 @@
 import {None, Option, Some} from "funfix-core";
-import {List} from "immutable";
+import {List, Set} from "immutable";
 import {
     avatarKey,
     discriminatorKey,
     idKey,
-    JsonBuilder, localeKey, parseList,
+    JsonBuilder,
+    localeKey,
+    parseSet,
     parseString,
     rolesKey,
     SimpleJsonSerializer,
@@ -23,7 +25,7 @@ export class DiscordUser {
         readonly avatar: Option<string> = None,
         readonly discriminator: Option<string> = None,
         readonly locale: Option<string> = Some("en-US"),
-        readonly roles: List<string> = List(),
+        readonly roles: Set<string> = Set(),
     ) {
     }
 
@@ -54,7 +56,7 @@ export class DiscordUser {
         });
     }
 
-    getRoles(): List<string> {
+    getRoles(): Set<string> {
         return this.roles;
     }
 
@@ -90,7 +92,7 @@ export class DiscordUserJsonSerilaizer extends SimpleJsonSerializer<DiscordUser>
             parseString(json[avatarKey]),
             parseString(json[discriminatorKey]),
             parseString(json[localeKey]),
-            parseList(json[rolesKey]),
+            parseSet(json[rolesKey]),
         );
     }
 
@@ -100,7 +102,7 @@ export class DiscordUserJsonSerilaizer extends SimpleJsonSerializer<DiscordUser>
             .addOptional(value.getRequestFormedAvatarUrl(), avatarKey)
             .addOptional(value.getDiscriminator(), discriminatorKey)
             .addOptional(value.getLocale(), localeKey)
-            .addList(value.getRoles(), rolesKey)
+            .addSet(value.getRoles(), rolesKey)
             .build();
     }
 

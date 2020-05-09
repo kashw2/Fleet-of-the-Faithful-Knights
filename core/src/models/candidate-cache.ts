@@ -21,6 +21,10 @@ export class CandidateCache {
         return this.candidates;
     }
 
+    getCandidatesEither(): Either<string, List<Candidate>> {
+        return EitherUtils.liftEither(this.getCandidates(), "No candidates in news cache");
+    }
+
     getFirst(): Candidate {
         return this.getCandidates()
             .first();
@@ -29,10 +33,6 @@ export class CandidateCache {
     getLast(): Candidate {
         return this.getCandidates()
             .last();
-    }
-
-    getNewsEither(): Either<string, List<Candidate>> {
-        return EitherUtils.liftEither(this.getCandidates(), "No candidates in news cache");
     }
 
 }
