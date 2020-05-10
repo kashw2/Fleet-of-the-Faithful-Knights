@@ -41,13 +41,15 @@
               <div class="col">
                 <div class="row">
                   <small *ngIf="article.getDate().nonEmpty()"
-                         class="font-weight-light ml-4 mt-1">{{toDateFormat(article.getDate().get(), "DMYHM")}}</small>
+                         class="font-weight-light hover-red ml-auto mr-4 pr-1 cursor-pointer">{{toDateFormat(article.getDate().get(), "DMYHM")}}</small>
                 </div>
                 <div class="row">
                   <small *ngIf="article.getUsername().nonEmpty()"
-                         class="font-weight-light ml-auto mr-4 pr-1 hover-red cursor-pointer">{{article.getUsername().get()}}</small>
+                         class="font-weight-light hover-red ml-auto mr-4 pr-1 cursor-pointer">{{article.getUsername().get()}}</small>
+                </div>
+                <div class="row">
                   <small *ngIf="article.getUserGroup().nonEmpty()"
-                         class="font-weight-light ml-3 hover-red cursor-pointer">{{article.getUserGroup().get()}}</small>
+                         class="font-weight-light hover-red ml-auto mr-4 pr-1 cursor-pointer">{{article.getUserGroup().get()}}</small>
                 </div>
               </div>
             </div>
