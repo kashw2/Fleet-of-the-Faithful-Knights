@@ -102,6 +102,23 @@ export function parseSerialized<T>(t: T, serializer: SimpleJsonSerializer<T>): O
     return Option.of(serializer.fromJson(t));
 }
 
+export function parseSerializedSet<T>(set: Set<T>, serializer: SimpleJsonSerializer<T>): Set<T> {
+    if (Option.of(set).isEmpty()) {
+        return Set();
+    }
+    // @ts-ignore
+    if (set.constructor.name === "Array") {
+        // @ts-ignore
+        return parseSetFromArray(set as [])
+            .map(s => serializer.fromJson(s));
+    }
+    return set.map(s => serializer.fromJson(s));
+}
+
+export function parseSerializedList<T>(set: List<T>, serializer: SimpleJsonSerializer<T>): List<T> {
+    return set.map(s => serializer.fromJson(s));
+}
+
 export function parseListFromArray(array: []): List<any> {
     return List(array);
 }

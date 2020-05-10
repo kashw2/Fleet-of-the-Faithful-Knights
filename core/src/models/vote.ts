@@ -1,5 +1,5 @@
 import {None, Option, Some} from "funfix-core";
-import {List} from "immutable";
+import {List, Set} from "immutable";
 import {
     candidateKey,
     dateKey,
@@ -10,7 +10,7 @@ import {
     parseBoolean,
     parseList,
     parseNumber,
-    parseSerialized,
+    parseSerialized, parseSerializedSet, parseSet,
     parseString,
     SimpleJsonSerializer,
     sponsorKey,
@@ -28,7 +28,7 @@ export class Vote {
         readonly candidate: Option<Candidate> = None,
         readonly group: Option<string> = None,
         readonly notes: Option<string> = None,
-        readonly voters: List<User> = List(),
+        readonly voters: Set<User> = Set(),
         readonly status: Option<boolean> = Some(false),
         readonly createdDate: Option<string> = None,
     ) {
@@ -77,7 +77,7 @@ export class Vote {
         return this.status;
     }
 
-    public getVoters(): List<User> {
+    public getVoters(): Set<User> {
         return this.voters;
     }
 
@@ -140,7 +140,7 @@ export class VoteJsonSerializer extends SimpleJsonSerializer<Vote> {
             parseSerialized(json[candidateKey], CandidateJsonSerializer.instance),
             parseString(json[groupKey]),
             parseString(json[notesKey]),
-            parseList(json[votersKey]),
+            parseSerializedSet(json[votersKey], UserJsonSerializer.instance),
             parseBoolean(json[statusKey]),
             parseString(json[dateKey]),
         );
@@ -152,7 +152,7 @@ export class VoteJsonSerializer extends SimpleJsonSerializer<Vote> {
             .addOptionalSerialized(value.getCandidate(), candidateKey, CandidateJsonSerializer.instance)
             .addOptional(value.getGroup(), groupKey)
             .addOptional(value.getNotes(), notesKey)
-            .addList(value.getVoters(), votersKey)
+            .addSetSerialized(value.getVoters(), votersKey, UserJsonSerializer.instance)
             .addOptional(value.getStatus(), statusKey)
             .addOptional(value.getCreatedDate(), dateKey)
             .build();

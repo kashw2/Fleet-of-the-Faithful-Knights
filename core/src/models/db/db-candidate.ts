@@ -1,3 +1,4 @@
+import {Option} from "funfix-core";
 import {
     discordIdKey,
     discordUsernameKey,
@@ -7,21 +8,20 @@ import {
     memberSinceKey,
     SimpleJsonSerializer,
 } from "../..";
-import {Candidate} from "../candidate";
-import {Option} from "funfix-core";
 import {GroupUtils} from "../../util/group-utils";
+import {Candidate} from "../candidate";
 
 export class DbCandidate {
 
     constructor(
         readonly discordId: string,
         readonly discordUsername: string,
-        readonly group_id: number,
+        readonly groupId: number,
         readonly memberSince: string,
         readonly fakeIdx: number = 0,
     ) {
     }
-    
+
     static fromCandidate(candidate: Candidate, index: number): Option<DbCandidate> {
         return Option.map4(
             candidate.getDiscordId(),
@@ -34,7 +34,7 @@ export class DbCandidate {
                     dn,
                     GroupUtils.getGroupIdFromName(g),
                     ms,
-                    index
+                    index,
                 );
             },
         );
@@ -48,16 +48,16 @@ export class DbCandidate {
         return this.discordUsername;
     }
 
+    getFakeIndex(): number {
+        return this.fakeIdx;
+    }
+
     getGroupId(): number {
-        return this.group_id;
+        return this.groupId;
     }
 
     getMemberSince(): string {
         return this.memberSince;
-    }
-    
-    getFakeIndex(): number {
-        return this.fakeIdx;
     }
 
 }

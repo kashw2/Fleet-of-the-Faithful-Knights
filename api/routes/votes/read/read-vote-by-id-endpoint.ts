@@ -2,8 +2,8 @@ import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {ApiUtils} from "../../../../core/src";
 import {Vote, VoteJsonSerializer} from "../../../../core/src/models/vote";
-import {Database} from "../../../db/database";
 import {GetEndpoint} from "../../../../core/src/server/get-endpoint";
+import {Database} from "../../../db/database";
 
 export class ReadVoteByIdEndpoint extends GetEndpoint {
 
@@ -12,7 +12,7 @@ export class ReadVoteByIdEndpoint extends GetEndpoint {
     }
 
     private getVote(voteId: number): Either<string, Vote> {
-        return this.db.cache.votes.getByIdEither(voteId);
+        return this.db.cache.votes.getByVoteIdEither(voteId);
     }
 
     private getVoteId(req: Request): Either<string, number> {
