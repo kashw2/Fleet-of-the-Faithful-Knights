@@ -2,6 +2,7 @@ import {Either} from "funfix-core";
 import {List} from "immutable";
 import {User, UserJsonSerializer} from "../../../core/src";
 import {Candidate, CandidateJsonSerializer} from "../../../core/src/models/candidate";
+import {Comment, CommentJsonSerializer} from "../../../core/src/models/comment";
 import {News, NewsJsonSerializer} from "../../../core/src/models/news";
 import {Vote, VoteJsonSerializer} from "../../../core/src/models/vote";
 import {DbRequest} from "../db-request";
@@ -13,6 +14,10 @@ export class DbRead {
 
     getCandidates(): Promise<Either<string, List<Candidate>>> {
         return this.requests.sendRequestListSerialized("ssp_json_GetCandidates", List.of(), CandidateJsonSerializer.instance);
+    }
+
+    getComments(): Promise<Either<string, List<Comment>>> {
+        return this.requests.sendRequestListSerialized("ssp_json_GetComments", List.of(), CommentJsonSerializer.instance);
     }
 
     getNews(): Promise<Either<string, List<News>>> {

@@ -2,15 +2,17 @@ import {None, Option, Some} from "funfix-core";
 import {List, Set} from "immutable";
 import {
     candidateKey,
+    commentsKey,
     dateKey,
     groupKey,
     idKey,
     JsonBuilder,
     notesKey,
     parseBoolean,
-    parseList,
     parseNumber,
-    parseSerialized, parseSerializedSet, parseSet,
+    parseSerialized,
+    parseSerializedList,
+    parseSerializedSet,
     parseString,
     SimpleJsonSerializer,
     sponsorKey,
@@ -18,6 +20,7 @@ import {
     votersKey,
 } from "..";
 import {Candidate, CandidateJsonSerializer} from "./candidate";
+import {Comment, CommentJsonSerializer} from "./comment";
 import {User, UserJsonSerializer} from "./user";
 
 export class Vote {
@@ -30,6 +33,7 @@ export class Vote {
         readonly notes: Option<string> = None,
         readonly voters: Set<User> = Set(),
         readonly status: Option<boolean> = Some(false),
+        readonly comments: List<Comment> = List(),
         readonly createdDate: Option<string> = None,
     ) {
     }
@@ -41,6 +45,10 @@ export class Vote {
     public getCandidateName(): Option<string> {
         return this.getCandidate()
             .flatMap(c => c.getDiscordUsername());
+    }
+
+    public getComments(): List<Comment> {
+        return this.comments;
     }
 
     public getCreatedDate(): Option<string> {
@@ -127,6 +135,11 @@ export class Vote {
             || this.isKnightVote();
     }
 
+    public shouldBeInSergeantVoting(): boolean {
+        return this.isSergeantFirstClassVote()
+            || this.isSergeantVote();
+    }
+
 }
 
 export class VoteJsonSerializer extends SimpleJsonSerializer<Vote> {
@@ -142,6 +155,7 @@ export class VoteJsonSerializer extends SimpleJsonSerializer<Vote> {
             parseString(json[notesKey]),
             parseSerializedSet(json[votersKey], UserJsonSerializer.instance),
             parseBoolean(json[statusKey]),
+            parseSerializedList(json[commentsKey], CommentJsonSerializer.instance),
             parseString(json[dateKey]),
         );
     }
@@ -154,6 +168,7 @@ export class VoteJsonSerializer extends SimpleJsonSerializer<Vote> {
             .addOptional(value.getNotes(), notesKey)
             .addSetSerialized(value.getVoters(), votersKey, UserJsonSerializer.instance)
             .addOptional(value.getStatus(), statusKey)
+            .addListSerialized(value.getComments(), commentsKey, CommentJsonSerializer.instance)
             .addOptional(value.getCreatedDate(), dateKey)
             .build();
     }

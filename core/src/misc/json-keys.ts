@@ -32,3 +32,4 @@ export const approximateMemberCountKey = "approximate_member_count";
 export const joinedAtKey = "joined_at";
 export const fakeIndexKey = "fake_index";
 export const nicknameKey = "nickname";
+export const commentsKey = "comments";
