@@ -2,7 +2,7 @@ import {Router} from "express";
 import {Database} from "../db/database";
 import {ListCandidatesEndpoint} from "./candidates/list/list-candidates-endpoint";
 import {WriteCandidatesEndpoint} from "./candidates/write/write-candidates-endpoint";
-import {ListNewsEndpoint} from "./news/list-news-endpoint";
+import {ListNewsEndpoint} from "./news/list/list-news-endpoint";
 import {ListUsersByGroupEndpoint} from "./users/list/list-users-by-group-endpoint";
 import {ReadUserByIdEndpoint} from "./users/read/read-user-by-id-endpoint";
 import {ReadUserByTokenEndpoint} from "./users/read/read-user-by-token-endpoint";
