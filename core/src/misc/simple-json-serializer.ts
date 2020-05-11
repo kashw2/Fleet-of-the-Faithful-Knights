@@ -3,15 +3,12 @@ import {JsonBuilder} from "./json-builder";
 
 export abstract class SimpleJsonSerializer<T> {
 
-    abstract fromJson(json: any): T;
+    abstract fromJson(json: object): T;
 
     // TODO: Explore making a fromJsonArray that takes a collection
     fromJsonArray(list: List<T>): List<T> {
+        // @ts-ignore
         return list.map(x => this.fromJson(x));
-    }
-
-    fromJsonSet(set: Set<T>): Set<T> {
-        return set.map(x => this.fromJson(x));
     }
 
     /**

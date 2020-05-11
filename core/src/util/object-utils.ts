@@ -99,6 +99,7 @@ function parseNumberFromString(s: string): Option<number> {
 }
 
 export function parseSerialized<T>(t: T, serializer: SimpleJsonSerializer<T>): Option<T> {
+    // @ts-ignore
     return Option.of(serializer.fromJson(t));
 }
 
@@ -112,11 +113,22 @@ export function parseSerializedSet<T>(set: Set<T>, serializer: SimpleJsonSeriali
         return parseSetFromArray(set as [])
             .map(s => serializer.fromJson(s));
     }
+    // @ts-ignore
     return set.map(s => serializer.fromJson(s));
 }
 
-export function parseSerializedList<T>(set: List<T>, serializer: SimpleJsonSerializer<T>): List<T> {
-    return set.map(s => serializer.fromJson(s));
+export function parseSerializedList<T>(list: List<T>, serializer: SimpleJsonSerializer<T>): List<T> {
+    if (Option.of(list).isEmpty()) {
+        return List();
+    }
+    // @ts-ignore
+    if (list.constructor.name === "Array") {
+        // @ts-ignore
+        return parseListFromArray(list as [])
+            .map(s => serializer.fromJson(s));
+    }
+    // @ts-ignore
+    return list.map(s => serializer.fromJson(s));
 }
 
 export function parseListFromArray(array: []): List<any> {
