@@ -29,7 +29,7 @@ export class Candidate {
         return new Candidate(
             None,
             member.getUser().flatMap(u => u.getId()),
-            member.getUser().flatMap(u => u.getUsername()),
+            member.getNickname().orElse(member.getUser().flatMap(u => u.getUsername())),
             GroupUtils.parseGroupOption(member.getRolesSortedHierarchy().first()),
             member.getJoinedAt(),
         );

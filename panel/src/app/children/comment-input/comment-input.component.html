@@ -1,0 +1,11 @@
+<div class="container-fluid my-1 p-0">
+  <div class="md-form">
+    <textarea mdbInput id="user-vote-comment" class="md-textarea form-control green-border-focus" rows="4" [(ngModel)]="content"></textarea>
+    <label for="user-vote-comment">I support this vote because...</label>
+    <div class="d-flex justify-content-end">
+    <button *ngIf="getUser().nonEmpty()" mdbBtn type="button" outline="true" color="success" size="sm" mdbWavesEffect (click)="submitComment($event)">
+      Comment
+    </button>
+    </div>
+  </div>
+</div>

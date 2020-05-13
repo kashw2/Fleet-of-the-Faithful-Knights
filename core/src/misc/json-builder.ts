@@ -16,7 +16,16 @@ export class JsonBuilder {
     addList<T>(values: List<T>, key: string): JsonBuilder {
         if (!values.isEmpty()) {
             // @ts-ignore
-            values.map((value, iteration) => this.object[key][iteration]);
+            values.map((value, iteration) => this.object[key][iteration] = value);
+            return new JsonBuilder(this.object);
+        }
+        return new JsonBuilder(this.object);
+    }
+
+    addListSerialized<T>(values: List<T>, key: string, serializer: SimpleJsonSerializer<T>): JsonBuilder {
+        if (!values.isEmpty()) {
+            // @ts-ignore
+            this.object[key] = serializer.toJsonArray(values);
             return new JsonBuilder(this.object);
         }
         return new JsonBuilder(this.object);
@@ -43,7 +52,16 @@ export class JsonBuilder {
     addSet<T>(values: Set<T>, key: string): JsonBuilder {
         if (!values.isEmpty()) {
             // @ts-ignore
-            values.map((value, iteration) => this.object[key][iteration]);
+            values.map((value, iteration) => this.object[key][iteration] = value);
+            return new JsonBuilder(this.object);
+        }
+        return new JsonBuilder(this.object);
+    }
+
+    addSetSerialized<T>(values: Set<T>, key: string, serializer: SimpleJsonSerializer<T>): JsonBuilder {
+        if (!values.isEmpty()) {
+            // @ts-ignore
+            this.object[key] = serializer.toJsonArray(values);
             return new JsonBuilder(this.object);
         }
         return new JsonBuilder(this.object);

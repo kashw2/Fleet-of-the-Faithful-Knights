@@ -11,11 +11,15 @@ import {CookieService} from "ngx-cookie-service";
 import {ToastrModule} from "ngx-toastr";
 import {AppRoutingModule} from "./app-routing.module";
 import {AppComponent} from "./app.component";
+import {CommentInputComponent} from "./children/comment-input/comment-input.component";
+import {VoteTabComponent} from "./children/vote-tab/vote-tab.component";
+import {CommentComponent} from "./components/comment/comment.component";
 import {HeaderComponent} from "./components/header/header.component";
 import {StatusIconComponent} from "./components/status-icon/status-icon.component";
 import {CreateVoteModalComponent} from "./modals/create-vote-modal/create-vote-modal.component";
 import {ProfilePageComponent} from "./pages/profile-page/profile-page.component";
 import {SsoPageComponent} from "./pages/sso-page/sso-page.component";
+import {VotePageComponent} from "./pages/vote-page/vote-page.component";
 import {VotesPageComponent} from "./pages/votes-page/votes-page.component";
 import {NotificationService} from "./services/notification.service";
 import {userReducer} from "./store/reducers/user-reducer";
@@ -26,6 +30,7 @@ const routes: Routes = [
   {path: "sso", component: SsoPageComponent},
   {path: "profile", component: ProfilePageComponent},
   {path: "votes", component: VotesPageComponent},
+  {path: "vote/:id", component: VotePageComponent},
 ];
 
 @NgModule({
@@ -38,6 +43,10 @@ const routes: Routes = [
     CreateVoteModalComponent,
     SsoPageComponent,
     StatusIconComponent,
+    VotePageComponent,
+    VoteTabComponent,
+    CommentComponent,
+    CommentInputComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),

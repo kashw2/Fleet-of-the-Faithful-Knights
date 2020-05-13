@@ -25,6 +25,13 @@ export class VoteCache {
         );
     }
 
+    getByVoteIdEither(id: number): Either<string, Vote> {
+        return EitherUtils.liftEither(
+            this.getVotes().filter(v => v.getId().contains(id)).first(),
+            `Vote ${id} does not exist in cache`,
+        );
+    }
+
     getCAAVotes(): Either<string, List<Vote>> {
         return EitherUtils.liftEither(
             this.getVotes().filter(v => v.isCAAVote()),
