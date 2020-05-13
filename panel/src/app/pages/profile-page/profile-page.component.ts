@@ -90,6 +90,72 @@ export class ProfilePageComponent implements OnInit {
     return this.votes;
   }
 
+  isCompanionAtArms(): boolean {
+    return this.getUser()
+      .map(x => x.isCompanionAtArms())
+      .getOrElse(false);
+  }
+
+  isDeveloper(): boolean {
+    return this.getUser()
+      .map(x => x.isDeveloper())
+      .getOrElse(false);
+  }
+
+  isGrandMaster(): boolean {
+    return this.getUser()
+      .map(x => x.isGrandMaster())
+      .getOrElse(false);
+  }
+
+  isGuest(): boolean {
+    return this.getUser()
+      .map(x => x.isGuest())
+      .getOrElse(false);
+  }
+
+  isKnight(): boolean {
+    return this.getUser()
+      .map(x => x.isKnight())
+      .getOrElse(false);
+  }
+
+  isKnightCommander(): boolean {
+    return this.getUser()
+      .map(x => x.isKnightCommander())
+      .getOrElse(false);
+  }
+
+  isKnightLieutenant(): boolean {
+    return this.getUser()
+      .map(x => x.isKnightLieutenant())
+      .getOrElse(false);
+  }
+
+  isMasterCommander(): boolean {
+    return this.getUser()
+      .map(x => x.isMasterCommander())
+      .getOrElse(false);
+  }
+
+  isSergeant(): boolean {
+    return this.getUser()
+      .map(x => x.isSergeant())
+      .getOrElse(false);
+  }
+
+  isSergeantFirstClass(): boolean {
+    return this.getUser()
+      .map(x => x.isSergeantFirstClass())
+      .getOrElse(false);
+  }
+
+  isSquire(): boolean {
+    return this.getUser()
+      .map(x => x.isSquire())
+      .getOrElse(false);
+  }
+
   ngOnInit(): void {
     this.store.select("user")
       .subscribe(user => {

@@ -60,6 +60,11 @@ export class User {
         return this.username;
     }
 
+    public isCompanionAtArms(): boolean {
+        return this.getGroup()
+            .contains("Companion at Arms");
+    }
+
     public isDeveloper(): boolean {
         return this.getGroup()
             .contains("Developer");
@@ -81,6 +86,19 @@ export class User {
             .contains("Grand Master");
     }
 
+    public isGuest(): boolean {
+        return !this.isDeveloper()
+        && !this.isGrandMaster()
+        && !this.isMasterCommander()
+        && !this.isKnightCommander()
+        && !this.isKnightLieutenant()
+        && !this.isKnight()
+        && !this.isSergeantFirstClass()
+        && !this.isSergeant()
+        && !this.isSquire()
+        && !this.isCompanionAtArms();
+    }
+
     public isKnight(): boolean {
         return this.getGroup()
             .contains("Knight");
@@ -96,6 +114,11 @@ export class User {
             .contains("Knight Lieutenant");
     }
 
+    public isMasterCommander(): boolean {
+        return this.getGroup()
+            .contains("Master Commander");
+    }
+
     public isSergeant(): boolean {
         return this.getGroup()
             .contains("Sergeant");
@@ -104,6 +127,11 @@ export class User {
     public isSergeantFirstClass(): boolean {
         return this.getGroup()
             .contains("Sergeant First Class");
+    }
+
+    public isSquire(): boolean {
+        return this.getGroup()
+            .contains("Squire");
     }
 
 }

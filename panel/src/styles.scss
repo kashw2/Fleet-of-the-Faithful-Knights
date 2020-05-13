@@ -14,6 +14,124 @@
   font-family: 'Baloo Thambi 2', sans-serif;
 }
 
+// Group Colours
+
+.guest {
+  color: #999999;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+}
+
+.squire {
+  color: #fce853;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+}
+
+.companion-at-arms {
+  color: #1f8b4c;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+}
+
+.sergeant {
+  color: #206694;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+}
+
+.sergeant-first-class {
+  color: #206694;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+}
+
+.knight {
+  color: #e67e22;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+}
+
+.knight-lieutenant {
+  color: #ce7100;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+}
+
+.knight-commander {
+  color: #ce7100;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+}
+
+.master-commander {
+  color: #9b0000;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+}
+
+.grand-master {
+  color: #9b0000;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+}
+
+.developer {
+  background-image: repeating-linear-gradient(319deg, #7fd82b 0%, #7696ef 37%, #f1ff5e 57%, #e557c6 100%);
+  text-align: center;
+  background-size: 800% 800%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow 2s ease-in-out infinite;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+}
+
+@keyframes rainbow {
+  0%,100% {
+    background-position: 0 0;
+  }
+
+  50% {
+    background-position: 100% 0;
+  }
+}
+
+
+
 .hover-red {
   transition: color ease-in-out 150ms;
 
@@ -42,21 +160,43 @@
 .text-border {
 
   &.top {
-      border-top: 1px solid black !important;
+    border-top: 1px solid black !important;
   }
 
   &.right {
-      border-right: 1px solid black !important;
+    border-right: 1px solid black !important;
   }
 
   &.bottom {
-      border-bottom: 1px solid black !important;
+    border-bottom: 1px solid black !important;
   }
 
   &.left {
-      border-left: 1px solid black !important;
+    border-left: 1px solid black !important;
   }
 
+}
+
+// Cursors
+.cursor-pointer {
+  cursor: default;
+}
+
+.cursor-click {
+  cursor: pointer;
+}
+
+// Sizing
+.w-30 {
+  width: 30% !important;
+}
+
+.w-40 {
+  width: 40% !important;
+}
+
+.w-60 {
+  width: 60% !important;
 }
 
 .mh-25 {
@@ -73,24 +213,4 @@
 
 .mh-50 {
   max-height: 50vh;
-}
-
-.cursor-pointer {
-  cursor: default;
-}
-
-.cursor-click {
-  cursor: pointer;
-}
-
-.w-30 {
-  width: 30% !important;
-}
-
-.w-40 {
-  width: 40% !important;
-}
-
-.w-60 {
-  width: 60% !important;
 }
