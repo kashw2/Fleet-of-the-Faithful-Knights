@@ -1,0 +1,37 @@
+<app-header></app-header>
+
+<div class="container-fluid">
+  <div class="row mt-5 pt-2 px-3 mb-1">
+    <div class="col">
+      <h2 *ngIf="getCandidateName().nonEmpty()"><b>{{getCandidateName().get()}}</b></h2>
+      <h5 class="mb-1">
+        <span *ngIf="getCandidateGroup().nonEmpty()" class="text-danger bold">
+          <b>{{getCandidateGroup().get()}}</b>
+        </span>
+        -
+        <span *ngIf="getVotePromotionRole().nonEmpty()" class="text-success bold">
+          <b>{{getVotePromotionRole().get()}}</b>
+        </span>
+      </h5>
+      <p *ngIf="getVoteDate().nonEmpty()" class="mb-1">{{toDateFormat(getVoteDate().get(), "DMYHM")}}</p>
+      <p *ngIf="getCandidateMembershipDate().nonEmpty()" class="mb-1">Member Since:
+        <b>{{toDateFormat(getCandidateMembershipDate().get(), "DMYHM")}}</b></p>
+      <p *ngIf="getVoteSponsorName().nonEmpty()" class="mb-1">Sponsored By: <b>{{getVoteSponsorName().get()}}</b></p>
+      <p *ngIf="getVoteNotes().nonEmpty()" class="mh-50 mb-1 overflow-auto">{{getVoteNotes().get()}}</p>
+    </div>
+    <div class="col">
+      <div class="d-flex justify-content-end">
+        <button *ngIf="canVote() && !hasVotePassed()" mdbBtn type="button" outline="true" color="success" size="sm"
+                mdbWavesEffect>Vote
+        </button>
+      </div>
+      <div class="d-flex row justify-content-end">
+        <div class="col-auto cursor-click mr-3 p-0" (click)="setSelectedTab(1)">Voting</div>
+        <div class="col-auto cursor-click mr-3 p-0" (click)="setSelectedTab(2)">Discord</div>
+        <div class="col-auto cursor-click mr-3 p-0" (click)="setSelectedTab(3)">Star Citizen</div>
+      </div>
+      <app-vote-tab *ngIf="getVote().nonEmpty() && isVotingTabSelected()" [vote]="getVote()" [user]="getUser()"></app-vote-tab>
+    </div>
+  </div>
+</div>
+

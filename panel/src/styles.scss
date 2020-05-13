@@ -177,6 +177,23 @@
 
 }
 
+// Overflow
+.overflow-y-hidden {
+  overflow-y: hidden;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
 // Cursors
 .cursor-pointer {
   cursor: default;
@@ -209,6 +226,10 @@
 
 .mh-40 {
   max-height: 40vh;
+}
+
+.mh-45 {
+  max-height: 45vh;
 }
 
 .mh-50 {
