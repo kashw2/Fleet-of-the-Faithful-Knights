@@ -2,7 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {MDBModalRef} from "angular-bootstrap-md";
 import {None, Option, Some} from "funfix-core";
-import {List} from "immutable";
+import {Set} from "immutable";
 import {CookieService} from "ngx-cookie-service";
 import {fromEvent} from "rxjs";
 import {debounceTime, tap} from "rxjs/operators";
@@ -43,7 +43,7 @@ export class CreateVoteModalComponent implements OnInit {
       Some(new Candidate(None, None, Some(this.candidate))),
       Some(this.candidatePromotionGroup),
       Some(this.voteNotes),
-      List(),
+      Set(),
       None,
     );
   }

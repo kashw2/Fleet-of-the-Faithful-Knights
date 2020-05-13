@@ -33,3 +33,6 @@ export const joinedAtKey = "joined_at";
 export const fakeIndexKey = "fake_index";
 export const nicknameKey = "nickname";
 export const commentsKey = "comments";
+export const createdDateKey = "created_date";
+export const userIdKey = "user_id";
+export const commentKey = "comment";

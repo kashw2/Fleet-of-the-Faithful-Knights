@@ -15,6 +15,7 @@ import {ListVotesEndpoint} from "./votes/list/list-votes-endpoint";
 import {ListVotesPassedEndpoint} from "./votes/list/list-votes-passed-endpoint";
 import {ReadVoteByIdEndpoint} from "./votes/read/read-vote-by-id-endpoint";
 import {WriteVoteEndpoint} from "./votes/write/write-vote-endpoint";
+import {WriteCommentEndpoint} from "./comments/write/write-comment-endpoint";
 
 export class AllEndpoints {
 
@@ -34,6 +35,7 @@ export class AllEndpoints {
         new WriteVoteEndpoint(db).routeEndpoint(router);
         new WriteCandidatesEndpoint(db).routeEndpoint(router);
         new ListCandidatesEndpoint(db).routeEndpoint(router);
+        new WriteCommentEndpoint(db).routeEndpoint(router);
     }
 
 }

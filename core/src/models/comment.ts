@@ -1,6 +1,6 @@
 import {None, Option} from "funfix-core";
 import {
-    contentKey,
+    contentKey, createdDateKey,
     idKey,
     JsonBuilder,
     parseNumber,
@@ -15,13 +15,18 @@ export class Comment {
 
     constructor(
         readonly id: Option<number> = None,
-        readonly content: Option<string> = None,
         readonly user: Option<User> = None,
+        readonly content: Option<string> = None,
+        readonly createdDate: Option<string> = None,
     ) {
     }
 
     public getContent(): Option<string> {
         return this.content;
+    }
+
+    public getCreatedDate(): Option<string> {
+        return this.createdDate;
     }
 
     public getId(): Option<number> {
@@ -30,6 +35,16 @@ export class Comment {
 
     public getUser(): Option<User> {
         return this.user;
+    }
+
+    public getUserId(): Option<number> {
+        return this.getUser()
+            .flatMap(u => u.getId());
+    }
+
+    public getUsername(): Option<string> {
+        return this.getUser()
+            .flatMap(u => u.getUsername());
     }
 
 }
@@ -41,15 +56,17 @@ export class CommentJsonSerializer extends SimpleJsonSerializer<Comment> {
     fromJson(json: any): Comment {
         return new Comment(
             parseNumber(json[idKey]),
-            parseString(json[contentKey]),
             parseSerialized(json[userKey], UserJsonSerializer.instance),
+            parseString(json[contentKey]),
+            parseString(json[createdDateKey]),
         );
     }
 
     toJson(value: Comment, builder: JsonBuilder): object {
         return builder.addOptional(value.getId(), idKey)
-            .addOptional(value.getContent(), contentKey)
             .addOptionalSerialized(value.getUser(), userKey, UserJsonSerializer.instance)
+            .addOptional(value.getContent(), contentKey)
+            .addOptional(value.getCreatedDate(), createdDateKey)
             .build();
     }
 
