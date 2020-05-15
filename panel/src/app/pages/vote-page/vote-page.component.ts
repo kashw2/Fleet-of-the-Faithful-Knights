@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {MDBModalService} from "angular-bootstrap-md";
 import {None, Option, Some} from "funfix-core";
@@ -12,6 +12,7 @@ import {FfkDateFormat, MomentUtils} from "../../../../../core/src/util/moment-ut
 import {FfkApiService} from "../../services/ffk-api.service";
 import {NotificationService} from "../../services/notification.service";
 import {AppState} from "../../store/state/app-state";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: "app-vote-page",
@@ -26,6 +27,8 @@ export class VotePageComponent implements OnInit {
     private ffkApi: FfkApiService,
     private store: Store<AppState>,
     private modalService: MDBModalService,
+    private cookieService: CookieService,
+    private router: Router,
   ) {
     route.paramMap.subscribe(params => this.voteId = Option.of(+params.get("id")!));
     this.store.select("user").subscribe(user => this.user = Option.of(user));
@@ -139,6 +142,9 @@ export class VotePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (!this.cookieService.check("token")) {
+      this.router.navigate(["/profile"]);
+    }
     this.voteId.map(vid => {
       this.ffkApi.read.getVoteById(vid)
         .subscribe(v => this.vote = Option.of(VoteJsonSerializer.instance.fromJson(v)));

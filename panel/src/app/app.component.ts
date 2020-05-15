@@ -18,11 +18,7 @@ import {AppState} from "./store/state/app-state";
 export class AppComponent implements OnInit {
 
   constructor(
-    private router: Router,
-    private http: HttpClient,
-    private location: Location,
     private cookieService: CookieService,
-    private notificationService: NotificationService,
     private ffkApi: FfkApiService,
     private store: Store<AppState>,
   ) {
