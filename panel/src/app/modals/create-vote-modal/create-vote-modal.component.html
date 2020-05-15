@@ -4,12 +4,12 @@
   </div>
   <div class="modal-body py-0">
     <div class="md-form">
-      <input mdbInput type="text" id="candidate-name" class="form-control my-4" [(ngModel)]="candidate">
-      <label for="candidate-name">Candidate Name</label>
+      <select id="candidates" class="browser-default custom-select my-4" [(ngModel)]="candidate">
+        <option *ngFor="let candidate of getCandidates()" [ngValue]="candidate">{{candidate.getDiscordUsername().get()}}</option>
+      </select>
       <!-- TODO: Use something other than the default Bootstrap <select> -->
       <select id="candidate-group" class="browser-default custom-select my-4" [(ngModel)]="candidatePromotionGroup">
         <option selected disabled class="d-none">Choose a Group</option>
-        <option value="Master Commander">Master Commander</option>
         <option value="Knight Commander">Knight Commander</option>
         <option value="Knight Lieutenant">Knight Lieutenant</option>
         <option value="Knight">Knight</option>

@@ -4,6 +4,7 @@ import {
     discordUsernameKey,
     fakeIndexKey,
     groupIdKey,
+    idKey,
     JsonBuilder,
     memberSinceKey,
     SimpleJsonSerializer,
@@ -14,6 +15,7 @@ import {Candidate} from "../candidate";
 export class DbCandidate {
 
     constructor(
+        readonly id: number,
         readonly discordId: string,
         readonly discordUsername: string,
         readonly groupId: number,
@@ -23,13 +25,15 @@ export class DbCandidate {
     }
 
     static fromCandidate(candidate: Candidate, index: number): Option<DbCandidate> {
-        return Option.map4(
+        return Option.map5(
+            candidate.getId(),
             candidate.getDiscordId(),
             candidate.getSanitizedDiscordUsername(),
             candidate.getGroup(),
             candidate.getSanitizedMemberSince(),
-            (did, dn, g, ms) => {
+            (id, did, dn, g, ms) => {
                 return new DbCandidate(
+                    id,
                     did,
                     dn,
                     GroupUtils.getGroupIdFromName(g),
@@ -56,6 +60,10 @@ export class DbCandidate {
         return this.groupId;
     }
 
+    getId(): number {
+        return this.id;
+    }
+
     getMemberSince(): string {
         return this.memberSince;
     }
@@ -71,7 +79,8 @@ export class DbCandidateJsonSerializer extends SimpleJsonSerializer<DbCandidate>
     }
 
     toJson(value: DbCandidate, builder: JsonBuilder): object {
-        return builder.add(value.getDiscordId(), discordIdKey)
+        return builder.add(value.getId(), idKey)
+            .add(value.getDiscordId(), discordIdKey)
             .add(value.getDiscordUsername(), discordUsernameKey)
             .add(value.getGroupId(), groupIdKey)
             .add(value.getMemberSince(), memberSinceKey)
