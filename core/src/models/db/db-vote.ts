@@ -1,14 +1,14 @@
 import {Option} from "funfix-core";
-import {candidateKey, groupIdKey, idKey, JsonBuilder, notesKey, SimpleJsonSerializer, sponsorIdKey} from "../..";
+import {candidateKey, groupIdKey, JsonBuilder, notesKey, SimpleJsonSerializer, sponsorIdKey} from "../..";
 import {GroupUtils} from "../../util/group-utils";
 import {Vote} from "../vote";
-import {DbUser} from "./db-user";
+import {DbCandidate, DbCandidateJsonSerializer} from "./db-candidate";
 
 export class DbVote {
 
     constructor(
         private sponsorId: number,
-        private candidateName: string,
+        private candidate: DbCandidate,
         private groupId: number,
         private notes: string = "",
     ) {
@@ -17,21 +17,21 @@ export class DbVote {
     static fromVote(vote: Vote): Option<DbVote> {
         return Option.map4(
             vote.getSponsorId(),
-            vote.getCandidateName(),
+            vote.getCandidate(),
             vote.getGroup(),
             vote.getNotes(),
             (sid, candidate, group, notes) => {
                 return new DbVote(
                     sid,
-                    candidate,
+                    DbCandidate.fromCandidate(candidate, 0).get(),
                     GroupUtils.getGroupIdFromName(GroupUtils.parseGroup(group)),
                     notes,
                 );
             });
     }
 
-    getCandidate(): string {
-        return this.candidateName;
+    getCandidate(): DbCandidate {
+        return this.candidate;
     }
 
     getGroupId(): number {

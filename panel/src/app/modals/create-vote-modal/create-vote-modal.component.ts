@@ -1,13 +1,13 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {MDBModalRef} from "angular-bootstrap-md";
 import {None, Option, Some} from "funfix-core";
-import {Set} from "immutable";
+import {List, Set} from "immutable";
 import {CookieService} from "ngx-cookie-service";
 import {fromEvent} from "rxjs";
 import {debounceTime, tap} from "rxjs/operators";
 import {idKey, User} from "../../../../../core/src";
-import {Candidate} from "../../../../../core/src/models/candidate";
+import {Candidate, CandidateJsonSerializer} from "../../../../../core/src/models/candidate";
 import {Vote, VoteJsonSerializer} from "../../../../../core/src/models/vote";
 import {FfkApiService} from "../../services/ffk-api.service";
 import {NotificationService} from "../../services/notification.service";
@@ -31,21 +31,26 @@ export class CreateVoteModalComponent implements OnInit {
       .subscribe(user => this.user = Option.of(user));
   }
 
-  candidate: string;
+  candidate: Candidate;
+  candidates: List<Candidate> = List();
+  candidateName: string;
   candidatePromotionGroup: string;
   user: Option<User> = None;
   voteNotes: string;
 
   private buildVote(): Vote {
+    console.log(this.candidate);
     return new Vote(
       None,
       this.getUser(),
-      Some(new Candidate(None, None, Some(this.candidate))),
+      Some(this.candidate),
       Some(this.candidatePromotionGroup),
       Some(this.voteNotes),
-      Set(),
-      None,
     );
+  }
+
+  getCandidates(): List<Candidate> {
+    return this.candidates;
   }
 
   getUser(): Option<User> {

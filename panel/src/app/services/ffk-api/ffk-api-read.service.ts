@@ -10,6 +10,10 @@ export class FfkApiReadService {
   constructor(private http: HttpClient) {
   }
 
+  getCandidates(): Observable<object> {
+    return this.http.get(this.getHostUrl().concat("/candidates"));
+  }
+
   private getHostUrl(): string {
     return "http://localhost:8080";
   }

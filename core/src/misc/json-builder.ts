@@ -49,6 +49,12 @@ export class JsonBuilder {
         return new JsonBuilder(this.object);
     }
 
+    addSerialized<T>(value: any, key: string, serializer: SimpleJsonSerializer<T>): JsonBuilder {
+        // @ts-ignore
+        this.object[key] = serializer.fromJson(value);
+        return new JsonBuilder(this.object);
+    }
+
     addSet<T>(values: Set<T>, key: string): JsonBuilder {
         if (!values.isEmpty()) {
             // @ts-ignore

@@ -4,6 +4,8 @@ import {MDBModalService, MdbTableDirective, MdbTablePaginationComponent, ModalOp
 import {Option} from "funfix-core";
 import {List} from "immutable";
 import {CookieService} from "ngx-cookie-service";
+import {User} from "../../../../../core/src";
+import {Candidate, CandidateJsonSerializer} from "../../../../../core/src/models/candidate";
 import {Vote, VoteJsonSerializer} from "../../../../../core/src/models/vote";
 import {FfkDateFormat, MomentUtils} from "../../../../../core/src/util/moment-utils";
 import {CreateVoteModalComponent} from "../../modals/create-vote-modal/create-vote-modal.component";
@@ -25,12 +27,18 @@ export class VotesPageComponent implements OnInit, AfterViewInit {
   ) {
   }
 
+  candidates: List<Candidate> = List();
+
   elements: any = [];
 
   @ViewChild(MdbTableDirective, {static: true}) mdbTable: MdbTableDirective;
   @ViewChild(MdbTablePaginationComponent, {static: true}) mdbTablePagination: MdbTablePaginationComponent;
 
   votes: List<Vote> = List();
+
+  getCandidates(): List<Candidate> {
+    return this.candidates;
+  }
 
   getLastVotes(amount: number): List<Vote> {
     return this.getVotes()
@@ -120,10 +128,12 @@ export class VotesPageComponent implements OnInit, AfterViewInit {
         this.mdbTable.setDataSource(this.elements);
         this.elements = this.mdbTable.getDataSource();
       });
+    this.ffkApi.read.getCandidates()
+      .subscribe(cs => this.candidates = CandidateJsonSerializer.instance.fromObjectToList(cs));
   }
 
-  openCreateVoteModal(): void {
-    const modalOptions: ModalOptions = {backdrop: true, animated: true};
+  openCreateVoteModal(candidates: List<Candidate>): void {
+    const modalOptions: ModalOptions = {backdrop: true, animated: true, data: {candidates}};
     this.modalService.show(CreateVoteModalComponent, modalOptions);
   }
 
