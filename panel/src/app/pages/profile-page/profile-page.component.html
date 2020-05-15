@@ -93,7 +93,10 @@
           <td *ngIf="vote.getCandidateName().nonEmpty()"
               class="py-2 hover-red cursor-pointer">{{vote.getCandidateName().get()}}</td>
           <td *ngIf="vote.getGroup().nonEmpty()" class="py-2 hover-red cursor-pointer">{{vote.getGroup().get()}}</td>
-          <td *ngIf="vote.getNotes().nonEmpty()" class="py-2 hover-red cursor-pointer"><a>View Notes</a></td>
+          <td *ngIf="vote.getNotes().nonEmpty() && vote.getId().nonEmpty()" class="py-2 hover-red cursor-pointer">
+            <a [href]="'/vote/' + vote.getId().get()">View Notes</a>
+          </td>
+          <td *ngIf="vote.getNotes().isEmpty()" class="py-2 hover-red cursor-pointer">N/A</td>
           <td *ngIf="vote.getCreatedDate().nonEmpty()"
               class="py-2 hover-red cursor-pointer">{{toDateFormat(vote.getCreatedDate().get(), "DMYHM")}}</td>
           <td *ngIf="vote.getStatus().nonEmpty()" class="py-2 hover-red cursor-pointer">
