@@ -22,6 +22,7 @@ import {
 import {Candidate, CandidateJsonSerializer} from "./candidate";
 import {Comment, CommentJsonSerializer} from "./comment";
 import {User, UserJsonSerializer} from "./user";
+import {Voter, VoterJsonSerializer} from "./voter";
 
 export class Vote {
 
@@ -31,7 +32,7 @@ export class Vote {
         readonly candidate: Option<Candidate> = None,
         readonly group: Option<string> = None,
         readonly notes: Option<string> = None,
-        readonly voters: Set<User> = Set(),
+        readonly voters: Set<Voter> = Set(),
         readonly status: Option<boolean> = Some(false),
         readonly comments: List<Comment> = List(),
         readonly createdDate: Option<string> = None,
@@ -85,7 +86,7 @@ export class Vote {
         return this.status;
     }
 
-    public getVoters(): Set<User> {
+    public getVoters(): Set<Voter> {
         return this.voters;
     }
 
@@ -153,7 +154,7 @@ export class VoteJsonSerializer extends SimpleJsonSerializer<Vote> {
             parseSerialized(json[candidateKey], CandidateJsonSerializer.instance),
             parseString(json[groupKey]),
             parseString(json[notesKey]),
-            parseSerializedSet(json[votersKey], UserJsonSerializer.instance),
+            parseSerializedSet(json[votersKey], VoterJsonSerializer.instance),
             parseBoolean(json[statusKey]),
             parseSerializedList(json[commentsKey], CommentJsonSerializer.instance),
             parseString(json[dateKey]),
@@ -166,7 +167,7 @@ export class VoteJsonSerializer extends SimpleJsonSerializer<Vote> {
             .addOptionalSerialized(value.getCandidate(), candidateKey, CandidateJsonSerializer.instance)
             .addOptional(value.getGroup(), groupKey)
             .addOptional(value.getNotes(), notesKey)
-            .addSetSerialized(value.getVoters(), votersKey, UserJsonSerializer.instance)
+            .addSetSerialized(value.getVoters(), votersKey, VoterJsonSerializer.instance)
             .addOptional(value.getStatus(), statusKey)
             .addListSerialized(value.getComments(), commentsKey, CommentJsonSerializer.instance)
             .addOptional(value.getCreatedDate(), dateKey)

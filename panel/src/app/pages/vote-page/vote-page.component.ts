@@ -3,9 +3,10 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {MDBModalService} from "angular-bootstrap-md";
 import {None, Option, Some} from "funfix-core";
-import {Set} from "immutable";
+import {List, Set} from "immutable";
 import {CookieService} from "ngx-cookie-service";
 import {BehaviorSubject} from "rxjs";
+import {debounce, debounceTime} from "rxjs/operators";
 import {User} from "../../../../../core/src";
 import {Candidate} from "../../../../../core/src/models/candidate";
 import {Vote, VoteJsonSerializer} from "../../../../../core/src/models/vote";
@@ -13,7 +14,7 @@ import {FfkDateFormat, MomentUtils} from "../../../../../core/src/util/moment-ut
 import {FfkApiService} from "../../services/ffk-api.service";
 import {NotificationService} from "../../services/notification.service";
 import {AppState} from "../../store/state/app-state";
-import {debounce, debounceTime} from "rxjs/operators";
+import {Voter} from "../../../../../core/src/models/voter";
 
 @Component({
   selector: "app-vote-page",
@@ -35,7 +36,7 @@ export class VotePageComponent implements OnInit {
     this.store.select("user").subscribe(user => this.user = Option.of(user));
   }
 
-  selectedTab: BehaviorSubject<Option<number>> = new BehaviorSubject(Some(0));
+  selectedTab: BehaviorSubject<Option<number>> = new BehaviorSubject(Some(1));
 
   user: Option<User> = None;
 
@@ -43,8 +44,22 @@ export class VotePageComponent implements OnInit {
 
   voteId: Option<number> = None;
 
-  canVote(): boolean {
-    return true;
+  getVoters(): Set<Voter> {
+    return this.getVote()
+      .map(v => v.getVoters())
+      .getOrElse(Set());
+  }
+
+  canAffirm(): boolean {
+    return this.getVote()
+      .flatMap(v => v.getStatus())
+      .contains(false)
+  }
+
+  canDeny(): boolean {
+    return this.getVote()
+      .flatMap(v => v.getStatus())
+      .contains(false);
   }
 
   getCandidateGroup(): Option<string> {
@@ -103,12 +118,6 @@ export class VotePageComponent implements OnInit {
   getVotePromotionRole(): Option<string> {
     return this.getVote()
       .flatMap(v => v.getGroup());
-  }
-
-  getVoters(): Set<User> {
-    return this.getVote()
-      .map(v => v.getVoters())
-      .getOrElse(Set());
   }
 
   getVoteSponsor(): Option<User> {

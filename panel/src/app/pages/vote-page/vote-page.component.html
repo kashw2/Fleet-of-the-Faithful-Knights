@@ -21,10 +21,10 @@
     </div>
     <div class="col">
       <div class="d-flex justify-content-end">
-        <button *ngIf="canVote() && !hasVotePassed()" mdbBtn type="button" outline="true" color="danger" size="sm"
+        <button *ngIf="canDeny() && !hasVotePassed()" mdbBtn type="button" outline="true" color="danger" size="sm"
                 mdbWavesEffect (click)="submitResponse('N')">Deny
         </button>
-        <button *ngIf="canVote() && !hasVotePassed()" mdbBtn type="button" outline="true" color="success" size="sm"
+        <button *ngIf="canAffirm() && !hasVotePassed()" mdbBtn type="button" outline="true" color="success" size="sm"
                 mdbWavesEffect (click)="submitResponse('Y')">Affirm
         </button>
       </div>

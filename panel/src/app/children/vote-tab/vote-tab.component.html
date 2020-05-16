@@ -4,7 +4,7 @@
       <th *ngFor="let voter of getVoters(); let i = index" class="py-1 px-auto">Voter {{i}}</th>
     </tr>
     <tr>
-      <td *ngFor="let vote of getVoters()" class="py-1 px-auto">{{vote.getUsername().get()}}</td>
+      <td *ngFor="let vote of getVoters()" class="py-1 px-auto">{{vote.getVoterUsername().get()}}</td>
     </tr>
   </table>
   <table *ngIf="isSergeantVote()" mdbTable class="table table-hover table-responsive table-borderless ml-auto w-auto">
@@ -12,7 +12,7 @@
       <th *ngFor="let voter of getVoters(); let i = index" class="py-1 px-auto">Voter {{i}}</th>
     </tr>
     <tr>
-      <td *ngFor="let vote of getVoters()" class="py-1 px-auto">{{vote.getUsername().get()}}</td>
+      <td *ngFor="let vote of getVoters()" class="py-1 px-auto">{{vote.getVoterUsername().get()}}</td>
     </tr>
   </table>
   <table *ngIf="isNormalVote()" mdbTable class="table table-hover table-responsive table-borderless ml-auto w-auto">
@@ -20,7 +20,7 @@
       <th *ngFor="let voter of getVoters(); let i = index" class="py-1 px-auto">Voter {{i}}</th>
     </tr>
     <tr>
-      <td *ngFor="let vote of getVoters()" class="py-1 px-auto">{{vote.getUsername().get()}}</td>
+      <td *ngFor="let vote of getVoters()" class="py-1 px-auto">{{vote.getVoterUsername().get()}}</td>
     </tr>
   </table>
   <app-comment [comments]="getComments()" class="w-100 mh-45 overflow-x-hidden overflow-y-auto"></app-comment>

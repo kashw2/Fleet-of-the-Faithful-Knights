@@ -4,6 +4,7 @@ import {List, Set} from "immutable";
 import {User} from "../../../../../core/src";
 import {Comment} from "../../../../../core/src/models/comment";
 import {Vote} from "../../../../../core/src/models/vote";
+import {Voter} from "../../../../../core/src/models/voter";
 
 @Component({
   selector: "app-vote-tab",
@@ -12,7 +13,8 @@ import {Vote} from "../../../../../core/src/models/vote";
 })
 export class VoteTabComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   @Input()
   user: Option<User> = None;
@@ -22,18 +24,8 @@ export class VoteTabComponent implements OnInit {
 
   getComments(): List<Comment> {
     return this.getVote()
-        .map(v => v.getComments())
-        .getOrElse(List());
-  }
-
-  getRequiredVotes(): number {
-    if (this.isKnightVote()) {
-      return 5;
-    }
-    if (this.isSergeantVote()) {
-      return 4;
-    }
-    return 4;
+      .map(v => v.getComments())
+      .getOrElse(List());
   }
 
   getUser(): Option<User> {
@@ -49,15 +41,24 @@ export class VoteTabComponent implements OnInit {
       .flatMap(v => v.getId());
   }
 
-  getVoters(): Set<User> {
+  getVoters(): Set<Voter> {
     return this.getVote()
       .map(v => v.getVoters())
+      .map(vs => {
+        if (this.isKnightVote()) {
+          return vs.take(4);
+        }
+        if (this.isSergeantVote()) {
+          return vs.take(5);
+        }
+        return vs.take(4);
+      })
       .getOrElse(Set());
   }
 
   isKnightVote(): boolean {
     return this.getVote()
-      .map(v => v.shouldBeInKnightVoting())
+      .map(v => v.isKnightVote() || v.isKnightLieutenantVote() || v.isKnightCommanderVote())
       .getOrElse(false);
   }
 
@@ -67,7 +68,7 @@ export class VoteTabComponent implements OnInit {
 
   isSergeantVote(): boolean {
     return this.getVote()
-      .map(v => v.shouldBeInSergeantVoting())
+      .map(v => v.isSergeantVote() || v.isSergeantFirstClassVote())
       .getOrElse(false);
   }
 
