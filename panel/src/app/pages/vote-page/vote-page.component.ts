@@ -4,6 +4,7 @@ import {Store} from "@ngrx/store";
 import {MDBModalService} from "angular-bootstrap-md";
 import {None, Option, Some} from "funfix-core";
 import {Set} from "immutable";
+import {CookieService} from "ngx-cookie-service";
 import {BehaviorSubject} from "rxjs";
 import {User} from "../../../../../core/src";
 import {Candidate} from "../../../../../core/src/models/candidate";
@@ -12,7 +13,7 @@ import {FfkDateFormat, MomentUtils} from "../../../../../core/src/util/moment-ut
 import {FfkApiService} from "../../services/ffk-api.service";
 import {NotificationService} from "../../services/notification.service";
 import {AppState} from "../../store/state/app-state";
-import {CookieService} from "ngx-cookie-service";
+import {debounce, debounceTime} from "rxjs/operators";
 
 @Component({
   selector: "app-vote-page",
@@ -46,10 +47,6 @@ export class VotePageComponent implements OnInit {
     return true;
   }
 
-  getUser(): Option<User> {
-    return this.user;
-  }
-
   getCandidateGroup(): Option<string> {
     return this.getVoteCandidate()
       .flatMap(c => c.getGroup());
@@ -68,6 +65,15 @@ export class VotePageComponent implements OnInit {
   getSelectedTab(): Option<number> {
     return this.selectedTab
       .getValue();
+  }
+
+  getUser(): Option<User> {
+    return this.user;
+  }
+
+  getUserId(): Option<number> {
+    return this.getUser()
+      .flatMap(u => u.getId());
   }
 
   getVote(): Option<Vote> {
@@ -153,6 +159,14 @@ export class VotePageComponent implements OnInit {
 
   setSelectedTab(tabId: number): void {
     this.selectedTab.next(Some(tabId));
+  }
+
+  submitResponse(response: string): void {
+    Option.map2(this.getUserId(), this.getVoteId(), (uid, vid) => {
+      this.ffkApi.write.writeVoteResponse(vid, uid, response)
+        .pipe(debounceTime(300))
+        .subscribe(x => this.notificationService.showSuccessNotification("Vote submitted"));
+    });
   }
 
   toDateFormat(date: string, format: FfkDateFormat): string {

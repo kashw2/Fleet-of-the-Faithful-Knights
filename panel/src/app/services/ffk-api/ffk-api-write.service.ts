@@ -28,4 +28,8 @@ export class FfkApiWriteService {
     return this.http.post(this.getHostUrl().concat("/vote/write"), {vote});
   }
 
+  writeVoteResponse(voteId: number, userId: number, response: string): Observable<object> {
+    return this.http.get(this.getHostUrl().concat(`/vote/response/${voteId}/${userId}/${response}`));
+  }
+
 }

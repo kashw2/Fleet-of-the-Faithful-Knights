@@ -21,8 +21,11 @@
     </div>
     <div class="col">
       <div class="d-flex justify-content-end">
+        <button *ngIf="canVote() && !hasVotePassed()" mdbBtn type="button" outline="true" color="danger" size="sm"
+                mdbWavesEffect (click)="submitResponse('N')">Deny
+        </button>
         <button *ngIf="canVote() && !hasVotePassed()" mdbBtn type="button" outline="true" color="success" size="sm"
-                mdbWavesEffect>Vote
+                mdbWavesEffect (click)="submitResponse('Y')">Affirm
         </button>
       </div>
       <div class="d-flex row justify-content-end">
