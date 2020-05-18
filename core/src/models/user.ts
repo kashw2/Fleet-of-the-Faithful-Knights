@@ -1,6 +1,7 @@
 import {None, Option, Some} from "funfix-core";
 import {
     avatarKey,
+    discordIdKey,
     discriminatorKey,
     groupKey,
     idKey,
@@ -18,6 +19,7 @@ export class User {
 
     constructor(
         readonly id: Option<number> = None,
+        readonly discordId: Option<string> = None,
         readonly username: Option<string> = None,
         readonly locale: Option<string> = Some("en-US"),
         readonly avatar: Option<string> = None,
@@ -30,6 +32,10 @@ export class User {
 
     public getAvatar(): Option<string> {
         return this.avatar;
+    }
+
+    public getDiscordId(): Option<string> {
+        return this.discordId;
     }
 
     public getDiscriminator(): Option<string> {
@@ -72,13 +78,14 @@ export class User {
 
     isEmpty(): boolean {
         return this.getId().isEmpty()
-        && this.getUsername().isEmpty()
-        && this.getLocale().isEmpty()
-        && this.getAvatar().isEmpty()
-        && this.getToken().isEmpty()
-        && this.getDiscriminator().isEmpty()
-        && this.getGroup().isEmpty()
-        && this.getMemberSince().isEmpty();
+            && this.getDiscordId().isEmpty()
+            && this.getUsername().isEmpty()
+            && this.getLocale().isEmpty()
+            && this.getAvatar().isEmpty()
+            && this.getToken().isEmpty()
+            && this.getDiscriminator().isEmpty()
+            && this.getGroup().isEmpty()
+            && this.getMemberSince().isEmpty();
     }
 
     public isGrandMaster(): boolean {
@@ -88,15 +95,15 @@ export class User {
 
     public isGuest(): boolean {
         return !this.isDeveloper()
-        && !this.isGrandMaster()
-        && !this.isMasterCommander()
-        && !this.isKnightCommander()
-        && !this.isKnightLieutenant()
-        && !this.isKnight()
-        && !this.isSergeantFirstClass()
-        && !this.isSergeant()
-        && !this.isSquire()
-        && !this.isCompanionAtArms();
+            && !this.isGrandMaster()
+            && !this.isMasterCommander()
+            && !this.isKnightCommander()
+            && !this.isKnightLieutenant()
+            && !this.isKnight()
+            && !this.isSergeantFirstClass()
+            && !this.isSergeant()
+            && !this.isSquire()
+            && !this.isCompanionAtArms();
     }
 
     public isKnight(): boolean {
@@ -143,6 +150,7 @@ export class UserJsonSerializer extends SimpleJsonSerializer<User> {
     fromJson(json: any): User {
         return new User(
             parseNumber(json[idKey]),
+            parseString(json[discordIdKey]),
             parseString(json[usernameKey]),
             parseString(json[localeKey]),
             parseString(json[avatarKey]),
@@ -156,6 +164,7 @@ export class UserJsonSerializer extends SimpleJsonSerializer<User> {
     toJson(value: User, builder: JsonBuilder): object {
         return builder
             .addOptional(value.getId(), idKey)
+            .addOptional(value.getDiscordId(), discordIdKey)
             .addOptional(value.getUsername(), usernameKey)
             .addOptional(value.getDiscriminator(), discriminatorKey)
             .addOptional(value.getAvatar(), avatarKey)
