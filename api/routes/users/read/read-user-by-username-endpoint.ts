@@ -6,15 +6,15 @@ import {Database} from "../../../db/database";
 
 export class ReadUserByUsernameEndpoint extends GetEndpoint {
 
-    constructor(private db: Database) {
-        super("/user/username/:username");
+    constructor(readonly db: Database) {
+        super("/user/username/:username", db);
     }
 
     private getName(req: Request): Either<string, string> {
         return ApiUtils.parseStringFromPath(req, usernameKey);
     }
 
-    isAuthorized(): boolean {
+    isAuthorized(user: User): boolean {
         return true;
     }
 

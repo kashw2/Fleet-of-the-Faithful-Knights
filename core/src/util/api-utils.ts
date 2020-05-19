@@ -28,6 +28,16 @@ export class ApiUtils {
         return EitherUtils.liftEither(serializer.fromJsonArray(List(req.body[key])), `unable to serialize ${key} from body`);
     }
 
+    static parseStringFromHeader(req: Request, key: string): Either<string, string> {
+        // @ts-ignore
+        return EitherUtils.liftEither(req.header(key), `${key} is not a valid header`);
+    }
+
+    static parseNumberFromHeader(req: Request, key: string): Either<string, number> {
+        // @ts-ignore
+        return EitherUtils.liftEither(+req.header(key), `${key} is not a valid header`);
+    }
+
     static parseStringFromPath(req: Request, key: string): Either<string, string> {
         return EitherUtils.liftEither(req.params[key], `${key} does not exist on object`);
     }

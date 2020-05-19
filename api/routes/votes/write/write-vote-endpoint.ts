@@ -8,15 +8,15 @@ import {Database} from "../../../db/database";
 
 export class WriteVoteEndpoint extends PostEndpoint {
 
-    constructor(private db: Database) {
-        super("/vote/write/");
+    constructor(readonly db: Database) {
+        super("/vote/write/", db);
     }
 
     private getVote(req: Request): Either<string, Vote> {
         return ApiUtils.parseSerializedFromBody(req, "vote", VoteJsonSerializer.instance);
     }
 
-    isAuthorized(): boolean {
+    isAuthorized(user: User): boolean {
         return true;
     }
 

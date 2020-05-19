@@ -6,8 +6,8 @@ import {Database} from "../../../db/database";
 
 export class ReadUserByIdEndpoint extends GetEndpoint {
 
-    constructor(private db: Database) {
-        super("/user/id/:id");
+    constructor(readonly db: Database) {
+        super("/user/id/:id", db);
     }
 
     private getUser(userId: number): Either<string, User> {
@@ -18,7 +18,7 @@ export class ReadUserByIdEndpoint extends GetEndpoint {
         return ApiUtils.parseNumberFromPath(req, idKey);
     }
 
-    isAuthorized(): boolean {
+    isAuthorized(user: User): boolean {
         return true;
     }
 

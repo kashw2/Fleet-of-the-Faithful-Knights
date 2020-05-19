@@ -7,8 +7,8 @@ import {Database} from "../../../db/database";
 
 export class ReadVoteByIdEndpoint extends GetEndpoint {
 
-    constructor(private db: Database) {
-        super("/vote/id/:id");
+    constructor(readonly db: Database) {
+        super("/vote/id/:id", db);
     }
 
     private getVote(voteId: number): Either<string, Vote> {
@@ -19,7 +19,7 @@ export class ReadVoteByIdEndpoint extends GetEndpoint {
         return ApiUtils.parseNumberFromPath(req, "id");
     }
 
-    isAuthorized(): boolean {
+    isAuthorized(user: User): boolean {
         return true;
     }
 
