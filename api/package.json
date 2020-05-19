@@ -17,10 +17,8 @@
     "@types/body-parser": "^1.19.0",
     "@types/cors": "^2.8.6",
     "@types/node": "^13.13.5",
-    "@types/passport": "^1.0.2",
     "body-parser": "^1.19.0",
-    "cors": "^2.8.5",
-    "passport": "^0.4.1"
+    "cors": "^2.8.5"
   },
   "devDependencies": {
     "typescript": "^3.8.3"
