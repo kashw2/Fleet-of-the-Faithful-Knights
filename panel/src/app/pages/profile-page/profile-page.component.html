@@ -18,17 +18,17 @@
         <div class="col">
           <h6 *ngIf="getUserId().nonEmpty()">User Id: <b class="hover-red cursor-pointer">{{getUserId().get()}}</b></h6>
           <h6 *ngIf="getUsername().nonEmpty()">Username: <b class="hover-red cursor-pointer">{{getUsername().get()}}</b></h6>
-          <h6 *ngIf="getGroup().nonEmpty() && isGuest()">Group: <b class="hover-red cursor-pointer guest">{{getGroup().get()}}</b></h6>
-          <h6 *ngIf="getGroup().nonEmpty() && isCompanionAtArms()">Group: <b class="hover-red cursor-pointer companion-at-arms">{{getGroup().get()}}</b></h6>
-          <h6 *ngIf="getGroup().nonEmpty() && isSquire()">Group: <b class="hover-red cursor-pointer squire">{{getGroup().get()}}</b></h6>
-          <h6 *ngIf="getGroup().nonEmpty() && isSergeant()">Group: <b class="hover-red cursor-pointer sergeant">{{getGroup().get()}}</b></h6>
-          <h6 *ngIf="getGroup().nonEmpty() && isSergeantFirstClass()">Group: <b class="hover-red cursor-pointer sergeant-first-class">{{getGroup().get()}}</b></h6>
-          <h6 *ngIf="getGroup().nonEmpty() && isKnight()">Group: <b class="hover-red cursor-pointer knight">{{getGroup().get()}}</b></h6>
-          <h6 *ngIf="getGroup().nonEmpty() && isKnightLieutenant()">Group: <b class="hover-red cursor-pointer knight-lieutenant">{{getGroup().get()}}</b></h6>
-          <h6 *ngIf="getGroup().nonEmpty() && isKnightCommander()">Group: <b class="hover-red cursor-pointer knight-commander">{{getGroup().get()}}</b></h6>
-          <h6 *ngIf="getGroup().nonEmpty() && isMasterCommander()">Group: <b class="hover-red cursor-pointer master-commander">{{getGroup().get()}}</b></h6>
-          <h6 *ngIf="getGroup().nonEmpty() && isGrandMaster()">Group: <b class="hover-red cursor-pointer grand-master">{{getGroup().get()}}</b></h6>
-          <h6 *ngIf="getGroup().nonEmpty() && isDeveloper()">Group: <b class="hover-red cursor-pointer developer">{{getGroup().get()}}</b></h6>
+          <h6 *ngIf="getGroup().nonEmpty() && isGuest()">Group: <b class="cursor-pointer guest">{{getGroup().get()}}</b></h6>
+          <h6 *ngIf="getGroup().nonEmpty() && isCompanionAtArms()">Group: <b class="cursor-pointer companion-at-arms">{{getGroup().get()}}</b></h6>
+          <h6 *ngIf="getGroup().nonEmpty() && isSquire()">Group: <b class="cursor-pointer squire">{{getGroup().get()}}</b></h6>
+          <h6 *ngIf="getGroup().nonEmpty() && isSergeant()">Group: <b class="cursor-pointer sergeant">{{getGroup().get()}}</b></h6>
+          <h6 *ngIf="getGroup().nonEmpty() && isSergeantFirstClass()">Group: <b class="cursor-pointer sergeant-first-class">{{getGroup().get()}}</b></h6>
+          <h6 *ngIf="getGroup().nonEmpty() && isKnight()">Group: <b class="cursor-pointer knight">{{getGroup().get()}}</b></h6>
+          <h6 *ngIf="getGroup().nonEmpty() && isKnightLieutenant()">Group: <b class="cursor-pointer knight-lieutenant">{{getGroup().get()}}</b></h6>
+          <h6 *ngIf="getGroup().nonEmpty() && isKnightCommander()">Group: <b class="cursor-pointer knight-commander">{{getGroup().get()}}</b></h6>
+          <h6 *ngIf="getGroup().nonEmpty() && isMasterCommander()">Group: <b class="cursor-pointer master-commander">{{getGroup().get()}}</b></h6>
+          <h6 *ngIf="getGroup().nonEmpty() && isGrandMaster()">Group: <b class="cursor-pointer grand-master">{{getGroup().get()}}</b></h6>
+          <h6 *ngIf="getGroup().nonEmpty() && isDeveloper()">Group: <b class="cursor-pointer developer">{{getGroup().get()}}</b></h6>
           <h6 *ngIf="getMemberSince().nonEmpty()">Member Since: <b class="hover-red cursor-pointer">{{getMemberSince().get()}}</b></h6>
           <h6 *ngIf="!getVotes().isEmpty()">Votes Created: <b
             class="hover-red cursor-pointer">{{getUserVoteCount()}}</b></h6>
