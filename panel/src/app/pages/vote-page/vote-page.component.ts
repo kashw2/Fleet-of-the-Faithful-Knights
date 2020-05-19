@@ -10,11 +10,11 @@ import {debounce, debounceTime} from "rxjs/operators";
 import {User} from "../../../../../core/src";
 import {Candidate} from "../../../../../core/src/models/candidate";
 import {Vote, VoteJsonSerializer} from "../../../../../core/src/models/vote";
+import {Voter} from "../../../../../core/src/models/voter";
 import {FfkDateFormat, MomentUtils} from "../../../../../core/src/util/moment-utils";
 import {FfkApiService} from "../../services/ffk-api.service";
 import {NotificationService} from "../../services/notification.service";
 import {AppState} from "../../store/state/app-state";
-import {Voter} from "../../../../../core/src/models/voter";
 
 @Component({
   selector: "app-vote-page",
@@ -44,22 +44,27 @@ export class VotePageComponent implements OnInit {
 
   voteId: Option<number> = None;
 
-  getVoters(): Set<Voter> {
-    return this.getVote()
-      .map(v => v.getVoters())
-      .getOrElse(Set());
-  }
-
   canAffirm(): boolean {
-    return this.getVote()
-      .flatMap(v => v.getStatus())
-      .contains(false)
+    if (this.isSergeantVote() && !this.hasVotePassed()) {
+      return this.getVoters()
+        .filter(v => v.didAffirm())
+        .size < 5;
+    }
+    if (this.isKnightVote() && !this.hasVotePassed()) {
+      return this.getVoters()
+        .filter(v => v.didAffirm())
+        .size < 4;
+    }
+    return !this.hasVotePassed() && this.getVoters()
+      .filter(v => v.didAffirm())
+      .size < 4;
   }
 
   canDeny(): boolean {
-    return this.getVote()
-      .flatMap(v => v.getStatus())
-      .contains(false);
+    return !this.hasVotePassed()
+      && this.getVoters()
+        .filter(v => v.didDeny())
+        .size < 4;
   }
 
   getCandidateGroup(): Option<string> {
@@ -120,6 +125,12 @@ export class VotePageComponent implements OnInit {
       .flatMap(v => v.getGroup());
   }
 
+  getVoters(): Set<Voter> {
+    return this.getVote()
+      .map(v => v.getVoters())
+      .getOrElse(Set());
+  }
+
   getVoteSponsor(): Option<User> {
     return this.getVote()
       .flatMap(v => v.getSponsor());
@@ -132,13 +143,25 @@ export class VotePageComponent implements OnInit {
 
   hasVotePassed(): boolean {
     return this.getVote()
-      .flatMap(v => v.getStatus())
+      .map(v => v.hasPassed())
       .getOrElse(false);
   }
 
   isDiscordTabSelected(): boolean {
     return this.getSelectedTab()
       .contains(2);
+  }
+
+  isKnightVote(): boolean {
+    return this.getVote()
+      .map(v => v.isKnightVote() || v.isKnightLieutenantVote() || v.isKnightCommanderVote())
+      .getOrElse(false);
+  }
+
+  isSergeantVote(): boolean {
+    return this.getVote()
+      .map(v => v.isSergeantVote() || v.isSergeantFirstClassVote())
+      .getOrElse(false);
   }
 
   isStarCitizenTabSelected(): boolean {

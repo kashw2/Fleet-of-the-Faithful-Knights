@@ -20,6 +20,16 @@ export class Voter {
     ) {
     }
 
+    public didAffirm(): boolean {
+        return this.getResponse()
+            .contains("Y");
+    }
+
+    public didDeny(): boolean {
+        return this.getResponse()
+            .contains("N");
+    }
+
     public getId(): Option<number> {
         return this.id;
     }
