@@ -39,7 +39,6 @@ export class CreateVoteModalComponent implements OnInit {
   voteNotes: string;
 
   private buildVote(): Vote {
-    console.log(this.candidate);
     return new Vote(
       None,
       this.getUser(),

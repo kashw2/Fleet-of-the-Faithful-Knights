@@ -1,6 +1,7 @@
 import {Option} from "funfix-core";
 import {
     avatarKey,
+    discordIdKey,
     discriminatorKey,
     groupIdKey,
     JsonBuilder,
@@ -16,6 +17,7 @@ export class DbUser {
 
     constructor(
         private username: string,
+        private discordId: string,
         private discriminator: string,
         private groupId: number,
         private avatar: string,
@@ -24,14 +26,16 @@ export class DbUser {
     }
 
     static fromDiscordGuildMember(guildMember: DiscordGuildMember): Option<DbUser> {
-        return Option.map4(
-            guildMember.getUser().flatMap(u => u.getUsername()),
+        return Option.map5(
+            guildMember.getUser().flatMap(u => u.getId()),
             guildMember.getUser().flatMap(u => u.getDiscriminatorWithSymbol()),
+            guildMember.getUser().flatMap(u => u.getUsername()),
             guildMember.getUser().flatMap(u => u.getRequestFormedAvatarUrl()),
             guildMember.getUser().flatMap(u => u.getLocale()),
-            (username, discriminator, avatar, locale) => {
+            (discordId, discriminator, username, avatar, locale) => {
                 return new DbUser(
                     username,
+                    discordId,
                     discriminator,
                     GroupUtils.getGroupIdFromName(GroupUtils.getGroupNameFromDiscordRoleId(guildMember.getRoles().first())),
                     avatar,
@@ -42,15 +46,17 @@ export class DbUser {
     }
 
     static fromUser(user: User): Option<DbUser> {
-        return Option.map5(
-            user.getUsername(),
+        return Option.map6(
+            user.getDiscordId(),
             user.getDiscriminator(),
+            user.getUsername(),
             user.getGroup(),
             user.getAvatar(),
             user.getLocale(),
-            (username, discriminator, group, avatar, locale) => {
+            (discordId, discriminator, username, group, avatar, locale) => {
                 return new DbUser(
                     username,
+                    discordId,
                     discriminator,
                     GroupUtils.getGroupIdFromName(GroupUtils.parseGroup(group)),
                     avatar,
@@ -62,6 +68,10 @@ export class DbUser {
 
     getAvatar(): string {
         return this.avatar;
+    }
+
+    getDiscordId(): string {
+        return this.discordId;
     }
 
     getDiscriminator(): string {
@@ -92,6 +102,7 @@ export class DbUserJsonSerializer extends SimpleJsonSerializer<DbUser> {
 
     toJson(value: DbUser, builder: JsonBuilder): object {
         return builder.add(value.getUsername(), usernameKey)
+            .add(value.getDiscordId(), discordIdKey)
             .add(value.getDiscriminator(), discriminatorKey)
             .add(value.getAvatar(), avatarKey)
             .add(value.getGroupId(), groupIdKey)

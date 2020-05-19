@@ -21,10 +21,10 @@
     </button>
     <div class="dropdown-menu min-width-75">
       <a *ngIf="!isLoggedIn()" class="dropdown-item py-1" href="https://discordapp.com/api/oauth2/authorize?client_id=607005043043860521&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2Fsso&response_type=code&scope=identify%20guilds">Login</a>
-      <a class="dropdown-item py-1" href="/profile">Profile</a>
+      <a *ngIf="isLoggedIn()" class="dropdown-item py-1" href="/profile">Profile</a>
       <div class="dropdown-divider my-1"></div>
       <a class="dropdown-item py-1" href="#">Settings</a>
-      <a class="dropdown-item py-1" href="#">Admin</a>
+      <a *ngIf="isLoggedIn()" class="dropdown-item py-1" href="#">Admin</a>
     </div>
   </div>
 </mdb-navbar>

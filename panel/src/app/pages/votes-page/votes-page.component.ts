@@ -10,6 +10,7 @@ import {Vote, VoteJsonSerializer} from "../../../../../core/src/models/vote";
 import {FfkDateFormat, MomentUtils} from "../../../../../core/src/util/moment-utils";
 import {CreateVoteModalComponent} from "../../modals/create-vote-modal/create-vote-modal.component";
 import {FfkApiService} from "../../services/ffk-api.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: "app-vote-page",
@@ -20,6 +21,7 @@ export class VotesPageComponent implements OnInit, AfterViewInit {
 
   constructor(
     private ffkApi: FfkApiService,
+    private router: Router,
     private location: Location,
     private cookieService: CookieService,
     private cdRef: ChangeDetectorRef,
@@ -111,6 +113,9 @@ export class VotesPageComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    if (!this.cookieService.check("token")) {
+      this.router.navigate(["/profile"]);
+    }
     this.ffkApi.read.getVotesByType(this.getSelectedVoteType().getOrElse("All"))
       .subscribe(votes => {
         this.votes = VoteJsonSerializer.instance.fromObjectToList(votes);

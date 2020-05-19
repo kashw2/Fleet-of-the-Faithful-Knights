@@ -44,4 +44,16 @@ export class DbInsert {
         );
     }
 
+    insertVoteResponse(
+        voteId: number,
+        userId: number,
+        response: string,
+        modifiedBy: string = "System",
+    ): Promise<Either<string, IRecordSet<any>>> {
+        return this.requests.sendRequest(
+            "ssp_InsertVoteResponse",
+            List.of(`@VoteId = ${voteId}`, `@UserId = ${userId}`, `@Response = ${response}`, `@ModifiedBy = ${modifiedBy}`),
+        );
+    }
+
 }

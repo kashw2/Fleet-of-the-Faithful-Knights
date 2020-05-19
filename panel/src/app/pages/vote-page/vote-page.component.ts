@@ -1,10 +1,12 @@
 import {Component, OnInit} from "@angular/core";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {MDBModalService} from "angular-bootstrap-md";
 import {None, Option, Some} from "funfix-core";
-import {Set} from "immutable";
+import {List, Set} from "immutable";
+import {CookieService} from "ngx-cookie-service";
 import {BehaviorSubject} from "rxjs";
+import {debounce, debounceTime} from "rxjs/operators";
 import {User} from "../../../../../core/src";
 import {Candidate} from "../../../../../core/src/models/candidate";
 import {Vote, VoteJsonSerializer} from "../../../../../core/src/models/vote";
@@ -12,6 +14,7 @@ import {FfkDateFormat, MomentUtils} from "../../../../../core/src/util/moment-ut
 import {FfkApiService} from "../../services/ffk-api.service";
 import {NotificationService} from "../../services/notification.service";
 import {AppState} from "../../store/state/app-state";
+import {Voter} from "../../../../../core/src/models/voter";
 
 @Component({
   selector: "app-vote-page",
@@ -26,12 +29,14 @@ export class VotePageComponent implements OnInit {
     private ffkApi: FfkApiService,
     private store: Store<AppState>,
     private modalService: MDBModalService,
+    private cookieService: CookieService,
+    private router: Router,
   ) {
     route.paramMap.subscribe(params => this.voteId = Option.of(+params.get("id")!));
     this.store.select("user").subscribe(user => this.user = Option.of(user));
   }
 
-  selectedTab: BehaviorSubject<Option<number>> = new BehaviorSubject(Some(0));
+  selectedTab: BehaviorSubject<Option<number>> = new BehaviorSubject(Some(1));
 
   user: Option<User> = None;
 
@@ -39,12 +44,22 @@ export class VotePageComponent implements OnInit {
 
   voteId: Option<number> = None;
 
-  canVote(): boolean {
-    return true;
+  getVoters(): Set<Voter> {
+    return this.getVote()
+      .map(v => v.getVoters())
+      .getOrElse(Set());
   }
 
-  getUser(): Option<User> {
-    return this.user;
+  canAffirm(): boolean {
+    return this.getVote()
+      .flatMap(v => v.getStatus())
+      .contains(false)
+  }
+
+  canDeny(): boolean {
+    return this.getVote()
+      .flatMap(v => v.getStatus())
+      .contains(false);
   }
 
   getCandidateGroup(): Option<string> {
@@ -65,6 +80,15 @@ export class VotePageComponent implements OnInit {
   getSelectedTab(): Option<number> {
     return this.selectedTab
       .getValue();
+  }
+
+  getUser(): Option<User> {
+    return this.user;
+  }
+
+  getUserId(): Option<number> {
+    return this.getUser()
+      .flatMap(u => u.getId());
   }
 
   getVote(): Option<Vote> {
@@ -94,12 +118,6 @@ export class VotePageComponent implements OnInit {
   getVotePromotionRole(): Option<string> {
     return this.getVote()
       .flatMap(v => v.getGroup());
-  }
-
-  getVoters(): Set<User> {
-    return this.getVote()
-      .map(v => v.getVoters())
-      .getOrElse(Set());
   }
 
   getVoteSponsor(): Option<User> {
@@ -139,6 +157,9 @@ export class VotePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (!this.cookieService.check("token")) {
+      this.router.navigate(["/profile"]);
+    }
     this.voteId.map(vid => {
       this.ffkApi.read.getVoteById(vid)
         .subscribe(v => this.vote = Option.of(VoteJsonSerializer.instance.fromJson(v)));
@@ -147,6 +168,14 @@ export class VotePageComponent implements OnInit {
 
   setSelectedTab(tabId: number): void {
     this.selectedTab.next(Some(tabId));
+  }
+
+  submitResponse(response: string): void {
+    Option.map2(this.getUserId(), this.getVoteId(), (uid, vid) => {
+      this.ffkApi.write.writeVoteResponse(vid, uid, response)
+        .pipe(debounceTime(300))
+        .subscribe(x => this.notificationService.showSuccessNotification("Vote submitted"));
+    });
   }
 
   toDateFormat(date: string, format: FfkDateFormat): string {
