@@ -1,17 +1,28 @@
 import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
+import {User} from "../../../../../core/src";
+import {CookieService} from "ngx-cookie-service";
 
 @Injectable({
   providedIn: "root",
 })
 export class FfkApiReadService {
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private cookieService: CookieService,
+  ) {
   }
 
+  token: string = this.cookieService.get("token");
+
   getCandidates(): Observable<object> {
-    return this.http.get(this.getHostUrl().concat("/candidates"));
+    return this.http.get(this.getHostUrl().concat("/candidates"), {
+      headers: {
+        "X-Api-Token": this.token,
+      },
+    });
   }
 
   private getHostUrl(): string {
@@ -19,35 +30,67 @@ export class FfkApiReadService {
   }
 
   getNews(): Observable<object> {
-    return this.http.get(this.getHostUrl().concat("/news"));
+    return this.http.get(this.getHostUrl().concat("/news"), {
+      headers: {
+        "X-Api-Token": this.token,
+      },
+    });
   }
 
   getRecentVotes(amount: number): Observable<object> {
-    return this.http.get(this.getHostUrl().concat(`/votes/recent/${amount}`));
+    return this.http.get(this.getHostUrl().concat(`/votes/recent/${amount}`), {
+      headers: {
+        "X-Api-Token": this.token,
+      },
+    });
   }
 
   getUserByToken(token: string): Observable<object> {
-    return this.http.get(this.getHostUrl().concat(`/user/token/${token}`));
+    return this.http.get(this.getHostUrl().concat(`/user/token/${token}`), {
+      headers: {
+        "X-Api-Token": this.token,
+      },
+    });
   }
 
   getVoteById(voteId: number): Observable<object> {
-    return this.http.get(this.getHostUrl().concat(`/vote/id/${voteId}`));
+    return this.http.get(this.getHostUrl().concat(`/vote/id/${voteId}`), {
+      headers: {
+        "X-Api-Token": this.token,
+      },
+    });
   }
 
   getVoteByStatus(userId: number, status: string): Observable<object> {
-    return this.http.get(this.getHostUrl().concat(`/votes/passed/${userId}?passed=${status}`));
+    return this.http.get(this.getHostUrl().concat(`/votes/passed/${userId}?passed=${status}`), {
+      headers: {
+        "X-Api-Token": this.token,
+      },
+    });
   }
 
   getVotes(): Observable<object> {
-    return this.http.get(this.getHostUrl().concat("/votes"));
+    return this.http.get(this.getHostUrl().concat("/votes"), {
+      headers: {
+        "X-Api-Token": this.token,
+      },
+    });
   }
 
   getVotesByType(type: string): Observable<object> {
-    return this.http.get(this.getHostUrl().concat(`/votes/type/${type}`));
+    return this.http.get(this.getHostUrl().concat(`/votes/type/${type}`), {
+      headers: {
+        "X-Api-Token": this.token,
+      },
+    });
   }
 
   getVotesByUser(userId: number): Observable<object> {
-    return this.http.get(this.getHostUrl().concat(`/votes/user/${userId}`));
+    return this.http.get(this.getHostUrl().concat(`/votes/sponsor/${userId}`), {
+      headers: {
+        "X-Api-Token": this.token,
+      },
+    });
   }
 
 }

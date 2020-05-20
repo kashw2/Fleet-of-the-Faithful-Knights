@@ -1,11 +1,26 @@
 import {Either} from "funfix-core";
 import {List} from "immutable";
 import {EitherUtils} from "..";
+import {Candidate} from "./candidate";
 import {Vote} from "./vote";
 
 export class VoteCache {
 
     constructor(private votes: List<Vote>) {
+    }
+
+    doesVoteExistForCandidate(candidate: Candidate): boolean {
+        return candidate.getId()
+            .map(cid => this.getByCandidateId(cid).isRight())
+            .getOrElse(false);
+    }
+
+    getByCandidateId(candidateId: number): Either<string, List<Vote>> {
+        return EitherUtils.liftEither(
+            this.getVotes()
+                .filter(v => v.getCandidate().flatMap(c => c.getId()).contains(candidateId)),
+            `No votes exist for ${candidateId} in cache`,
+        );
     }
 
     getById(id: number): Vote {
@@ -17,7 +32,7 @@ export class VoteCache {
         return EitherUtils.liftEither(this.getById(id), `Vote ${id} does not exist in cache`);
     }
 
-    getByUserId(userId: number): Either<string, List<Vote>> {
+    getBySponsorId(userId: number): Either<string, List<Vote>> {
         return EitherUtils.liftEither(
             this.getVotes()
                 .filter(v => v.getSponsor().flatMap(s => s.getId()).contains(userId)),

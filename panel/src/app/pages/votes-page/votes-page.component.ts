@@ -4,7 +4,6 @@ import {MDBModalService, MdbTableDirective, MdbTablePaginationComponent, ModalOp
 import {Option} from "funfix-core";
 import {List} from "immutable";
 import {CookieService} from "ngx-cookie-service";
-import {User} from "../../../../../core/src";
 import {Candidate, CandidateJsonSerializer} from "../../../../../core/src/models/candidate";
 import {Vote, VoteJsonSerializer} from "../../../../../core/src/models/vote";
 import {FfkDateFormat, MomentUtils} from "../../../../../core/src/util/moment-utils";

@@ -30,7 +30,7 @@ export abstract class GetEndpoint extends RouteManager {
                     } else {
                         res.sendStatus(403);
                     }
-                })
+                });
             if (this.getApiUser(req, this.db).isLeft()) {
                 ApiUtils.sendError(this.getApiUser(req, this.db), res);
             }
