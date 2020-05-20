@@ -6,8 +6,8 @@ import {Database} from "../../../db/database";
 
 export class ReadUserByTokenEndpoint extends GetEndpoint {
 
-    constructor(private db: Database) {
-        super("/user/token/:token");
+    constructor(readonly db: Database) {
+        super("/user/token/:token", db);
     }
 
     private getToken(req: Request): Either<string, string> {
@@ -18,7 +18,7 @@ export class ReadUserByTokenEndpoint extends GetEndpoint {
         return this.db.cache.users.getUserByToken(token);
     }
 
-    isAuthorized(): boolean {
+    isAuthorized(user: User): boolean {
         return true;
     }
 

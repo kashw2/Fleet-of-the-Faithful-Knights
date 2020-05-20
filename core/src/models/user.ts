@@ -76,7 +76,7 @@ export class User {
             .contains("Developer");
     }
 
-    isEmpty(): boolean {
+    public isEmpty(): boolean {
         return this.getId().isEmpty()
             && this.getDiscordId().isEmpty()
             && this.getUsername().isEmpty()

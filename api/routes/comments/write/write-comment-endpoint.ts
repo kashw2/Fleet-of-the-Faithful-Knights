@@ -1,15 +1,15 @@
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
-import {ApiUtils} from "../../../../core/src";
+import {ApiUtils, User} from "../../../../core/src";
 import {Comment, CommentJsonSerializer} from "../../../../core/src/models/comment";
 import {DbComment} from "../../../../core/src/models/db/db-comment";
-import {Database} from "../../../db/database";
 import {PostEndpoint} from "../../../../core/src/server/post-endpoint";
+import {Database} from "../../../db/database";
 
 export class WriteCommentEndpoint extends PostEndpoint {
 
-    constructor(private db: Database) {
-        super("/comment/write/:voteid");
+    constructor(readonly db: Database) {
+        super("/comment/write/:voteid", db);
     }
 
     private getComment(req: Request): Either<string, Comment> {
@@ -20,7 +20,7 @@ export class WriteCommentEndpoint extends PostEndpoint {
         return ApiUtils.parseNumberFromPath(req, "voteid");
     }
 
-    isAuthorized(): boolean {
+    isAuthorized(user: User): boolean {
         return true;
     }
 

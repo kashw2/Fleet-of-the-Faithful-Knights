@@ -1,15 +1,15 @@
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
-import {ApiUtils, EitherUtils} from "../../../../core/src";
+import {ApiUtils, EitherUtils, User} from "../../../../core/src";
 import {DiscordApi} from "../../../../core/src/misc/discord-api";
 import {DbUser} from "../../../../core/src/models/db/db-user";
-import {Database} from "../../../db/database";
 import {GetEndpoint} from "../../../../core/src/server/get-endpoint";
+import {Database} from "../../../db/database";
 
 export class UserRegisterEndpoint extends GetEndpoint {
 
-    constructor(private db: Database) {
-        super("/user/register");
+    constructor(readonly db: Database) {
+        super("/user/register", db);
     }
 
     private getPanelClientId(): Either<string, string> {
@@ -24,7 +24,7 @@ export class UserRegisterEndpoint extends GetEndpoint {
         return ApiUtils.parseStringFromQuery(req, "code");
     }
 
-    isAuthorized(): boolean {
+    isAuthorized(user: User): boolean {
         return true;
     }
 

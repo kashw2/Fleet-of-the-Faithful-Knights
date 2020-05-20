@@ -1,15 +1,15 @@
 import {Request, Response} from "express";
 import {Either, Left} from "funfix-core";
 import {List} from "immutable";
-import {ApiUtils} from "../../../../core/src";
+import {ApiUtils, User} from "../../../../core/src";
 import {Vote, VoteJsonSerializer} from "../../../../core/src/models/vote";
-import {Database} from "../../../db/database";
 import {GetEndpoint} from "../../../../core/src/server/get-endpoint";
+import {Database} from "../../../db/database";
 
 export class ListVotesByTypeEndpoint extends GetEndpoint {
 
-    constructor(private db: Database) {
-        super("/votes/type/:type");
+    constructor(readonly db: Database) {
+        super("/votes/type/:type", db);
     }
 
     private getType(req: Request): Either<string, string> {
@@ -44,7 +44,7 @@ export class ListVotesByTypeEndpoint extends GetEndpoint {
             });
     }
 
-    isAuthorized(): boolean {
+    isAuthorized(user: User): boolean {
         return true;
     }
 

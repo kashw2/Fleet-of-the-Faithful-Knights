@@ -1,22 +1,22 @@
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {List} from "immutable";
-import {ApiUtils} from "../../../../core/src";
+import {ApiUtils, User} from "../../../../core/src";
 import {News, NewsJsonSerializer} from "../../../../core/src/models/news";
-import {Database} from "../../../db/database";
 import {GetEndpoint} from "../../../../core/src/server/get-endpoint";
+import {Database} from "../../../db/database";
 
 export class ListNewsEndpoint extends GetEndpoint {
 
-    constructor(private db: Database) {
-        super("/news");
+    constructor(readonly db: Database) {
+        super("/news", db);
     }
 
     private getNewsArticles(): Either<string, List<News>> {
         return this.db.cache.news.getNewsEither();
     }
 
-    isAuthorized(): boolean {
+    isAuthorized(user: User): boolean {
         return true;
     }
 

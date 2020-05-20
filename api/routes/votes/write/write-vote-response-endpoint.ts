@@ -1,13 +1,13 @@
 import {Request, Response} from "express";
 import {Either, Left, Right} from "funfix-core";
-import {ApiUtils} from "../../../../core/src";
+import {ApiUtils, User} from "../../../../core/src";
 import {GetEndpoint} from "../../../../core/src/server/get-endpoint";
 import {Database} from "../../../db/database";
 
 export class WriteVoteResponseEndpoint extends GetEndpoint {
 
-    constructor(private db: Database) {
-        super("/vote/response/:voteid/:userid/:response");
+    constructor(readonly db: Database) {
+        super("/vote/response/:voteid/:userid/:response", db);
     }
 
     private getOnboardedResponse(req: Request): Either<string, string> {
@@ -35,7 +35,7 @@ export class WriteVoteResponseEndpoint extends GetEndpoint {
         return ApiUtils.parseNumberFromPath(req, "voteid");
     }
 
-    isAuthorized(): boolean {
+    isAuthorized(user: User): boolean {
         return true;
     }
 

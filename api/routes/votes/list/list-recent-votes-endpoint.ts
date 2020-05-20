@@ -1,15 +1,15 @@
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {List} from "immutable";
-import {ApiUtils} from "../../../../core/src";
+import {ApiUtils, User} from "../../../../core/src";
 import {Vote, VoteJsonSerializer} from "../../../../core/src/models/vote";
-import {Database} from "../../../db/database";
 import {GetEndpoint} from "../../../../core/src/server/get-endpoint";
+import {Database} from "../../../db/database";
 
 export class ListRecentVotesEndpoint extends GetEndpoint {
 
-    constructor(private db: Database) {
-        super("/votes/recent/:amount");
+    constructor(readonly db: Database) {
+        super("/votes/recent/:amount", db);
     }
 
     private getAmount(req: Request): Either<string, number> {
@@ -21,7 +21,7 @@ export class ListRecentVotesEndpoint extends GetEndpoint {
             .flatMap(n => this.db.cache.votes.getLastVotes(n));
     }
 
-    isAuthorized(): boolean {
+    isAuthorized(user: User): boolean {
         return true;
     }
 
