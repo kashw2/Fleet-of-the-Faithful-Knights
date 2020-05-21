@@ -1,20 +1,42 @@
-import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
-import {CookieService} from "ngx-cookie-service";
-import {FfkApiReadService} from "./ffk-api/ffk-api-read.service";
-import {FfkApiWriteService} from "./ffk-api/ffk-api-write.service";
+import {List} from "immutable";
+import {FfkApi} from "../../../../core/src/misc/ffk-api";
+import {News} from "../../../../core/src/models/news";
+import {Vote} from "../../../../core/src/models/vote";
+import {environment} from "../../environments/environment";
+import {NotificationService} from "./notification.service";
 
 @Injectable({
   providedIn: "root",
 })
-export class FfkApiService {
+export class FfkApiService extends FfkApi {
 
-  constructor(private http: HttpClient, private cookieService: CookieService) {
-    this.read = new FfkApiReadService(this.http, this.cookieService);
-    this.write = new FfkApiWriteService(this.http, this.cookieService);
+  constructor(private notificationService: NotificationService) {
+    super(environment.FFK_API_ADDRESS, environment.FFK_API_TOKEN);
   }
 
-  read: FfkApiReadService;
-  write: FfkApiWriteService;
+  async getNews(): Promise<List<News>> {
+    const news = await this.getAllNews();
+    if (news.isLeft()) {
+      return this.notificationService.showFailureNotificationAndRecoverList(news);
+    }
+    return news.get();
+  }
+
+  async getVotesByStatus(userId: number, status: boolean = false): Promise<List<Vote>> {
+    const votes = await this.getAllVotesByStatus(userId, status);
+    if (votes.isLeft()) {
+      return this.notificationService.showFailureNotificationAndRecoverList(votes);
+    }
+    return votes.get();
+  }
+
+  async getVotesByUser(userId: number): Promise<List<Vote>> {
+    const votes = await this.getAllVotesByUser(userId);
+    if (votes.isLeft()) {
+      return this.notificationService.showFailureNotificationAndRecoverList(votes);
+    }
+    return votes.get();
+  }
 
 }
