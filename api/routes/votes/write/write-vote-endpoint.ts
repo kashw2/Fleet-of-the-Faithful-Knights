@@ -28,8 +28,10 @@ export class WriteVoteEndpoint extends PostEndpoint {
     run(req: Request, res: Response): void {
         this.getVote(req)
             .map(vote => {
-                this.doesVoteExist(vote) ? res.send("Vote already exists") : DbVote.fromVote(vote)
-                    .map(dbVote => ApiUtils.sendResultPromise(this.db.procedures.insert.insertVote(dbVote), res));
+                this.doesVoteExist(vote) ? DbVote.fromVote(vote)
+                        .map(dbVote => ApiUtils.sendResultPromise(this.db.procedures.insert.insertVote(dbVote), res))
+                    : res.send("Vote already exists");
+                this.db.cache.cacheVotes();
             });
     }
 

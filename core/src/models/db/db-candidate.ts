@@ -15,6 +15,7 @@ import {Candidate} from "../candidate";
 export class DbCandidate {
 
     constructor(
+        readonly id: number,
         readonly discordId: string,
         readonly discordUsername: string,
         readonly groupId: number,
@@ -24,13 +25,15 @@ export class DbCandidate {
     }
 
     static fromCandidate(candidate: Candidate, index: number): Option<DbCandidate> {
-        return Option.map4(
+        return Option.map5(
+            candidate.getId(),
             candidate.getDiscordId(),
             candidate.getSanitizedDiscordUsername(),
             candidate.getGroup(),
             candidate.getSanitizedMemberSince(),
-            (did, dn, g, ms) => {
+            (id, did, dn, g, ms) => {
                 return new DbCandidate(
+                    id,
                     did,
                     dn,
                     GroupUtils.getGroupIdFromName(g),
