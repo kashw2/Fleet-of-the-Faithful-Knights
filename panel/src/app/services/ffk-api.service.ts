@@ -23,72 +23,72 @@ export class FfkApiService extends FfkApi {
 
   async getCandidates(): Promise<List<Candidate>> {
     const candidates = await this.getAllCandidates();
-    return OptionUtils.toList(this.notificationService.showNotificationBasedOnEither(candidates, "Successfully loaded candidates"));
+    return OptionUtils.toList(this.notificationService.showNotificationBaseOnEitherEffector(candidates, candidates => `Loaded ${candidates.size} Candidates`));
   }
 
   async getNews(): Promise<List<News>> {
     const news = await this.getAllNews();
-    return OptionUtils.toList(this.notificationService.showNotificationBasedOnEither(news, "Successfully loaded news"));
+    return OptionUtils.toList(this.notificationService.showNotificationBaseOnEitherEffector(news, articles => `Loaded ${articles.size} Articles`));
   }
 
   async getUserByToken(token: string): Promise<User> {
-    const user =  await this.getUserFromToken(token);
-    return this.notificationService.showNotificationBasedOnEither(user, "Successfully loaded user")
+    const response = await this.getUserFromToken(token);
+    return this.notificationService.showNotificationBaseOnEitherEffector(response, user => `Welcome ${user.getUsername().getOrElse("Unknown")}`)
       .filter(x => !x.isEmpty())
       .get();
   }
 
   async getVoteById(voteId: number): Promise<Vote> {
     const vote = await this.getVoteFromId(voteId);
-    return this.notificationService.showNotificationBasedOnEither(vote, "Successfully loaded vote")
+    return this.notificationService.showNotificationBasedOnEither(vote, "Vote Loaded")
       .filter(x => !x.isEmpty())
       .get();
   }
 
   async getVotes(): Promise<List<Vote>> {
-    const votes = await this.getAllVotes();
-    return OptionUtils.toList(this.notificationService.showNotificationBasedOnEither(votes, "Successfully loader votes"));
+    const responses = await this.getAllVotes();
+    return OptionUtils.toList(this.notificationService.showNotificationBaseOnEitherEffector(responses, votes => `Loaded ${votes.size} Votes`));
   }
 
   async getVotesByStatus(userId: number, status: boolean = false): Promise<List<Vote>> {
-    const votes = await this.getAllVotesByStatus(userId, status);
-    return OptionUtils.toList(this.notificationService.showNotificationBasedOnEither(votes, "Successfully loaded votes"));
+    const response = await this.getAllVotesByStatus(userId, status);
+    return OptionUtils.toList(this.notificationService.showNotificationBaseOnEitherEffector(response, votes => `Loaded ${votes.size} Votes`));
   }
 
   async getVotesByType(type: string): Promise<List<Vote>> {
-    const votes = await this.getAllVotesByType(type);
-    return OptionUtils.toList(this.notificationService.showNotificationBasedOnEither(votes, "Successfully loaded votes"));
+    const response = await this.getAllVotesByType(type);
+    return OptionUtils.toList(this.notificationService.showNotificationBaseOnEitherEffector(response, votes => `Loaded ${votes.size} Votes`));
   }
 
   async getVotesByUser(userId: number): Promise<List<Vote>> {
-    const votes = await this.getAllVotesByUser(userId);
-    return OptionUtils.toList(this.notificationService.showNotificationBasedOnEither(votes, "Successfully loaded user votes"));
+    const response = await this.getAllVotesByUser(userId);
+    return OptionUtils.toList(this.notificationService.showNotificationBaseOnEitherEffector(response, votes => `Loaded ${votes.size} User Votes`));
   }
 
   async loginUser(code: string): Promise<DiscordOAuthResponse> {
     const response = await this.logUserIn(code);
-    return this.notificationService.showNotificationBasedOnEither(response, "Handshake authenticated")
+    return this.notificationService.showNotificationBasedOnEither(response, "Handshake Authenticated")
       .filter(x => x.isUseful())
       .get();
   }
 
   async writeVoteComment(comment: Comment, voteId: number): Promise<number> {
     const response = await this.writeComment(comment, voteId);
-    return this.notificationService.showNotificationBaseOnEitherEffector(response, value => `Successfully wrote comment ${value}`)
+    return this.notificationService.showNotificationBasedOnEither(response, "Success")
       // Lol
       .getOrElse(NaN);
   }
 
   async writeVoteForUser(vote: Vote): Promise<number> {
     const response = await this.writeVote(vote);
-    return this.notificationService.showNotificationBaseOnEitherEffector(response, (value) => `Successfully wrote vote ${value}`)
+    return this.notificationService.showNotificationBasedOnEither(response, "Success")
       // Lol
       .getOrElse(NaN);
   }
 
   async writeVoteResponse(voteId: number, userId: number, char: string): Promise<number> {
     const response = await this.writeResponse(voteId, userId, char);
-    return this.notificationService.showNotificationBaseOnEitherEffector(response, (value) => `Successfully wrote response ${value}`)
+    return this.notificationService.showNotificationBasedOnEither(response, "Success")
       // Lol
       .getOrElse(NaN);
   }
