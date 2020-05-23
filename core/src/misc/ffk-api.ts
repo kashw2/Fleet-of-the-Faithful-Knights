@@ -14,9 +14,8 @@ export class FfkApi {
         private address: string,
         private apiToken: string = process.env.FFK_API_TOKEN!,
     ) {
-
     }
-    
+
     getAllCandidates(): Promise<Either<string, List<Candidate>>> {
         return axios.get(this.getHostUrl().concat(`/candidates`), {
             headers: {
