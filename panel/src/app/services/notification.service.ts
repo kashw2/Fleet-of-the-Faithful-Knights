@@ -1,4 +1,6 @@
 import {Injectable} from "@angular/core";
+import {Either, None, Option, Some} from "funfix-core";
+import {Collection, List, Set} from "immutable";
 import {ToastrService} from "ngx-toastr";
 
 @Injectable({
@@ -9,36 +11,50 @@ export class NotificationService {
   constructor(private toastr: ToastrService) {
   }
 
-  showFailureNotification(message: string, title: string = "Uh oh!", timeout?: number): void {
-    if (timeout) {
-      this.toastr.error(message, title, {timeOut: timeout, progressBar: true, enableHtml: true});
-      return;
-    }
-    this.toastr.error(message, title, {timeOut: 2500, progressBar: true, enableHtml: true});
+  showFailureNotification(message: string, title: string = "Uh oh!", timeout: number = 2500): void {
+    this.toastr.error(message, title, {timeOut: timeout, progressBar: true, enableHtml: true});
   }
 
-  showInfoNotification(message: string, title: string = "Info", timeout?: number): void {
-    if (timeout) {
-      this.toastr.info(message, title, {timeOut: timeout, progressBar: true, enableHtml: true});
-      return;
+  showFailureNotificationAndRecoverList<T>(e: Either<string, List<T>>, title: string = "Uh oh!", timeout?: number): List<T> {
+    if (e.isLeft()) {
+      this.showFailureNotification(e.value, title, timeout);
+      return List();
     }
-    this.toastr.info(message, title, {timeOut: 5000, progressBar: true, enableHtml: true});
+    return e.get();
   }
 
-  showSuccessNotification(message: string, title: string = "Success!", timeout?: number): void {
-    if (timeout) {
-      this.toastr.success(message, title, {timeOut: timeout, progressBar: true, enableHtml: true});
-      return;
+  showFailureNotificationAndRecoverSet<T>(e: Either<string, Set<T>>, title: string = "Uh oh!", timeout?: number): Set<T> {
+    if (e.isLeft()) {
+      this.showFailureNotification(e.value, title, timeout);
+      return Set();
     }
-    this.toastr.success(message, title, {timeOut: 1500, progressBar: true, enableHtml: true});
+    return e.get();
   }
 
-  showWarningNotification(message: string, title: string = "Warning", timeout?: number): void {
-    if (timeout) {
-      this.toastr.warning(message, title, {timeOut: timeout, progressBar: true, enableHtml: true});
-      return;
+  showInfoNotification(message: string, title: string = "Info", timeout: number = 5000): void {
+    this.toastr.info(message, title, {timeOut: timeout, progressBar: true, enableHtml: true});
+  }
+
+  showNotificationBasedOnEither<T>(e: Either<string, T>, successMessage: string, timeout?: number): Option<T> {
+    if (e.isLeft()) {
+      this.showFailureNotification(e.value, "Uh oh!", timeout);
+      return None;
     }
-    this.toastr.warning(message, title, {timeOut: 3000, progressBar: true, enableHtml: true});
+    this.showSuccessNotification(successMessage, "Success", timeout);
+    return Some(e.get());
+  }
+
+  // TODO: Merge this with showNotificationBaseOnEither()
+  showNotificationBaseOnEitherEffector<T>(e: Either<string, T>, f: (value: T) => string, timeout?: number): Option<T> {
+    return this.showNotificationBasedOnEither(e, f(e.get()), timeout);
+  }
+
+  showSuccessNotification(message: string, title: string = "Success!", timeout: number = 1500): void {
+    this.toastr.success(message, title, {timeOut: timeout, progressBar: true, enableHtml: true});
+  }
+
+  showWarningNotification(message: string, title: string = "Warning", timeout: number = 3000): void {
+    this.toastr.warning(message, title, {timeOut: timeout, progressBar: true, enableHtml: true});
   }
 
 }
