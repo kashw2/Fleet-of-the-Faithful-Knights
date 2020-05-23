@@ -1,8 +1,9 @@
 import axios from "axios";
 import {Either, Left, Right} from "funfix-core";
 import {List} from "immutable";
-import {User, UserJsonSerializer} from "..";
+import {idKey, User, UserJsonSerializer} from "..";
 import {Candidate, CandidateJsonSerializer} from "../models/candidate";
+import {Comment, CommentJsonSerializer} from "../models/comment";
 import {News, NewsJsonSerializer} from "../models/news";
 import {Vote, VoteJsonSerializer} from "../models/vote";
 import {DiscordOAuthResponse, DiscordOAuthResponseJsonSerializer} from "./discord-api";
@@ -15,7 +16,7 @@ export class FfkApi {
     ) {
 
     }
-
+    
     getAllCandidates(): Promise<Either<string, List<Candidate>>> {
         return axios.get(this.getHostUrl().concat(`/candidates`), {
             headers: {
@@ -56,8 +57,18 @@ export class FfkApi {
             .catch(x => Left(x));
     }
 
-    getAllVotesByUser(userId: number): Promise<Either<string, List<Vote>>> {
-        return axios.get(this.getHostUrl().concat(`/votes/user/${userId}`), {
+    getAllVotesByType(type: string): Promise<Either<string, List<Vote>>> {
+        return axios.get(this.getHostUrl().concat(`/votes/type/${type}`), {
+            headers: {
+                "X-Api-Token": this.getApiToken(),
+            },
+        })
+            .then(x => Right(VoteJsonSerializer.instance.fromJsonArray(List(x.data))))
+            .catch(x => Left(x));
+    }
+
+    getAllVotesByUser(sponsorId: number): Promise<Either<string, List<Vote>>> {
+        return axios.get(this.getHostUrl().concat(`/votes/sponsor/${sponsorId}`), {
             headers: {
                 "X-Api-Token": this.getApiToken(),
             },
@@ -84,8 +95,8 @@ export class FfkApi {
             .catch(x => Left(x));
     }
 
-    getUserByToken(token: string): Promise<Either<string, User>> {
-        return axios.get(this.getHostUrl().concat(`/user/token/${token}`), {
+    getUserByUsername(username: string): Promise<Either<string, User>> {
+        return axios.get(this.getHostUrl().concat(`/users/username/${username}`), {
             headers: {
                 "X-Api-Token": this.getApiToken(),
             },
@@ -94,8 +105,8 @@ export class FfkApi {
             .catch(x => Left(x));
     }
 
-    getUserByUsername(username: string): Promise<Either<string, User>> {
-        return axios.get(this.getHostUrl().concat(`/users/username/${username}`), {
+    getUserFromToken(token: string): Promise<Either<string, User>> {
+        return axios.get(this.getHostUrl().concat(`/user/token/${token}`), {
             headers: {
                 "X-Api-Token": this.getApiToken(),
             },
@@ -114,8 +125,8 @@ export class FfkApi {
             .catch(x => Left(x));
     }
 
-    getVoteById(voteId: number): Promise<Either<string, Vote>> {
-        return axios.get(this.getHostUrl().concat(`/vote/${voteId}`), {
+    getVoteFromId(voteId: number): Promise<Either<string, Vote>> {
+        return axios.get(this.getHostUrl().concat(`/vote/id/${voteId}`), {
             headers: {
                 "X-Api-Token": this.getApiToken(),
             },
@@ -124,8 +135,8 @@ export class FfkApi {
             .catch(x => Left(x));
     }
 
-    loginUser(code: string): Promise<Either<string, DiscordOAuthResponse>> {
-        return axios.get(this.getHostUrl().concat(`/user/profile?code=${code}`), {
+    logUserIn(code: string): Promise<Either<string, DiscordOAuthResponse>> {
+        return axios.get(this.getHostUrl().concat(`/user/register?code=${code}`), {
             headers: {
                 "X-Api-Token": this.getApiToken(),
             },
@@ -146,6 +157,28 @@ export class FfkApi {
             .catch(x => Left(x));
     }
 
+    writeComment(comment: Comment, voteId: number): Promise<Either<string, number>> {
+        return axios.post(this.getHostUrl().concat(`/comment/write/${voteId}`), {
+            comment: CommentJsonSerializer.instance.toJsonImpl(comment),
+        }, {
+            headers: {
+                "X-Api-Token": this.getApiToken(),
+            },
+        })
+            .then(x => Right(x.data[idKey]))
+            .catch(x => Left(x));
+    }
+
+    writeResponse(voteId: number, userId: number, response: string): Promise<Either<string, number>> {
+        return axios.get(this.getHostUrl().concat(`/vote/response/${voteId}/${userId}/${response}`), {
+            headers: {
+                "X-Api-Token": this.getApiToken(),
+            },
+        })
+            .then(x => Right(x.data[idKey]))
+            .catch(x => Left(x));
+    }
+
     writeVote(vote: Vote): Promise<Either<string, number>> {
         return axios.post(this.getHostUrl().concat("/vote/write"), {
             vote: VoteJsonSerializer.instance.toJsonImpl(vote),
@@ -154,7 +187,7 @@ export class FfkApi {
                 "X-Api-Token": this.getApiToken(),
             },
         })
-            .then(x => Right(x.data))
+            .then(x => Right(x.data[idKey]))
             .catch(x => Left(x));
     }
 

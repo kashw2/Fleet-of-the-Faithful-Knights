@@ -7,8 +7,8 @@ import {None, Option} from "funfix-core";
 import {List} from "immutable";
 import {CookieService} from "ngx-cookie-service";
 import {User} from "../../../../../core/src";
-import {News, NewsJsonSerializer} from "../../../../../core/src/models/news";
-import {Vote, VoteJsonSerializer} from "../../../../../core/src/models/vote";
+import {News} from "../../../../../core/src/models/news";
+import {Vote} from "../../../../../core/src/models/vote";
 import {FfkDateFormat, MomentUtils} from "../../../../../core/src/util/moment-utils";
 import {FfkApiService} from "../../services/ffk-api.service";
 import {NotificationService} from "../../services/notification.service";
@@ -156,21 +156,18 @@ export class ProfilePageComponent implements OnInit {
       .getOrElse(false);
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.store.select("user")
       .subscribe(user => {
         this.user = Option.of(user);
         this.getUser()
           .flatMap(u => u.getId())
-          .map(uid => {
-            this.ffkApi.read.getVotesByUser(uid)
-              .subscribe(votes => this.votes = VoteJsonSerializer.instance.fromObjectToList(votes));
-            this.ffkApi.read.getVoteByStatus(uid, "true")
-              .subscribe(votes => this.passedVotes = VoteJsonSerializer.instance.fromObjectToList(votes));
+          .map(async uid => {
+            this.votes = await this.ffkApi.getVotesByUser(uid);
+            this.passedVotes = await this.ffkApi.getVotesByStatus(uid, true);
           });
       });
-    this.ffkApi.read.getNews()
-      .subscribe(news => this.news = NewsJsonSerializer.instance.fromObjectToList(news));
+    this.news = await this.ffkApi.getNews();
   }
 
   // TODO: Put this in a util class or something

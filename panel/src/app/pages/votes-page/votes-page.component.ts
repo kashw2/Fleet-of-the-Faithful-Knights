@@ -1,15 +1,18 @@
 import {Location} from "@angular/common";
 import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from "@angular/core";
+import {Router} from "@angular/router";
+import {Store} from "@ngrx/store";
 import {MDBModalService, MdbTableDirective, MdbTablePaginationComponent, ModalOptions} from "angular-bootstrap-md";
-import {Option} from "funfix-core";
+import {None, Option, Some} from "funfix-core";
 import {List} from "immutable";
 import {CookieService} from "ngx-cookie-service";
+import {User} from "../../../../../core/src";
 import {Candidate, CandidateJsonSerializer} from "../../../../../core/src/models/candidate";
 import {Vote, VoteJsonSerializer} from "../../../../../core/src/models/vote";
 import {FfkDateFormat, MomentUtils} from "../../../../../core/src/util/moment-utils";
 import {CreateVoteModalComponent} from "../../modals/create-vote-modal/create-vote-modal.component";
 import {FfkApiService} from "../../services/ffk-api.service";
-import {Router} from "@angular/router";
+import {AppState} from "../../store/state/app-state";
 
 @Component({
   selector: "app-vote-page",
@@ -25,7 +28,10 @@ export class VotesPageComponent implements OnInit, AfterViewInit {
     private cookieService: CookieService,
     private cdRef: ChangeDetectorRef,
     private modalService: MDBModalService,
+    private store: Store<AppState>,
   ) {
+    this.store.select("user")
+      .subscribe(user => this.user = Option.of(user));
   }
 
   candidates: List<Candidate> = List();
@@ -34,6 +40,8 @@ export class VotesPageComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MdbTableDirective, {static: true}) mdbTable: MdbTableDirective;
   @ViewChild(MdbTablePaginationComponent, {static: true}) mdbTablePagination: MdbTablePaginationComponent;
+
+  user: Option<User> = None;
 
   votes: List<Vote> = List();
 
@@ -111,29 +119,25 @@ export class VotesPageComponent implements OnInit, AfterViewInit {
     this.cdRef.detectChanges();
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     if (!this.cookieService.check("token")) {
       this.router.navigate(["/profile"]);
     }
-    this.ffkApi.read.getVotesByType(this.getSelectedVoteType().getOrElse("All"))
-      .subscribe(votes => {
-        this.votes = VoteJsonSerializer.instance.fromObjectToList(votes);
-        for (let i = 1; i <= this.getVotes().size; i++) {
-          this.elements.push({
-            candidate: "Candidate" + i,
-            created_date: "Created Date" + i,
-            group: "Group" + i,
-            id: i.toString(),
-            other: i,
-            sponsor: "Sponsor" + i,
-            status: "Status" + i,
-          });
-        }
-        this.mdbTable.setDataSource(this.elements);
-        this.elements = this.mdbTable.getDataSource();
+    this.votes = await this.ffkApi.getVotesByType(this.getSelectedVoteType().getOrElse("All"));
+    this.candidates = await this.ffkApi.getCandidates();
+    for (let i = 1; i <= this.getVotes().size; i++) {
+      this.elements.push({
+        candidate: "Candidate" + i,
+        created_date: "Created Date" + i,
+        group: "Group" + i,
+        id: i.toString(),
+        other: i,
+        sponsor: "Sponsor" + i,
+        status: "Status" + i,
       });
-    this.ffkApi.read.getCandidates()
-      .subscribe(cs => this.candidates = CandidateJsonSerializer.instance.fromObjectToList(cs));
+    }
+    this.mdbTable.setDataSource(this.elements);
+    this.elements = this.mdbTable.getDataSource();
   }
 
   openCreateVoteModal(candidates: List<Candidate>): void {

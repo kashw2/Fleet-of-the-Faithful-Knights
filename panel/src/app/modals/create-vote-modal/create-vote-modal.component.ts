@@ -63,12 +63,9 @@ export class CreateVoteModalComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  submitVote(event): void {
-    fromEvent(event.target, "click")
-      .pipe(debounceTime(500))
-      .pipe(x => this.ffkApi.write.writeVote(VoteJsonSerializer.instance.toJsonImpl(this.buildVote())))
-      .pipe(tap(this.modalRef.hide))
-      .subscribe(x => this.notificationService.showSuccessNotification(`Vote ${x[idKey]} successfully created`, "Success", 2350));
+  submitVote(): void {
+    this.ffkApi.writeVoteForUser(this.buildVote());
+    this.modalRef.hide();
   }
 
 }

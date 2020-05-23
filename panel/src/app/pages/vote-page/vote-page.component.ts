@@ -183,9 +183,8 @@ export class VotePageComponent implements OnInit {
     if (!this.cookieService.check("token")) {
       this.router.navigate(["/profile"]);
     }
-    this.voteId.map(vid => {
-      this.ffkApi.read.getVoteById(vid)
-        .subscribe(v => this.vote = Option.of(VoteJsonSerializer.instance.fromJson(v)));
+    this.voteId.map(async vid => {
+      this.vote = Option.of(await this.ffkApi.getVoteById(vid));
     });
   }
 
@@ -194,10 +193,8 @@ export class VotePageComponent implements OnInit {
   }
 
   submitResponse(response: string): void {
-    Option.map2(this.getUserId(), this.getVoteId(), (uid, vid) => {
-      this.ffkApi.write.writeVoteResponse(vid, uid, response)
-        .pipe(debounceTime(300))
-        .subscribe(x => this.notificationService.showSuccessNotification("Vote submitted"));
+    Option.map2(this.getUserId(), this.getVoteId(), async (uid, vid) => {
+      this.ffkApi.writeVoteResponse(vid, uid, response);
     });
   }
 
