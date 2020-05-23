@@ -10,6 +10,11 @@ export class ApiUtils {
         return parseBoolean(req.query[key]).contains(true);
     }
 
+    static parseNumberFromHeader(req: Request, key: string): Either<string, number> {
+        // @ts-ignore
+        return EitherUtils.liftEither(+req.header(key), `${key} is not a valid header`);
+    }
+
     // Don't know if these methods will show in the stacktrace so good error messages might be a requirement
     static parseNumberFromPath(req: Request, key: string): Either<string, number> {
         return EitherUtils.liftEither(+req.params[key], `${key} does not exist on object`);
@@ -31,11 +36,6 @@ export class ApiUtils {
     static parseStringFromHeader(req: Request, key: string): Either<string, string> {
         // @ts-ignore
         return EitherUtils.liftEither(req.header(key), `${key} is not a valid header`);
-    }
-
-    static parseNumberFromHeader(req: Request, key: string): Either<string, number> {
-        // @ts-ignore
-        return EitherUtils.liftEither(+req.header(key), `${key} is not a valid header`);
     }
 
     static parseStringFromPath(req: Request, key: string): Either<string, string> {

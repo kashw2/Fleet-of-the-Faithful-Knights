@@ -100,6 +100,18 @@ export class Vote {
             .contains("Companion at Arms");
     }
 
+    public isEmpty(): boolean {
+        return this.getId().isEmpty()
+        && this.getSponsor().isEmpty()
+        && this.getCandidate().isEmpty()
+        && this.getGroup().isEmpty()
+        && this.getNotes().isEmpty()
+        && this.getVoters().isEmpty()
+        && this.getStatus().isEmpty()
+        && this.getComments().isEmpty()
+        && this.getCreatedDate().isEmpty();
+    }
+
     public isKnightCommanderVote(): boolean {
         return this.getGroup()
             .contains("Knight Commander");

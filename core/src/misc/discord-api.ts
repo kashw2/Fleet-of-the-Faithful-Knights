@@ -148,6 +148,11 @@ export class DiscordOAuthResponse {
         return this.tokenType;
     }
 
+    isUseful(): boolean {
+        return this.getAccessToken()
+            .nonEmpty();
+    }
+
 }
 
 /**

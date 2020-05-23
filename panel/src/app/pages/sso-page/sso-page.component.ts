@@ -5,8 +5,7 @@ import {Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {CookieService} from "ngx-cookie-service";
 import {Observable} from "rxjs";
-import {share} from "rxjs/operators";
-import {tokenKey, User, UserJsonSerializer} from "../../../../../core/src";
+import {User} from "../../../../../core/src";
 import {FfkApiService} from "../../services/ffk-api.service";
 import {NotificationService} from "../../services/notification.service";
 import {AddUserAction} from "../../store/actions/user-action";
@@ -25,33 +24,27 @@ export class SsoPageComponent implements OnInit {
     private cookieService: CookieService,
     private location: Location,
     private router: Router,
-    private http: HttpClient,
-    private notificationService: NotificationService,
   ) {
     this.user = store.select("user");
   }
 
   user: Observable<User>;
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     // If user is already logged in, take them to the profile page.
     if (this.cookieService.check("token")) {
       console.log("Already authenticated");
       this.router.navigate(["/profile"]);
       return;
     }
-
-    this.ffkApi.write.writeUser(this.location.path().split("?code=")[1])
-      .subscribe(o => {
-        const token = o[tokenKey];
+    const response = await this.ffkApi.loginUser(this.location.path().split("?code=")[1]);
+    response.getAccessToken()
+      .map(async token => {
         this.cookieService.set("token", token, 365);
         console.log(`Client - Server handshake authenticated, assigned token: ${token}`);
-        this.ffkApi.read.getUserByToken(token)
-          .subscribe(uo => {
-            this.store.dispatch(new AddUserAction(UserJsonSerializer.instance.fromJson(uo)));
-            this.router.navigate(["/profile"]);
-            this.notificationService.showSuccessNotification("Handshake authenticated");
-          });
+        this.store.dispatch(new AddUserAction(await this.ffkApi.getUserByToken(token)));
+        this.ffkApi.getUserByToken(token);
+        this.router.navigate(["/profile"]);
       });
   }
 

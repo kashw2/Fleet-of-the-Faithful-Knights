@@ -48,13 +48,10 @@ export class CommentInputComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  submitComment(event): void {
+  submitComment(): void {
     this.getVoteId()
       .map(vid => {
-        fromEvent(event.target, "click")
-          .pipe(debounceTime(500))
-          .pipe(x => this.ffkApi.write.writeComment(CommentJsonSerializer.instance.toJsonImpl(this.buildComment()), vid))
-          .subscribe(x => this.notificationService.showSuccessNotification(`Comment ${x[idKey]} successfully added`, "Success", 2350));
+        this.ffkApi.writeVoteComment(this.buildComment(), vid);
       });
   }
 

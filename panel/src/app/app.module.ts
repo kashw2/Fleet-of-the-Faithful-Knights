@@ -9,6 +9,7 @@ import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {MDBBootstrapModule} from "angular-bootstrap-md";
 import {CookieService} from "ngx-cookie-service";
 import {ToastrModule} from "ngx-toastr";
+import {FfkApi} from "../../../core/src/misc/ffk-api";
 import {AppRoutingModule} from "./app-routing.module";
 import {AppComponent} from "./app.component";
 import {CommentInputComponent} from "./children/comment-input/comment-input.component";
@@ -23,6 +24,7 @@ import {VotePageComponent} from "./pages/vote-page/vote-page.component";
 import {VotesPageComponent} from "./pages/votes-page/votes-page.component";
 import {NotificationService} from "./services/notification.service";
 import {userReducer} from "./store/reducers/user-reducer";
+import {FfkApiService} from "./services/ffk-api.service";
 
 const routes: Routes = [
   {path: "", component: ProfilePageComponent},
@@ -65,7 +67,7 @@ const routes: Routes = [
       maxAge: 10,
     }),
   ],
-  providers: [NotificationService, CookieService],
+  providers: [NotificationService, CookieService, FfkApiService],
 })
 export class AppModule {
 }

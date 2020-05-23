@@ -3,7 +3,7 @@
     <textarea mdbInput id="user-vote-comment" class="md-textarea form-control green-border-focus" rows="4" [(ngModel)]="content"></textarea>
     <label for="user-vote-comment">I support this vote because...</label>
     <div class="d-flex justify-content-end">
-    <button *ngIf="getUser().nonEmpty()" mdbBtn type="button" outline="true" color="success" size="sm" mdbWavesEffect (click)="submitComment($event)">
+    <button *ngIf="getUser().nonEmpty()" mdbBtn type="button" outline="true" color="success" size="sm" mdbWavesEffect (click)="submitComment()">
       Comment
     </button>
     </div>

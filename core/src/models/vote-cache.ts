@@ -11,14 +11,20 @@ export class VoteCache {
 
     doesVoteExistForCandidate(candidate: Candidate): boolean {
         return candidate.getId()
-            .map(cid => this.getByCandidateId(cid).isRight())
-            .getOrElse(false);
+            .exists(cid => this.getByCandidateId(cid).isRight());
     }
 
-    getByCandidateId(candidateId: number): Either<string, List<Vote>> {
+    doesVoteIntersect(vote: Vote): boolean {
+        // Performs an 'intersect' on the list of votes
+        // This requires that the vote be exactly the same though
+        return this.getVotes()
+            .contains(vote);
+    }
+
+    getByCandidateId(candidateId: number): Either<string, Vote> {
         return EitherUtils.liftEither(
             this.getVotes()
-                .filter(v => v.getCandidate().flatMap(c => c.getId()).contains(candidateId)),
+                .find(v => v.getCandidate().flatMap(c => c.getId()).contains(candidateId)),
             `No votes exist for ${candidateId} in cache`,
         );
     }

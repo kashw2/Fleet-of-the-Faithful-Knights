@@ -14,7 +14,8 @@ export class WriteVoteEndpoint extends PostEndpoint {
 
     private doesVoteExist(vote: Vote): boolean {
         return vote.getCandidate()
-            .exists(c => this.db.cache.votes.doesVoteExistForCandidate(c));
+            .map(c => this.db.cache.votes.doesVoteExistForCandidate(c))
+            .getOrElse(false);
     }
 
     private getVote(req: Request): Either<string, Vote> {
@@ -28,8 +29,11 @@ export class WriteVoteEndpoint extends PostEndpoint {
     run(req: Request, res: Response): void {
         this.getVote(req)
             .map(vote => {
-                this.doesVoteExist(vote) ? res.send("Vote already exists") : DbVote.fromVote(vote)
-                    .map(dbVote => ApiUtils.sendResultPromise(this.db.procedures.insert.insertVote(dbVote), res));
+                this.doesVoteExist(vote)
+                    ? res.send("Vote already exists")
+                    : DbVote.fromVote(vote)
+                        .map(dbVote => ApiUtils.sendResultPromise(this.db.procedures.insert.insertVote(dbVote), res));
+                this.db.cache.cacheVotes();
             });
     }
 

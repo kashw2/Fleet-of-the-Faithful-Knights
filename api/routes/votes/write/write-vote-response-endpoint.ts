@@ -46,7 +46,8 @@ export class WriteVoteResponseEndpoint extends GetEndpoint {
             this.getVoteId(req),
             this.getUserId(req),
             (response, vid, uid) => {
-                ApiUtils.sendResultPromiseEffector(this.db.procedures.insert.insertVoteResponse(vid, uid, response), res, x => ({id: x}));
+                ApiUtils.sendResultPromise(this.db.procedures.insert.insertVoteResponse(vid, uid, response), res);
+                this.db.cache.cacheVotes();
             });
     }
 

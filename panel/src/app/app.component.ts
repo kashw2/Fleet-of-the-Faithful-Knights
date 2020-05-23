@@ -26,11 +26,10 @@ export class AppComponent implements OnInit {
 
   title = "FFK Voting Panel";
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     if (this.cookieService.check("token")) {
       const token = this.cookieService.get("token");
-      this.ffkApi.read.getUserByToken(token)
-        .subscribe(user => this.store.dispatch(new AddUserAction(UserJsonSerializer.instance.fromJson(user))));
+      this.store.dispatch(new AddUserAction(await this.ffkApi.getUserByToken(token)));
     }
   }
 

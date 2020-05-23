@@ -6,8 +6,13 @@ import {Candidate} from "../../../core/src/models/candidate";
 import {DiscordGuild} from "../../../core/src/models/discord/discord-guild";
 import {CandidateOnboarding} from "../candidate-onboarding";
 import {FfkApi} from "../../../core/src/misc/ffk-api";
+import {Onboarding} from "../../onboarding";
 
 export class DiscordCandidateOnboarding extends CandidateOnboarding {
+
+    constructor(private ffkApi: FfkApi) {
+        super();
+    }
 
     getGuild(): Promise<Either<string, DiscordGuild>> {
         return DiscordApi.getGuild();
@@ -38,7 +43,7 @@ export class DiscordCandidateOnboarding extends CandidateOnboarding {
         this.listCandidates()
             .then(cs => {
                 const candidates = EitherUtils.toList(cs);
-                FfkApi.writeCandidates(candidates);
+                Onboarding.ffkApi.writeCandidates(candidates);
             });
     }
 
