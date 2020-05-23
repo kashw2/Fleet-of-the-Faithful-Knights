@@ -25,6 +25,7 @@ export class WriteCandidatesEndpoint extends PostEndpoint {
         const dbCandidates = OptionUtils.flattenList(EitherUtils.toList(this.getCandidates(req))
             .map((c, idx) => DbCandidate.fromCandidate(c, idx)));
         ApiUtils.sendResultPromiseEffector(this.db.procedures.insert.insertCandidates(dbCandidates), res, (x) => ({id: x}));
+        this.db.cache.cacheUsers();
     }
 
 }
