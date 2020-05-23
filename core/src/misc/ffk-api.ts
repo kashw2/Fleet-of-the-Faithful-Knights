@@ -22,7 +22,7 @@ export class FfkApi {
                 "X-Api-Token": this.getApiToken(),
             },
         })
-            .then(x => Right(List(CandidateJsonSerializer.instance.fromJsonArray(x.data))))
+            .then(x => Right(CandidateJsonSerializer.instance.fromJsonArray(x.data)))
             .catch(x => Left(x));
     }
 
@@ -32,7 +32,7 @@ export class FfkApi {
                 "X-Api-Token": this.getApiToken(),
             },
         })
-            .then(x => Right(List(NewsJsonSerializer.instance.fromJsonArray(x.data))))
+            .then(x => Right(NewsJsonSerializer.instance.fromJsonArray(x.data)))
             .catch(x => Left(x));
     }
 
@@ -42,7 +42,7 @@ export class FfkApi {
                 "X-Api-Token": this.getApiToken(),
             },
         })
-            .then(x => Right(List(VoteJsonSerializer.instance.fromJsonArray(x.data))))
+            .then(x => Right(VoteJsonSerializer.instance.fromJsonArray(x.data)))
             .catch(x => Left(x));
     }
 
@@ -52,7 +52,7 @@ export class FfkApi {
                 "X-Api-Token": this.getApiToken(),
             },
         })
-            .then(x => Right(List(VoteJsonSerializer.instance.fromJsonArray(x.data))))
+            .then(x => Right(VoteJsonSerializer.instance.fromJsonArray(x.data)))
             .catch(x => Left(x));
     }
 
@@ -62,7 +62,7 @@ export class FfkApi {
                 "X-Api-Token": this.getApiToken(),
             },
         })
-            .then(x => Right(List(VoteJsonSerializer.instance.fromJsonArray(x.data))))
+            .then(x => Right(VoteJsonSerializer.instance.fromJsonArray(x.data)))
             .catch(x => Left(x));
     }
 
@@ -72,7 +72,7 @@ export class FfkApi {
                 "X-Api-Token": this.getApiToken(),
             },
         })
-            .then(x => Right(List(VoteJsonSerializer.instance.fromJsonArray(List(x.data)))))
+            .then(x => Right(VoteJsonSerializer.instance.fromJsonArray(List(x.data))))
             .catch(x => Left(x));
     }
 

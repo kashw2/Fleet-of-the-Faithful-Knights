@@ -7,6 +7,10 @@ export abstract class SimpleJsonSerializer<T> {
 
     // TODO: Explore making a fromJsonArray that takes a collection
     fromJsonArray(list: List<T>): List<T> {
+        if (list instanceof Array) {
+            return List(list)
+                .map(x => this.fromJson(x));
+        }
         // @ts-ignore
         return list.map(x => this.fromJson(x));
     }
