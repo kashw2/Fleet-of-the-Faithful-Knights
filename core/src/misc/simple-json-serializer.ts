@@ -19,6 +19,7 @@ export abstract class SimpleJsonSerializer<T> {
      * Pretty much goes against the TypeScript type system.
      * This works off the basis that you parse in what the system believes is an Object but isn't at runtime
      * Check the 'object' and if it's not an empty object then it's something else and we treat it like a Collection
+     * @deprecated
      */
     fromObjectToList(obj: object): List<T> {
         // @ts-ignore

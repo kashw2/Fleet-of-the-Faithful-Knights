@@ -45,9 +45,7 @@ export class UserRegisterEndpoint extends GetEndpoint {
                                     guildMember.map(gm => {
                                         DbUser.fromDiscordGuildMember(gm.withDiscordUserLocale(usr))
                                             .map(async dbU => {
-                                                // TODO: Should be able to .then this
-                                                const insertedUser = await this.db.procedures.insert.insertUser(dbU);
-                                                ApiUtils.sendResult(insertedUser, res);
+                                                ApiUtils.sendResultPromise(this.db.procedures.insert.insertUser(dbU), res)
                                                 this.db.cache.cacheUsers();
                                             });
                                     });

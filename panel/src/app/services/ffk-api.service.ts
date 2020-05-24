@@ -22,8 +22,8 @@ export class FfkApiService extends FfkApi {
   }
 
   async getCandidates(): Promise<List<Candidate>> {
-    const candidates = await this.getAllCandidates();
-    return OptionUtils.toList(this.notificationService.showNotificationBaseOnEitherEffector(candidates, candidates => `Loaded ${candidates.size} Candidates`));
+    const response = await this.getAllCandidates();
+    return OptionUtils.toList(this.notificationService.showNotificationBaseOnEitherEffector(response, candidates => `Loaded ${candidates.size} Candidates`));
   }
 
   async getNews(): Promise<List<News>> {
