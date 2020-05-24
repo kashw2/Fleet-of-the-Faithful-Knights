@@ -1,4 +1,4 @@
-import {None, Option} from "funfix-core";
+import {None, Option, Some} from "funfix-core";
 import {List} from "immutable";
 import {
     discordIdKey,
@@ -25,9 +25,9 @@ export class Candidate {
     ) {
     }
 
-    static fromDiscordGuildMember(member: DiscordGuildMember): Candidate {
+    static fromDiscordGuildMember(member: DiscordGuildMember, idx: Option<number> = None): Candidate {
         return new Candidate(
-            None,
+            idx,
             member.getUser().flatMap(u => u.getId()),
             member.getNickname().orElse(member.getUser().flatMap(u => u.getUsername())),
             GroupUtils.parseGroupOption(member.getRolesSortedHierarchy().first()),
@@ -36,7 +36,7 @@ export class Candidate {
     }
 
     static fromDiscordGuildMembers(members: List<DiscordGuildMember>): List<Candidate> {
-        return members.map(m => this.fromDiscordGuildMember(m));
+        return members.map((m, idx) => this.fromDiscordGuildMember(m, Some(idx)));
     }
 
     public getDiscordId(): Option<string> {

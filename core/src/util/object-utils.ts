@@ -107,8 +107,7 @@ export function parseSerializedSet<T>(set: Set<T>, serializer: SimpleJsonSeriali
     if (Option.of(set).isEmpty()) {
         return Set();
     }
-    // @ts-ignore
-    if (set.constructor.name === "Array") {
+    if (set instanceof Array) {
         // @ts-ignore
         return parseSetFromArray(set as [])
             .map(s => serializer.fromJson(s));
@@ -121,8 +120,7 @@ export function parseSerializedList<T>(list: List<T>, serializer: SimpleJsonSeri
     if (Option.of(list).isEmpty()) {
         return List();
     }
-    // @ts-ignore
-    if (list.constructor.name === "Array") {
+    if (list instanceof Array) {
         // @ts-ignore
         return parseListFromArray(list as [])
             .map(s => serializer.fromJson(s));
@@ -145,8 +143,7 @@ export function parseList<T>(list: T): List<T> {
     if (Option.of(list).isEmpty()) {
         return List();
     }
-    // @ts-ignore
-    if (list.constructor.name === "Array") {
+    if (list instanceof Array) {
         // @ts-ignore
         return parseListFromArray(list as []);
     }
@@ -158,8 +155,7 @@ export function parseSet<T>(set: T): Set<any> {
     if (Option.of(set).isEmpty()) {
         return Set();
     }
-    // @ts-ignore
-    if (set.constructor.name === "Array") {
+    if (set instanceof Array) {
         // @ts-ignore
         return parseSetFromArray(set as []);
     }

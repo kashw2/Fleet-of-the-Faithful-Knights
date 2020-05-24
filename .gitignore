@@ -1,6 +1,9 @@
 /.idea/
 *node_modules
 
+*.heapsnapshot
+*.log
+
 *.js
 *.js.map
 
