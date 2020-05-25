@@ -29,7 +29,7 @@ export class EitherUtils {
     }
 
     /**
-     * Confirmed state of an Either containing a List
+     * Confirms state of an Either containing a List
      * Returns the right side of the List if Right and an empty List if Left
      */
     static toList<T>(either: Either<any, List<T>>): List<T> {
