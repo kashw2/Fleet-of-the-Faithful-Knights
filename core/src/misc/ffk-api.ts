@@ -16,66 +16,6 @@ export class FfkApi {
     ) {
     }
 
-    getAllCandidates(): Promise<Either<string, List<Candidate>>> {
-        return axios.get(this.getHostUrl().concat(`/candidates`), {
-            headers: {
-                "X-Api-Token": this.getApiToken(),
-            },
-        })
-            .then(x => Right(CandidateJsonSerializer.instance.fromJsonArray(x.data)))
-            .catch(x => Left(x));
-    }
-
-    getAllNews(): Promise<Either<string, List<News>>> {
-        return axios.get(this.getHostUrl().concat(`/news`), {
-            headers: {
-                "X-Api-Token": this.getApiToken(),
-            },
-        })
-            .then(x => Right(NewsJsonSerializer.instance.fromJsonArray(x.data)))
-            .catch(x => Left(x));
-    }
-
-    getAllVotes(): Promise<Either<string, List<Vote>>> {
-        return axios.get(this.getHostUrl().concat("/votes"), {
-            headers: {
-                "X-Api-Token": this.getApiToken(),
-            },
-        })
-            .then(x => Right(VoteJsonSerializer.instance.fromJsonArray(x.data)))
-            .catch(x => Left(x));
-    }
-
-    getAllVotesByStatus(userId: number, status: boolean): Promise<Either<string, List<Vote>>> {
-        return axios.get(this.getHostUrl().concat(`/votes/passed/${userId}?passed=${status}`), {
-            headers: {
-                "X-Api-Token": this.getApiToken(),
-            },
-        })
-            .then(x => Right(VoteJsonSerializer.instance.fromJsonArray(x.data)))
-            .catch(x => Left(x));
-    }
-
-    getAllVotesByType(type: string): Promise<Either<string, List<Vote>>> {
-        return axios.get(this.getHostUrl().concat(`/votes/type/${type}`), {
-            headers: {
-                "X-Api-Token": this.getApiToken(),
-            },
-        })
-            .then(x => Right(VoteJsonSerializer.instance.fromJsonArray(x.data)))
-            .catch(x => Left(x));
-    }
-
-    getAllVotesByUser(sponsorId: number): Promise<Either<string, List<Vote>>> {
-        return axios.get(this.getHostUrl().concat(`/votes/sponsor/${sponsorId}`), {
-            headers: {
-                "X-Api-Token": this.getApiToken(),
-            },
-        })
-            .then(x => Right(VoteJsonSerializer.instance.fromJsonArray(List(x.data))))
-            .catch(x => Left(x));
-    }
-
     private getApiToken(): string {
         return this.apiToken;
     }
@@ -131,6 +71,66 @@ export class FfkApi {
             },
         })
             .then(x => Right(VoteJsonSerializer.instance.fromJson(x.data)))
+            .catch(x => Left(x));
+    }
+
+    listCandidates(): Promise<Either<string, List<Candidate>>> {
+        return axios.get(this.getHostUrl().concat(`/candidates`), {
+            headers: {
+                "X-Api-Token": this.getApiToken(),
+            },
+        })
+            .then(x => Right(CandidateJsonSerializer.instance.fromJsonArray(x.data)))
+            .catch(x => Left(x));
+    }
+
+    listNews(): Promise<Either<string, List<News>>> {
+        return axios.get(this.getHostUrl().concat(`/news`), {
+            headers: {
+                "X-Api-Token": this.getApiToken(),
+            },
+        })
+            .then(x => Right(NewsJsonSerializer.instance.fromJsonArray(x.data)))
+            .catch(x => Left(x));
+    }
+
+    listVotes(): Promise<Either<string, List<Vote>>> {
+        return axios.get(this.getHostUrl().concat("/votes"), {
+            headers: {
+                "X-Api-Token": this.getApiToken(),
+            },
+        })
+            .then(x => Right(VoteJsonSerializer.instance.fromJsonArray(x.data)))
+            .catch(x => Left(x));
+    }
+
+    listVotesBySponsor(sponsorId: number): Promise<Either<string, List<Vote>>> {
+        return axios.get(this.getHostUrl().concat(`/votes/sponsor/${sponsorId}`), {
+            headers: {
+                "X-Api-Token": this.getApiToken(),
+            },
+        })
+            .then(x => Right(VoteJsonSerializer.instance.fromJsonArray(List(x.data))))
+            .catch(x => Left(x));
+    }
+
+    listVotesByStatus(userId: number, status: boolean): Promise<Either<string, List<Vote>>> {
+        return axios.get(this.getHostUrl().concat(`/votes/passed/${userId}?passed=${status}`), {
+            headers: {
+                "X-Api-Token": this.getApiToken(),
+            },
+        })
+            .then(x => Right(VoteJsonSerializer.instance.fromJsonArray(x.data)))
+            .catch(x => Left(x));
+    }
+
+    listVotesByType(type: string): Promise<Either<string, List<Vote>>> {
+        return axios.get(this.getHostUrl().concat(`/votes/type/${type}`), {
+            headers: {
+                "X-Api-Token": this.getApiToken(),
+            },
+        })
+            .then(x => Right(VoteJsonSerializer.instance.fromJsonArray(x.data)))
             .catch(x => Left(x));
     }
 
