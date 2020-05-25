@@ -1,9 +1,0 @@
-<a *ngIf="getHyperLink().nonEmpty() else noLink" [href]="getHyperLink().get()">
-  <i *ngIf="hasPassed()" class="fas fa-check"></i>
-  <i *ngIf="!hasPassed()" class="fas fa-times"></i>
-</a>
-
-<ng-template #noLink>
-  <i *ngIf="hasPassed()" class="fas fa-check"></i>
-  <i *ngIf="!hasPassed()" class="fas fa-times"></i>
-</ng-template>
