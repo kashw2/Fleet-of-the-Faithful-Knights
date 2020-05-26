@@ -84,7 +84,7 @@ export class DiscordApi {
             grant_type: "authorization_code",
             // tslint:disable-next-line
             code: code,
-            redirect_uri: "http://localhost:4200/sso",
+            redirect_uri: this.getRedirectUrl(),
             scope: "identify guilds",
         }), {
             headers: {
@@ -93,6 +93,10 @@ export class DiscordApi {
         })
             .then(x => Right(DiscordOAuthResponseJsonSerializer.instance.fromJson(x.data)))
             .catch(x => Left(x));
+    }
+
+    static getRedirectUrl(): string {
+        return process.env.FFK_PANEL_ADDRESS!;
     }
 
     static getTokenRequestUrl(): string {
