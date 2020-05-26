@@ -1,0 +1,46 @@
+import {Component, OnInit} from "@angular/core";
+import {ActivatedRoute} from "@angular/router";
+import {Option} from "funfix-core";
+import {FfkApiService} from "../../services/ffk-api.service";
+import {NotificationService} from "../../services/notification.service";
+import {UserStateService} from "../../services/user-state.service";
+
+@Component({
+  selector: "app-main-page",
+  templateUrl: "./main-page.component.html",
+  styleUrls: ["./main-page.component.scss"],
+})
+export class MainPageComponent implements OnInit {
+
+  constructor(
+    private ffkApiService: FfkApiService,
+    private activatedRouteService: ActivatedRoute,
+    private userStateService: UserStateService,
+    private notificationService: NotificationService,
+  ) {
+  }
+
+  ngOnInit(): void {
+    if (!this.userStateService.isLoggedIn() && !this.userStateService.isCookieSet()) {
+      this.activatedRouteService
+        .queryParamMap
+        .subscribe(params => {
+          const code = Option.of(params.get("code"));
+          code.map(c => this.ffkApiService.loginOrRegisterUser(c))
+            .map(async x => {
+              const awaitedUser = await x;
+              this.notificationService.showNotificationBaseOnEitherEffector(awaitedUser, user => `Welcome ${user.getUsername().getOrElse("User")}`);
+              this.userStateService.user.next(awaitedUser.toOption());
+            });
+        });
+    }
+    if (!this.userStateService.isLoggedIn() && this.userStateService.isCookieSet()) {
+      this.ffkApiService.getUserByToken(this.userStateService.getCookieToken())
+        .then(userByToken => {
+          this.notificationService.showNotificationBaseOnEitherEffector(userByToken, user => `Welcome ${user.getUsername().getOrElse("User")}`);
+          this.userStateService.user.next(userByToken.toOption());
+        });
+    }
+  }
+
+}
