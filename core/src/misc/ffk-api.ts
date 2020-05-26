@@ -34,7 +34,7 @@ export class FfkApi {
             .catch(x => Left(x));
     }
 
-    protected getUserByToken(token: string): Promise<Either<string, User>> {
+    getUserByToken(token: string): Promise<Either<string, User>> {
         return axios.get(this.getHostUrl().concat(`/user/token/${token}`), {
             headers: {
                 "X-Api-Token": this.getApiToken(),
