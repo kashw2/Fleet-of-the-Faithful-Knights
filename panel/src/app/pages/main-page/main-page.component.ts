@@ -4,6 +4,7 @@ import {Option} from "funfix-core";
 import {FfkApiService} from "../../services/ffk-api.service";
 import {NotificationService} from "../../services/notification.service";
 import {UserStateService} from "../../services/user-state.service";
+import {ViewStateService} from "../../services/view-state.service";
 
 @Component({
   selector: "app-main-page",
@@ -16,8 +17,13 @@ export class MainPageComponent implements OnInit {
     private ffkApiService: FfkApiService,
     private activatedRouteService: ActivatedRoute,
     private userStateService: UserStateService,
+    private viewStateService: ViewStateService,
     private notificationService: NotificationService,
   ) {
+  }
+
+  getPageIndex(): number {
+    return this.viewStateService.getPageIndex();
   }
 
   ngOnInit(): void {

@@ -8,12 +8,18 @@ import {CookieService} from "ngx-cookie-service";
 import {ToastrModule} from "ngx-toastr";
 import {AppRoutingModule} from "./app-routing.module";
 import {AppComponent} from "./app.component";
+import {HeaderComponent} from "./components/header/header.component";
 import {NotificationService} from "./services/notification.service";
+import { MainPageComponent } from './pages/main-page/main-page.component';
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 
 @NgModule({
   bootstrap: [AppComponent],
   declarations: [
     AppComponent,
+    HeaderComponent,
+    MainPageComponent,
+    ProfilePageComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),

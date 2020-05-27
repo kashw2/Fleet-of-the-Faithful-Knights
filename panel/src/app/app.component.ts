@@ -7,7 +7,8 @@ import {Component, OnInit} from "@angular/core";
 })
 export class AppComponent implements OnInit {
 
-  constructor() {
+  constructor(
+  ) {
   }
 
   title = "FFK Voting Panel";

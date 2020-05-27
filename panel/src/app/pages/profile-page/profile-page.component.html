@@ -1,0 +1,40 @@
+<div class="container-fluid pt-5 mt-2">
+  <div class="row">
+    <div class="col">
+      <h2 *ngIf="getUsername().nonEmpty()">Greetings, <b>{{getUsername().get()}}</b></h2>
+      <div class="row">
+        <div class="col-auto">
+          <div class="view overlay">
+            <img *ngIf="getAvatar().nonEmpty()" src="https://cdn.discordapp.com{{this.getAvatar().get()}}"
+                 width="200"
+                 alt="">
+            <div class="mask flex-center rgba-red-light cursor-click">
+              <p class="white-text">Discord Picture</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <p *ngIf="getId().nonEmpty()" class="mx-0 mt-0 mb-1 cursor-pointer">Id: <b>{{getId().get()}}</b></p>
+          <p *ngIf="getUsername().nonEmpty()" class="mx-0 my-1 cursor-pointer">Username: <b>{{getUsername().get()}}</b></p>
+          <p *ngIf="getGroup().nonEmpty() && isGuest()" class="mx-0 my-1">Group: <b class="cursor-pointer guest">{{getGroup().get()}}</b></p>
+          <p *ngIf="getGroup().nonEmpty() && isCompanionAtArms()" class="mx-0 my-1">Group: <b class="cursor-pointer companion-at-arms">{{getGroup().get()}}</b></p>
+          <p *ngIf="getGroup().nonEmpty() && isSquire()" class="mx-0 my-1">Group: <b class="cursor-pointer squire">{{getGroup().get()}}</b></p>
+          <p *ngIf="getGroup().nonEmpty() && isSergeant()" class="mx-0 my-1">Group: <b class="cursor-pointer sergeant">{{getGroup().get()}}</b></p>
+          <p *ngIf="getGroup().nonEmpty() && isSergeantFirstClass()" class="mx-0 my-1">Group: <b class="cursor-pointer sergeant-first-class">{{getGroup().get()}}</b></p>
+          <p *ngIf="getGroup().nonEmpty() && isKnight()" class="mx-0 my-1">Group: <b class="cursor-pointer knight">{{getGroup().get()}}</b></p>
+          <p *ngIf="getGroup().nonEmpty() && isKnightLieutenant()" class="mx-0 my-1">Group: <b class="cursor-pointer knight-lieutenant">{{getGroup().get()}}</b></p>
+          <p *ngIf="getGroup().nonEmpty() && isKnightCommander()" class="mx-0 my-1">Group: <b class="cursor-pointer knight-commander">{{getGroup().get()}}</b></p>
+          <p *ngIf="getGroup().nonEmpty() && isMasterCommander()" class="mx-0 my-1">Group: <b class="cursor-pointer master-commander">{{getGroup().get()}}</b></p>
+          <p *ngIf="getGroup().nonEmpty() && isGrandMaster()" class="mx-0 my-1">Group: <b class="cursor-pointer grand-master">{{getGroup().get()}}</b></p>
+          <p *ngIf="getGroup().nonEmpty() && isDeveloper()" class="mx-0 my-1">Group: <b class="cursor-pointer developer">{{getGroup().get()}}</b></p>
+          <p *ngIf="getMemberSince().nonEmpty()" class="mx-0 my-1 cursor-pointer">Member Since: <b>{{getMemberSince().get()}}</b></p>
+          <p *ngIf="!getVotesCreated().isEmpty()" class="mx-0 my-1 cursor-pointer">Votes Created: <b>{{getVotesCreated().size}}</b></p>
+          <p *ngIf="!getVotesPassed().isEmpty()" class="mx-0 my-1 cursor-pointer">Votes Passed: <b>{{getVotesPassed().size}}</b></p>
+          <p *ngIf="!getVotesFailed().isEmpty()" class="mx-0 my-1 cursor-pointer">Votes Failed: <b>{{getVotesFailed().size}}</b></p>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+    </div>
+  </div>
+</div>
