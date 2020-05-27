@@ -21,7 +21,7 @@
     </button>
     <div class="dropdown-menu min-width-75">
       <a *ngIf="!isLoggedIn()" class="dropdown-item py-1" href="https://discord.com/api/oauth2/authorize?client_id=607005043043860521&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2F&response_type=code&scope=identify%20guilds">Login</a>
-      <a *ngIf="isLoggedIn()" class="dropdown-item py-1">Profile</a>
+      <a *ngIf="isLoggedIn()" class="dropdown-item py-1" (click)="goToProfilePage()">Profile</a>
       <div *ngIf="isLoggedIn()" class="dropdown-divider my-1"></div>
       <a *ngIf="isLoggedIn()" class="dropdown-item py-1" href="#">Settings</a>
       <a *ngIf="isLoggedIn()" class="dropdown-item py-1" href="#">Admin</a>

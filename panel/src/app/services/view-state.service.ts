@@ -15,4 +15,8 @@ export class ViewStateService {
       .getValue();
   }
 
+  setPageIndex(index: number): void {
+    this.pageIndex.next(index);
+  }
+
 }

@@ -12,6 +12,7 @@ import {HeaderComponent} from "./components/header/header.component";
 import {NotificationService} from "./services/notification.service";
 import { MainPageComponent } from './pages/main-page/main-page.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+import { PostContainerComponent } from './components/post-container/post-container.component';
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -20,6 +21,7 @@ import { ProfilePageComponent } from './pages/profile-page/profile-page.componen
     HeaderComponent,
     MainPageComponent,
     ProfilePageComponent,
+    PostContainerComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),

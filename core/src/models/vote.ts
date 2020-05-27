@@ -90,6 +90,14 @@ export class Vote {
         return this.voters;
     }
 
+    public hasFailed(): boolean {
+        return this.getStatus()
+            .contains(false)
+        && this.getVoters()
+                .map(v => v.didDeny())
+                .size > 4;
+    }
+
     public hasPassed(): boolean {
         return this.getStatus()
             .contains(true);
