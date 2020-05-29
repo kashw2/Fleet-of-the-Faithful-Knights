@@ -5,6 +5,8 @@ import {DiscordOAuthResponse} from "../../../../core/src/misc/discord-api";
 import {FfkApi} from "../../../../core/src/misc/ffk-api";
 import {environment} from "../../environments/environment";
 import {CookieService} from "ngx-cookie-service";
+import {List} from "immutable";
+import {News} from "../../../../core/src/models/news";
 
 @Injectable({
   providedIn: "root",
@@ -27,6 +29,11 @@ export class FfkApiService extends FfkApi {
     }
     this.cookieService.set("token", token.get(), 999999999);
     return this.getUserByToken(token.get());
+  }
+
+  async getAllNews(): Promise<Either<string, List<News>>> {
+    const response = await this.listNews();
+    return response;
   }
 
 }

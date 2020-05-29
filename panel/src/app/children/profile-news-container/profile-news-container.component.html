@@ -1,0 +1,26 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <ul class="list-unstyled">
+        <li *ngIf="canViewDeveloper()" class="d-inline-block mr-1 developer cursor-click text-decoration-none">Developer</li>
+        <li *ngIf="canViewHeadOffice()" class="d-inline-block mx-1 grand-master cursor-click text-decoration-none">Head Office</li>
+        <li *ngIf="canViewKnights()" class="d-inline-block mx-1 knight cursor-click text-decoration-none">Knights</li>
+        <li *ngIf="canViewSergeants()" class="d-inline-block mx-1 sergeant cursor-click text-decoration-none">Sergeants</li>
+        <li *ngIf="canViewNormal()" class="d-inline-block mx-1 guest cursor-click text-decoration-none">Normal</li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div *ngFor="let article of getNews()" class="col">
+      <app-post-container
+        [input]="article"
+        [titleExtractor]="titleExtractor"
+        [contentExtractor]="contentExtractor"
+        [dateExtractor]="dateExtractor"
+        [groupExtractor]="groupExtractor"
+        [authorExtractor]="authorExtractor"
+      >
+      </app-post-container>
+    </div>
+  </div>
+</div>

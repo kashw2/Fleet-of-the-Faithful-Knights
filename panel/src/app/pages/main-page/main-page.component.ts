@@ -26,7 +26,7 @@ export class MainPageComponent implements OnInit {
     return this.viewStateService.getPageIndex();
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     if (!this.userStateService.isLoggedIn() && !this.userStateService.isCookieSet()) {
       this.activatedRouteService
         .queryParamMap
@@ -47,6 +47,15 @@ export class MainPageComponent implements OnInit {
           this.userStateService.user.next(userByToken.toOption());
         });
     }
+    if (this.userStateService.isLoggedIn() || this.userStateService.isCookieSet()) {
+        this.populateNews();
+    }
+  }
+
+  private async populateNews(): Promise<void> {
+    const news = await this.ffkApiService.getAllNews();
+    this.notificationService.showNotificationBaseOnEitherEffector(news, values => `Loaded ${values.size} Articles`)
+      .map(articles => this.userStateService.news.next(articles));
   }
 
 }

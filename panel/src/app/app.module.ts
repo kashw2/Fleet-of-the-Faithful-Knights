@@ -13,6 +13,7 @@ import {NotificationService} from "./services/notification.service";
 import { MainPageComponent } from './pages/main-page/main-page.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { PostContainerComponent } from './components/post-container/post-container.component';
+import { ProfileNewsContainerComponent } from './children/profile-news-container/profile-news-container.component';
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -22,6 +23,7 @@ import { PostContainerComponent } from './components/post-container/post-contain
     MainPageComponent,
     ProfilePageComponent,
     PostContainerComponent,
+    ProfileNewsContainerComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
