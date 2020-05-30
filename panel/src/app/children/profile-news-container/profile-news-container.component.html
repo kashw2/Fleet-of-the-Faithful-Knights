@@ -10,8 +10,8 @@
       </ul>
     </div>
   </div>
-  <div class="row">
-    <div *ngFor="let article of getNews()" class="col">
+  <div class="row d-flex m-4">
+    <div *ngFor="let article of getNews()" class="col-auto">
       <app-post-container
         [input]="article"
         [titleExtractor]="titleExtractor"
