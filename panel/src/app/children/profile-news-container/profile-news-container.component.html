@@ -2,11 +2,31 @@
   <div class="row">
     <div class="col">
       <ul class="list-unstyled">
-        <li *ngIf="canViewDeveloper()" class="d-inline-block mr-1 developer cursor-click text-decoration-none">Developer</li>
-        <li *ngIf="canViewHeadOffice()" class="d-inline-block mx-1 grand-master cursor-click text-decoration-none">Head Office</li>
-        <li *ngIf="canViewKnights()" class="d-inline-block mx-1 knight cursor-click text-decoration-none">Knights</li>
-        <li *ngIf="canViewSergeants()" class="d-inline-block mx-1 sergeant cursor-click text-decoration-none">Sergeants</li>
-        <li *ngIf="canViewNormal()" class="d-inline-block mx-1 guest cursor-click text-decoration-none">Normal</li>
+        <li
+          *ngIf="isSectionViewable('Developer')"
+          class="d-inline-block mr-1 developer cursor-click text-decoration-none"
+          (click)="updateSelectedGroup('Developer')">Developer
+        </li>
+        <li
+          *ngIf="isSectionViewable('Grand Master')"
+          class="d-inline-block mx-1 grand-master cursor-click text-decoration-none"
+          (click)="updateSelectedGroup('Grand Master')">Head Office
+        </li>
+        <li
+          *ngIf="isSectionViewable('Knight')"
+          class="d-inline-block mx-1 knight cursor-click text-decoration-none"
+          (click)="updateSelectedGroup('Knight')">Knights
+        </li>
+        <li
+          *ngIf="isSectionViewable('Sergeant')"
+          class="d-inline-block mx-1 sergeant cursor-click text-decoration-none"
+          (click)="updateSelectedGroup('Sergeant')">Sergeants
+        </li>
+        <li
+          *ngIf="isSectionViewable('Guest')"
+          class="d-inline-block mx-1 guest cursor-click text-decoration-none"
+          (click)="updateSelectedGroup('Guest')">Normal
+        </li>
       </ul>
     </div>
   </div>

@@ -30,6 +30,20 @@ export const DiscordGroupIdMap: Map<string, string> = Map({
     "539194424001953793": "Squire",
 });
 
+export const GroupMapByName: Map<string, number> = Map({
+    "Developer": 1,
+    "Grand Master": 2,
+    "Master Commander": 3,
+    "Knight Commander": 4,
+    "Knight Lieutenant": 5,
+    "Knight": 6,
+    "Sergeant First Class": 7,
+    "Sergeant": 8,
+    "Squire": 9,
+    "Companion at Arms": 10,
+    "Guest": 11,
+});
+
 export class GroupUtils {
 
     static containsNonGuestRoles(ids: Set<string>): boolean {
@@ -115,6 +129,10 @@ export class GroupUtils {
                 console.log(`${role} is not a recognised discord role, defaulting to Guest`);
                 return "Guest";
         }
+    }
+
+    static isGroupHigher(group: string, comparator: string): boolean {
+        return this.getGroupIdFromName(this.parseGroup(comparator)) >= GroupMapByName.get(group);
     }
 
     static isNonGuestRole(id: string): boolean {
