@@ -48,15 +48,18 @@ export class ProfilePageComponent implements OnInit {
   }
 
   getVotesCreated(): List<Vote> {
-    return List.of(new Vote());
+    return this.userStateService.getVotes()
+      .filter(v => this.getUsername().map(u => v.getSponsorUsername().contains(u)));
   }
 
   getVotesFailed(): List<Vote> {
-    return List.of(new Vote());
+    return this.getVotesCreated()
+      .filter(v => v.hasFailed());
   }
 
   getVotesPassed(): List<Vote> {
-    return List.of(new Vote());
+    return this.getVotesCreated()
+      .filter(v => v.hasPassed());
   }
 
   isCompanionAtArms(): boolean {
