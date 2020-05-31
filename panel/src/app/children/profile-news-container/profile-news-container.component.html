@@ -31,7 +31,7 @@
     </div>
   </div>
   <div class="row d-flex m-4">
-    <div *ngFor="let article of getNews()" class="col-auto">
+    <div *ngFor="let article of getNewsFilteredBySelectedGroup()" class="col-auto">
       <app-post-container
         [input]="article"
         [titleExtractor]="titleExtractor"

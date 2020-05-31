@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import {Option} from "funfix-core";
+import {None, Option, Some} from "funfix-core";
 import {List} from "immutable";
 import {BehaviorSubject} from "rxjs";
 import {User} from "../../../../../core/src";
@@ -16,7 +16,7 @@ export class ProfileNewsContainerComponent implements OnInit {
 
   constructor(private userStateService: UserStateService) { }
 
-  selectedGroup: BehaviorSubject<string> = new BehaviorSubject<string>("Developer");
+  selectedGroup: BehaviorSubject<Option<string>> = new BehaviorSubject<Option<string>>(None);
 
   authorExtractor = (n: News) => n.getUsername();
 
@@ -27,11 +27,16 @@ export class ProfileNewsContainerComponent implements OnInit {
   getNews(): List<News> {
     return this.userStateService
       .getNews()
-      .filter(n => GroupUtils.isGroupHigher(n.getUserGroup().getOrElse("Guest"), this.getSelectedGroup()))
+      .filter(n => GroupUtils.isGroupHigher(n.getUserGroup().getOrElse("Guest"), this.getSelectedGroup().getOrElse("Guest")))
       .take(3);
   }
 
-  getSelectedGroup(): string {
+  getNewsFilteredBySelectedGroup(): List<News> {
+    return this.getNews()
+      .filter(n => n.getUserGroup().contains(this.getSelectedGroup().getOrElse("Guest")));
+  }
+
+  getSelectedGroup(): Option<string> {
     return this.selectedGroup
       .getValue();
   }
@@ -60,7 +65,7 @@ export class ProfileNewsContainerComponent implements OnInit {
   titleExtractor = (n: News) => n.getTitle();
 
   updateSelectedGroup(selectedGroup: string): void {
-    this.selectedGroup.next(selectedGroup);
+    this.selectedGroup.next(Some(selectedGroup));
   }
 
 }

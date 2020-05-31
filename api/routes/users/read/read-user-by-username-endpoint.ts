@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
-import {ApiUtils, UserJsonSerializer, usernameKey} from "../../../../core/src";
+import {ApiUtils, User, UserJsonSerializer, usernameKey} from "../../../../core/src";
 import {GetEndpoint} from "../../../../core/src/server/get-endpoint";
 import {Database} from "../../../db/database";
 

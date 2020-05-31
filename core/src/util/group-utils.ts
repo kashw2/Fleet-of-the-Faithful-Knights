@@ -132,6 +132,7 @@ export class GroupUtils {
     }
 
     static isGroupHigher(group: string, comparator: string): boolean {
+        // @ts-ignore
         return this.getGroupIdFromName(this.parseGroup(comparator)) >= GroupMapByName.get(group);
     }
 

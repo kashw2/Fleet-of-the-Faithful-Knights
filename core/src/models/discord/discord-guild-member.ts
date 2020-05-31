@@ -44,6 +44,7 @@ export class DiscordGuildMember {
             return this.getRoles().filterNot(role => !GroupUtils.isNonGuestRole(role))
                 .map(x => GroupUtils.getGroupNameFromDiscordRoleId(x));
         }
+        // TODO: Document this; Why don't we return Set()?
         return this.getRoles()
             .map(role => GroupUtils.getGroupNameFromDiscordRoleId(role));
     }

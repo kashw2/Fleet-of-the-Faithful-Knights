@@ -1,12 +1,13 @@
 import {Injectable} from "@angular/core";
 import {Either, Left} from "funfix-core";
+import {List} from "immutable";
+import {CookieService} from "ngx-cookie-service";
 import {User} from "../../../../core/src";
 import {DiscordOAuthResponse} from "../../../../core/src/misc/discord-api";
 import {FfkApi} from "../../../../core/src/misc/ffk-api";
-import {environment} from "../../environments/environment";
-import {CookieService} from "ngx-cookie-service";
-import {List} from "immutable";
 import {News} from "../../../../core/src/models/news";
+import {Vote} from "../../../../core/src/models/vote";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: "root",
@@ -15,6 +16,16 @@ export class FfkApiService extends FfkApi {
 
   constructor(private cookieService: CookieService) {
     super(environment.FFK_API_ADDRESS, environment.FFK_API_TOKEN);
+  }
+
+  async getAllNews(): Promise<Either<string, List<News>>> {
+    const response = await this.listNews();
+    return response;
+  }
+
+  async getAllVotes(): Promise<Either<string, List<Vote>>> {
+    const response = await this.listVotes();
+    return response;
   }
 
   async loginOrRegisterUser(code: string): Promise<Either<string, User>> {
@@ -29,11 +40,6 @@ export class FfkApiService extends FfkApi {
     }
     this.cookieService.set("token", token.get(), 999999999);
     return this.getUserByToken(token.get());
-  }
-
-  async getAllNews(): Promise<Either<string, List<News>>> {
-    const response = await this.listNews();
-    return response;
   }
 
 }

@@ -49,6 +49,7 @@ export class MainPageComponent implements OnInit {
     }
     if (this.userStateService.isLoggedIn() || this.userStateService.isCookieSet()) {
         this.populateNews();
+        this.populateVotes();
     }
   }
 
@@ -56,6 +57,12 @@ export class MainPageComponent implements OnInit {
     const news = await this.ffkApiService.getAllNews();
     this.notificationService.showNotificationBaseOnEitherEffector(news, values => `Loaded ${values.size} Articles`)
       .map(articles => this.userStateService.news.next(articles));
+  }
+
+  private async populateVotes(): Promise<void> {
+    const votes = await this.ffkApiService.getAllVotes();
+    this.notificationService.showNotificationBaseOnEitherEffector(votes, values => `Loaded ${values.size} Votes`)
+      .map(vs => this.userStateService.votes.next(vs));
   }
 
 }
