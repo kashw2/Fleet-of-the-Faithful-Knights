@@ -1,19 +1,21 @@
 <mdb-navbar SideClass="navbar navbar-expand-lg white navbar-dark shadow fixed-top" containerInside>
-  <mdb-navbar-brand><h3 class="font-weight-normal text-black baloo ml-0 mr-4 my-auto">FFK Panel</h3></mdb-navbar-brand>
-  <div *ngIf="isLoggedIn()" class="btn-group" mdbDropdown>
-    <button type="button" size="sm" mdbBtn color="danger" outline="true" class="waves-effect dropdown-toggle"
+  <mdb-navbar-brand>
+    <h3 class="font-weight-normal text-black baloo ml-0 mr-4 my-auto">FFK Panel</h3>
+  </mdb-navbar-brand>
+  <div class="btn-group" mdbDropdown>
+    <button *ngIf="isLoggedIn()" type="button" size="sm" mdbBtn color="danger" outline="true" class="waves-effect dropdown-toggle"
             mdbWavesEffect mdbDropdownToggle>Votes
     </button>
     <div class="dropdown-menu">
-      <a class="dropdown-item py-1">All</a>
-      <a class="dropdown-item py-1">Active</a>
-      <a class="dropdown-item py-1">Recent</a>
-      <div class="dropdown-divider my-1"></div>
-      <a class="dropdown-item py-1">Knight</a>
-      <a class="dropdown-item py-1">Sergeant First Class</a>
-      <a class="dropdown-item py-1">Sergeant</a>
-      <a class="dropdown-item py-1">Squire</a>
-      <a class="dropdown-item py-1">Companion at Arms</a>
+      <a *ngIf="canUserViewVoteSection('Companion at Arms')" class="dropdown-item py-1">All</a>
+      <a *ngIf="canUserViewVoteSection('Companion at Arms')" class="dropdown-item py-1">Active</a>
+      <a *ngIf="canUserViewVoteSection('Companion at Arms')" class="dropdown-item py-1">Recent</a>
+      <div *ngIf="canUserViewVoteSection('Companion at Arms')" class="dropdown-divider my-1"></div>
+      <a *ngIf="canUserViewVoteSection('Knight')" class="dropdown-item py-1">Knight</a>
+      <a *ngIf="canUserViewVoteSection('Sergeant First Class')" class="dropdown-item py-1">Sergeant First Class</a>
+      <a *ngIf="canUserViewVoteSection('Sergeant')" class="dropdown-item py-1">Sergeant</a>
+      <a *ngIf="canUserViewVoteSection('Squire')" class="dropdown-item py-1">Squire</a>
+      <a *ngIf="canUserViewVoteSection('Companion at Arms')" class="dropdown-item py-1">Companion at Arms</a>
     </div>
   </div>
   <div class="btn-group ml-auto" mdbDropdown>
