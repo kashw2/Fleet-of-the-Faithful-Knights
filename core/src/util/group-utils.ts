@@ -136,6 +136,11 @@ export class GroupUtils {
         return this.getGroupIdFromName(this.parseGroup(comparator)) >= GroupMapByName.get(group);
     }
 
+    static IsGroupLower(group: string, comparator: string): boolean {
+        // @ts-ignore
+        return this.getGroupIdFromName(this.parseGroup(comparator)) <= GroupMapByName.get(group);
+    }
+
     static isNonGuestRole(id: string): boolean {
         switch (id) {
             case "541835139701800962":
