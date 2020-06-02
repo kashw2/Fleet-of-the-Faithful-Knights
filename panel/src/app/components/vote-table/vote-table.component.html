@@ -1,0 +1,40 @@
+<table mdbTable #tableElement="mdbTable">
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>Username</th>
+    <th>Promotion Group</th>
+    <th>Created</th>
+    <th class="w-25">
+      <div class="form-row align-items-center">
+        <div class="col-auto">
+          <div class="md-form mb-0 mt-3">
+            <input
+              mdbInput
+              type="text"
+              class="form-control mb-2 md-bg"
+              id="search"
+              (keyup)="updateFilter($event)"
+            >
+            <label for="search">Search</label>
+          </div>
+        </div>
+      </div>
+    </th>
+  </tr>
+  </thead>
+  <tbody *ngFor="let vote of getFilteredVotes(); let i = index">
+  <th *ngIf="vote.getId().nonEmpty() && shouldTruncateRows(i)">{{vote.getId().get()}}</th>
+  <td *ngIf="vote.getCandidateName().nonEmpty() && shouldTruncateRows(i)">{{vote.getCandidateName().get()}}</td>
+  <td *ngIf="vote.getGroup().nonEmpty() && shouldTruncateRows(i)">{{vote.getGroup().get()}}</td>
+  <td *ngIf="vote.getCreatedDate().nonEmpty() && shouldTruncateRows(i)">{{vote.getCreatedDateFormatted('DMY').get()}}</td>
+  <td *ngIf="!vote.isEmpty() && shouldTruncateRows(i)" class="mx-auto">
+    <p class="d-inherit w-auto cursor-click">View</p>
+  </td>
+  </tbody>
+  <tfoot>
+  <td colspan="5">
+    <mdb-table-pagination [tableEl]="tableElement" [searchDataSource]="elements"></mdb-table-pagination>
+  </td>
+  </tfoot>
+</table>

@@ -19,6 +19,7 @@ import {
     statusKey,
     votersKey,
 } from "..";
+import {FfkDateFormat, MomentUtils} from "../util/moment-utils";
 import {Candidate, CandidateJsonSerializer} from "./candidate";
 import {Comment, CommentJsonSerializer} from "./comment";
 import {User, UserJsonSerializer} from "./user";
@@ -54,6 +55,11 @@ export class Vote {
 
     public getCreatedDate(): Option<string> {
         return this.createdDate;
+    }
+
+    public getCreatedDateFormatted(format: FfkDateFormat): Option<string> {
+        return this.getCreatedDate()
+            .map(datetime => MomentUtils.formatString(datetime, format));
     }
 
     public getGroup(): Option<string> {

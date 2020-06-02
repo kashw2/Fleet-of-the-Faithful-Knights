@@ -38,6 +38,11 @@ export class HeaderComponent implements OnInit {
     this.viewStateService.setPageIndex(1);
   }
 
+  goToVotesPage(type: string): void {
+    this.viewStateService.setPageIndex(2);
+    this.viewStateService.setVotePageType(type);
+  }
+
   isLoggedIn(): boolean {
     return this.userStateService
       .isLoggedIn();

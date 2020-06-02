@@ -8,12 +8,14 @@ import {CookieService} from "ngx-cookie-service";
 import {ToastrModule} from "ngx-toastr";
 import {AppRoutingModule} from "./app-routing.module";
 import {AppComponent} from "./app.component";
+import {ProfileNewsContainerComponent} from "./children/profile-news-container/profile-news-container.component";
 import {HeaderComponent} from "./components/header/header.component";
+import {PostContainerComponent} from "./components/post-container/post-container.component";
+import {VoteTableComponent} from "./components/vote-table/vote-table.component";
+import {MainPageComponent} from "./pages/main-page/main-page.component";
+import {ProfilePageComponent} from "./pages/profile-page/profile-page.component";
+import {VotesPageComponent} from "./pages/votes-page/votes-page.component";
 import {NotificationService} from "./services/notification.service";
-import { MainPageComponent } from './pages/main-page/main-page.component';
-import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
-import { PostContainerComponent } from './components/post-container/post-container.component';
-import { ProfileNewsContainerComponent } from './children/profile-news-container/profile-news-container.component';
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -24,6 +26,8 @@ import { ProfileNewsContainerComponent } from './children/profile-news-container
     ProfilePageComponent,
     PostContainerComponent,
     ProfileNewsContainerComponent,
+    VotesPageComponent,
+    VoteTableComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
