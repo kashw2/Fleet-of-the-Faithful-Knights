@@ -11,6 +11,8 @@
       <a *ngIf="canUserViewVoteSection('Companion at Arms')" class="dropdown-item py-1" (click)="goToVotesPage('Active')">Active</a>
       <a *ngIf="canUserViewVoteSection('Companion at Arms')" class="dropdown-item py-1" (click)="goToVotesPage('Recent')">Recent</a>
       <div *ngIf="canUserViewVoteSection('Companion at Arms')" class="dropdown-divider my-1"></div>
+      <a *ngIf="canUserViewVoteSection('Knight Commander')" class="dropdown-item py-1" (click)="goToVotesPage('Knight Commander')">Knight Commander</a>
+      <a *ngIf="canUserViewVoteSection('Knight Lieutenant')" class="dropdown-item py-1" (click)="goToVotesPage('Knight Lieutenant')">Knight Lieutenant</a>
       <a *ngIf="canUserViewVoteSection('Knight')" class="dropdown-item py-1" (click)="goToVotesPage('Knight')">Knight</a>
       <a *ngIf="canUserViewVoteSection('Sergeant First Class')" class="dropdown-item py-1" (click)="goToVotesPage('Sergeant First Class')">Sergeant First Class</a>
       <a *ngIf="canUserViewVoteSection('Sergeant')" class="dropdown-item py-1" (click)="goToVotesPage('Sergeant')">Sergeant</a>
