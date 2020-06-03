@@ -50,7 +50,13 @@ export class MainPageComponent implements OnInit {
     if (this.userStateService.isLoggedIn() || this.userStateService.isCookieSet()) {
         this.populateNews();
         this.populateVotes();
+        this.populateCandidates();
     }
+  }
+
+  private async populateCandidates(): Promise<void> {
+    const candidates = await this.ffkApiService.getAllCandidates();
+    this.notificationService.showNotificationBaseOnEitherEffector(candidates, values => `Loaded ${values.size} Candidates`);
   }
 
   private async populateNews(): Promise<void> {
