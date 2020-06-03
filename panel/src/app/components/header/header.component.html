@@ -6,18 +6,18 @@
     <button *ngIf="isLoggedIn()" type="button" size="sm" mdbBtn color="danger" outline="true" class="waves-effect dropdown-toggle"
             mdbWavesEffect mdbDropdownToggle>Votes
     </button>
-    <div class="dropdown-menu">
-      <a *ngIf="canUserViewVoteSection('Companion at Arms')" class="dropdown-item py-1" (click)="goToVotesPage('All')">All</a>
-      <a *ngIf="canUserViewVoteSection('Companion at Arms')" class="dropdown-item py-1" (click)="goToVotesPage('Active')">Active</a>
-      <a *ngIf="canUserViewVoteSection('Companion at Arms')" class="dropdown-item py-1" (click)="goToVotesPage('Recent')">Recent</a>
+    <div *ngIf="canUserViewVoteSection('Guest')" class="dropdown-menu">
+      <a *ngIf="canUserViewVoteSection('Companion at Arms')" class="dropdown-item font-weight-light py-1" (click)="goToVotesPage('All')">All</a>
+      <a *ngIf="canUserViewVoteSection('Companion at Arms')" class="dropdown-item font-weight-light py-1" (click)="goToVotesPage('Active')">Active</a>
+      <a *ngIf="canUserViewVoteSection('Companion at Arms')" class="dropdown-item font-weight-light py-1" (click)="goToVotesPage('Recent')">Recent</a>
       <div *ngIf="canUserViewVoteSection('Companion at Arms')" class="dropdown-divider my-1"></div>
-      <a *ngIf="canUserViewVoteSection('Knight Commander')" class="dropdown-item py-1" (click)="goToVotesPage('Knight Commander')">Knight Commander</a>
-      <a *ngIf="canUserViewVoteSection('Knight Lieutenant')" class="dropdown-item py-1" (click)="goToVotesPage('Knight Lieutenant')">Knight Lieutenant</a>
-      <a *ngIf="canUserViewVoteSection('Knight')" class="dropdown-item py-1" (click)="goToVotesPage('Knight')">Knight</a>
-      <a *ngIf="canUserViewVoteSection('Sergeant First Class')" class="dropdown-item py-1" (click)="goToVotesPage('Sergeant First Class')">Sergeant First Class</a>
-      <a *ngIf="canUserViewVoteSection('Sergeant')" class="dropdown-item py-1" (click)="goToVotesPage('Sergeant')">Sergeant</a>
-      <a *ngIf="canUserViewVoteSection('Squire')" class="dropdown-item py-1" (click)="goToVotesPage('Squire')">Squire</a>
-      <a *ngIf="canUserViewVoteSection('Companion at Arms')" class="dropdown-item py-1" (click)="goToVotesPage('Companion at Arms')">Companion at Arms</a>
+      <a *ngIf="canUserViewVoteSection('Knight Commander')" class="dropdown-item font-weight-light py-1" (click)="goToVotesPage('Knight Commander')">Knight Commander</a>
+      <a *ngIf="canUserViewVoteSection('Knight Lieutenant')" class="dropdown-item font-weight-light py-1" (click)="goToVotesPage('Knight Lieutenant')">Knight Lieutenant</a>
+      <a *ngIf="canUserViewVoteSection('Knight')" class="dropdown-item font-weight-light py-1" (click)="goToVotesPage('Knight')">Knight</a>
+      <a *ngIf="canUserViewVoteSection('Sergeant First Class')" class="dropdown-item font-weight-light py-1" (click)="goToVotesPage('Sergeant First Class')">Sergeant First Class</a>
+      <a *ngIf="canUserViewVoteSection('Sergeant')" class="dropdown-item font-weight-light py-1" (click)="goToVotesPage('Sergeant')">Sergeant</a>
+      <a *ngIf="canUserViewVoteSection('Squire')" class="dropdown-item font-weight-light py-1" (click)="goToVotesPage('Squire')">Squire</a>
+      <a *ngIf="canUserViewVoteSection('Companion at Arms')" class="dropdown-item font-weight-light py-1" (click)="goToVotesPage('Companion at Arms')">Companion at Arms</a>
     </div>
   </div>
   <div class="btn-group ml-auto" mdbDropdown>
