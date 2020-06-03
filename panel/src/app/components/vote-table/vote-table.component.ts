@@ -1,10 +1,11 @@
-import {ChangeDetection} from "@angular/cli/lib/config/schema";
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild} from "@angular/core";
+import {AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild} from "@angular/core";
 import {MdbTableDirective, MdbTablePaginationComponent} from "angular-bootstrap-md";
 import {None, Option, Some} from "funfix-core";
 import {List} from "immutable";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, fromEvent} from "rxjs";
+import {debounceTime, distinctUntilChanged, first} from "rxjs/operators";
 import {Vote} from "../../../../../core/src/models/vote";
+import {NotificationService} from "../../services/notification.service";
 
 @Component({
   selector: "app-vote-table",
@@ -13,12 +14,16 @@ import {Vote} from "../../../../../core/src/models/vote";
 })
 export class VoteTableComponent implements OnInit, AfterViewInit {
 
-  constructor(private changeDetection: ChangeDetectorRef) { }
+  constructor(
+    private changeDetection: ChangeDetectorRef,
+    private notificationService: NotificationService,
+  ) {
+  }
 
   elements: any = [];
 
-  @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
-  @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
+  @ViewChild(MdbTableDirective, {static: true}) mdbTable: MdbTableDirective;
+  @ViewChild(MdbTablePaginationComponent, {static: true}) mdbTablePagination: MdbTablePaginationComponent;
 
   searchText: BehaviorSubject<Option<string>> = new BehaviorSubject<Option<string>>(None);
 
@@ -29,8 +34,8 @@ export class VoteTableComponent implements OnInit, AfterViewInit {
     return this.getVotes()
       .filter(v => {
         return v.getCandidateName().exists(n => n.toLowerCase().includes(filter.toLowerCase()))
-        || v.getGroup().exists(g => g.toLowerCase().includes(filter.toLowerCase()))
-        || v.getFormattedCreatedDate("DMY").exists(d => d.includes(filter));
+          || v.getGroup().exists(g => g.toLowerCase().includes(filter.toLowerCase()))
+          || v.getFormattedCreatedDate("DMY").exists(d => d.includes(filter));
       });
   }
 
@@ -73,13 +78,26 @@ export class VoteTableComponent implements OnInit, AfterViewInit {
     this.elements = this.mdbTable.getDataSource();
   }
 
+  notifyOfFilterChange(event): void {
+    fromEvent(event.target, "keyup")
+      .pipe(debounceTime(150))
+      .pipe(distinctUntilChanged())
+      .pipe(first())
+      .subscribe(value => {
+        const opt: Option<string> = Option.of(event.target.value);
+        if (opt.nonEmpty()) {
+          this.notificationService.showInfoNotification(`Applied Filter: ${event.target.value}`, "Info", 1250);
+        }
+      });
+  }
+
   shouldTruncateRows(currentIndex: number): boolean {
     return currentIndex + 1 >= this.mdbTablePagination.firstItemIndex
       && currentIndex < this.mdbTablePagination.lastItemIndex;
   }
 
   updateFilter(event): void {
-    const value = Option.of(event.target.value);
+    const value: Option<string> = Option.of(event.target.value);
     if (value.isEmpty()) {
       this.searchText.next(None);
       return;

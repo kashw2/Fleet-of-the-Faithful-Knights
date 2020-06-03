@@ -1,11 +1,11 @@
-<table mdbTable #tableElement="mdbTable">
+<table mdbTable #tableElement="mdbTable" striped="striped" borderless="borderless" hover="hover" small="small">
   <thead>
   <tr>
-    <th>Id</th>
-    <th>Username</th>
-    <th>Promotion Group</th>
-    <th>Created</th>
-    <th class="w-25">
+    <th scope="col">Id</th>
+    <th scope="col">Username</th>
+    <th scope="col">Promotion Group</th>
+    <th scope="col">Created</th>
+    <th scope="col" class="w-25">
       <div class="form-row align-items-center">
         <div class="col-auto">
           <div class="md-form mb-0 mt-3">
@@ -15,6 +15,7 @@
               class="form-control mb-2 md-bg"
               id="search"
               (keyup)="updateFilter($event)"
+              (change)="notifyOfFilterChange($event)"
             >
             <label for="search">Search</label>
           </div>
@@ -23,14 +24,16 @@
     </th>
   </tr>
   </thead>
-  <tbody *ngFor="let vote of getFilteredVotes(); let i = index">
-  <th *ngIf="vote.getId().nonEmpty() && shouldTruncateRows(i)">{{vote.getId().get()}}</th>
-  <td *ngIf="vote.getCandidateName().nonEmpty() && shouldTruncateRows(i)">{{vote.getCandidateName().get()}}</td>
-  <td *ngIf="vote.getGroup().nonEmpty() && shouldTruncateRows(i)">{{vote.getGroup().get()}}</td>
-  <td *ngIf="vote.getCreatedDate().nonEmpty() && shouldTruncateRows(i)">{{vote.getFormattedCreatedDate('DMY').get()}}</td>
-  <td *ngIf="!vote.isEmpty() && shouldTruncateRows(i)" class="mx-auto">
-    <p class="d-inherit w-auto cursor-click">View</p>
-  </td>
+  <tbody>
+  <tr mdbTableRow *ngFor="let vote of getFilteredVotes(); let i = index">
+    <th *ngIf="vote.getId().nonEmpty() && shouldTruncateRows(i)">{{vote.getId().get()}}</th>
+    <td *ngIf="vote.getCandidateName().nonEmpty() && shouldTruncateRows(i)">{{vote.getCandidateName().get()}}</td>
+    <td *ngIf="vote.getGroup().nonEmpty() && shouldTruncateRows(i)">{{vote.getGroup().get()}}</td>
+    <td *ngIf="vote.getCreatedDate().nonEmpty() && shouldTruncateRows(i)">{{vote.getFormattedCreatedDate('DMY').get()}}</td>
+    <td *ngIf="!vote.isEmpty() && shouldTruncateRows(i)" class="mx-auto">
+      <p class="d-inherit w-auto cursor-click">View</p>
+    </td>
+  </tr>
   </tbody>
   <tfoot>
   <td colspan="5">
