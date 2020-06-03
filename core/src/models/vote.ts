@@ -57,7 +57,7 @@ export class Vote {
         return this.createdDate;
     }
 
-    public getCreatedDateFormatted(format: FfkDateFormat): Option<string> {
+    public getFormattedCreatedDate(format: FfkDateFormat): Option<string> {
         return this.getCreatedDate()
             .map(datetime => MomentUtils.formatString(datetime, format));
     }

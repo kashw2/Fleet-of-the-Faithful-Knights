@@ -27,7 +27,7 @@
   <th *ngIf="vote.getId().nonEmpty() && shouldTruncateRows(i)">{{vote.getId().get()}}</th>
   <td *ngIf="vote.getCandidateName().nonEmpty() && shouldTruncateRows(i)">{{vote.getCandidateName().get()}}</td>
   <td *ngIf="vote.getGroup().nonEmpty() && shouldTruncateRows(i)">{{vote.getGroup().get()}}</td>
-  <td *ngIf="vote.getCreatedDate().nonEmpty() && shouldTruncateRows(i)">{{vote.getCreatedDateFormatted('DMY').get()}}</td>
+  <td *ngIf="vote.getCreatedDate().nonEmpty() && shouldTruncateRows(i)">{{vote.getFormattedCreatedDate('DMY').get()}}</td>
   <td *ngIf="!vote.isEmpty() && shouldTruncateRows(i)" class="mx-auto">
     <p class="d-inherit w-auto cursor-click">View</p>
   </td>

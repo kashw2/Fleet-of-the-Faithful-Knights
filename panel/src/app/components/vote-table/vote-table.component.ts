@@ -27,7 +27,11 @@ export class VoteTableComponent implements OnInit, AfterViewInit {
 
   filterVotes(filter: string): List<Vote> {
     return this.getVotes()
-      .filter(v => v.getCandidateName().exists(n => n.toLowerCase().includes(filter.toLowerCase())));
+      .filter(v => {
+        return v.getCandidateName().exists(n => n.toLowerCase().includes(filter.toLowerCase()))
+        || v.getGroup().exists(g => g.toLowerCase().includes(filter.toLowerCase()))
+        || v.getFormattedCreatedDate("DMY").exists(d => d.includes(filter));
+      });
   }
 
   getFilteredVotes(): List<Vote> {
