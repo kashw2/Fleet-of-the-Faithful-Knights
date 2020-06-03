@@ -12,6 +12,7 @@ import {ProfileNewsContainerComponent} from "./children/profile-news-container/p
 import {HeaderComponent} from "./components/header/header.component";
 import {PostContainerComponent} from "./components/post-container/post-container.component";
 import {VoteTableComponent} from "./components/vote-table/vote-table.component";
+import {CreateVoteModalComponent} from "./modals/create-vote-modal/create-vote-modal.component";
 import {MainPageComponent} from "./pages/main-page/main-page.component";
 import {ProfilePageComponent} from "./pages/profile-page/profile-page.component";
 import {VotesPageComponent} from "./pages/votes-page/votes-page.component";
@@ -28,6 +29,7 @@ import {NotificationService} from "./services/notification.service";
     ProfileNewsContainerComponent,
     VotesPageComponent,
     VoteTableComponent,
+    CreateVoteModalComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
