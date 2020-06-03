@@ -8,6 +8,7 @@ import {FfkApi} from "../../../../core/src/misc/ffk-api";
 import {News} from "../../../../core/src/models/news";
 import {Vote} from "../../../../core/src/models/vote";
 import {environment} from "../../environments/environment";
+import {Candidate} from "../../../../core/src/models/candidate";
 
 @Injectable({
   providedIn: "root",
@@ -18,19 +19,20 @@ export class FfkApiService extends FfkApi {
     super(environment.FFK_API_ADDRESS, environment.FFK_API_TOKEN);
   }
 
-  async getAllNews(): Promise<Either<string, List<News>>> {
-    const response = await this.listNews();
-    return response;
+  getAllNews(): Promise<Either<string, List<News>>> {
+    return this.listNews();
   }
 
-  async getAllVotes(): Promise<Either<string, List<Vote>>> {
-    const response = await this.listVotes();
-    return response;
+  getAllVotes(): Promise<Either<string, List<Vote>>> {
+    return this.listVotes();
+  }
+
+  getAllCandidates(): Promise<Either<string, List<Candidate>>> {
+    return this.listCandidates();
   }
 
   async loginOrRegisterUser(code: string): Promise<Either<string, User>> {
     const response = await this.logUserIn(code);
-    console.log(response);
     if (response.isLeft()) {
       return Left(response.value);
     }
