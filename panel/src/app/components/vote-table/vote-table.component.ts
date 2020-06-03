@@ -1,10 +1,11 @@
 import {AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild} from "@angular/core";
-import {MdbTableDirective, MdbTablePaginationComponent} from "angular-bootstrap-md";
+import {MDBModalService, MdbTableDirective, MdbTablePaginationComponent, ModalOptions} from "angular-bootstrap-md";
 import {None, Option, Some} from "funfix-core";
 import {List} from "immutable";
 import {BehaviorSubject, fromEvent} from "rxjs";
 import {debounceTime, distinctUntilChanged, first} from "rxjs/operators";
 import {Vote} from "../../../../../core/src/models/vote";
+import {CreateVoteModalComponent} from "../../modals/create-vote-modal/create-vote-modal.component";
 import {NotificationService} from "../../services/notification.service";
 
 @Component({
@@ -17,8 +18,12 @@ export class VoteTableComponent implements OnInit, AfterViewInit {
   constructor(
     private changeDetection: ChangeDetectorRef,
     private notificationService: NotificationService,
+    private mdbModalService: MDBModalService,
   ) {
   }
+
+  @Input()
+  canCreateVote: boolean = false;
 
   elements: any = [];
 
@@ -55,6 +60,10 @@ export class VoteTableComponent implements OnInit, AfterViewInit {
     return this.votes;
   }
 
+  isUsedForVoteCreation(): boolean {
+    return this.canCreateVote;
+  }
+
   ngAfterViewInit() {
     this.mdbTablePagination.setMaxVisibleItemsNumberTo(17);
     this.mdbTablePagination.calculateFirstItemIndex();
@@ -89,6 +98,11 @@ export class VoteTableComponent implements OnInit, AfterViewInit {
           this.notificationService.showInfoNotification(`Applied Filter: ${event.target.value}`, "Info", 1250);
         }
       });
+  }
+
+  openVoteModal(): void {
+    const options: ModalOptions = {backdrop: true, animated: true};
+    this.mdbModalService.show(CreateVoteModalComponent, options);
   }
 
   shouldTruncateRows(currentIndex: number): boolean {

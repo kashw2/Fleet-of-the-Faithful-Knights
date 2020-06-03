@@ -6,7 +6,7 @@
     <th scope="col">Promotion Group</th>
     <th scope="col">Created</th>
     <th scope="col" class="w-25">
-      <div class="form-row align-items-center">
+      <div class="row align-items-center">
         <div class="col-auto">
           <div class="md-form mb-0 mt-3">
             <input
@@ -19,6 +19,9 @@
             >
             <label for="search">Search</label>
           </div>
+        </div>
+        <div *ngIf="isUsedForVoteCreation()" class="col-auto">
+          <button mdbBtn mdbWavesEffect type="button" size="sm" color="success" outline="outline" (click)="openVoteModal()">Create Vote</button>
         </div>
       </div>
     </th>
