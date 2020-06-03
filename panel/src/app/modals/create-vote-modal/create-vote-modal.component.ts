@@ -5,6 +5,7 @@ import {User} from "../../../../../core/src";
 import {Candidate} from "../../../../../core/src/models/candidate";
 import {GroupUtils} from "../../../../../core/src/util/group-utils";
 import {UserStateService} from "../../services/user-state.service";
+import {MDBModalRef} from "angular-bootstrap-md";
 
 @Component({
   selector: "app-create-vote-modal",
@@ -13,7 +14,10 @@ import {UserStateService} from "../../services/user-state.service";
 })
 export class CreateVoteModalComponent implements OnInit {
 
-  constructor(private userStateService: UserStateService) { }
+  constructor(
+    private userStateService: UserStateService,
+    private modalRef: MDBModalRef,
+  ) { }
 
   canCreateVoteForGroup(group: string): boolean {
     return this.getUserGroup()
@@ -33,6 +37,10 @@ export class CreateVoteModalComponent implements OnInit {
   getUserGroup(): Option<string> {
     return this.getUser()
       .flatMap(u => u.getGroup());
+  }
+
+  hide(): void {
+    return this.modalRef.hide();
   }
 
   ngOnInit(): void {
