@@ -40,6 +40,26 @@ export class Vote {
     ) {
     }
 
+    // TODO: Make this take a createdDate on use
+    public static forVoteCreation(
+        candidate: Candidate,
+        sponsor: User,
+        group: string,
+        notes: string,
+    ): Vote {
+        return new Vote(
+            None,
+            Option.of(sponsor),
+            Option.of(candidate),
+            Option.of(group),
+            Option.of(notes),
+            Set(),
+            Some(false),
+            List(),
+            None
+        );
+    }
+
     public getCandidate(): Option<Candidate> {
         return this.candidate;
     }
@@ -98,8 +118,8 @@ export class Vote {
 
     public hasFailed(): boolean {
         return this.getStatus()
-            .contains(false)
-        && this.getVoters()
+                .contains(false)
+            && this.getVoters()
                 .map(v => v.didDeny())
                 .size > 4;
     }
@@ -116,14 +136,14 @@ export class Vote {
 
     public isEmpty(): boolean {
         return this.getId().isEmpty()
-        && this.getSponsor().isEmpty()
-        && this.getCandidate().isEmpty()
-        && this.getGroup().isEmpty()
-        && this.getNotes().isEmpty()
-        && this.getVoters().isEmpty()
-        && this.getStatus().isEmpty()
-        && this.getComments().isEmpty()
-        && this.getCreatedDate().isEmpty();
+            && this.getSponsor().isEmpty()
+            && this.getCandidate().isEmpty()
+            && this.getGroup().isEmpty()
+            && this.getNotes().isEmpty()
+            && this.getVoters().isEmpty()
+            && this.getStatus().isEmpty()
+            && this.getComments().isEmpty()
+            && this.getCreatedDate().isEmpty();
     }
 
     public isKnightCommanderVote(): boolean {

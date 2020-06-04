@@ -56,7 +56,8 @@ export class MainPageComponent implements OnInit {
 
   private async populateCandidates(): Promise<void> {
     const candidates = await this.ffkApiService.getAllCandidates();
-    this.notificationService.showNotificationBaseOnEitherEffector(candidates, values => `Loaded ${values.size} Candidates`);
+    this.notificationService.showNotificationBaseOnEitherEffector(candidates, values => `Loaded ${values.size} Candidates`)
+      .map(cs => this.userStateService.candidates.next(cs));
   }
 
   private async populateNews(): Promise<void> {

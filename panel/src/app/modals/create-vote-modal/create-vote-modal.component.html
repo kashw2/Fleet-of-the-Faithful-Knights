@@ -4,27 +4,27 @@
   </div>
   <div class="modal-body">
     <select mdbInput name="candidate-select" class="custom-select text-center my-4">
-      <option *ngFor="let candidate of getCandidates()">{{candidate.getDiscordUsername().get()}}</option>
+      <option *ngFor="let candidate of getCandidates()" (click)="updateCandidate(candidate)">{{candidate.getDiscordUsername().get()}}</option>
     </select>
     <select mdbInput name="group-select" class="custom-select text-center my-4">
-      <option *ngIf="canCreateVoteForGroup('Grand Master')" value="Grand Master">Grand Master</option>
-      <option *ngIf="canCreateVoteForGroup('Master Commander')" value="Master Commander">Master Commander</option>
-      <option *ngIf="canCreateVoteForGroup('Knight Commander')" value="Knight Commander">Knight Commander</option>
-      <option *ngIf="canCreateVoteForGroup('Knight Lieutenant')" value="Knight Lieutenant">Knight Lieutenant</option>
-      <option *ngIf="canCreateVoteForGroup('Knight')" value="Knight">Knight</option>
-      <option *ngIf="canCreateVoteForGroup('Sergeant First Class')" value="Sergeant First Class">Sergeant First Class</option>
-      <option *ngIf="canCreateVoteForGroup('Sergeant')" value="Sergeant">Sergeant</option>
-      <option *ngIf="canCreateVoteForGroup('Squire')" value="Squire">Squire</option>
-      <option *ngIf="canCreateVoteForGroup('Companion at Arms')" value="Companion at Arms">Companion at Arms</option>
-      <option *ngIf="canCreateVoteForGroup('Guest')" value="Guest">Guest</option>
+      <option *ngIf="canCreateVoteForGroup('Grand Master')" value="Grand Master" (click)="updatePromotionGroup($event)">Grand Master</option>
+      <option *ngIf="canCreateVoteForGroup('Master Commander')" value="Master Commander" (click)="updatePromotionGroup($event)">Master Commander</option>
+      <option *ngIf="canCreateVoteForGroup('Knight Commander')" value="Knight Commander" (click)="updatePromotionGroup($event)">Knight Commander</option>
+      <option *ngIf="canCreateVoteForGroup('Knight Lieutenant')" value="Knight Lieutenant" (click)="updatePromotionGroup($event)">Knight Lieutenant</option>
+      <option *ngIf="canCreateVoteForGroup('Knight')" value="Knight" (click)="updatePromotionGroup($event)">Knight</option>
+      <option *ngIf="canCreateVoteForGroup('Sergeant First Class')" value="Sergeant First Class" (click)="updatePromotionGroup($event)">Sergeant First Class</option>
+      <option *ngIf="canCreateVoteForGroup('Sergeant')" value="Sergeant" (click)="updatePromotionGroup($event)">Sergeant</option>
+      <option *ngIf="canCreateVoteForGroup('Squire')" value="Squire" (click)="updatePromotionGroup($event)">Squire</option>
+      <option *ngIf="canCreateVoteForGroup('Companion at Arms')" value="Companion at Arms" (click)="updatePromotionGroup($event)">Companion at Arms</option>
+      <option *ngIf="canCreateVoteForGroup('Guest')" value="Guest" (click)="updatePromotionGroup($event)">Guest</option>
     </select>
     <div class="md-form">
-      <textarea mdbInput id="candidate-notes" class="md-textarea form-control my-4"></textarea>
+      <textarea mdbInput id="candidate-notes" class="md-textarea form-control my-4" (change)="updateNotes($event)"></textarea>
       <label for="candidate-notes">Notes</label>
     </div>
   </div>
   <div class="modal-footer">
-    <button mdbBtn type="button" color="danger" outline="false" class="btn waves-effect" mdbWavesEffect (click)="hide()">Cancel</button>
-    <button mdbBtn type="button" color="success" outline="false" class="btn waves-effect" mdbWavesEffect>Create</button>
+    <button mdbBtn mdbWavesEffect type="button" color="danger" outline="false" class="btn waves-effect" (click)="hide()">Cancel</button>
+    <button mdbBtn mdbWavesEffect type="button" color="success" outline="false" class="btn waves-effect" (click)="createVote()">Create</button>
   </div>
 </div>

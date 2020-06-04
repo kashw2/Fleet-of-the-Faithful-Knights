@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import {Either} from "funfix-core";
+import {Either, Left} from "funfix-core";
 import {ApiUtils, User} from "../../../../core/src";
 import {DbVote} from "../../../../core/src/models/db/db-vote";
 import {Vote, VoteJsonSerializer} from "../../../../core/src/models/vote";
@@ -30,7 +30,7 @@ export class WriteVoteEndpoint extends PostEndpoint {
         this.getVote(req)
             .map(vote => {
                 this.doesVoteExist(vote)
-                    ? res.send("Vote already exists")
+                    ? ApiUtils.sendError(Left("Vote already exists"), res)
                     : DbVote.fromVote(vote)
                         .map(dbVote => ApiUtils.sendResultPromise(this.db.procedures.insert.insertVote(dbVote), res));
                 this.db.cache.cacheVotes();

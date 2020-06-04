@@ -72,15 +72,15 @@ export class VoteTableComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    for (let i = 1; i <= this.getVotes().size; i++) {
+    for (let i = 0; i <= this.getVotes().size; i++) {
       this.elements.push({
-        candidate: "Candidate" + i,
-        created_date: "Created Date" + i,
-        group: "Group" + i,
+        candidate: "Candidate " + i,
+        created_date: "Created Date " + i,
+        group: "Group " + i,
         id: i.toString(),
         other: i,
-        sponsor: "Sponsor" + i,
-        status: "Status" + i,
+        sponsor: "Sponsor " + i,
+        status: "Status " + i,
       });
     }
     this.mdbTable.setDataSource(this.elements);
@@ -106,8 +106,8 @@ export class VoteTableComponent implements OnInit, AfterViewInit {
   }
 
   shouldTruncateRows(currentIndex: number): boolean {
-    return currentIndex + 1 >= this.mdbTablePagination.firstItemIndex
-      && currentIndex < this.mdbTablePagination.lastItemIndex;
+    return currentIndex >= this.mdbTablePagination.firstItemIndex - 1
+      && currentIndex < this.mdbTablePagination.lastItemIndex - 1;
   }
 
   updateFilter(event): void {

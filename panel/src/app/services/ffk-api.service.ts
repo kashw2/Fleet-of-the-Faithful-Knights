@@ -44,4 +44,8 @@ export class FfkApiService extends FfkApi {
     return this.getUserByToken(token.get());
   }
 
+  writeCandidateVote(vote: Vote): Promise<Either<string, number>> {
+    return this.writeVote(vote);
+  }
+
 }

@@ -1,13 +1,13 @@
 <table mdbTable #tableElement="mdbTable" striped="striped" borderless="borderless" hover="hover" small="small">
   <thead>
   <tr>
-    <th scope="col">Id</th>
-    <th scope="col">Username</th>
-    <th scope="col">Promotion Group</th>
-    <th scope="col">Created</th>
-    <th scope="col" class="w-25">
+    <th scope="col" class="py-0">Id</th>
+    <th scope="col" class="py-0">Username</th>
+    <th scope="col" class="py-0">Promotion Group</th>
+    <th scope="col" class="py-0">Created</th>
+    <th scope="col" class="w-25 py-0">
       <div class="row align-items-center">
-        <div class="col-auto">
+        <div class="col">
           <div class="md-form mb-0 mt-3">
             <input
               mdbInput
@@ -20,8 +20,18 @@
             <label for="search">Search</label>
           </div>
         </div>
-        <div *ngIf="isUsedForVoteCreation()" class="col-auto">
-          <button mdbBtn mdbWavesEffect type="button" size="sm" color="success" outline="outline" (click)="openVoteModal()">Create Vote</button>
+        <div *ngIf="isUsedForVoteCreation()">
+          <button
+            mdbBtn
+            mdbWavesEffect
+            *ngIf="isUsedForVoteCreation()"
+            type="button"
+            size="sm"
+            color="success"
+            outline="outline"
+            (click)="openVoteModal()"
+          >Create Vote
+          </button>
         </div>
       </div>
     </th>
