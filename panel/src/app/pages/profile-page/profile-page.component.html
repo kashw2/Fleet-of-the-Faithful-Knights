@@ -29,8 +29,8 @@
           <p *ngIf="getGroup().nonEmpty() && isDeveloper()" class="mx-0 my-1">Group: <b class="cursor-pointer developer">{{getGroup().get()}}</b></p>
           <p *ngIf="getMemberSince().nonEmpty()" class="mx-0 my-1 cursor-pointer">Member Since: <b>{{getMemberSince().get()}}</b></p>
           <p *ngIf="!getVotesCreated().isEmpty()" class="mx-0 my-1 cursor-pointer">Votes Created: <b>{{getVotesCreated().size}}</b></p>
-          <p class="mx-0 my-1 cursor-pointer">Votes Passed: <b>{{getVotesPassed().size}}</b></p>
-          <p class="mx-0 my-1 cursor-pointer">Votes Failed: <b>{{getVotesFailed().size}}</b></p>
+          <p *ngIf="!getVotesPassed().isEmpty()" class="mx-0 my-1 cursor-pointer">Votes Passed: <b>{{getVotesPassed().size}}</b></p>
+          <p *ngIf="!getVotesFailed().isEmpty()" class="mx-0 my-1 cursor-pointer">Votes Failed: <b>{{getVotesFailed().size}}</b></p>
         </div>
       </div>
     </div>
