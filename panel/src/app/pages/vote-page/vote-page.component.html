@@ -27,6 +27,7 @@
     <div class="col">
       <div class="btn-group ml-auto d-table">
         <button
+          *ngIf="canDeny()"
           mdbWavesEffect
           mdbBtn
           type="button"
@@ -34,10 +35,12 @@
           color="danger"
           outline="true"
           class="waves-effect mx-1"
+          (click)="submitVoteResponse('N')"
         >
         Deny
         </button>
         <button
+          *ngIf="canAffirm()"
           mdbWavesEffect
           mdbBtn
           type="button"
@@ -45,6 +48,7 @@
           color="success"
           outline="true"
           class="waves-effect mx-1"
+          (click)="submitVoteResponse('Y')"
         >
           Affirm
         </button>
