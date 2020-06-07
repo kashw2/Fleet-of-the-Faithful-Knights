@@ -16,10 +16,6 @@ export class DbRead {
         return this.requests.sendRequestListSerialized("ssp_json_GetCandidates", List.of(), CandidateJsonSerializer.instance);
     }
 
-    getComments(): Promise<Either<string, List<Comment>>> {
-        return this.requests.sendRequestListSerialized("ssp_json_GetComments", List.of(), CommentJsonSerializer.instance);
-    }
-
     getNews(): Promise<Either<string, List<News>>> {
         return this.requests.sendRequestListSerialized("ssp_json_GetNews", List.of(), NewsJsonSerializer.instance);
     }

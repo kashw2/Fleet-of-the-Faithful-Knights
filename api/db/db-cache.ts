@@ -2,7 +2,6 @@ import {List} from "immutable";
 import {interval} from "rxjs";
 import {UserCache} from "../../core/src";
 import {CandidateCache} from "../../core/src/models/candidate-cache";
-import {CommentCache} from "../../core/src/models/comment-cache";
 import {NewsCache} from "../../core/src/models/news-cache";
 import {VoteCache} from "../../core/src/models/vote-cache";
 import {DbProcedures} from "./procedures/db-procedures";
@@ -17,7 +16,6 @@ export class DbCache {
     }
 
     candidates: CandidateCache = new CandidateCache(List());
-    comments: CommentCache = new CommentCache(List());
     news: NewsCache = new NewsCache(List());
     users: UserCache = new UserCache(List());
     votes: VoteCache = new VoteCache(List());
@@ -28,16 +26,6 @@ export class DbCache {
                 result.forEach(x => {
                     this.candidates = new CandidateCache(x);
                     console.log(`Cached ${x.size} Candidates`);
-                });
-            });
-    }
-
-    cacheComments(): void {
-        this.procedures.read.getComments()
-            .then(result => {
-                result.forEach(x => {
-                    this.comments = new CommentCache(x);
-                    console.log(`Cached ${x.size} Comments`);
                 });
             });
     }
@@ -76,7 +64,6 @@ export class DbCache {
         Promise.resolve([
             this.cacheUsers(),
             this.cacheNews(),
-            this.cacheComments(),
             this.cacheVotes(),
             this.cacheCandidates(),
         ]);
