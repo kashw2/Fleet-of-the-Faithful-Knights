@@ -6,7 +6,7 @@ import {Candidate, CandidateJsonSerializer} from "../models/candidate";
 import {Comment, CommentJsonSerializer} from "../models/comment";
 import {News, NewsJsonSerializer} from "../models/news";
 import {Vote, VoteJsonSerializer} from "../models/vote";
-import {DiscordOAuthResponse, DiscordOAuthResponseJsonSerializer} from "./discord-api";
+import {DiscordOAuthResponse, DiscordOAuthResponseJsonSerializer} from "../models/discord/discord-oauth-response";
 
 export class FfkApi {
 

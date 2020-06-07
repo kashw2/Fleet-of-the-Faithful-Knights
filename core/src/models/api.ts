@@ -12,18 +12,13 @@ export class Api {
     }
 
     public getBaseUrl(): string {
-        return this.getUrl()
-            .getUrl()
+        return this.url.getUri();
     }
 
     private getHeaders(): object {
         return {
             "Content-Type": "application/json",
         };
-    }
-
-    public getUrl(): Url {
-        return this.url;
     }
 
     private isFailureStatusCode(statusCode: number): boolean {
@@ -50,86 +45,107 @@ export class Api {
         }
     }
 
-    private sendGetRequestListSerialized<T>(serializer: SimpleJsonSerializer<T>, headers: object = this.getHeaders()): Promise<Either<string, List<T>>> {
-            return axios.get(this.getBaseUrl(), {
-                    headers,
-                },
-            )
-                .then(x => {
-                    if (this.isFailureStatusCode(x.status)) {
-                        return Left(`${x.status} ${x.statusText} - ${x.data}`);
-                    }
-                    return Right(serializer.fromJsonArray(x.data));
-                })
-                .catch(x => Left(x));
+    private sendGetRequestListSerialized<T>(
+        location: string,
+        serializer: SimpleJsonSerializer<T>,
+        headers: object = this.getHeaders(),
+    ): Promise<Either<string, List<T>>> {
+        return axios.get(this.getBaseUrl().concat(location), {
+                headers,
+            },
+        )
+            .then(x => {
+                if (this.isFailureStatusCode(x.status)) {
+                    return Left(`${x.status} ${x.statusText} - ${x.data}`);
+                }
+                return Right(serializer.fromJsonArray(x.data));
+            })
+            .catch(x => Left(x));
     }
 
-    private sendGetRequestSerialized<T>(serializer: SimpleJsonSerializer<T>, headers: object = this.getHeaders()): Promise<Either<string, T>> {
-            return axios.get(this.getBaseUrl(), {
-                    headers,
-                },
-            )
-                .then(x => {
-                    if (this.isFailureStatusCode(x.status)) {
-                        return Left(`${x.status} ${x.statusText} - ${x.data}`);
-                    }
-                    return Right(serializer.fromJson(x.data));
-                })
-                .catch(x => Left(x));
+    private sendGetRequestSerialized<T>(
+        location: string,
+        serializer: SimpleJsonSerializer<T>,
+        headers: object = this.getHeaders(),
+    ): Promise<Either<string, T>> {
+        return axios.get(this.getBaseUrl().concat(location), {
+                headers,
+            },
+        )
+            .then(x => {
+                if (this.isFailureStatusCode(x.status)) {
+                    return Left(`${x.status} ${x.statusText} - ${x.data}`);
+                }
+                return Right(serializer.fromJson(x.data));
+            })
+            .catch(x => Left(x));
     }
 
     private sendPostRequestListSerialized<T>(
+        location: string,
         serializer: SimpleJsonSerializer<T>,
         headers: object = this.getHeaders(),
-        body: object = {},
-        ): Promise<Either<string, List<T>>> {
-            return axios.post(this.getBaseUrl(), body, {
-                headers,
+        body: object | string,
+    ): Promise<Either<string, List<T>>> {
+        return axios.post(this.getBaseUrl().concat(location), body, {
+            headers,
+        })
+            .then(x => {
+                if (this.isFailureStatusCode(x.status)) {
+                    return Left(`${x.status} ${x.statusText} - ${x.data}`);
+                }
+                return Right(serializer.fromJsonArray(x.data));
             })
-                .then(x => {
-                    if (this.isFailureStatusCode(x.status)) {
-                        return Left(`${x.status} ${x.statusText} - ${x.data}`);
-                    }
-                    return Right(serializer.fromJsonArray(x.data));
-                })
-                .catch(x => Left(x));
+            .catch(x => Left(x));
     }
 
-    private sendPostRequestSerialized<T>(serializer: SimpleJsonSerializer<T>, headers: object = this.getHeaders(), body: object = {}): Promise<Either<string, T>> {
-            return axios.post(this.getBaseUrl(), body, {
-                headers,
+    private sendPostRequestSerialized<T>(
+        location: string,
+        serializer: SimpleJsonSerializer<T>,
+        headers: object = this.getHeaders(),
+        body: object | string,
+    ): Promise<Either<string, T>> {
+        return axios.post(this.getBaseUrl().concat(location), body, {
+            headers,
+        })
+            .then(x => {
+                if (this.isFailureStatusCode(x.status)) {
+                    return Left(`${x.status} ${x.statusText} - ${x.data}`);
+                }
+                return Right(serializer.fromJson(x.data));
             })
-                .then(x => {
-                    if (this.isFailureStatusCode(x.status)) {
-                        return Left(`${x.status} ${x.statusText} - ${x.data}`);
-                    }
-                    return Right(serializer.fromJson(x.data));
-                })
-                .catch(x => Left(x));
+            .catch(x => Left(x));
     }
 
-    sendRequestSerialized<T>(serializer: SimpleJsonSerializer<T>, headers: object = this.getHeaders(), method: Methods, body?: object): Promise<Either<string, T>> {
+    sendRequestSerialized<T>(
+        location: string,
+        serializer: SimpleJsonSerializer<T>,
+        headers: object = this.getHeaders(),
+        method: Methods,
+        body?: object | string,
+    ): Promise<Either<string, T>> {
         switch (method) {
             case "GET":
-                return this.sendGetRequestSerialized(serializer, headers);
+                return this.sendGetRequestSerialized(location, serializer, headers);
             case "POST":
-                return this.sendPostRequestSerialized(serializer, headers, body);
+                return this.sendPostRequestSerialized(location, serializer, headers, body);
             default:
                 throw new Error(`Unsupported method type '${method}'`);
         }
     }
 
     sendRequestSerializedList<T>(
+        location: string,
         serializer: SimpleJsonSerializer<T>,
         headers: object = this.getHeaders(),
         method: Methods,
-        body?: object,
-        ): Promise<Either<string, List<T>>> {
+        body?: object | string,
+    ): Promise<Either<string, List<T>>> {
         switch (method) {
             case "GET":
-                return this.sendGetRequestListSerialized(serializer, headers);
+                return this.sendGetRequestListSerialized(location, serializer, headers);
             case "POST":
-                return this.sendPostRequestListSerialized(serializer, headers, body);
+                return this.sendPostRequestListSerialized(location, serializer, headers, body);
             default:
                 throw new Error(`Unsupported method type '${method}'`)
         }

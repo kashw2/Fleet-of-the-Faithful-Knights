@@ -3,6 +3,10 @@ import {List} from "immutable";
 
 export class EitherUtils {
 
+    static deepEffector<A, B>(either: Either<string, A>, f: (v: A) => Either<string, B>): Either<string, B> {
+        return either.flatMap(v => f(v));
+    }
+
     /**
      * Flattens a list of Eithers to return a new list of Rights
      */

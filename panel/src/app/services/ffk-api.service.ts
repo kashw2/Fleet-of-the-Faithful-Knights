@@ -1,15 +1,14 @@
 import {Injectable} from "@angular/core";
-import {Either, Left, Option} from "funfix-core";
+import {Either, Left} from "funfix-core";
 import {List} from "immutable";
 import {CookieService} from "ngx-cookie-service";
 import {User} from "../../../../core/src";
-import {DiscordOAuthResponse} from "../../../../core/src/misc/discord-api";
 import {FfkApi} from "../../../../core/src/misc/ffk-api";
 import {News} from "../../../../core/src/models/news";
 import {Vote} from "../../../../core/src/models/vote";
 import {environment} from "../../environments/environment";
 import {Candidate} from "../../../../core/src/models/candidate";
-import {Comment, CommentJsonSerializer} from "../../../../core/src/models/comment";
+import {Comment} from "../../../../core/src/models/comment";
 
 @Injectable({
   providedIn: "root",
