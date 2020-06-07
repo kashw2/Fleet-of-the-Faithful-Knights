@@ -37,3 +37,4 @@ export const createdDateKey = "created_date";
 export const userIdKey = "user_id";
 export const commentKey = "comment";
 export const responseKey = "response";
+export const urlKey = "url";
