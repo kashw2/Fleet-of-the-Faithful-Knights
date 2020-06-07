@@ -1,29 +1,53 @@
 <mdb-navbar SideClass="navbar navbar-expand-lg white navbar-dark shadow fixed-top" containerInside>
-  <mdb-navbar-brand><h3 class="font-weight-normal text-black baloo ml-0 mr-4 my-auto">FFK Panel</h3></mdb-navbar-brand>
-  <div *ngIf="isLoggedIn()" class="btn-group" mdbDropdown>
-    <button type="button" size="sm" mdbBtn color="danger" outline="true" class="waves-effect dropdown-toggle"
-            mdbWavesEffect mdbDropdownToggle>Votes
+  <mdb-navbar-brand>
+    <h3 class="font-weight-normal text-black baloo ml-0 mr-4 my-auto">FFK Panel</h3>
+  </mdb-navbar-brand>
+  <div mdbDropdown class="btn-group">
+    <button
+      mdbWavesEffect
+      mdbDropdownToggle
+      mdbBtn
+      *ngIf="isLoggedIn()"
+      type="button"
+      size="sm"
+      color="danger"
+      outline="true"
+      class="waves-effect dropdown-toggle"
+    >
+      Votes
     </button>
-    <div class="dropdown-menu">
-      <a class="dropdown-item py-1" href="/votes?type=All">All</a>
-      <a class="dropdown-item py-1" href="/votes?type=Active">Active</a>
-      <a class="dropdown-item py-1" href="/votes?type=Recent">Recent</a>
-      <div class="dropdown-divider my-1"></div>
-      <a class="dropdown-item py-1" href="/votes?type=Knight">Knight</a>
-      <a class="dropdown-item py-1" href="/votes?type=Sergeant First Class">Sergeant First Class</a>
-      <a class="dropdown-item py-1" href="/votes?type=Sergeant">Sergeant</a>
-      <a class="dropdown-item py-1" href="/votes?type=Squire">Squire</a>
-      <a class="dropdown-item py-1" href="/votes?type=Companion at Arms">Companion at Arms</a>
+    <div *ngIf="canUserViewVoteSection('Guest')" class="dropdown-menu">
+      <a *ngIf="canUserViewVoteSection('Companion at Arms')" class="dropdown-item font-weight-light py-1" (click)="goToVotesPage('All')">All</a>
+      <a *ngIf="canUserViewVoteSection('Companion at Arms')" class="dropdown-item font-weight-light py-1" (click)="goToVotesPage('Active')">Active</a>
+      <a *ngIf="canUserViewVoteSection('Companion at Arms')" class="dropdown-item font-weight-light py-1" (click)="goToVotesPage('Recent')">Recent</a>
+      <div *ngIf="canUserViewVoteSection('Companion at Arms')" class="dropdown-divider my-1"></div>
+      <a *ngIf="canUserViewVoteSection('Knight Commander')" class="dropdown-item font-weight-light py-1" (click)="goToVotesPage('Knight Commander')">Knight Commander</a>
+      <a *ngIf="canUserViewVoteSection('Knight Lieutenant')" class="dropdown-item font-weight-light py-1" (click)="goToVotesPage('Knight Lieutenant')">Knight Lieutenant</a>
+      <a *ngIf="canUserViewVoteSection('Knight')" class="dropdown-item font-weight-light py-1" (click)="goToVotesPage('Knight')">Knight</a>
+      <a *ngIf="canUserViewVoteSection('Sergeant First Class')" class="dropdown-item font-weight-light py-1" (click)="goToVotesPage('Sergeant First Class')">Sergeant First Class</a>
+      <a *ngIf="canUserViewVoteSection('Sergeant')" class="dropdown-item font-weight-light py-1" (click)="goToVotesPage('Sergeant')">Sergeant</a>
+      <a *ngIf="canUserViewVoteSection('Squire')" class="dropdown-item font-weight-light py-1" (click)="goToVotesPage('Squire')">Squire</a>
+      <a *ngIf="canUserViewVoteSection('Companion at Arms')" class="dropdown-item font-weight-light py-1" (click)="goToVotesPage('Companion at Arms')">Companion at Arms</a>
     </div>
   </div>
-  <div class="btn-group ml-auto" mdbDropdown>
-    <button type="button" size="sm" mdbBtn color="danger" outline="true" class="dropdown-toggle waves-effect" mdbDropdownToggle mdbWavesEffect>User
+  <div mdbDropdown class="btn-group ml-auto">
+    <button
+      mdbDropdownToggle
+      mdbWavesEffect
+      mdbBtn
+      type="button"
+      size="sm"
+      color="danger"
+      outline="true"
+      class="dropdown-toggle waves-effect"
+    >
+      User
     </button>
     <div class="dropdown-menu min-width-75">
-      <a *ngIf="!isLoggedIn()" class="dropdown-item py-1" href="https://discordapp.com/api/oauth2/authorize?client_id=607005043043860521&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2Fsso&response_type=code&scope=identify%20guilds">Login</a>
-      <a *ngIf="isLoggedIn()" class="dropdown-item py-1" href="/profile">Profile</a>
-      <div class="dropdown-divider my-1"></div>
-      <a class="dropdown-item py-1" href="#">Settings</a>
+      <a *ngIf="!isLoggedIn()" class="dropdown-item py-1" href="https://discord.com/api/oauth2/authorize?client_id=607005043043860521&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2F&response_type=code&scope=identify%20guilds">Login</a>
+      <a *ngIf="isLoggedIn()" class="dropdown-item py-1" (click)="goToProfilePage()">Profile</a>
+      <div *ngIf="isLoggedIn()" class="dropdown-divider my-1"></div>
+      <a *ngIf="isLoggedIn()" class="dropdown-item py-1" href="#">Settings</a>
       <a *ngIf="isLoggedIn()" class="dropdown-item py-1" href="#">Admin</a>
     </div>
   </div>

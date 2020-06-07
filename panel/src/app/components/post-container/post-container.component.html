@@ -1,0 +1,27 @@
+<mdb-card class="mw-35 min-width-30">
+  <mdb-card-header class="bg-white p-2">
+    <div class="row">
+      <div class="col">
+        <mdb-card-title *ngIf="getTitle().nonEmpty()">{{getTitle().get()}}</mdb-card-title>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-auto mr-auto">
+        <small *ngIf="getAuthor().nonEmpty()">{{getAuthor().get()}}</small>
+      </div>
+      <div class="col-auto ml-auto">
+        <small *ngIf="getGroup().nonEmpty()">{{getGroup().get()}}</small>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-auto mr-auto">
+        <small *ngIf="getDate().nonEmpty()">Published on {{getDate().get()}}</small>
+      </div>
+    </div>
+  </mdb-card-header>
+  <mdb-card-body class="p-2">
+    <div class="mh-40 overflow-y-auto overflow-x-hidden">
+      <small *ngIf="getContent().nonEmpty()" class="font-weight-light p-3">{{getContent().get()}}</small>
+    </div>
+  </mdb-card-body>
+</mdb-card>

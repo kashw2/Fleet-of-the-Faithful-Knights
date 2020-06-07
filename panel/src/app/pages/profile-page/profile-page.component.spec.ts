@@ -1,13 +1,14 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import {ProfilePageComponent} from "./profile-page.component";
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-describe("ProfilePageComponent", () => {
+import { ProfilePageComponent } from './profile-page.component';
+
+describe('ProfilePageComponent', () => {
   let component: ProfilePageComponent;
   let fixture: ComponentFixture<ProfilePageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProfilePageComponent ],
+      declarations: [ ProfilePageComponent ]
     })
     .compileComponents();
   }));
@@ -18,7 +19,7 @@ describe("ProfilePageComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

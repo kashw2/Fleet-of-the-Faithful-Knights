@@ -19,6 +19,7 @@ import {
     statusKey,
     votersKey,
 } from "..";
+import {FfkDateFormat, MomentUtils} from "../util/moment-utils";
 import {Candidate, CandidateJsonSerializer} from "./candidate";
 import {Comment, CommentJsonSerializer} from "./comment";
 import {User, UserJsonSerializer} from "./user";
@@ -39,6 +40,26 @@ export class Vote {
     ) {
     }
 
+    // TODO: Make this take a createdDate on use
+    public static forVoteCreation(
+        candidate: Candidate,
+        sponsor: User,
+        group: string,
+        notes: string,
+    ): Vote {
+        return new Vote(
+            None,
+            Option.of(sponsor),
+            Option.of(candidate),
+            Option.of(group),
+            Option.of(notes),
+            Set(),
+            Some(false),
+            List(),
+            None
+        );
+    }
+
     public getCandidate(): Option<Candidate> {
         return this.candidate;
     }
@@ -54,6 +75,11 @@ export class Vote {
 
     public getCreatedDate(): Option<string> {
         return this.createdDate;
+    }
+
+    public getFormattedCreatedDate(format: FfkDateFormat): Option<string> {
+        return this.getCreatedDate()
+            .map(datetime => MomentUtils.formatString(datetime, format));
     }
 
     public getGroup(): Option<string> {
@@ -90,6 +116,14 @@ export class Vote {
         return this.voters;
     }
 
+    public hasFailed(): boolean {
+        return this.getStatus()
+                .contains(false)
+            && this.getVoters()
+                .map(v => v.didDeny())
+                .size > 4;
+    }
+
     public hasPassed(): boolean {
         return this.getStatus()
             .contains(true);
@@ -102,14 +136,14 @@ export class Vote {
 
     public isEmpty(): boolean {
         return this.getId().isEmpty()
-        && this.getSponsor().isEmpty()
-        && this.getCandidate().isEmpty()
-        && this.getGroup().isEmpty()
-        && this.getNotes().isEmpty()
-        && this.getVoters().isEmpty()
-        && this.getStatus().isEmpty()
-        && this.getComments().isEmpty()
-        && this.getCreatedDate().isEmpty();
+            && this.getSponsor().isEmpty()
+            && this.getCandidate().isEmpty()
+            && this.getGroup().isEmpty()
+            && this.getNotes().isEmpty()
+            && this.getVoters().isEmpty()
+            && this.getStatus().isEmpty()
+            && this.getComments().isEmpty()
+            && this.getCreatedDate().isEmpty();
     }
 
     public isKnightCommanderVote(): boolean {

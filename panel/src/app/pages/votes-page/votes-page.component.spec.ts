@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VotesPageComponent } from './votes-page.component';
 
-describe('VotePageComponent', () => {
+describe('VotesPageComponent', () => {
   let component: VotesPageComponent;
   let fixture: ComponentFixture<VotesPageComponent>;
 

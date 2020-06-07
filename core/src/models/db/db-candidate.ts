@@ -1,5 +1,6 @@
 import {Option} from "funfix-core";
 import {
+    avatarKey,
     discordIdKey,
     discordUsernameKey,
     fakeIndexKey,
@@ -18,6 +19,7 @@ export class DbCandidate {
         readonly id: number,
         readonly discordId: string,
         readonly discordUsername: string,
+        readonly avatar: string,
         readonly groupId: number,
         readonly memberSince: string,
         readonly fakeIdx: number = 0,
@@ -25,23 +27,29 @@ export class DbCandidate {
     }
 
     static fromCandidate(candidate: Candidate, index: number): Option<DbCandidate> {
-        return Option.map5(
+        return Option.map6(
             candidate.getId(),
             candidate.getDiscordId(),
+            candidate.getAvatar(),
             candidate.getSanitizedDiscordUsername(),
             candidate.getGroup(),
             candidate.getSanitizedMemberSince(),
-            (id, did, dn, g, ms) => {
+            (id, did, avatar, dn, g, ms) => {
                 return new DbCandidate(
                     id,
                     did,
                     dn,
+                    avatar,
                     GroupUtils.getGroupIdFromName(g),
                     ms,
                     index,
                 );
             },
         );
+    }
+
+    getAvatar(): string {
+        return this.avatar;
     }
 
     getDiscordId(): string {
@@ -77,6 +85,7 @@ export class DbCandidateJsonSerializer extends SimpleJsonSerializer<DbCandidate>
     toJson(value: DbCandidate, builder: JsonBuilder): object {
         return builder.add(value.getDiscordId(), discordIdKey)
             .add(value.getDiscordUsername(), discordUsernameKey)
+            .add(value.getAvatar(), avatarKey)
             .add(value.getGroupId(), groupIdKey)
             .add(value.getMemberSince(), memberSinceKey)
             .add(value.getFakeIndex(), fakeIndexKey)

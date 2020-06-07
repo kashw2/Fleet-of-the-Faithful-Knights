@@ -1,5 +1,9 @@
 import {Component, OnInit} from "@angular/core";
-import {CookieService} from "ngx-cookie-service";
+import {Option} from "funfix-core";
+import {User} from "../../../../../core/src";
+import {GroupUtils} from "../../../../../core/src/util/group-utils";
+import {UserStateService} from "../../services/user-state.service";
+import {ViewStateService} from "../../services/view-state.service";
 
 @Component({
   selector: "app-header",
@@ -9,16 +13,42 @@ import {CookieService} from "ngx-cookie-service";
 export class HeaderComponent implements OnInit {
 
   constructor(
-    private cookieService: CookieService,
+    private userStateService: UserStateService,
+    private viewStateService: ViewStateService,
   ) {
   }
 
+  canUserViewVoteSection(group: string): boolean {
+    return this.getUserGroup()
+      .map(g => GroupUtils.isGroupHigher(g, group))
+      .getOrElse(false);
+  }
+
+  getUser(): Option<User> {
+    return this.userStateService
+      .getUser();
+  }
+
+  getUserGroup(): Option<string> {
+    return this.getUser()
+      .flatMap(u => u.getGroup());
+  }
+
+  goToProfilePage(): void {
+    this.viewStateService.setPageIndex(1);
+  }
+
+  goToVotesPage(type: string): void {
+    this.viewStateService.setPageIndex(2);
+    this.viewStateService.setVotePageType(type);
+  }
+
   isLoggedIn(): boolean {
-    return this.cookieService.check("token");
+    return this.userStateService
+      .isLoggedIn();
   }
 
   ngOnInit(): void {
-    return;
   }
 
 }

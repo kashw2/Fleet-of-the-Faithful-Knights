@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="row">
+    <div class="col-auto pl-0 mr-auto">
+      <small *ngIf="getAuthor().nonEmpty()" class="m-0">{{getAuthor().get()}}</small>
+    </div>
+    <div class="col-auto pl-0 pr-0 ml-auto">
+      <small *ngIf="getDate().nonEmpty()" class="m-0">{{getDate().get()}}</small>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col pl-0">
+      <small *ngIf="getMessage().nonEmpty()">{{getMessage().get()}}</small>
+    </div>
+  </div>
+</div>

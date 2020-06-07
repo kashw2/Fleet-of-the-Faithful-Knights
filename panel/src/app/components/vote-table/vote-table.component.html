@@ -1,0 +1,56 @@
+<table mdbTable #tableElement="mdbTable" striped="striped" borderless="borderless" hover="hover" small="small">
+  <thead>
+  <tr>
+    <th scope="col" class="py-0">Id</th>
+    <th scope="col" class="py-0">Username</th>
+    <th scope="col" class="py-0">Promotion Group</th>
+    <th scope="col" class="py-0">Created</th>
+    <th scope="col" class="w-25 py-0">
+      <div class="row align-items-center">
+        <div class="col">
+          <div class="md-form mb-0 mt-3">
+            <input
+              mdbInput
+              type="text"
+              class="form-control mb-2 md-bg"
+              id="search"
+              (keyup)="updateFilter($event)"
+              (change)="notifyOfFilterChange($event)"
+            >
+            <label for="search">Search</label>
+          </div>
+        </div>
+        <div *ngIf="isUsedForVoteCreation()">
+          <button
+            mdbBtn
+            mdbWavesEffect
+            *ngIf="isUsedForVoteCreation()"
+            type="button"
+            size="sm"
+            color="success"
+            outline="outline"
+            (click)="openVoteModal()"
+          >Create Vote
+          </button>
+        </div>
+      </div>
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr mdbTableRow *ngFor="let vote of getFilteredVotes(); let i = index">
+    <th *ngIf="vote.getId().nonEmpty() && shouldTruncateRows(i)">{{vote.getId().get()}}</th>
+    <td *ngIf="vote.getCandidateName().nonEmpty() && shouldTruncateRows(i)">{{vote.getCandidateName().get()}}</td>
+    <td *ngIf="vote.getGroup().nonEmpty() && shouldTruncateRows(i)">{{vote.getGroup().get()}}</td>
+    <td *ngIf="vote.getCreatedDate().nonEmpty() && shouldTruncateRows(i)">{{vote.getFormattedCreatedDate('DMY').get()}}</td>
+    <td *ngIf="!vote.isEmpty() && shouldTruncateRows(i)" class="mx-auto">
+      <p class="d-inherit w-auto cursor-click" (click)="goToVotePage(vote)">View</p>
+    </td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <td colspan="5" class="py-0">
+    <mdb-table-pagination [tableEl]="tableElement" [searchDataSource]="elements"></mdb-table-pagination>
+  </td>
+  </tfoot>
+</table>

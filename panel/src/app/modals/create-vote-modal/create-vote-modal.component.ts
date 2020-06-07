@@ -1,17 +1,15 @@
-import {Component, Input, OnInit} from "@angular/core";
-import {Store} from "@ngrx/store";
+import {Component, OnInit} from "@angular/core";
+import {None, Option} from "funfix-core";
+import {List} from "immutable";
+import {User} from "../../../../../core/src";
+import {Candidate} from "../../../../../core/src/models/candidate";
+import {GroupUtils} from "../../../../../core/src/util/group-utils";
+import {UserStateService} from "../../services/user-state.service";
 import {MDBModalRef} from "angular-bootstrap-md";
-import {None, Option, Some} from "funfix-core";
-import {List, Set} from "immutable";
-import {CookieService} from "ngx-cookie-service";
-import {fromEvent} from "rxjs";
-import {debounceTime, tap} from "rxjs/operators";
-import {idKey, User} from "../../../../../core/src";
-import {Candidate, CandidateJsonSerializer} from "../../../../../core/src/models/candidate";
-import {Vote, VoteJsonSerializer} from "../../../../../core/src/models/vote";
+import {BehaviorSubject} from "rxjs";
 import {FfkApiService} from "../../services/ffk-api.service";
+import {Vote} from "../../../../../core/src/models/vote";
 import {NotificationService} from "../../services/notification.service";
-import {AppState} from "../../store/state/app-state";
 
 @Component({
   selector: "app-create-vote-modal",
@@ -21,51 +19,82 @@ import {AppState} from "../../store/state/app-state";
 export class CreateVoteModalComponent implements OnInit {
 
   constructor(
-    private modalRef: MDBModalRef,
-    private cookieService: CookieService,
-    private ffkApi: FfkApiService,
+    private userStateService: UserStateService,
     private notificationService: NotificationService,
-    private store: Store<AppState>,
+    private modalRef: MDBModalRef,
+    private ffkApi: FfkApiService,
   ) {
-    this.store.select("user")
-      .subscribe(user => this.user = Option.of(user));
   }
 
-  candidate: Candidate;
-  candidates: List<Candidate> = List();
-  candidateName: string;
-  candidatePromotionGroup: string;
-  user: Option<User> = None;
-  voteNotes: string;
+  candidate: BehaviorSubject<Option<Candidate>> = new BehaviorSubject<Option<Candidate>>(None);
+  notes: BehaviorSubject<Option<string>> = new BehaviorSubject<Option<string>>(None);
+  promotionGroup: BehaviorSubject<Option<string>> = new BehaviorSubject<Option<string>>(None);
 
-  private buildVote(): Vote {
-    return new Vote(
-      None,
+  canCreateVoteForGroup(group: string): boolean {
+    return this.getUserGroup()
+      .exists(g => GroupUtils.isGroupHigher(g, group));
+  }
+
+  createVote(): void {
+    Option.map4(
+      this.getCandidate(),
       this.getUser(),
-      Some(this.candidate),
-      Some(this.candidatePromotionGroup),
-      Some(this.voteNotes),
-    );
+      this.getPromotionGroup(),
+      this.getNotes(),
+      async (candidate, sponsor, group, notes) => {
+        const vote = await this.ffkApi.writeCandidateVote(Vote.forVoteCreation(candidate, sponsor, group, notes));
+        this.notificationService.showNotificationBaseOnEitherEffector(vote, value => `Created Vote ${value}`)
+        this.userStateService.candidates.next(this.getCandidates().push(candidate));
+      })
+  }
+
+  getCandidate(): Option<Candidate> {
+    return this.candidate
+      .getValue();
   }
 
   getCandidates(): List<Candidate> {
-    return this.candidates;
+    return this.userStateService
+      .getCandidates();
+  }
+
+  getNotes(): Option<string> {
+    return this.notes
+      .getValue();
+  }
+
+  getPromotionGroup(): Option<string> {
+    return this.promotionGroup
+      .getValue();
   }
 
   getUser(): Option<User> {
-    return this.user;
+    return this.userStateService
+      .getUser();
   }
 
-  hideModal(): void {
-    this.modalRef.hide();
+  getUserGroup(): Option<string> {
+    return this.getUser()
+      .flatMap(u => u.getGroup());
+  }
+
+  hide(): void {
+    return this.modalRef.hide();
   }
 
   ngOnInit(): void {
   }
 
-  submitVote(): void {
-    this.ffkApi.writeVoteForUser(this.buildVote());
-    this.modalRef.hide();
+  updateCandidate(candidate: Candidate): void {
+    this.candidate.next(Option.of(candidate));
+  }
+
+  updateNotes(event): void {
+    this.notes.next(Option.of(event.target.value));
+  }
+
+  updatePromotionGroup(event): void {
+    this.promotionGroup.next(Option.of(event.target.value));
   }
 
 }

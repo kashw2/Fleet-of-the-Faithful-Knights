@@ -1,158 +1,44 @@
-import {Location} from "@angular/common";
-import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from "@angular/core";
-import {Router} from "@angular/router";
-import {Store} from "@ngrx/store";
-import {MDBModalService, MdbTableDirective, MdbTablePaginationComponent, ModalOptions} from "angular-bootstrap-md";
-import {None, Option, Some} from "funfix-core";
+import { Component, OnInit } from "@angular/core";
+import {Option} from "funfix-core";
 import {List} from "immutable";
-import {CookieService} from "ngx-cookie-service";
-import {User} from "../../../../../core/src";
-import {Candidate, CandidateJsonSerializer} from "../../../../../core/src/models/candidate";
-import {Vote, VoteJsonSerializer} from "../../../../../core/src/models/vote";
-import {FfkDateFormat, MomentUtils} from "../../../../../core/src/util/moment-utils";
-import {CreateVoteModalComponent} from "../../modals/create-vote-modal/create-vote-modal.component";
-import {FfkApiService} from "../../services/ffk-api.service";
-import {AppState} from "../../store/state/app-state";
+import {Vote} from "../../../../../core/src/models/vote";
+import {UserStateService} from "../../services/user-state.service";
+import {ViewStateService} from "../../services/view-state.service";
 
 @Component({
-  selector: "app-vote-page",
+  selector: "app-votes-page",
   templateUrl: "./votes-page.component.html",
   styleUrls: ["./votes-page.component.scss"],
 })
-export class VotesPageComponent implements OnInit, AfterViewInit {
+export class VotesPageComponent implements OnInit {
 
   constructor(
-    private ffkApi: FfkApiService,
-    private router: Router,
-    private location: Location,
-    private cookieService: CookieService,
-    private cdRef: ChangeDetectorRef,
-    private modalService: MDBModalService,
-    private store: Store<AppState>,
-  ) {
-    this.store.select("user")
-      .subscribe(user => this.user = Option.of(user));
-  }
+    private userStateService: UserStateService,
+    private viewStateService: ViewStateService,
+  ) { }
 
-  candidates: List<Candidate> = List();
-
-  elements: any = [];
-
-  @ViewChild(MdbTableDirective, {static: true}) mdbTable: MdbTableDirective;
-  @ViewChild(MdbTablePaginationComponent, {static: true}) mdbTablePagination: MdbTablePaginationComponent;
-
-  user: Option<User> = None;
-
-  votes: List<Vote> = List();
-
-  getCandidates(): List<Candidate> {
-    return this.candidates;
-  }
-
-  getLastVotes(amount: number): List<Vote> {
-    return this.getVotes()
-      .takeLast(amount);
-  }
-
-  getSelectedVoteType(): Option<string> {
-    return Option.of(this.location.path().split("?type=")[1]);
-  }
-
-  getVotes(): List<Vote> {
-    return this.votes;
-  }
-
-  isActiveVoting(): boolean {
-    return this.getSelectedVoteType()
-      .contains("Active");
-  }
-
-  isAllVoting(): boolean {
-    return this.getSelectedVoteType()
-      .contains("All");
-  }
-
-  isCAAVoting(): boolean {
-    return this.getSelectedVoteType()
-      .contains("Companion at Arms");
-  }
-
-  isKnightVoting(): boolean {
-    return this.getSelectedVoteType()
-      .contains("Knight");
-  }
-
-  isRecentVoting(): boolean {
-    return this.getSelectedVoteType()
-      .contains("Recent");
-  }
-
-  isRecognisedVoteType(): boolean {
-    return this.isActiveVoting()
-      || this.isRecentVoting()
-      || this.isKnightVoting()
-      || this.isSergeantFirstClassVoting()
-      || this.isSergeantVoting()
-      || this.isSquireVoting()
-      || this.isCAAVoting();
-  }
-
-  isSergeantFirstClassVoting(): boolean {
-    return this.getSelectedVoteType()
-      .contains("Sergeant First Class");
-  }
-
-  isSergeantVoting(): boolean {
-    return this.getSelectedVoteType()
-      .contains("Sergeant");
-  }
-
-  isSquireVoting(): boolean {
-    return this.getSelectedVoteType()
-      .contains("Squire");
-  }
-
-  ngAfterViewInit() {
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(17);
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-    this.cdRef.detectChanges();
-  }
-
-  async ngOnInit(): Promise<void> {
-    if (!this.cookieService.check("token")) {
-      this.router.navigate(["/profile"]);
+  getFilteredVotesByType(): List<Vote> {
+    switch (this.getVoteType()) {
+      case "All":
+        return this.userStateService.getVotes();
+      case "Active":
+        return this.userStateService.getVotes();
+      case "Recent":
+        return this.userStateService.getVotes()
+          .reverse();
+      default:
+        return this.userStateService
+          .getVotes()
+          .filter(v => v.getGroup().contains(this.getVoteType()));
     }
-    this.votes = await this.ffkApi.getVotesByType(this.getSelectedVoteType().getOrElse("All"));
-    this.candidates = await this.ffkApi.getCandidates();
-    for (let i = 1; i <= this.getVotes().size; i++) {
-      this.elements.push({
-        candidate: "Candidate" + i,
-        created_date: "Created Date" + i,
-        group: "Group" + i,
-        id: i.toString(),
-        other: i,
-        sponsor: "Sponsor" + i,
-        status: "Status" + i,
-      });
-    }
-    this.mdbTable.setDataSource(this.elements);
-    this.elements = this.mdbTable.getDataSource();
   }
 
-  openCreateVoteModal(candidates: List<Candidate>): void {
-    const modalOptions: ModalOptions = {backdrop: true, animated: true, data: {candidates}};
-    this.modalService.show(CreateVoteModalComponent, modalOptions);
+  getVoteType(): string {
+    return this.viewStateService
+      .getVotePageType();
   }
 
-  shouldTruncateRows(currentIndex: number): boolean {
-    return currentIndex + 1 >= this.mdbTablePagination.firstItemIndex
-      && currentIndex < this.mdbTablePagination.lastItemIndex;
-  }
-
-  // TODO: Put this in a util class or something
-  toDateFormat(date: string, format: FfkDateFormat): string {
-    return MomentUtils.formatString(date, format);
+  ngOnInit(): void {
   }
 
 }

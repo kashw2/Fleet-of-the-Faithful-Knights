@@ -1,6 +1,7 @@
 import {None, Option, Some} from "funfix-core";
 import {List} from "immutable";
 import {
+    avatarKey,
     discordIdKey,
     discordUsernameKey,
     groupKey,
@@ -20,6 +21,7 @@ export class Candidate {
         readonly id: Option<number> = None,
         readonly discordId: Option<string> = None,
         readonly discordUsername: Option<string> = None,
+        readonly avatar: Option<string> = None,
         readonly group: Option<Group> = None,
         readonly memberSince: Option<string> = None,
     ) {
@@ -30,6 +32,7 @@ export class Candidate {
             idx,
             member.getUser().flatMap(u => u.getId()),
             member.getNickname().orElse(member.getUser().flatMap(u => u.getUsername())),
+            member.getUser().flatMap(u => u.getRequestFormedAvatarUrl()),
             GroupUtils.parseGroupOption(member.getRolesSortedHierarchy().first()),
             member.getJoinedAt(),
         );
@@ -37,6 +40,10 @@ export class Candidate {
 
     static fromDiscordGuildMembers(members: List<DiscordGuildMember>): List<Candidate> {
         return members.map((m, idx) => this.fromDiscordGuildMember(m, Some(idx)));
+    }
+
+    public getAvatar(): Option<string> {
+        return this.avatar;
     }
 
     public getDiscordId(): Option<string> {
@@ -80,6 +87,7 @@ export class CandidateJsonSerializer extends SimpleJsonSerializer<Candidate> {
             parseNumber(json[idKey]),
             parseString(json[discordIdKey]),
             parseString(json[discordUsernameKey]),
+            parseString(json[avatarKey]),
             GroupUtils.parseGroupOption(json[groupKey]),
             parseString(json[memberSinceKey]),
         );
@@ -89,6 +97,7 @@ export class CandidateJsonSerializer extends SimpleJsonSerializer<Candidate> {
         return builder.addOptional(value.getId(), idKey)
             .addOptional(value.getDiscordId(), discordIdKey)
             .addOptional(value.getDiscordUsername(), discordUsernameKey)
+            .addOptional(value.getAvatar(), avatarKey)
             .addOptional(value.getGroup(), groupKey)
             .addOptional(value.getMemberSince(), memberSinceKey)
             .build();

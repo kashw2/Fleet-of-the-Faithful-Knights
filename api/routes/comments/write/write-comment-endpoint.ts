@@ -28,7 +28,7 @@ export class WriteCommentEndpoint extends PostEndpoint {
         Either.map2(this.getComment(req), this.getVoteId(req), (comment, vid) => {
             DbComment.fromComment(comment)
                 .map(dbComment => ApiUtils.sendResultPromise(this.db.procedures.insert.insertComment(dbComment, vid), res));
-            this.db.cache.cacheComments();
+            this.db.cache.cacheVotes();
         });
     }
 

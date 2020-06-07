@@ -1,178 +1,131 @@
-import {Location} from "@angular/common";
-import {HttpClient} from "@angular/common/http";
-import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
-import {Router} from "@angular/router";
-import {Store} from "@ngrx/store";
-import {None, Option} from "funfix-core";
+import {Component, OnInit} from "@angular/core";
+import {Option} from "funfix-core";
 import {List} from "immutable";
-import {CookieService} from "ngx-cookie-service";
 import {User} from "../../../../../core/src";
-import {News} from "../../../../../core/src/models/news";
 import {Vote} from "../../../../../core/src/models/vote";
-import {FfkDateFormat, MomentUtils} from "../../../../../core/src/util/moment-utils";
-import {FfkApiService} from "../../services/ffk-api.service";
-import {NotificationService} from "../../services/notification.service";
-import {AppState} from "../../store/state/app-state";
+import {MomentUtils} from "../../../../../core/src/util/moment-utils";
+import {UserStateService} from "../../services/user-state.service";
 
 @Component({
-  selector: "app-profile.page",
+  selector: "app-profile-page",
   templateUrl: "./profile-page.component.html",
   styleUrls: ["./profile-page.component.scss"],
-  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class ProfilePageComponent implements OnInit {
 
-  constructor(
-    private ffkApi: FfkApiService,
-    private cookieService: CookieService,
-    private router: Router,
-    private http: HttpClient,
-    private location: Location,
-    private notificationService: NotificationService,
-    private store: Store<AppState>,
-  ) {
+  constructor(private userStateService: UserStateService) {
   }
 
-  news: List<News> = List();
-  passedVotes: List<Vote> = List();
-
-  user: Option<User> = None;
-  votes: List<Vote> = List();
-
-  getAvatarUrl(): Option<string> {
+  getAvatar(): Option<string> {
     return this.getUser()
-      .flatMap(x => x.getAvatar());
+      .flatMap(u => u.getAvatar());
   }
 
   getGroup(): Option<string> {
     return this.getUser()
-      .flatMap(x => x.getGroup());
+      .flatMap(u => u.getGroup());
   }
 
-  getLastVotes(amount: number): List<Vote> {
-    return this.getVotes()
-      .takeLast(amount);
+  getId(): Option<number> {
+    return this.getUser()
+      .flatMap(u => u.getId());
   }
 
   getMemberSince(): Option<string> {
     return this.getUser()
-      .flatMap(x => x.getMemberSince())
-      .map(s => MomentUtils.formatString(s, "DMY"));
-  }
-
-  getNews(): List<News> {
-    return this.news.take(3);
+      .flatMap(u => u.getMemberSince())
+      .map(d => MomentUtils.formatString(d, "DMYHM"));
   }
 
   getUser(): Option<User> {
-    return this.user;
-  }
-
-  getUserId(): Option<number> {
-    return this.getUser()
-      .flatMap(x => x.getId());
+    return this.userStateService
+      .getUser();
   }
 
   getUsername(): Option<string> {
     return this.getUser()
-      .flatMap(x => x.getUsername());
+      .flatMap(u => u.getUsername());
   }
 
-  getUserPassedVoteCount(): number {
-    return this.passedVotes.size;
+  getVotesCreated(): List<Vote> {
+    return this.userStateService.getVotes()
+      .filter(v => this.getUsername().map(u => v.getSponsorUsername().contains(u)));
   }
 
-  getUserVoteCount(): number {
-    return this.votes.size;
+  getVotesFailed(): List<Vote> {
+    return this.getVotesCreated()
+      .filter(v => v.hasFailed());
   }
 
-  getVotes(): List<Vote> {
-    return this.votes;
+  getVotesPassed(): List<Vote> {
+    return this.getVotesCreated()
+      .filter(v => v.hasPassed());
   }
 
   isCompanionAtArms(): boolean {
-    return this.getUser()
-      .map(x => x.isCompanionAtArms())
-      .getOrElse(false);
+    return this.getGroup()
+      .contains("Companion at Arms");
   }
 
   isDeveloper(): boolean {
-    return this.getUser()
-      .map(x => x.isDeveloper())
-      .getOrElse(false);
+    return this.getGroup()
+      .contains("Developer");
   }
 
   isGrandMaster(): boolean {
-    return this.getUser()
-      .map(x => x.isGrandMaster())
-      .getOrElse(false);
+    return this.getGroup()
+      .contains("Grand Master");
   }
 
   isGuest(): boolean {
-    return this.getUser()
-      .map(x => x.isGuest())
-      .getOrElse(false);
+    return !this.isDeveloper()
+      && !this.isGrandMaster()
+      && !this.isMasterCommander()
+      && !this.isKnightCommander()
+      && !this.isKnightLieutenant()
+      && !this.isKnight()
+      && !this.isSergeantFirstClass()
+      && !this.isSergeant()
+      && !this.isSquire()
+      && !this.isCompanionAtArms();
   }
 
   isKnight(): boolean {
-    return this.getUser()
-      .map(x => x.isKnight())
-      .getOrElse(false);
+    return this.getGroup()
+      .contains("Knight");
   }
 
   isKnightCommander(): boolean {
-    return this.getUser()
-      .map(x => x.isKnightCommander())
-      .getOrElse(false);
+    return this.getGroup()
+      .contains("Knight Commander");
   }
 
   isKnightLieutenant(): boolean {
-    return this.getUser()
-      .map(x => x.isKnightLieutenant())
-      .getOrElse(false);
+    return this.getGroup()
+      .contains("Knight Lieutenant");
   }
 
   isMasterCommander(): boolean {
-    return this.getUser()
-      .map(x => x.isMasterCommander())
-      .getOrElse(false);
+    return this.getGroup()
+      .contains("Master Commander");
   }
 
   isSergeant(): boolean {
-    return this.getUser()
-      .map(x => x.isSergeant())
-      .getOrElse(false);
+    return this.getGroup()
+      .contains("Sergeant");
   }
 
   isSergeantFirstClass(): boolean {
-    return this.getUser()
-      .map(x => x.isSergeantFirstClass())
-      .getOrElse(false);
+    return this.getGroup()
+      .contains("Sergeant First Class");
   }
 
   isSquire(): boolean {
-    return this.getUser()
-      .map(x => x.isSquire())
-      .getOrElse(false);
+    return this.getGroup()
+      .contains("Squire");
   }
 
-  async ngOnInit(): Promise<void> {
-    this.store.select("user")
-      .subscribe(user => {
-        this.user = Option.of(user);
-        this.getUser()
-          .flatMap(u => u.getId())
-          .map(async uid => {
-            this.votes = await this.ffkApi.getVotesByUser(uid);
-            this.passedVotes = await this.ffkApi.getVotesByStatus(uid, true);
-          });
-      });
-    this.news = await this.ffkApi.getNews();
-  }
-
-  // TODO: Put this in a util class or something
-  toDateFormat(date: string, format: FfkDateFormat): string {
-    return MomentUtils.formatString(date, format);
+  ngOnInit(): void {
   }
 
 }
