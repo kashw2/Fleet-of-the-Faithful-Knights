@@ -1,12 +1,12 @@
 import {Either} from "funfix-core";
 import {List} from "immutable";
 import {EitherUtils} from "../../../core/src";
-import {DiscordApi} from "../../../core/src/misc/discord-api";
 import {Candidate} from "../../../core/src/models/candidate";
 import {DiscordGuild} from "../../../core/src/models/discord/discord-guild";
 import {CandidateOnboarding} from "../candidate-onboarding";
 import {FfkApi} from "../../../core/src/misc/ffk-api";
 import {Onboarding} from "../../onboarding";
+import { DiscordApi } from "../../../core/src/apis/discord-api";
 
 export class DiscordCandidateOnboarding extends CandidateOnboarding {
 
@@ -15,7 +15,7 @@ export class DiscordCandidateOnboarding extends CandidateOnboarding {
     }
 
     getGuild(): Promise<Either<string, DiscordGuild>> {
-        return DiscordApi.getGuild();
+        return DiscordApi.instance.getGuild();
     }
 
     async getGuildMemberCount(): Promise<number> {
@@ -35,7 +35,7 @@ export class DiscordCandidateOnboarding extends CandidateOnboarding {
 
     async listCandidates(): Promise<Either<string, List<Candidate>>> {
         const memberCount = await this.getGuildMemberCount();
-        const guildMembers = await DiscordApi.getGuildMembers(this.appropiateLimit(memberCount));
+        const guildMembers = await DiscordApi.instance.listGuildMembers(this.appropiateLimit(memberCount));
         return guildMembers.map(gms => Candidate.fromDiscordGuildMembers(gms));
     }
 

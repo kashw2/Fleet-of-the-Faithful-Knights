@@ -1,23 +1,15 @@
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
-import {ApiUtils, EitherUtils, User} from "../../../../core/src";
-import {DiscordApi} from "../../../../core/src/misc/discord-api";
-import {DbUser} from "../../../../core/src/models/db/db-user";
+import {ApiUtils, EitherUtils, OptionUtils, User} from "../../../../core/src";
 import {GetEndpoint} from "../../../../core/src/server/get-endpoint";
 import {Database} from "../../../db/database";
+import {DiscordApi} from "../../../../core/src/apis/discord-api";
+import {DbUser} from "../../../../core/src/models/db/db-user";
 
 export class UserRegisterEndpoint extends GetEndpoint {
 
     constructor(readonly db: Database) {
         super("/user/register", db);
-    }
-
-    private getPanelClientId(): Either<string, string> {
-        return EitherUtils.liftEither(process.env.FFK_DISOCRD_PANEL_CLIENT_ID!, "FFK_DISOCRD_PANEL_CLIENT_ID is empty");
-    }
-
-    private getPanelClientSecret(): Either<string, string> {
-        return EitherUtils.liftEither(process.env.FFK_DISCORD_PANEL_SECRET!, "FFK_PANEL_SECRET is empty");
     }
 
     private getResponseCode(req: Request): Either<string, string> {
@@ -29,31 +21,32 @@ export class UserRegisterEndpoint extends GetEndpoint {
     }
 
     run(req: Request, res: Response): void {
-        // Low complexity however execute time is heightened
-        Either.map3(this.getResponseCode(req), this.getPanelClientId(), this.getPanelClientSecret(), async (code, clientId, clientSecret) => {
-            const oAuthResponse =   await DiscordApi.getOAuth(clientId, clientSecret, code);
-            oAuthResponse.map(auth => auth.getAccessToken()
-                .map(async accessToken => {
-                    const user = await DiscordApi.getUser(accessToken);
-                    user.map(usr => usr.getId()
-                        .map(async uid => {
-                            const guilds = await DiscordApi.getUserGuilds(uid, accessToken);
-                            const guild = guilds.map(guildList => guildList.find(g => g.getId().contains("539188746114039818"))!);
-                            guild.map(g => g.getId()
-                                .map(async gid => {
-                                    const guildMember = await DiscordApi.getGuildMember(uid, gid, accessToken);
-                                    guildMember.map(gm => {
-                                        DbUser.fromDiscordGuildMember(gm.withDiscordUserLocale(usr))
-                                            .map(async dbU => {
-                                                ApiUtils.sendResultPromise(this.db.procedures.insert.insertUser(dbU), res);
-                                                this.db.cache.cacheUsers();
-                                            });
-                                    });
-                                }));
-                        }));
-                }),
-            );
-        });
+        this.getResponseCode(req)
+            .map(async code => {
+                const oAuthResponse = await DiscordApi.instance.getOAuth(code);
+                EitherUtils.deepEffector(oAuthResponse, v => EitherUtils.toEither(v.getAccessToken(), "Invalid access token"))
+                    .map(async token => {
+                        const discordUser = await DiscordApi.instance.getCurrentUser(token);
+                        return discordUser.map(user => {
+                            return user.getId()
+                                .map(async uid => {
+                                    const discordGuild = await DiscordApi.instance.getGuild();
+                                    return discordGuild.map(guild => {
+                                        guild.getId().map(async gid => {
+                                            const discordGuildMember = await DiscordApi.instance.getGuildMember(uid, gid);
+                                            return discordGuildMember.map(gm => {
+                                                DbUser.fromDiscordGuildMember(gm.withDiscordUserLocale(user))
+                                                    .map(dbUser => {
+                                                        ApiUtils.sendResultPromise(this.db.procedures.insert.insertUser(dbUser), res);
+                                                        this.db.cache.cacheUsers();
+                                                    })
+                                            })
+                                        })
+                                    })
+                                })
+                        })
+                    })
+            });
     }
 
 }

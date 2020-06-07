@@ -3,6 +3,10 @@ import {List} from "immutable";
 
 export class OptionUtils {
 
+    static deepEffector<A, B>(opt: Option<A>, f: (v: A) => Option<B>): Option<B> {
+        return opt.flatMap(v => f(v));
+    }
+
     static exists2<A, B, C>(opt1: Option<A>, opt2: Option<B>, f: (a: A, b: B) => boolean): boolean {
         if (opt1.nonEmpty() && opt2.nonEmpty()) {
             return f(opt1.get(), opt2.get());

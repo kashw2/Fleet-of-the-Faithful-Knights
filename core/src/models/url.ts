@@ -40,19 +40,25 @@ export class Url {
 
     public getUrl(): string {
         return this.getProtocol()
+            .concat("://")
             .concat(this.getUrn())
             .split("#")[0]
     }
 
     public getUrn(): string {
         return this.getUri()
-            .split(this.getProtocol())[1]
+            .split(this.getProtocol().concat("://"))[1]
             .split("/")[0];
     }
 
     public hasProtocol(): boolean {
         return this.getProtocol()
             .length > 0;
+    }
+
+    public hasWww(): boolean {
+        return this.getUrn()
+            .startsWith("www");
     }
 
     public isHttp(): boolean {

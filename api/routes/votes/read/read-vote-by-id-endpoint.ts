@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
-import {ApiUtils} from "../../../../core/src";
+import {ApiUtils, User} from "../../../../core/src";
 import {Vote, VoteJsonSerializer} from "../../../../core/src/models/vote";
 import {GetEndpoint} from "../../../../core/src/server/get-endpoint";
 import {Database} from "../../../db/database";
