@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Either, Left} from "funfix-core";
+import {Either, Left, Option} from "funfix-core";
 import {List} from "immutable";
 import {CookieService} from "ngx-cookie-service";
 import {User} from "../../../../core/src";
@@ -51,6 +51,10 @@ export class FfkApiService extends FfkApi {
 
   writeVoteComment(comment: Comment, voteId: number): Promise<Either<string, number>> {
     return this.writeComment(comment, voteId);
+  }
+
+  wrtieVoteResponse(voteId: number, userId: number, response: string): Promise<Either<string, number>> {
+    return this.writeResponse(voteId, userId, response)
   }
 
 }
