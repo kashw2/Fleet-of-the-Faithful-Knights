@@ -17,6 +17,9 @@ import {MainPageComponent} from "./pages/main-page/main-page.component";
 import {ProfilePageComponent} from "./pages/profile-page/profile-page.component";
 import {VotesPageComponent} from "./pages/votes-page/votes-page.component";
 import {NotificationService} from "./services/notification.service";
+import { VotePageComponent } from './pages/vote-page/vote-page.component';
+import { CandidateExtraInfoContainerComponent } from './children/candidate-extra-info-container/candidate-extra-info-container.component';
+import { MessageContainerComponent } from './components/message-container/message-container.component';
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -30,6 +33,9 @@ import {NotificationService} from "./services/notification.service";
     VotesPageComponent,
     VoteTableComponent,
     CreateVoteModalComponent,
+    VotePageComponent,
+    CandidateExtraInfoContainerComponent,
+    MessageContainerComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),

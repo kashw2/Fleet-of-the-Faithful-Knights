@@ -7,6 +7,7 @@ import {debounceTime, distinctUntilChanged, first} from "rxjs/operators";
 import {Vote} from "../../../../../core/src/models/vote";
 import {CreateVoteModalComponent} from "../../modals/create-vote-modal/create-vote-modal.component";
 import {NotificationService} from "../../services/notification.service";
+import {ViewStateService} from "../../services/view-state.service";
 
 @Component({
   selector: "app-vote-table",
@@ -18,6 +19,7 @@ export class VoteTableComponent implements OnInit, AfterViewInit {
   constructor(
     private changeDetection: ChangeDetectorRef,
     private notificationService: NotificationService,
+    private viewStateService: ViewStateService,
     private mdbModalService: MDBModalService,
   ) {
   }
@@ -58,6 +60,11 @@ export class VoteTableComponent implements OnInit, AfterViewInit {
 
   getVotes(): List<Vote> {
     return this.votes;
+  }
+
+  goToVotePage(vote: Vote): void {
+    this.viewStateService.setPageIndex(3);
+    this.viewStateService.setSelectedVote(vote);
   }
 
   isUsedForVoteCreation(): boolean {

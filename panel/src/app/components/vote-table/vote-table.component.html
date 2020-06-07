@@ -44,12 +44,12 @@
     <td *ngIf="vote.getGroup().nonEmpty() && shouldTruncateRows(i)">{{vote.getGroup().get()}}</td>
     <td *ngIf="vote.getCreatedDate().nonEmpty() && shouldTruncateRows(i)">{{vote.getFormattedCreatedDate('DMY').get()}}</td>
     <td *ngIf="!vote.isEmpty() && shouldTruncateRows(i)" class="mx-auto">
-      <p class="d-inherit w-auto cursor-click">View</p>
+      <p class="d-inherit w-auto cursor-click" (click)="goToVotePage(vote)">View</p>
     </td>
   </tr>
   </tbody>
   <tfoot>
-  <td colspan="5">
+  <td colspan="5" class="py-0">
     <mdb-table-pagination [tableEl]="tableElement" [searchDataSource]="elements"></mdb-table-pagination>
   </td>
   </tfoot>

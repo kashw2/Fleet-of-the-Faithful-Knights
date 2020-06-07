@@ -136,9 +136,9 @@ export class GroupUtils {
         return this.getGroupIdFromName(this.parseGroup(comparator)) >= GroupMapByName.get(group);
     }
 
-    static IsGroupLower(group: string, comparator: string): boolean {
+    static isGroupLower(group: string, comparator: string): boolean {
         // @ts-ignore
-        return this.getGroupIdFromName(this.parseGroup(comparator)) <= GroupMapByName.get(group);
+        return this.getGroupIdFromName(this.parseGroup(comparator)) < GroupMapByName.get(group);
     }
 
     static isNonGuestRole(id: string): boolean {

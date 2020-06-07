@@ -1,4 +1,4 @@
-import {None, Option} from "funfix-core";
+import {None, Option, Some} from "funfix-core";
 import {
     contentKey, createdDateKey,
     idKey,
@@ -19,6 +19,16 @@ export class Comment {
         readonly content: Option<string> = None,
         readonly createdDate: Option<string> = None,
     ) {
+    }
+
+    // TOOD: Add created date
+    public static forCommentWriting(comment: string, user: User): Comment {
+        return new Comment(
+            None,
+            Some(user),
+            Some(comment),
+            None,
+        )
     }
 
     public getContent(): Option<string> {

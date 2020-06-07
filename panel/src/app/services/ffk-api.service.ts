@@ -9,6 +9,7 @@ import {News} from "../../../../core/src/models/news";
 import {Vote} from "../../../../core/src/models/vote";
 import {environment} from "../../environments/environment";
 import {Candidate} from "../../../../core/src/models/candidate";
+import {Comment, CommentJsonSerializer} from "../../../../core/src/models/comment";
 
 @Injectable({
   providedIn: "root",
@@ -46,6 +47,10 @@ export class FfkApiService extends FfkApi {
 
   writeCandidateVote(vote: Vote): Promise<Either<string, number>> {
     return this.writeVote(vote);
+  }
+
+  writeVoteComment(comment: Comment, voteId: number): Promise<Either<string, number>> {
+    return this.writeComment(comment, voteId);
   }
 
 }
