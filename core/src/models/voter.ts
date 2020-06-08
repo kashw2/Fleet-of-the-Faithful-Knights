@@ -1,15 +1,9 @@
 import {None, Option} from "funfix-core";
-import {
-    idKey, JsonBuilder,
-    parseNumber,
-    parseSerialized,
-    parseString,
-    responseKey,
-    SimpleJsonSerializer,
-    User,
-    UserJsonSerializer,
-    userKey,
-} from "..";
+import {idKey, responseKey, userKey} from "../misc/json-keys";
+import {parseNumber, parseSerialized, parseString} from "../util/object-utils";
+import {JsonBuilder} from "../misc/json-builder";
+import {SimpleJsonSerializer} from "../misc/simple-json-serializer";
+import {User, UserJsonSerializer} from "./user";
 
 export class Voter {
 

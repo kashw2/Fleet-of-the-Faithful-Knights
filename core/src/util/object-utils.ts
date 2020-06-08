@@ -137,8 +137,6 @@ export function parseSetFromArray(array: []): Set<any> {
     return Set(array);
 }
 
-// TODO: I made this at 12:23, there needs to be a Monadic variation of this.
-// TODO: Expand on this
 export function parseList<T>(list: T): List<T> {
     if (Option.of(list).isEmpty()) {
         return List();

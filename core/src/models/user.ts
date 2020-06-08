@@ -5,15 +5,15 @@ import {
     discriminatorKey,
     groupKey,
     idKey,
-    JsonBuilder,
     localeKey,
     memberSinceKey,
-    parseNumber,
-    parseString,
-    SimpleJsonSerializer,
     tokenKey,
-    usernameKey,
-} from "..";
+    usernameKey
+} from "../misc/json-keys";
+import {parseNumber, parseString} from "../util/object-utils";
+import {JsonBuilder} from "../misc/json-builder";
+import {SimpleJsonSerializer} from "../misc/simple-json-serializer";
+
 
 export class User {
 

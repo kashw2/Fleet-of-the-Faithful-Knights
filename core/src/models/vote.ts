@@ -1,24 +1,9 @@
 import {None, Option, Some} from "funfix-core";
 import {List, Set} from "immutable";
-import {
-    candidateKey,
-    commentsKey,
-    dateKey,
-    groupKey,
-    idKey,
-    JsonBuilder,
-    notesKey,
-    parseBoolean,
-    parseNumber,
-    parseSerialized,
-    parseSerializedList,
-    parseSerializedSet,
-    parseString,
-    SimpleJsonSerializer,
-    sponsorKey,
-    statusKey,
-    votersKey,
-} from "..";
+import {candidateKey, commentsKey, dateKey, groupKey, idKey, notesKey, sponsorKey, statusKey, votersKey} from "../misc/json-keys";
+import {parseBoolean, parseNumber, parseSerialized, parseSerializedList, parseSerializedSet, parseString} from "../util/object-utils";
+import {JsonBuilder} from "../misc/json-builder";
+import {SimpleJsonSerializer} from "../misc/simple-json-serializer";
 import {FfkDateFormat, MomentUtils} from "../util/moment-utils";
 import {Candidate, CandidateJsonSerializer} from "./candidate";
 import {Comment, CommentJsonSerializer} from "./comment";

@@ -1,5 +1,7 @@
 import {List} from "immutable";
-import {JsonBuilder, SimpleJsonSerializer, urlKey} from "..";
+import { SimpleJsonSerializer } from "../misc/simple-json-serializer";
+import { urlKey } from "../misc/json-keys";
+import { JsonBuilder } from "../misc/json-builder";
 
 export class Url {
 
@@ -96,6 +98,5 @@ export class UrlJsonSerializer extends SimpleJsonSerializer<Url> {
         return builder.add(value.getUrl(), urlKey)
             .build();
     }
-
 
 }

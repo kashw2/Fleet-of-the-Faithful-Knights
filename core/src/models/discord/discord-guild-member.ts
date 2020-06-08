@@ -1,17 +1,10 @@
 import {None, Option, Some} from "funfix-core";
 import {Set} from "immutable";
-import {
-    joinedAtKey,
-    JsonBuilder, nicknameKey,
-    parseSerialized,
-    parseSet,
-    parseString,
-    rolesKey,
-    SimpleJsonSerializer,
-    userKey,
-} from "../..";
-import {GroupUtils} from "../../util/group-utils";
 import {DiscordUser, DiscordUserJsonSerilaizer} from "./discord-user";
+import {SimpleJsonSerializer} from "../../misc/simple-json-serializer";
+import {joinedAtKey, nicknameKey, rolesKey, userKey} from "../../misc/json-keys";
+import {parseSerialized, parseSet, parseString} from "../../util/object-utils";
+import {GroupUtils, JsonBuilder} from "../..";
 
 /**
  * This class should never find usage in the API cache
@@ -44,7 +37,6 @@ export class DiscordGuildMember {
             return this.getRoles().filterNot(role => !GroupUtils.isNonGuestRole(role))
                 .map(x => GroupUtils.getGroupNameFromDiscordRoleId(x));
         }
-        // TODO: Document this; Why don't we return Set()?
         return this.getRoles()
             .map(role => GroupUtils.getGroupNameFromDiscordRoleId(role));
     }

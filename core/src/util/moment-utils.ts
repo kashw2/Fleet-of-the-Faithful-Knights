@@ -24,4 +24,16 @@ export class MomentUtils {
         }
     }
 
+    static isSameDay(m: moment.Moment, comparator: moment.Moment): boolean {
+        return m.isSame(comparator, "day");
+    }
+
+    static isSameMonth(m: moment.Moment, comparator: moment.Moment): boolean {
+        return m.isSame(comparator, "month");
+    }
+
+    static isSameYear(m: moment.Moment, comparator: moment.Moment): boolean {
+        return m.isSame(comparator, "year");
+    }
+
 }

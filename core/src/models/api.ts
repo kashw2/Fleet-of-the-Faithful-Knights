@@ -1,6 +1,6 @@
 import {Either, Left, Right} from "funfix-core";
 import {Url} from "./url";
-import {SimpleJsonSerializer} from "..";
+import {SimpleJsonSerializer} from "../misc/simple-json-serializer";
 import axios from "axios";
 import {List} from "immutable";
 

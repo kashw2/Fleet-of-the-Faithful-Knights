@@ -1,14 +1,8 @@
 import {None, Option, Some} from "funfix-core";
-import {
-    contentKey, createdDateKey,
-    idKey,
-    JsonBuilder,
-    parseNumber,
-    parseSerialized,
-    parseString,
-    SimpleJsonSerializer,
-    userKey,
-} from "..";
+import {contentKey, createdDateKey, idKey, userKey} from "../misc/json-keys";
+import {parseNumber, parseSerialized, parseString} from "../util/object-utils";
+import {JsonBuilder} from "../misc/json-builder";
+import {SimpleJsonSerializer} from "../misc/simple-json-serializer";
 import {User, UserJsonSerializer} from "./user";
 
 export class Comment {
