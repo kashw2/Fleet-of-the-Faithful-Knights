@@ -29,7 +29,7 @@ export class DiscordApi {
     }
 
     private getDiscordPanelBotToken(): Either<string, string> {
-        return EitherUtils.liftEither(process.env.FFK_DISCORD_PANEL_BOT_TOKEN, "FFK_DISCORD_PANEL_BOT_TOKEN is not defined");
+        return EitherUtils.liftEither(process.env.FFK_DISCORD_PANEL_BOT_TOKEN!, "FFK_DISCORD_PANEL_BOT_TOKEN is not defined");
     }
 
     private getFfkGuildId(): string {
@@ -106,15 +106,15 @@ export class DiscordApi {
     }
 
     private getPanelClientId(): Either<string, string> {
-        return EitherUtils.liftEither(process.env.FFK_DISOCRD_PANEL_CLIENT_ID, "FFK_DISOCRD_PANEL_CLIENT_ID is undefined");
+        return EitherUtils.liftEither(process.env.FFK_DISOCRD_PANEL_CLIENT_ID!, "FFK_DISOCRD_PANEL_CLIENT_ID is undefined");
     }
 
     private getPanelClientSecret(): Either<string, string> {
-        return EitherUtils.liftEither(process.env.FFK_DISCORD_PANEL_SECRET, "FFK_DISCORD_PANEL_SECRET is undefined");
+        return EitherUtils.liftEither(process.env.FFK_DISCORD_PANEL_SECRET!, "FFK_DISCORD_PANEL_SECRET is undefined");
     }
 
     private getRedirectUrl(): Either<string, string> {
-        return EitherUtils.liftEither(process.env.FFK_PANEL_ADDRESS, "FFK_PANEL_ADDRESS is undefined");
+        return EitherUtils.liftEither(process.env.FFK_PANEL_ADDRESS!, "FFK_PANEL_ADDRESS is undefined");
     }
 
     listGuildMembers(

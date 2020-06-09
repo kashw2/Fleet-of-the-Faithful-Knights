@@ -122,7 +122,7 @@ export class Api {
         serializer: SimpleJsonSerializer<T>,
         headers: object = this.getHeaders(),
         method: Methods,
-        body?: object | string,
+        body: object | string = {},
     ): Promise<Either<string, T>> {
         switch (method) {
             case "GET":
@@ -139,7 +139,7 @@ export class Api {
         serializer: SimpleJsonSerializer<T>,
         headers: object = this.getHeaders(),
         method: Methods,
-        body?: object | string,
+        body: object | string = {},
     ): Promise<Either<string, List<T>>> {
         switch (method) {
             case "GET":
