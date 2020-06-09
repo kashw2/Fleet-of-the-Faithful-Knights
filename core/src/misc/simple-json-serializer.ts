@@ -5,7 +5,6 @@ export abstract class SimpleJsonSerializer<T> {
 
     abstract fromJson(json: object): T;
 
-    // TODO: Explore making a fromJsonArray that takes a collection
     fromJsonArray(list: List<T>): List<T> {
         if (list instanceof Array) {
             return List(list)

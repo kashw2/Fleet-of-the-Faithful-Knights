@@ -1,18 +1,8 @@
 import {None, Option} from "funfix-core";
-import {Moment} from "moment";
-import {
-    contentKey,
-    dateKey,
-    idKey,
-    JsonBuilder,
-    parseMoment,
-    parseNumber,
-    parseSerialized,
-    parseString,
-    SimpleJsonSerializer,
-    titleKey,
-    userKey,
-} from "..";
+import {contentKey, dateKey, idKey, titleKey, userKey} from "../misc/json-keys";
+import {parseNumber, parseSerialized, parseString} from "../util/object-utils";
+import {JsonBuilder} from "../misc/json-builder";
+import {SimpleJsonSerializer} from "../misc/simple-json-serializer";
 import {User, UserJsonSerializer} from "./user";
 
 export class News {

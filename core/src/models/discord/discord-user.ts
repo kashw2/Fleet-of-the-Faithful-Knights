@@ -1,17 +1,9 @@
 import {None, Option, Some} from "funfix-core";
 import {List, Set} from "immutable";
-import {
-    avatarKey,
-    discriminatorKey,
-    idKey,
-    JsonBuilder,
-    localeKey,
-    parseSet,
-    parseString,
-    rolesKey,
-    SimpleJsonSerializer,
-    usernameKey,
-} from "../..";
+import {SimpleJsonSerializer} from "../../misc/simple-json-serializer";
+import {parseSet, parseString} from "../../util/object-utils";
+import {avatarKey, discriminatorKey, idKey, localeKey, rolesKey, usernameKey} from "../../misc/json-keys";
+import {JsonBuilder} from "../../misc/json-builder";
 
 /**
  * This class should never find usage in the API cache

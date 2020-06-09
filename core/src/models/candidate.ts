@@ -1,19 +1,11 @@
 import {None, Option, Some} from "funfix-core";
 import {List} from "immutable";
-import {
-    avatarKey,
-    discordIdKey,
-    discordUsernameKey,
-    groupKey,
-    idKey,
-    JsonBuilder,
-    memberSinceKey,
-    parseNumber,
-    parseString,
-    SimpleJsonSerializer,
-} from "..";
+import {parseNumber, parseString} from "../util/object-utils";
 import {Group, GroupUtils} from "../util/group-utils";
 import {DiscordGuildMember} from "./discord/discord-guild-member";
+import {SimpleJsonSerializer} from "../misc/simple-json-serializer";
+import {avatarKey, discordIdKey, discordUsernameKey, groupKey, idKey, memberSinceKey} from "../misc/json-keys";
+import {JsonBuilder} from "..";
 
 export class Candidate {
 

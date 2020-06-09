@@ -1,15 +1,8 @@
 import {None, Option} from "funfix-core";
-import {
-    accessTokenKey,
-    expiresInKey,
-    JsonBuilder,
-    parseNumber,
-    parseString,
-    refreshTokenKey,
-    scopeKey,
-    SimpleJsonSerializer,
-    tokenTypeKey
-} from "../..";
+import {SimpleJsonSerializer} from "../../misc/simple-json-serializer";
+import {parseNumber, parseString} from "../../util/object-utils";
+import {accessTokenKey, expiresInKey, refreshTokenKey, scopeKey, tokenTypeKey} from "../../misc/json-keys";
+import {JsonBuilder} from "../../misc/json-builder";
 
 /**
  * This class should never find usage in the API cache

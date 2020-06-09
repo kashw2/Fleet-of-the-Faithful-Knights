@@ -1,13 +1,8 @@
 import {None, Option} from "funfix-core";
-import {
-    approximateMemberCountKey,
-    idKey,
-    JsonBuilder,
-    nameKey,
-    parseNumber,
-    parseString,
-    SimpleJsonSerializer,
-} from "../..";
+import {SimpleJsonSerializer} from "../../misc/simple-json-serializer";
+import {parseNumber, parseString} from "../../util/object-utils";
+import {approximateMemberCountKey, idKey, nameKey} from "../../misc/json-keys";
+import {JsonBuilder} from "../../misc/json-builder";
 
 /**
  * This class should never find usage in the API cache

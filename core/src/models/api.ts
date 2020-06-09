@@ -1,6 +1,6 @@
 import {Either, Left, Right} from "funfix-core";
 import {Url} from "./url";
-import {SimpleJsonSerializer} from "..";
+import {SimpleJsonSerializer} from "../misc/simple-json-serializer";
 import axios from "axios";
 import {List} from "immutable";
 
@@ -122,7 +122,7 @@ export class Api {
         serializer: SimpleJsonSerializer<T>,
         headers: object = this.getHeaders(),
         method: Methods,
-        body?: object | string,
+        body: object | string = {},
     ): Promise<Either<string, T>> {
         switch (method) {
             case "GET":
@@ -139,7 +139,7 @@ export class Api {
         serializer: SimpleJsonSerializer<T>,
         headers: object = this.getHeaders(),
         method: Methods,
-        body?: object | string,
+        body: object | string = {},
     ): Promise<Either<string, List<T>>> {
         switch (method) {
             case "GET":
