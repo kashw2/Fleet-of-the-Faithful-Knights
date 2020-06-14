@@ -47,7 +47,7 @@ export class VoterJsonSerializer extends SimpleJsonSerializer<Voter> {
 
     static instance: VoterJsonSerializer = new VoterJsonSerializer();
 
-    fromJson(json: object): Voter {
+    fromJson(json: any): Voter {
         return new Voter(
             parseNumber(json[idKey]),
             parseSerialized(json[userKey], UserJsonSerializer.instance),

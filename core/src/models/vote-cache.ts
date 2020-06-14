@@ -24,7 +24,7 @@ export class VoteCache {
     getByCandidateId(candidateId: number): Either<string, Vote> {
         return EitherUtils.liftEither(
             this.getVotes()
-                .find(v => v.getCandidate().flatMap(c => c.getId()).contains(candidateId)),
+                .find(v => v.getCandidate().flatMap(c => c.getId()).contains(candidateId))!,
             `No votes exist for ${candidateId} in cache`,
         );
     }
