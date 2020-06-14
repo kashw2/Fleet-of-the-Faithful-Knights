@@ -8,6 +8,7 @@ import {List} from "immutable";
 import {DiscordUser, DiscordUserJsonSerilaizer} from "../models/discord/discord-user";
 import {DiscordOAuthResponse, DiscordOAuthResponseJsonSerializer} from "../models/discord/discord-oauth-response";
 import * as querystring from "querystring";
+import {DiscordChannel, DiscordChannelJsonSerializer} from "../models/discord/discord-channel";
 
 export class DiscordApi {
 
@@ -115,6 +116,24 @@ export class DiscordApi {
 
     private getRedirectUrl(): Either<string, string> {
         return EitherUtils.liftEither(process.env.FFK_PANEL_ADDRESS!, "FFK_PANEL_ADDRESS is undefined");
+    }
+
+    listChannelMessages(channelId: string): Promise<Either<string, List<DiscordChannel>>> {
+        return this.api.sendRequestSerializedList(
+            `/channels/${channelId}/messages`,
+            DiscordChannelJsonSerializer.instance,
+            this.getHeaders(),
+            "GET",
+        )
+    }
+
+    private listGuildChannels(guildId: string = this.getFfkGuildId()): Promise<Either<string, List<DiscordChannel>>> {
+        return this.api.sendRequestSerializedList(
+            `/guilds/${guildId}/channels`,
+            DiscordChannelJsonSerializer.instance,
+            this.getHeaders(),
+            "GET",
+        );
     }
 
     listGuildMembers(
