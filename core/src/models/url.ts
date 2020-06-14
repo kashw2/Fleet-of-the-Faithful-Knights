@@ -1,7 +1,7 @@
 import {List} from "immutable";
-import { SimpleJsonSerializer } from "../misc/simple-json-serializer";
-import { urlKey } from "../misc/json-keys";
-import { JsonBuilder } from "../misc/json-builder";
+import {SimpleJsonSerializer} from "../misc/simple-json-serializer";
+import {urlKey} from "../misc/json-keys";
+import {JsonBuilder} from "../misc/json-builder";
 
 export class Url {
 
@@ -10,6 +10,14 @@ export class Url {
 
     static buildFromUri(uri: string): Url {
         return new Url(uri);
+    }
+
+    static buildFromUrl(url: string): Url {
+        return new Url(url);
+    }
+
+    static buildFromUrn(urn: string): Url {
+        return new Url(urn);
     }
 
     public getDomain(): string {
@@ -90,7 +98,7 @@ export class UrlJsonSerializer extends SimpleJsonSerializer<Url> {
 
     static instance: UrlJsonSerializer = new UrlJsonSerializer();
 
-    fromJson(json: object): Url {
+    fromJson(json: any): Url {
         return new Url(json[urlKey]);
     }
 

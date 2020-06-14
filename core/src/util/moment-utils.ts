@@ -5,6 +5,7 @@ export type FfkDateFormat = "DMY" | "DMYHM" | "12HT";
 export class MomentUtils {
 
     static formatString(s: string, format: FfkDateFormat): string {
+        // @ts-ignore
         return moment(s)
             .format(this.getFfkDateFormatString(format));
     }
