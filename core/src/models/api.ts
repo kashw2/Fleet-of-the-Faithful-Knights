@@ -1,7 +1,7 @@
 import {Either, Left, Right} from "funfix-core";
 import {Url} from "./url";
 import {SimpleJsonSerializer} from "../misc/simple-json-serializer";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 import {List} from "immutable";
 
 type Methods = "POST" | "GET";
@@ -27,6 +27,7 @@ export class Api {
             case 401:
             case 403:
             case 404:
+            case 429:
             case 500:
                 return false;
             default:
@@ -56,11 +57,12 @@ export class Api {
         )
             .then(x => {
                 if (this.isFailureStatusCode(x.status)) {
-                    return Left(`${x.status} ${x.statusText} - ${x.data}`);
+                    return Left(`${x.status}: ${x.statusText} - ${x.data}`);
                 }
                 return Right(serializer.fromJsonArray(x.data));
             })
-            .catch(x => Left(x));
+            // @ts-ignore
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
     }
 
     private sendGetRequestSerialized<T>(
@@ -74,11 +76,12 @@ export class Api {
         )
             .then(x => {
                 if (this.isFailureStatusCode(x.status)) {
-                    return Left(`${x.status} ${x.statusText} - ${x.data}`);
+                    return Left(`${x.status}: ${x.statusText} - ${x.data}`);
                 }
                 return Right(serializer.fromJson(x.data));
             })
-            .catch(x => Left(x));
+            // @ts-ignore
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
     }
 
     private sendPostRequestListSerialized<T>(
@@ -92,11 +95,12 @@ export class Api {
         })
             .then(x => {
                 if (this.isFailureStatusCode(x.status)) {
-                    return Left(`${x.status} ${x.statusText} - ${x.data}`);
+                    return Left(`${x.status}: ${x.statusText} - ${x.data}`);
                 }
                 return Right(serializer.fromJsonArray(x.data));
             })
-            .catch(x => Left(x));
+            // @ts-ignore
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
     }
 
     private sendPostRequestSerialized<T>(
@@ -110,11 +114,12 @@ export class Api {
         })
             .then(x => {
                 if (this.isFailureStatusCode(x.status)) {
-                    return Left(`${x.status} ${x.statusText} - ${x.data}`);
+                    return Left(`${x.status}: ${x.statusText} - ${x.data}`);
                 }
                 return Right(serializer.fromJson(x.data));
             })
-            .catch(x => Left(x));
+            // @ts-ignore
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
     }
 
     sendRequestSerialized<T>(
