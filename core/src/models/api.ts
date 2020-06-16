@@ -3,8 +3,9 @@ import {Url} from "./url";
 import {SimpleJsonSerializer} from "../misc/simple-json-serializer";
 import axios, {AxiosError} from "axios";
 import {List} from "immutable";
+import {Primitive} from "../misc/type-defs";
 
-type Methods = "POST" | "GET";
+type Method = "POST" | "GET";
 
 export class Api {
 
@@ -65,6 +66,24 @@ export class Api {
             .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
     }
 
+    sendGetRequestPrimitive<T>(
+        location: string,
+        headers: object = this.getHeaders(),
+    ): Promise<Either<string, Primitive>> {
+        return axios.get(this.getBaseUrl().concat(location), {
+                headers,
+            },
+        )
+            .then(x => {
+                if (this.isFailureStatusCode(x.status)) {
+                    return Left(`${x.status}: ${x.statusText} - ${x.data}`);
+                }
+                return Right(x.data);
+            })
+            // @ts-ignore
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
+    }
+
     private sendGetRequestSerialized<T>(
         location: string,
         serializer: SimpleJsonSerializer<T>,
@@ -88,7 +107,7 @@ export class Api {
         location: string,
         serializer: SimpleJsonSerializer<T>,
         headers: object = this.getHeaders(),
-        body: object | string,
+        body?: unknown,
     ): Promise<Either<string, List<T>>> {
         return axios.post(this.getBaseUrl().concat(location), body, {
             headers,
@@ -103,11 +122,29 @@ export class Api {
             .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
     }
 
+    sendPostRequestPrimitive<T>(
+        location: string,
+        headers: object = this.getHeaders(),
+        body?: unknown,
+    ): Promise<Either<string, Primitive>> {
+        return axios.post(this.getBaseUrl().concat(location), body, {
+            headers,
+        })
+            .then(x => {
+                if (this.isFailureStatusCode(x.status)) {
+                    return Left(`${x.status}: ${x.statusText} - ${x.data}`);
+                }
+                return Right(x.data);
+            })
+            // @ts-ignore
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
+    }
+
     private sendPostRequestSerialized<T>(
         location: string,
         serializer: SimpleJsonSerializer<T>,
         headers: object = this.getHeaders(),
-        body: object | string,
+        body?: unknown,
     ): Promise<Either<string, T>> {
         return axios.post(this.getBaseUrl().concat(location), body, {
             headers,
@@ -122,12 +159,30 @@ export class Api {
             .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
     }
 
+    // This method is meant to be used in the context of a Monad as it can return a Right of Primitive
+    // It's assumed that it will be used inside of a Monad where you can control the inputs and outputs individually
+    sendRequestPrimitive<T>(
+        location: string,
+        headers: object = this.getHeaders(),
+        method: Method,
+        body?: unknown,
+    ): Promise<Either<string, Primitive>> {
+        switch (method) {
+            case "GET":
+                return this.sendGetRequestPrimitive(location, headers);
+            case "POST":
+                return this.sendPostRequestPrimitive(location, headers, body)
+            default:
+                throw new Error(`Unsupported method type '${method}'`);
+        }
+    }
+
     sendRequestSerialized<T>(
         location: string,
         serializer: SimpleJsonSerializer<T>,
         headers: object = this.getHeaders(),
-        method: Methods,
-        body: object | string = {},
+        method: Method,
+        body?: unknown,
     ): Promise<Either<string, T>> {
         switch (method) {
             case "GET":
@@ -143,8 +198,8 @@ export class Api {
         location: string,
         serializer: SimpleJsonSerializer<T>,
         headers: object = this.getHeaders(),
-        method: Methods,
-        body: object | string = {},
+        method: Method,
+        body?: unknown,
     ): Promise<Either<string, List<T>>> {
         switch (method) {
             case "GET":
