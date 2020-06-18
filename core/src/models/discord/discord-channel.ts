@@ -23,8 +23,8 @@ import {SimpleJsonSerializer} from "../../misc/simple-json-serializer";
 import {List, Map} from "immutable";
 import {DiscordUser, DiscordUserJsonSerilaizer} from "./discord-user";
 import {JsonBuilder} from "../../misc/json-builder";
+import {ChannelType} from "../../misc/type-defs";
 
-export type ChannelType = "GUILD_TEXT" | "DM" | "GUILD_VOICE" | "GROUP_DM" | "GUILD_CATEGORY" | "GUILD_NEWS" | "GUILD_STORE";
 // @ts-ignore
 export const ChannelTypeMap: Map<number, ChannelType> = Map({
     0: "GUILD_TEXT",

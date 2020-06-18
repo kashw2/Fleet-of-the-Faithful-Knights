@@ -1,6 +1,5 @@
 import * as moment from "moment";
-
-export type FfkDateFormat = "DMY" | "DMYHM" | "12HT";
+import {FfkDateFormat} from "../misc/type-defs";
 
 export class MomentUtils {
 

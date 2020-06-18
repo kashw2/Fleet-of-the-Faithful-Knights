@@ -86,7 +86,6 @@ export class Api {
     private sendGetRequestNumberList<T>(
         location: string,
         headers: object = this.getHeaders(),
-        body?: unknown
     ): Promise<Either<string, List<number>>> {
         return axios.get(this.getBaseUrl().concat(location),  {
                 headers,

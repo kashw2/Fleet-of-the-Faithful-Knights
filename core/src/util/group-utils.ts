@@ -1,18 +1,6 @@
 import {Option} from "funfix-core";
 import {Map, Set} from "immutable";
-
-export type Group =
-    "Developer"
-    | "Guest"
-    | "Grand Master"
-    | "Master Commander"
-    | "Knight Commander"
-    | "Knight Lieutenant"
-    | "Knight"
-    | "Sergeant First Class"
-    | "Sergeant"
-    | "Companion at Arms"
-    | "Squire";
+import {Group} from "../misc/type-defs";
 
 export const DiscordGroupIdMap: Map<string, string> = Map({
     "541835139701800962": "Grand Master",

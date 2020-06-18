@@ -4,11 +4,12 @@ import {candidateKey, commentsKey, dateKey, groupKey, idKey, notesKey, sponsorKe
 import {parseBoolean, parseNumber, parseSerialized, parseSerializedList, parseSerializedSet, parseString} from "../util/object-utils";
 import {JsonBuilder} from "../misc/json-builder";
 import {SimpleJsonSerializer} from "../misc/simple-json-serializer";
-import {FfkDateFormat, MomentUtils} from "../util/moment-utils";
+import {MomentUtils} from "../util/moment-utils";
 import {Candidate, CandidateJsonSerializer} from "./candidate";
 import {Comment, CommentJsonSerializer} from "./comment";
 import {User, UserJsonSerializer} from "./user";
 import {Voter, VoterJsonSerializer} from "./voter";
+import {FfkDateFormat} from "../misc/type-defs";
 
 export class Vote {
 
