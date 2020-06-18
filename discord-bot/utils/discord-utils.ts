@@ -1,8 +1,7 @@
 import {Channel, Collection, GuildChannel, Snowflake} from "discord.js";
 import {Either} from "funfix-core";
 import {ChannelUtils} from "./channel-utils";
-
-export type Primitive = string | number | boolean;
+import {Primitive} from "../../core/src/misc/type-defs";
 
 export class DiscordUtils {
 
