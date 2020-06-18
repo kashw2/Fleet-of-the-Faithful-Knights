@@ -55,19 +55,19 @@ export class MainPageComponent implements OnInit {
   }
 
   private async populateCandidates(): Promise<void> {
-    const candidates = await this.ffkApiService.getAllCandidates();
+    const candidates = await this.ffkApiService.listCandidates();
     this.notificationService.showNotificationBaseOnEitherEffector(candidates, values => `Loaded ${values.size} Candidates`)
       .map(cs => this.userStateService.candidates.next(cs));
   }
 
   private async populateNews(): Promise<void> {
-    const news = await this.ffkApiService.getAllNews();
+    const news = await this.ffkApiService.listNews();
     this.notificationService.showNotificationBaseOnEitherEffector(news, values => `Loaded ${values.size} Articles`)
       .map(articles => this.userStateService.news.next(articles));
   }
 
   private async populateVotes(): Promise<void> {
-    const votes = await this.ffkApiService.getAllVotes();
+    const votes = await this.ffkApiService.listVotes();
     this.notificationService.showNotificationBaseOnEitherEffector(votes, values => `Loaded ${values.size} Votes`)
       .map(vs => this.userStateService.votes.next(vs));
   }

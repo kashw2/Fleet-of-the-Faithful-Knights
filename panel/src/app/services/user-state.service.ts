@@ -7,6 +7,7 @@ import {User} from "../../../../core/src";
 import {Candidate} from "../../../../core/src/models/candidate";
 import {News} from "../../../../core/src/models/news";
 import {Vote} from "../../../../core/src/models/vote";
+import {DiscordMessage} from "../../../../core/src/models/discord/discord-message";
 
 @Injectable({
   providedIn: "root",
@@ -17,6 +18,7 @@ export class UserStateService {
   }
 
   candidates: BehaviorSubject<List<Candidate>> = new BehaviorSubject<List<Candidate>>(List());
+  discordMessages: BehaviorSubject<List<DiscordMessage>> = new BehaviorSubject<List<DiscordMessage>>(List());
   news: BehaviorSubject<List<News>> = new BehaviorSubject<List<News>>(List());
   user: BehaviorSubject<Option<User>> = new BehaviorSubject<Option<User>>(None);
   votes: BehaviorSubject<List<Vote>> = new BehaviorSubject<List<Vote>>(List());
@@ -28,6 +30,11 @@ export class UserStateService {
 
   getCookieToken(): string {
     return this.cookieService.get("token");
+  }
+
+  getDiscordMessages(): List<DiscordMessage> {
+    return this.discordMessages
+      .getValue();
   }
 
   getNews(): List<News> {

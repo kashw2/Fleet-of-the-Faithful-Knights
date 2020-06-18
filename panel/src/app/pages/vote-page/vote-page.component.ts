@@ -178,7 +178,7 @@ export class VotePageComponent implements OnInit {
 
   submitVoteResponse(response: "Y" | "N"): void {
     Option.map2(this.getUserId(), this.getVoteId(), async (uid, vid) => {
-      const res = await this.ffkApi.wrtieVoteResponse(vid, uid, response);
+      const res = await this.ffkApi.writeResponse(vid, response);
       this.notificationService.showNotificationBasedOnEither(res, "Vote Submitted");
     })
   }
