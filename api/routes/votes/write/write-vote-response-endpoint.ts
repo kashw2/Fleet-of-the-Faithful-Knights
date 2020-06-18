@@ -7,7 +7,7 @@ import {Database} from "../../../db/database";
 export class WriteVoteResponseEndpoint extends GetEndpoint {
 
     constructor(readonly db: Database) {
-        super("/vote/response/:voteid/:userid/:response", db);
+        super("/vote/response/:voteid/:response", db);
     }
 
     private getOnboardedResponse(req: Request): Either<string, string> {
@@ -27,10 +27,6 @@ export class WriteVoteResponseEndpoint extends GetEndpoint {
         return ApiUtils.parseStringFromPath(req, "response");
     }
 
-    private getUserId(req: Request): Either<string, number> {
-        return ApiUtils.parseNumberFromPath(req, "userid");
-    }
-
     private getVoteId(req: Request): Either<string, number> {
         return ApiUtils.parseNumberFromPath(req, "voteid");
     }
@@ -44,9 +40,9 @@ export class WriteVoteResponseEndpoint extends GetEndpoint {
         Either.map3(
             this.getOnboardedResponse(req),
             this.getVoteId(req),
-            this.getUserId(req),
-            (response, vid, uid) => {
-                ApiUtils.sendResultPromise(this.db.procedures.insert.insertVoteResponse(vid, uid, response), res);
+            this.getApiUser(req, this.db),
+            (response, vid, user) => {
+                user.getId().map(uid => ApiUtils.sendResultPromise(this.db.procedures.insert.insertVoteResponse(vid, uid, response), res));
                 this.db.cache.cacheVotes();
             });
     }
