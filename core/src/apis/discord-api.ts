@@ -1,7 +1,6 @@
 import {Api} from "../models/api";
 import {Url} from "../models/url";
 import {Either, Left} from "funfix-core";
-import {EitherUtils} from "..";
 import {DiscordGuild, DiscordGuildJsonSerializer} from "../models/discord/discord-guild";
 import {DiscordGuildMember, DiscordGuildMemberJsonSerializer} from "../models/discord/discord-guild-member";
 import {List} from "immutable";
@@ -9,12 +8,18 @@ import {DiscordUser, DiscordUserJsonSerilaizer} from "../models/discord/discord-
 import {DiscordOAuthResponse, DiscordOAuthResponseJsonSerializer} from "../models/discord/discord-oauth-response";
 import * as querystring from "querystring";
 import {DiscordChannel, DiscordChannelJsonSerializer} from "../models/discord/discord-channel";
+import {DiscordMessage, DiscordMessageJsonSerializer} from "../models/discord/discord-message";
+import {EitherUtils} from "../util/either-utils";
 
 export class DiscordApi {
 
     public static instance: DiscordApi = new DiscordApi();
 
     private api: Api = new Api(Url.buildFromUri(this.getDiscordApiUrl()));
+
+    static getFfkGeneralChannel(): string {
+        return "539188746114039820";
+    }
 
     getCurrentUser(accessToken: string): Promise<Either<string, DiscordUser>> {
         return this.api.sendRequestSerialized(
@@ -59,7 +64,7 @@ export class DiscordApi {
         if (this.getDiscordPanelBotToken().isRight()) {
             return {
                 Authorization: `Bot ${this.getDiscordPanelBotToken().get()}`,
-            }
+            };
         }
         throw new Error(this.getDiscordPanelBotToken().value);
     }
@@ -118,16 +123,16 @@ export class DiscordApi {
         return EitherUtils.liftEither(process.env.FFK_PANEL_ADDRESS!, "FFK_PANEL_ADDRESS is undefined");
     }
 
-    listChannelMessages(channelId: string): Promise<Either<string, List<DiscordChannel>>> {
+    listChannelMessages(channelId: string): Promise<Either<string, List<DiscordMessage>>> {
         return this.api.sendRequestSerializedList(
             `/channels/${channelId}/messages`,
-            DiscordChannelJsonSerializer.instance,
+            DiscordMessageJsonSerializer.instance,
             this.getHeaders(),
             "GET",
         )
     }
 
-    private listGuildChannels(guildId: string = this.getFfkGuildId()): Promise<Either<string, List<DiscordChannel>>> {
+    listGuildChannels(guildId: string = this.getFfkGuildId()): Promise<Either<string, List<DiscordChannel>>> {
         return this.api.sendRequestSerializedList(
             `/guilds/${guildId}/channels`,
             DiscordChannelJsonSerializer.instance,

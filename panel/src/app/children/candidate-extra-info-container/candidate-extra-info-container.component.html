@@ -23,6 +23,20 @@
       </div>
     </div>
   </div>
+  <div class="overflow-x-hidden overflow-y-auto pr-4 mh-60">
+    <div *ngFor="let message of getDiscordMessages()" class="row my-2">
+      <div class="col pr-0">
+        <app-message-container
+          *ngIf="isDiscordSelected()"
+          [input]="message"
+          [authorExtractor]="discordMessageAuthorExtractor"
+          [dateExtractor]="discordMessageDateExtractor"
+          [messageExtractor]="discordMessageExtractor"
+          class="my-1"
+        ></app-message-container>
+      </div>
+    </div>
+  </div>
   <div *ngIf="isCommentSelected()" class="row">
     <div class="md-form w-100 mb-0">
       <textarea mdbInput id="comment" class="md-textarea form-control" (keyup)="updateComment($event)"></textarea>

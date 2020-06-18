@@ -1,10 +1,11 @@
 // Apis
-export * from "./apis/discord-api"
+export * from "./apis/discord-api";
+export * from "./apis/ffk-api";
 // Misc
-export * from "./misc/ffk-api"
 export * from "./misc/json-builder";
 export * from "./misc/json-keys";
 export * from "./misc/simple-json-serializer";
+export * from "./misc/type-defs";
 // Models
 export * from "./models/db/db-candidate";
 export * from "./models/db/db-comment";

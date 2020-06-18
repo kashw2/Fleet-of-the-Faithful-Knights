@@ -8,9 +8,11 @@ import {Comment} from "../../../../../core/src/models/comment";
 import {MomentUtils} from "../../../../../core/src/util/moment-utils";
 import {BehaviorSubject} from "rxjs";
 import {FfkApiService} from "../../services/ffk-api.service";
-import {User} from "../../../../../core/src";
+import {DiscordApi, EitherUtils, User} from "../../../../../core/src";
 import {NotificationService} from "../../services/notification.service";
 import {Candidate} from "../../../../../core/src/models/candidate";
+import {DiscordApiService} from "../../services/discord-api.service";
+import {DiscordMessage} from "../../../../../core/src/models/discord/discord-message";
 
 @Component({
   selector: "app-candidate-extra-info-container",
@@ -24,6 +26,7 @@ export class CandidateExtraInfoContainerComponent implements OnInit {
     private userStateService: UserStateService,
     private notificationService: NotificationService,
     private ffkApi: FfkApiService,
+    private discordApi: DiscordApiService,
   ) {
   }
 
@@ -32,6 +35,12 @@ export class CandidateExtraInfoContainerComponent implements OnInit {
   authorExtractor = (c: Comment) => c.getUsername();
 
   dateExtractor = (c: Comment) => c.getCreatedDate().map(d => MomentUtils.formatString(d, "DMYHM"));
+
+  discordMessageAuthorExtractor = (m: DiscordMessage) => m.getAuthor();
+
+  discordMessageDateExtractor = (m: DiscordMessage) => m.getTimestamp();
+
+  discordMessageExtractor = (m: DiscordMessage) => m.getContent();
 
   getCandidate(): Option<Candidate> {
     return this.getVote()
@@ -53,13 +62,28 @@ export class CandidateExtraInfoContainerComponent implements OnInit {
       .getValue();
   }
 
+  getDiscordMessages(): List<DiscordMessage> {
+    return this.userStateService.getDiscordMessages();
+  }
+
   getUser(): Option<User> {
     return this.userStateService
       .getUser();
   }
 
+  getUserDiscordDiscriminator(): Option<string> {
+    return this.getUser()
+      .flatMap(u => u.getDiscriminator());
+  }
+
+  getUserDiscordId(): Option<string> {
+    return this.getUser()
+      .flatMap(u => u.getDiscordId());
+  }
+
   getVote(): Option<Vote> {
-    return this.viewStateService.getSelectedVote();
+    return this.viewStateService
+      .getSelectedVote();
   }
 
   getVoteComments(): List<Comment> {
@@ -91,6 +115,23 @@ export class CandidateExtraInfoContainerComponent implements OnInit {
   messageExtractor = (c: Comment) => c.getContent();
 
   ngOnInit(): void {
+    // this.processDiscordMessages();
+  }
+
+  async processDiscordMessages(): Promise<void> {
+    const channels = await this.discordApi.listGuildChannels()
+    EitherUtils.toList(channels)
+      .map(channel => {
+        return Option.map3(
+          channel.getId(),
+          this.getUserDiscordId(),
+          this.getUserDiscordDiscriminator(),
+          async (cid, udid, ud) => {
+            const userMessages = await this.discordApi.listChannelMessageByDiscordUser(cid, udid, ud);
+            this.userStateService.discordMessages.next(userMessages.getOrElse(List()));
+            this.notificationService.showNotificationBasedOnEither(userMessages, "Loaded Discord Messages");
+          });
+      })
   }
 
   setCandidateExtraInfoViewIndex(index: number): void {
@@ -108,9 +149,9 @@ export class CandidateExtraInfoContainerComponent implements OnInit {
       this.getVoteId(),
       this.getCandidateUsername(),
       async (comment, user, vid, candidate) => {
-      const vote = await this.ffkApi.writeVoteComment(Comment.forCommentWriting(comment, user), vid);
-      this.notificationService.showNotificationBaseOnEitherEffector(vote, () => `Successfully Commented On ${candidate}'s Vote`);
-    });
+        const vote = await this.ffkApi.writeComment( vid, Comment.forCommentWriting(comment, user));
+        this.notificationService.showNotificationBaseOnEitherEffector(vote, () => `Successfully Commented On ${candidate}'s Vote`);
+      });
   }
 
 }

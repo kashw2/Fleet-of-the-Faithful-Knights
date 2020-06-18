@@ -10,7 +10,6 @@ import {ReadUserByTokenEndpoint} from "./users/read/read-user-by-token-endpoint"
 import {ReadUserByUsernameEndpoint} from "./users/read/read-user-by-username-endpoint";
 import {UserRegisterEndpoint} from "./users/write/user-register-endpoint";
 import {ListRecentVotesEndpoint} from "./votes/list/list-recent-votes-endpoint";
-import {ListVotesByTypeEndpoint} from "./votes/list/list-votes-by-type-endpoint";
 import {ListVotesBySponsorEndpoint} from "./votes/list/list-votes-by-sponsor-endpoint";
 import {ListVotesEndpoint} from "./votes/list/list-votes-endpoint";
 import {ListVotesPassedEndpoint} from "./votes/list/list-votes-passed-endpoint";
@@ -31,7 +30,6 @@ export class AllEndpoints {
         new ReadVoteByIdEndpoint(db).routeEndpoint(router);
         new ListVotesBySponsorEndpoint(db).routeEndpoint(router);
         new ListVotesPassedEndpoint(db).routeEndpoint(router);
-        new ListVotesByTypeEndpoint(db).routeEndpoint(router);
         new ListRecentVotesEndpoint(db).routeEndpoint(router);
         new WriteVoteEndpoint(db).routeEndpoint(router);
         new WriteCandidatesEndpoint(db).routeEndpoint(router);

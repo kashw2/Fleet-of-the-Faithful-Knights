@@ -42,7 +42,7 @@ export class CreateVoteModalComponent implements OnInit {
       this.getPromotionGroup(),
       this.getNotes(),
       async (candidate, sponsor, group, notes) => {
-        const vote = await this.ffkApi.writeCandidateVote(Vote.forVoteCreation(candidate, sponsor, group, notes));
+        const vote = await this.ffkApi.writeVote(Vote.forVoteCreation(candidate, sponsor, group, notes));
         this.notificationService.showNotificationBaseOnEitherEffector(vote, value => `Created Vote ${value}`)
         this.userStateService.candidates.next(this.getCandidates().push(candidate));
       })
