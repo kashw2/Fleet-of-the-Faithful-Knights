@@ -1,11 +1,10 @@
-import {Either, Left, Right} from "funfix-core";
+import {Either, Left, Right, Some} from "funfix-core";
 import {Url} from "./url";
 import {SimpleJsonSerializer} from "../misc/simple-json-serializer";
 import axios, {AxiosError} from "axios";
 import {List} from "immutable";
-import {Primitive} from "../misc/type-defs";
-
-type Method = "POST" | "GET";
+import {Primitive, Method} from "../misc/type-defs";
+import {parseNumber, parseString} from "..";
 
 export class Api {
 
@@ -66,7 +65,44 @@ export class Api {
             .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
     }
 
-    sendGetRequestPrimitive<T>(
+    private sendGetRequestNumber(
+        location: string,
+        headers: object = this.getHeaders(),
+    ): Promise<Either<string, number>> {
+        return axios.get(this.getBaseUrl().concat(location), {
+                headers,
+            },
+        )
+            .then(x => {
+                if (this.isFailureStatusCode(x.status)) {
+                    return Left(`${x.status}: ${x.statusText} - ${x.data}`);
+                }
+                return Right(parseNumber(x).get());
+            })
+            // @ts-ignore
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
+    }
+
+    private sendGetRequestNumberList<T>(
+        location: string,
+        headers: object = this.getHeaders(),
+        body?: unknown
+    ): Promise<Either<string, List<number>>> {
+        return axios.get(this.getBaseUrl().concat(location),  {
+                headers,
+            },
+        )
+            .then(x => {
+                if (this.isFailureStatusCode(x.status)) {
+                    return Left(`${x.status}: ${x.statusText} - ${x.data}`);
+                }
+                return Right(List(x.data).map(val => parseNumber(Some(val)).value!));
+            })
+            // @ts-ignore
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
+    }
+
+    private sendGetRequestPrimitive<T>(
         location: string,
         headers: object = this.getHeaders(),
     ): Promise<Either<string, Primitive>> {
@@ -84,6 +120,7 @@ export class Api {
             .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
     }
 
+
     private sendGetRequestSerialized<T>(
         location: string,
         serializer: SimpleJsonSerializer<T>,
@@ -98,6 +135,24 @@ export class Api {
                     return Left(`${x.status}: ${x.statusText} - ${x.data}`);
                 }
                 return Right(serializer.fromJson(x.data));
+            })
+            // @ts-ignore
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
+    }
+
+    private sendGetRequestString(
+        location: string,
+        headers: object = this.getHeaders(),
+    ): Promise<Either<string, string>> {
+        return axios.get(this.getBaseUrl().concat(location), {
+                headers,
+            },
+        )
+            .then(x => {
+                if (this.isFailureStatusCode(x.status)) {
+                    return Left(`${x.status}: ${x.statusText} - ${x.data}`);
+                }
+                return Right(parseString(x).value!);
             })
             // @ts-ignore
             .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
@@ -122,7 +177,45 @@ export class Api {
             .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
     }
 
-    sendPostRequestPrimitive<T>(
+    private sendPostRequestNumber<T>(
+        location: string,
+        headers: object = this.getHeaders(),
+        body?: unknown
+    ): Promise<Either<string, number>> {
+        return axios.post(this.getBaseUrl().concat(location), body, {
+                headers,
+            },
+        )
+            .then(x => {
+                if (this.isFailureStatusCode(x.status)) {
+                    return Left(`${x.status}: ${x.statusText} - ${x.data}`);
+                }
+                return Right(parseNumber(x.data).value!);
+            })
+            // @ts-ignore
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.message}`));
+    }
+
+    private sendPostRequestNumberList<T>(
+        location: string,
+        headers: object = this.getHeaders(),
+        body?: unknown
+    ): Promise<Either<string, List<number>>> {
+        return axios.post(this.getBaseUrl().concat(location), body, {
+                headers,
+            },
+        )
+            .then(x => {
+                if (this.isFailureStatusCode(x.status)) {
+                    return Left(`${x.status}: ${x.statusText} - ${x.data}`);
+                }
+                return Right(List(x.data).map(val => parseNumber(Some(val)).value!));
+            })
+            // @ts-ignore
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
+    }
+
+    private sendPostRequestPrimitive<T>(
         location: string,
         headers: object = this.getHeaders(),
         body?: unknown,
@@ -157,6 +250,57 @@ export class Api {
             })
             // @ts-ignore
             .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
+    }
+
+    private sendPostRequestString<T>(
+        location: string,
+        headers: object = this.getHeaders(),
+        body?: unknown
+    ): Promise<Either<string, string>> {
+        return axios.post(this.getBaseUrl().concat(location), body, {
+                headers,
+            },
+        )
+            .then(x => {
+                if (this.isFailureStatusCode(x.status)) {
+                    return Left(`${x.status}: ${x.statusText} - ${x.data}`);
+                }
+                return Right(parseString(x.data).value!);
+            })
+            // @ts-ignore
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
+    }
+
+    sendRequestNumber<T>(
+        location: string,
+        headers: object = this.getHeaders(),
+        method: Method,
+        body?: unknown,
+    ): Promise<Either<string, number>> {
+        switch (method) {
+            case "GET":
+                return this.sendGetRequestNumber(location, headers);
+            case "POST":
+                return this.sendPostRequestNumber(location, headers, body);
+            default:
+                throw new Error(`Unsupported method type '${method}'`);
+        }
+    }
+
+    sendRequestNumberList<T>(
+        location: string,
+        headers: object = this.getHeaders(),
+        method: Method,
+        body?: unknown,
+    ): Promise<Either<string, List<number>>> {
+        switch (method) {
+            case "GET":
+                return this.sendGetRequestNumberList(location, headers);
+            case "POST":
+                return this.sendPostRequestNumberList(location, headers, body);
+            default:
+                throw new Error(`Unsupported method type '${method}'`);
+        }
     }
 
     // This method is meant to be used in the context of a Monad as it can return a Right of Primitive
@@ -208,6 +352,22 @@ export class Api {
                 return this.sendPostRequestListSerialized(location, serializer, headers, body);
             default:
                 throw new Error(`Unsupported method type '${method}'`)
+        }
+    }
+
+    sendRequestString<T>(
+        location: string,
+        headers: object = this.getHeaders(),
+        method: Method,
+        body?: unknown,
+    ): Promise<Either<string, string>> {
+        switch (method) {
+            case "GET":
+                return this.sendGetRequestString(location, headers);
+            case "POST":
+                return this.sendPostRequestString(location, headers, body);
+            default:
+                throw new Error(`Unsupported method type '${method}'`);
         }
     }
 
