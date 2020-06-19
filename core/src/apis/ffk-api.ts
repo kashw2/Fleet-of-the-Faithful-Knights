@@ -107,6 +107,15 @@ export class FfkApi {
         );
     }
 
+    listUsers(): Promise<Either<string, List<User>>> {
+        return this.api.sendRequestSerializedList(
+            "/users",
+            UserJsonSerializer.instance,
+            this.getHeaders(),
+            "GET",
+        );
+    }
+
     listUsersByGroup(group: string): Promise<Either<string, List<User>>> {
         return this.api.sendRequestSerializedList(
             `/users/${group}`,

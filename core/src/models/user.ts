@@ -30,6 +30,20 @@ export class User {
     ) {
     }
 
+    public static withoutToken(user: User): User {
+        return new User(
+            user.getId(),
+            user.getDiscordId(),
+            user.getUsername(),
+            user.getLocale(),
+            user.getAvatar(),
+            None,
+            user.getDiscriminator(),
+            user.getGroup(),
+            user.getMemberSince(),
+        );
+    }
+
     public getAvatar(): Option<string> {
         return this.avatar;
     }

@@ -45,4 +45,13 @@ export class UserCache {
         return EitherUtils.liftEither(this.getUsers().filter(user => user.getGroup().contains(group)), `unable to find any users with the ${group} group`);
     }
 
+    getUsersEither(): Either<string, List<User>> {
+        return EitherUtils.liftEither(this.getUsers(), "user cache is empty");
+    }
+
+    getUsersWithoutToken(): Either<string, List<User>> {
+        return EitherUtils.liftEither(this.getUsers()
+            .map(user => User.withoutToken(user)), "unable to retrieve users");
+    }
+
 }
