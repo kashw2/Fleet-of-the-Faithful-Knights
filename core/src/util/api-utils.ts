@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
-import {Collection, List} from "immutable";
+import {Collection, List, Set} from "immutable";
 import {parseBoolean, SimpleJsonSerializer} from "..";
 import {EitherUtils} from "./either-utils";
 

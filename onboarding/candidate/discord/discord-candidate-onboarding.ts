@@ -1,16 +1,15 @@
 import {Either} from "funfix-core";
 import {List} from "immutable";
-import {EitherUtils} from "../../../core/src";
+import {EitherUtils, FfkApi} from "../../../core/src";
 import {Candidate} from "../../../core/src/models/candidate";
 import {DiscordGuild} from "../../../core/src/models/discord/discord-guild";
 import {CandidateOnboarding} from "../candidate-onboarding";
-import {FfkApi} from "../../../core/src/misc/ffk-api";
 import {Onboarding} from "../../onboarding";
-import { DiscordApi } from "../../../core/src/apis/discord-api";
+import {DiscordApi} from "../../../core/src/apis/discord-api";
 
 export class DiscordCandidateOnboarding extends CandidateOnboarding {
 
-    constructor(private ffkApi: FfkApi) {
+    constructor() {
         super();
     }
 
@@ -27,7 +26,7 @@ export class DiscordCandidateOnboarding extends CandidateOnboarding {
     }
 
     private appropiateLimit(memberCount: number): number {
-        if(memberCount >= 1000) {
+        if (memberCount >= 1000) {
             return Math.round(memberCount / 1000);
         }
         return 1000;
@@ -41,9 +40,9 @@ export class DiscordCandidateOnboarding extends CandidateOnboarding {
 
     async onboard(): Promise<void> {
         this.listCandidates()
-            .then(cs => {
-                const candidates = EitherUtils.toList(cs);
-                Onboarding.ffkApi.writeCandidates(candidates);
+            .then(async cs => {
+                const candidates = await this.listMissingCandidates(EitherUtils.toList(cs))
+                FfkApi.instance.writeCandidates(EitherUtils.toList(candidates));
             });
     }
 

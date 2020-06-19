@@ -79,6 +79,16 @@ export class FfkApi {
         );
     }
 
+    listMissingCandidates(candidates: List<Candidate>): Promise<Either<string, List<Candidate>>> {
+        return this.api.sendRequestSerializedList(
+            "/candidates/missing",
+            CandidateJsonSerializer.instance,
+            this.getHeaders(),
+            "POST",
+            {candidates: CandidateJsonSerializer.instance.toJsonArray(candidates)},
+        )
+    }
+
     listNews(): Promise<Either<string, List<News>>> {
         return this.api.sendRequestSerializedList(
             "/news",
