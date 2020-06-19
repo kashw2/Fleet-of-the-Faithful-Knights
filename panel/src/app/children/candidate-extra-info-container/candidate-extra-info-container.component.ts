@@ -150,7 +150,7 @@ export class CandidateExtraInfoContainerComponent implements OnInit {
       this.getCandidateUsername(),
       async (comment, user, vid, candidate) => {
         const vote = await this.ffkApi.writeComment( vid, Comment.forCommentWriting(comment, user));
-        this.notificationService.showNotificationBaseOnEitherEffector(vote, () => `Successfully Commented On ${candidate}'s Vote`);
+        this.notificationService.showNotificationBasedOnEitherEffector(vote, () => `Successfully Commented On ${candidate}'s Vote`);
       });
   }
 
