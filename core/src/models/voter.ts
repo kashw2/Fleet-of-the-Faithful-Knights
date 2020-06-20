@@ -8,9 +8,9 @@ import {User, UserJsonSerializer} from "./user";
 export class Voter {
 
     constructor(
-        readonly id: Option<number> = None,
-        readonly user: Option<User> = None,
-        readonly response: Option<string> = None,
+        private id: Option<number> = None,
+        private user: Option<User> = None,
+        private response: Option<string> = None,
     ) {
     }
 

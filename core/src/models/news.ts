@@ -8,11 +8,11 @@ import {User, UserJsonSerializer} from "./user";
 export class News {
 
     constructor(
-        readonly id: Option<number> = None,
-        readonly user: Option<User> = None,
-        readonly content: Option<string> = None,
-        readonly title: Option<string> = None,
-        readonly date: Option<string> = None, // TODO: Use MomentJS data structure
+        private id: Option<number> = None,
+        private user: Option<User> = None,
+        private content: Option<string> = None,
+        private title: Option<string> = None,
+        private date: Option<string> = None, // TODO: Use MomentJS data structure
     ) {
     }
 
