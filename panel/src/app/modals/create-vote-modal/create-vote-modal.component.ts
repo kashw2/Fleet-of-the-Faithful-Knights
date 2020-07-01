@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {None, Option} from "funfix-core";
 import {List} from "immutable";
-import {User} from "../../../../../core/src";
+import {CandidateJsonSerializer, User} from "../../../../../core/src";
 import {Candidate} from "../../../../../core/src/models/candidate";
 import {GroupUtils} from "../../../../../core/src/util/group-utils";
 import {UserStateService} from "../../services/user-state.service";
@@ -86,6 +86,12 @@ export class CreateVoteModalComponent implements OnInit {
   }
 
   updateCandidate(candidate: Candidate): void {
+    this.candidate.next(Option.of(candidate));
+  }
+
+  updateCandidateViaSelect(event): void {
+    const candidate = this.getCandidates()
+      .find(c => c.getId().contains(+event.target.selectedOptions[0].dataset.value));
     this.candidate.next(Option.of(candidate));
   }
 
