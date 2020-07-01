@@ -1,0 +1,12 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col pl-0 mt-2">
+      <app-checkbox
+        *ngFor="let permission of getUserPermissions()"
+        [input]="permission"
+        [labelExtractor]="labelExtractor"
+        [descriptionExtractor]="descriptionExtractor"
+      ></app-checkbox>
+    </div>
+  </div>
+</div>

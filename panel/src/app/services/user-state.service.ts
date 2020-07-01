@@ -21,6 +21,7 @@ export class UserStateService {
   discordMessages: BehaviorSubject<List<DiscordMessage>> = new BehaviorSubject<List<DiscordMessage>>(List());
   news: BehaviorSubject<List<News>> = new BehaviorSubject<List<News>>(List());
   user: BehaviorSubject<Option<User>> = new BehaviorSubject<Option<User>>(None);
+  users: BehaviorSubject<List<User>> = new BehaviorSubject<List<User>>(List());
   votes: BehaviorSubject<List<Vote>> = new BehaviorSubject<List<Vote>>(List());
 
   getCandidates(): List<Candidate> {
@@ -44,6 +45,11 @@ export class UserStateService {
 
   getUser(): Option<User> {
     return this.user
+      .getValue();
+  }
+
+  getUsers(): List<User> {
+    return this.users
       .getValue();
   }
 

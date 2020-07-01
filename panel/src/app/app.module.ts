@@ -17,9 +17,12 @@ import {MainPageComponent} from "./pages/main-page/main-page.component";
 import {ProfilePageComponent} from "./pages/profile-page/profile-page.component";
 import {VotesPageComponent} from "./pages/votes-page/votes-page.component";
 import {NotificationService} from "./services/notification.service";
-import { VotePageComponent } from './pages/vote-page/vote-page.component';
-import { CandidateExtraInfoContainerComponent } from './children/candidate-extra-info-container/candidate-extra-info-container.component';
-import { MessageContainerComponent } from './components/message-container/message-container.component';
+import {VotePageComponent} from "./pages/vote-page/vote-page.component";
+import {CandidateExtraInfoContainerComponent} from "./children/candidate-extra-info-container/candidate-extra-info-container.component";
+import {MessageContainerComponent} from "./components/message-container/message-container.component";
+import {AdminPageComponent} from "./pages/admin-page/admin-page.component";
+import { AdminContainerComponent } from './components/admin-container/admin-container.component';
+import { CheckboxComponent } from './components/checkbox/checkbox.component';
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -36,6 +39,9 @@ import { MessageContainerComponent } from './components/message-container/messag
     VotePageComponent,
     CandidateExtraInfoContainerComponent,
     MessageContainerComponent,
+    AdminPageComponent,
+    AdminContainerComponent,
+    CheckboxComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),

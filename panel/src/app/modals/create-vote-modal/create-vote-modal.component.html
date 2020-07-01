@@ -3,10 +3,10 @@
     <h4 class="modal-title text-center font-weight-normal">Create Vote</h4>
   </div>
   <div class="modal-body">
-    <select mdbInput name="candidate-select" class="custom-select text-center my-4">
+    <select mdbInput name="candidate-select" class="text-center my-4">
       <option *ngFor="let candidate of getCandidates()" (click)="updateCandidate(candidate)">{{candidate.getDiscordUsername().get()}}</option>
     </select>
-    <select mdbInput name="group-select" class="custom-select text-center my-4">
+    <select mdbInput name="group-select" class="text-center my-4">
       <option *ngIf="canCreateVoteForGroup('Grand Master')" value="Grand Master" (click)="updatePromotionGroup($event)">Grand Master</option>
       <option *ngIf="canCreateVoteForGroup('Master Commander')" value="Master Commander" (click)="updatePromotionGroup($event)">Master Commander</option>
       <option *ngIf="canCreateVoteForGroup('Knight Commander')" value="Knight Commander" (click)="updatePromotionGroup($event)">Knight Commander</option>

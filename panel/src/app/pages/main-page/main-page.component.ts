@@ -35,7 +35,7 @@ export class MainPageComponent implements OnInit {
           code.map(c => this.ffkApiService.loginOrRegisterUser(c))
             .map(async x => {
               const awaitedUser = await x;
-              this.notificationService.showNotificationBaseOnEitherEffector(awaitedUser, user => `Welcome ${user.getUsername().getOrElse("User")}`);
+              this.notificationService.showNotificationBasedOnEitherEffector(awaitedUser, user => `Welcome ${user.getUsername().getOrElse("User")}`);
               this.userStateService.user.next(awaitedUser.toOption());
             });
         });
@@ -43,7 +43,7 @@ export class MainPageComponent implements OnInit {
     if (!this.userStateService.isLoggedIn() && this.userStateService.isCookieSet()) {
       this.ffkApiService.getUserByToken(this.userStateService.getCookieToken())
         .then(userByToken => {
-          this.notificationService.showNotificationBaseOnEitherEffector(userByToken, user => `Welcome ${user.getUsername().getOrElse("User")}`);
+          this.notificationService.showNotificationBasedOnEitherEffector(userByToken, user => `Welcome ${user.getUsername().getOrElse("User")}`);
           this.userStateService.user.next(userByToken.toOption());
         });
     }
@@ -56,19 +56,19 @@ export class MainPageComponent implements OnInit {
 
   private async populateCandidates(): Promise<void> {
     const candidates = await this.ffkApiService.listCandidates();
-    this.notificationService.showNotificationBaseOnEitherEffector(candidates, values => `Loaded ${values.size} Candidates`)
+    this.notificationService.showNotificationBasedOnEitherEffector(candidates, values => `Loaded ${values.size} Candidates`)
       .map(cs => this.userStateService.candidates.next(cs));
   }
 
   private async populateNews(): Promise<void> {
     const news = await this.ffkApiService.listNews();
-    this.notificationService.showNotificationBaseOnEitherEffector(news, values => `Loaded ${values.size} Articles`)
+    this.notificationService.showNotificationBasedOnEitherEffector(news, values => `Loaded ${values.size} Articles`)
       .map(articles => this.userStateService.news.next(articles));
   }
 
   private async populateVotes(): Promise<void> {
     const votes = await this.ffkApiService.listVotes();
-    this.notificationService.showNotificationBaseOnEitherEffector(votes, values => `Loaded ${values.size} Votes`)
+    this.notificationService.showNotificationBasedOnEitherEffector(votes, values => `Loaded ${values.size} Votes`)
       .map(vs => this.userStateService.votes.next(vs));
   }
 
