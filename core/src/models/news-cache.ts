@@ -2,7 +2,6 @@ import {Either} from "funfix-core";
 import {List} from "immutable";
 import {EitherUtils} from "..";
 import {News} from "./news";
-import {User} from "./user";
 
 // Partial builder pattern implementation
 

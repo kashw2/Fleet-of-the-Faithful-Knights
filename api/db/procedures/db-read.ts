@@ -6,6 +6,7 @@ import {Comment, CommentJsonSerializer} from "../../../core/src/models/comment";
 import {News, NewsJsonSerializer} from "../../../core/src/models/news";
 import {Vote, VoteJsonSerializer} from "../../../core/src/models/vote";
 import {DbRequest} from "../db-request";
+import {Permission, PermissionJsonSerializer} from "../../../core/src/models/permission";
 
 export class DbRead {
 
@@ -18,6 +19,10 @@ export class DbRead {
 
     getNews(): Promise<Either<string, List<News>>> {
         return this.requests.sendRequestListSerialized("ssp_json_GetNews", List.of(), NewsJsonSerializer.instance);
+    }
+
+    getPermissions(): Promise<Either<string, List<Permission>>> {
+        return this.requests.sendRequestListSerialized("ssp_json_GetPermissions", List.of(), PermissionJsonSerializer.instance);
     }
 
     getUsers(): Promise<Either<string, List<User>>> {

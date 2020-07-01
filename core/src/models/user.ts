@@ -7,26 +7,30 @@ import {
     idKey,
     localeKey,
     memberSinceKey,
+    permissionsKey,
     tokenKey,
     usernameKey
 } from "../misc/json-keys";
-import {parseNumber, parseString} from "../util/object-utils";
+import {parseNumber, parseSerializedList, parseString} from "../util/object-utils";
 import {JsonBuilder} from "../misc/json-builder";
 import {SimpleJsonSerializer} from "../misc/simple-json-serializer";
+import {List} from "immutable";
+import {Permission, PermissionJsonSerializer} from "./permission";
 
 
 export class User {
 
     constructor(
-        readonly id: Option<number> = None,
-        readonly discordId: Option<string> = None,
-        readonly username: Option<string> = None,
-        readonly locale: Option<string> = Some("en-US"),
-        readonly avatar: Option<string> = None,
-        readonly token: Option<string> = None,
-        readonly discriminator: Option<string> = None,
-        readonly group: Option<string> = None,
-        readonly memberSince: Option<string> = None,
+        private id: Option<number> = None,
+        private discordId: Option<string> = None,
+        private discriminator: Option<string> = None,
+        private username: Option<string> = None,
+        private locale: Option<string> = Some("en-US"),
+        private avatar: Option<string> = None,
+        private token: Option<string> = None,
+        private group: Option<string> = None,
+        private permissions: List<Permission> = List(),
+        private memberSince: Option<string> = None,
     ) {
     }
 
@@ -34,12 +38,13 @@ export class User {
         return new User(
             user.getId(),
             user.getDiscordId(),
+            user.getDiscriminator(),
             user.getUsername(),
             user.getLocale(),
             user.getAvatar(),
             None,
-            user.getDiscriminator(),
             user.getGroup(),
+            user.getPermissions(),
             user.getMemberSince(),
         );
     }
@@ -72,12 +77,29 @@ export class User {
         return this.memberSince;
     }
 
+    public getPermissions(): List<Permission> {
+        return this.permissions;
+    }
+
     public getToken(): Option<string> {
         return this.token;
     }
 
     public getUsername(): Option<string> {
         return this.username;
+    }
+
+    public hasAllPermissions(...permissions: number[]): boolean {
+        return permissions.every(p => this.hasPermission(p));
+    }
+
+    public hasOneOfPermissions(...permissions: number[]): boolean {
+        return permissions.some(p => this.hasPermission(p));
+    }
+
+    public hasPermission(permission: number): boolean {
+        return this.getPermissions()
+            .every(p => p.getId().contains(permission));
     }
 
     public isCompanionAtArms(): boolean {
@@ -165,12 +187,13 @@ export class UserJsonSerializer extends SimpleJsonSerializer<User> {
         return new User(
             parseNumber(json[idKey]),
             parseString(json[discordIdKey]),
+            parseString(json[discriminatorKey]),
             parseString(json[usernameKey]),
             parseString(json[localeKey]),
             parseString(json[avatarKey]),
             parseString(json[tokenKey]),
-            parseString(json[discriminatorKey]),
             parseString(json[groupKey]),
+            parseSerializedList(json[permissionsKey], PermissionJsonSerializer.instance),
             parseString(json[memberSinceKey]),
         );
     }
@@ -179,12 +202,13 @@ export class UserJsonSerializer extends SimpleJsonSerializer<User> {
         return builder
             .addOptional(value.getId(), idKey)
             .addOptional(value.getDiscordId(), discordIdKey)
-            .addOptional(value.getUsername(), usernameKey)
             .addOptional(value.getDiscriminator(), discriminatorKey)
+            .addOptional(value.getUsername(), usernameKey)
             .addOptional(value.getAvatar(), avatarKey)
             .addOptional(value.getToken(), tokenKey)
             .addOptional(value.getLocale(), localeKey)
             .addOptional(value.getGroup(), groupKey)
+            .addListSerialized(value.getPermissions(), permissionsKey, PermissionJsonSerializer.instance)
             .addOptional(value.getMemberSince(), memberSinceKey)
             .build();
     }

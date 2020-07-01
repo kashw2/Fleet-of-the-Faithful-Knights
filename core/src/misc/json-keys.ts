@@ -67,3 +67,5 @@ export const ttsKey = "tts";
 export const mentionEveryoneKey = "mention_everyone";
 export const mentionsKey = "mentions";
 export const mentionRolesKey = "mention_roles";
+export const labelKey = "label";
+export const descriptionKey = "description";

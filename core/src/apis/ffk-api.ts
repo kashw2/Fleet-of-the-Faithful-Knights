@@ -9,6 +9,7 @@ import {User, UserJsonSerializer} from "../models/user";
 import {Vote, VoteJsonSerializer} from "../models/vote";
 import {News, NewsJsonSerializer} from "../models/news";
 import {DiscordOAuthResponse, DiscordOAuthResponseJsonSerializer} from "..";
+import {Permission, PermissionJsonSerializer} from "../models/permission";
 
 export class FfkApi {
 
@@ -93,6 +94,15 @@ export class FfkApi {
         return this.api.sendRequestSerializedList(
             "/news",
             NewsJsonSerializer.instance,
+            this.getHeaders(),
+            "GET",
+        );
+    }
+
+    listPermissions(): Promise<Either<string, List<Permission>>> {
+        return this.api.sendRequestSerializedList(
+            "/permissions",
+            PermissionJsonSerializer.instance,
             this.getHeaders(),
             "GET",
         );
