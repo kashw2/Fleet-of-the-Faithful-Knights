@@ -27,6 +27,7 @@ export class Api {
             case 401:
             case 403:
             case 404:
+            case 409:
             case 429:
             case 500:
                 return false;
@@ -46,6 +47,26 @@ export class Api {
         }
     }
 
+    private sendGetRequestKeyParsable(
+        location: string,
+        headers: object = this.getHeaders(),
+        parser: (v: any) => any,
+        key: string,
+    ): Promise<Either<string, any>> {
+        return axios.get(this.getBaseUrl().concat(location), {
+                headers,
+            },
+        )
+            .then(x => {
+                if (this.isFailureStatusCode(x.status)) {
+                    return Left(`${x.status}: ${x.statusText} - ${x.data}`);
+                }
+                return Right(parser(x.data[key]).value!);
+            })
+            // @ts-ignore
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
+    }
+
     private sendGetRequestListSerialized<T>(
         location: string,
         serializer: SimpleJsonSerializer<T>,
@@ -62,7 +83,7 @@ export class Api {
                 return Right(serializer.fromJsonArray(x.data));
             })
             // @ts-ignore
-            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
     }
 
     private sendGetRequestNumber(
@@ -77,17 +98,17 @@ export class Api {
                 if (this.isFailureStatusCode(x.status)) {
                     return Left(`${x.status}: ${x.statusText} - ${x.data}`);
                 }
-                return Right(parseNumber(x).get());
+                return Right(parseNumber(x.data).get());
             })
             // @ts-ignore
-            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
     }
 
     private sendGetRequestNumberList<T>(
         location: string,
         headers: object = this.getHeaders(),
     ): Promise<Either<string, List<number>>> {
-        return axios.get(this.getBaseUrl().concat(location),  {
+        return axios.get(this.getBaseUrl().concat(location), {
                 headers,
             },
         )
@@ -98,7 +119,26 @@ export class Api {
                 return Right(List(x.data).map(val => parseNumber(Some(val)).value!));
             })
             // @ts-ignore
-            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
+    }
+
+    private sendGetRequestParsable(
+        location: string,
+        headers: object = this.getHeaders(),
+        parser: (v: any) => any,
+    ): Promise<Either<string, any>> {
+        return axios.get(this.getBaseUrl().concat(location), {
+                headers,
+            },
+        )
+            .then(x => {
+                if (this.isFailureStatusCode(x.status)) {
+                    return Left(`${x.status}: ${x.statusText} - ${x.data}`);
+                }
+                return Right(parser(x.data).value!);
+            })
+            // @ts-ignore
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
     }
 
     private sendGetRequestPrimitive<T>(
@@ -116,9 +156,8 @@ export class Api {
                 return Right(x.data);
             })
             // @ts-ignore
-            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
     }
-
 
     private sendGetRequestSerialized<T>(
         location: string,
@@ -136,7 +175,7 @@ export class Api {
                 return Right(serializer.fromJson(x.data));
             })
             // @ts-ignore
-            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
     }
 
     private sendGetRequestString(
@@ -151,10 +190,31 @@ export class Api {
                 if (this.isFailureStatusCode(x.status)) {
                     return Left(`${x.status}: ${x.statusText} - ${x.data}`);
                 }
-                return Right(parseString(x).value!);
+                return Right(parseString(x.data).value!);
             })
             // @ts-ignore
-            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
+    }
+
+    private sendPostRequestKeyParsable(
+        location: string,
+        headers: object = this.getHeaders(),
+        parser: (v: any) => any,
+        key: string,
+        body?: unknown,
+    ): Promise<Either<string, any>> {
+        return axios.post(this.getBaseUrl().concat(location), body, {
+                headers,
+            },
+        )
+            .then(x => {
+                if (this.isFailureStatusCode(x.status)) {
+                    return Left(`${x.status}: ${x.statusText} - ${x.data}`);
+                }
+                return Right(parser(x.data[key]).value!);
+            })
+            // @ts-ignore
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
     }
 
     private sendPostRequestListSerialized<T>(
@@ -173,13 +233,13 @@ export class Api {
                 return Right(serializer.fromJsonArray(x.data));
             })
             // @ts-ignore
-            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
     }
 
-    private sendPostRequestNumber<T>(
+    private sendPostRequestNumber(
         location: string,
         headers: object = this.getHeaders(),
-        body?: unknown
+        body?: unknown,
     ): Promise<Either<string, number>> {
         return axios.post(this.getBaseUrl().concat(location), body, {
                 headers,
@@ -192,7 +252,7 @@ export class Api {
                 return Right(parseNumber(x.data).value!);
             })
             // @ts-ignore
-            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.message}`));
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
     }
 
     private sendPostRequestNumberList<T>(
@@ -211,7 +271,27 @@ export class Api {
                 return Right(List(x.data).map(val => parseNumber(Some(val)).value!));
             })
             // @ts-ignore
-            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
+    }
+
+    private sendPostRequestParsable(
+        location: string,
+        headers: object = this.getHeaders(),
+        parser: (v: any) => any,
+        body?: unknown,
+    ): Promise<Either<string, any>> {
+        return axios.post(this.getBaseUrl().concat(location), body, {
+                headers,
+            },
+        )
+            .then(x => {
+                if (this.isFailureStatusCode(x.status)) {
+                    return Left(`${x.status}: ${x.statusText} - ${x.data}`);
+                }
+                return Right(parser(x.data).value!);
+            })
+            // @ts-ignore
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
     }
 
     private sendPostRequestPrimitive<T>(
@@ -229,7 +309,7 @@ export class Api {
                 return Right(x.data);
             })
             // @ts-ignore
-            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
     }
 
     private sendPostRequestSerialized<T>(
@@ -248,7 +328,7 @@ export class Api {
                 return Right(serializer.fromJson(x.data));
             })
             // @ts-ignore
-            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
     }
 
     private sendPostRequestString<T>(
@@ -267,7 +347,7 @@ export class Api {
                 return Right(parseString(x.data).value!);
             })
             // @ts-ignore
-            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText} - ${x.message}`));
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
     }
 
     sendRequestNumber<T>(
@@ -297,6 +377,41 @@ export class Api {
                 return this.sendGetRequestNumberList(location, headers);
             case "POST":
                 return this.sendPostRequestNumberList(location, headers, body);
+            default:
+                throw new Error(`Unsupported method type '${method}'`);
+        }
+    }
+
+    sendRequestKeyParsable(
+        location: string,
+        headers: object = this.getHeaders(),
+        method: Method,
+        parser: (v: any) => any,
+        key: string,
+        body?: unknown
+    ): Promise<Either<string, any>> {
+        switch (method) {
+            case "GET":
+                return this.sendGetRequestKeyParsable(location, headers, parser, key);
+            case "POST":
+                return this.sendPostRequestKeyParsable(location, headers, parser, key, body);
+            default:
+                throw new Error(`Unsupported method type '${method}'`);
+        }
+    }
+
+    sendRequestParsable(
+        location: string,
+        headers: object = this.getHeaders(),
+        method: Method,
+        parser: (v: any) => any,
+        body?: unknown
+    ): Promise<Either<string, any>> {
+        switch (method) {
+            case "GET":
+                return this.sendGetRequestParsable(location, headers, parser);
+            case "POST":
+                return this.sendPostRequestParsable(location, headers, parser, body);
             default:
                 throw new Error(`Unsupported method type '${method}'`);
         }

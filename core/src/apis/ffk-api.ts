@@ -8,7 +8,7 @@ import {Comment, CommentJsonSerializer} from "../models/comment";
 import {User, UserJsonSerializer} from "../models/user";
 import {Vote, VoteJsonSerializer} from "../models/vote";
 import {News, NewsJsonSerializer} from "../models/news";
-import {DiscordOAuthResponse, DiscordOAuthResponseJsonSerializer} from "..";
+import {DiscordOAuthResponse, DiscordOAuthResponseJsonSerializer, idKey, parseNumber} from "..";
 import {Permission, PermissionJsonSerializer} from "../models/permission";
 
 export class FfkApi {
@@ -192,10 +192,12 @@ export class FfkApi {
     }
 
     writeVote(vote: Vote): Promise<Either<string, number>> {
-        return this.api.sendRequestNumber(
+        return this.api.sendRequestKeyParsable(
             "/vote/write",
             this.getHeaders(),
             "POST",
+            parseNumber,
+            idKey,
             {vote: VoteJsonSerializer.instance.toJsonImpl(vote)},
         );
     }
