@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from "@angular/core";
-import {List} from "immutable";
 import {None, Option} from "funfix-core";
 
 @Component({

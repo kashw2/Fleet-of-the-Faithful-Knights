@@ -45,7 +45,11 @@ export class NotificationService {
   }
 
   // TODO: Merge this with showNotificationBasedOnEither()
-  showNotificationBaseOnEitherEffector<T>(e: Either<string, T>, f: (value: T) => string, timeout?: number): Option<T> {
+  showNotificationBasedOnEitherEffector<T>(e: Either<string, T>, f: (value: T) => string, timeout?: number): Option<T> {
+    if (e.isLeft()) {
+      this.showFailureNotification(e.value);
+      return None;
+    }
     return this.showNotificationBasedOnEither(e, f(e.get()), timeout);
   }
 

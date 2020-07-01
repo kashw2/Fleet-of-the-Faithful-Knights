@@ -1,0 +1,25 @@
+<div class="container-fluid mt-5 pt-2">
+  <div class="row">
+    <div class="col">
+      <h2 class="mb-0">Administration</h2>
+      <small *ngIf="getUsername().nonEmpty()">Should you be here <b>{{getUsername().get()}}</b>?</small>
+      <!-- TODO: When done, remove dev check -->
+      <div *ngIf="canViewDeveloperTab()" class="row">
+        <div class="col-auto">
+          <select class="border-information text-center">
+            <option selected hidden>Select User</option>
+            <option *ngFor="let user of getUsers()" (click)="updateUser(user)">{{user.getUsername().get()}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <app-admin-container
+            *ngIf="getSelectedUser().nonEmpty()"
+            [user]="getSelectedUser()"
+          ></app-admin-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

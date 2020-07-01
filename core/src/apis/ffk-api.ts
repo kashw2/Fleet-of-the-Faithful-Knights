@@ -8,7 +8,8 @@ import {Comment, CommentJsonSerializer} from "../models/comment";
 import {User, UserJsonSerializer} from "../models/user";
 import {Vote, VoteJsonSerializer} from "../models/vote";
 import {News, NewsJsonSerializer} from "../models/news";
-import {DiscordOAuthResponse, DiscordOAuthResponseJsonSerializer} from "..";
+import {DiscordOAuthResponse, DiscordOAuthResponseJsonSerializer, idKey, parseNumber} from "..";
+import {Permission, PermissionJsonSerializer} from "../models/permission";
 
 export class FfkApi {
 
@@ -79,6 +80,16 @@ export class FfkApi {
         );
     }
 
+    listMissingCandidates(candidates: List<Candidate>): Promise<Either<string, List<Candidate>>> {
+        return this.api.sendRequestSerializedList(
+            "/candidates/missing",
+            CandidateJsonSerializer.instance,
+            this.getHeaders(),
+            "POST",
+            {candidates: CandidateJsonSerializer.instance.toJsonArray(candidates)},
+        )
+    }
+
     listNews(): Promise<Either<string, List<News>>> {
         return this.api.sendRequestSerializedList(
             "/news",
@@ -88,10 +99,28 @@ export class FfkApi {
         );
     }
 
+    listPermissions(): Promise<Either<string, List<Permission>>> {
+        return this.api.sendRequestSerializedList(
+            "/permissions",
+            PermissionJsonSerializer.instance,
+            this.getHeaders(),
+            "GET",
+        );
+    }
+
     listRecentVotes(amount: number = 10): Promise<Either<string, List<Vote>>> {
         return this.api.sendRequestSerializedList(
             `/votes/recent/${amount}`,
             VoteJsonSerializer.instance,
+            this.getHeaders(),
+            "GET",
+        );
+    }
+
+    listUsers(): Promise<Either<string, List<User>>> {
+        return this.api.sendRequestSerializedList(
+            "/users",
+            UserJsonSerializer.instance,
             this.getHeaders(),
             "GET",
         );
@@ -163,10 +192,12 @@ export class FfkApi {
     }
 
     writeVote(vote: Vote): Promise<Either<string, number>> {
-        return this.api.sendRequestNumber(
+        return this.api.sendRequestKeyParsable(
             "/vote/write",
             this.getHeaders(),
             "POST",
+            parseNumber,
+            idKey,
             {vote: VoteJsonSerializer.instance.toJsonImpl(vote)},
         );
     }

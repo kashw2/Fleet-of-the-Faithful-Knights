@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import {BehaviorSubject} from "rxjs";
 import {None, Option, Some} from "funfix-core";
 import {Vote} from "../../../../core/src/models/vote";
+import {User} from "../../../../core/src";
 
 @Injectable({
   providedIn: "root",
@@ -11,11 +12,9 @@ export class ViewStateService {
   constructor() { }
 
   pageIndex: BehaviorSubject<number> = new BehaviorSubject<number>(1);
-
   selectedCandidateExtraInfoViewIndex: BehaviorSubject<Option<number>> = new BehaviorSubject<Option<number>>(Some(1));
-
+  selectedUser: BehaviorSubject<Option<User>> = new BehaviorSubject<Option<User>>(None);
   selectedVote: BehaviorSubject<Option<Vote>> = new BehaviorSubject<Option<Vote>>(None);
-
   votePageType: BehaviorSubject<string> = new BehaviorSubject<string>("All");
 
   getPageIndex(): number {
@@ -25,6 +24,11 @@ export class ViewStateService {
 
   getSelectedCandidateExtraInfoViewIndex(): Option<number> {
     return this.selectedCandidateExtraInfoViewIndex
+      .getValue();
+  }
+
+  getSelectedUser(): Option<User> {
+    return this.selectedUser
       .getValue();
   }
 

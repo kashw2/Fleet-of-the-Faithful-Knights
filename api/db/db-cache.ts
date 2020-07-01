@@ -5,6 +5,7 @@ import {CandidateCache} from "../../core/src/models/candidate-cache";
 import {NewsCache} from "../../core/src/models/news-cache";
 import {VoteCache} from "../../core/src/models/vote-cache";
 import {DbProcedures} from "./procedures/db-procedures";
+import {PermissionCache} from "../../core/src/models/permission-cache";
 
 export class DbCache {
 
@@ -17,6 +18,7 @@ export class DbCache {
 
     candidates: CandidateCache = new CandidateCache(List());
     news: NewsCache = new NewsCache(List());
+    permissions: PermissionCache = new PermissionCache(List());
     users: UserCache = new UserCache(List());
     votes: VoteCache = new VoteCache(List());
 
@@ -38,6 +40,16 @@ export class DbCache {
                     console.log(`Cached ${x.size} News Articles`);
                 });
             });
+    }
+
+    cachePermissions(): void {
+        this.procedures.read.getPermissions()
+            .then(result => {
+                result.forEach(x => {
+                    this.permissions = new PermissionCache(x);
+                    console.log(`Cached ${x.size} Permissions`);
+                })
+            })
     }
 
     cacheUsers(): void {
@@ -66,6 +78,7 @@ export class DbCache {
             this.cacheNews(),
             this.cacheVotes(),
             this.cacheCandidates(),
+            this.cachePermissions(),
         ]);
     }
 

@@ -34,6 +34,10 @@ export class HeaderComponent implements OnInit {
       .flatMap(u => u.getGroup());
   }
 
+  goToAdminPage(): void {
+    this.viewStateService.setPageIndex(4);
+  }
+
   goToProfilePage(): void {
     this.viewStateService.setPageIndex(1);
   }
