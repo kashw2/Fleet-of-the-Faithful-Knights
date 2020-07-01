@@ -53,6 +53,13 @@ export class ApiUtils {
         }
     }
 
+    static sendError409(req: Either<string, any>, res: Response): void {
+        if (req.isLeft()) {
+            res.status(409)
+                .send(req.value);
+        }
+    }
+
     static sendError500(req: Either<string, any>, res: Response): void {
         if (req.isLeft()) {
             res.sendStatus(500)
