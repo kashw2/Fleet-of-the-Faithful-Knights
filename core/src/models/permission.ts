@@ -8,9 +8,9 @@ import {descriptionKey, idKey, labelKey} from "../misc/json-keys";
 export class Permission {
 
     constructor(
-        private id: Option<number> = None,
-        private label: Option<string> = None,
-        private description: Option<string> = None,
+        readonly id: Option<number> = None,
+        readonly label: Option<string> = None,
+        readonly description: Option<string> = None,
     ) {
     }
 

@@ -350,6 +350,24 @@ export class Api {
             .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
     }
 
+    sendRequestKeyParsable(
+        location: string,
+        headers: object = this.getHeaders(),
+        method: Method,
+        parser: (v: any) => any,
+        key: string,
+        body?: unknown
+    ): Promise<Either<string, any>> {
+        switch (method) {
+            case "GET":
+                return this.sendGetRequestKeyParsable(location, headers, parser, key);
+            case "POST":
+                return this.sendPostRequestKeyParsable(location, headers, parser, key, body);
+            default:
+                throw new Error(`Unsupported method type '${method}'`);
+        }
+    }
+
     sendRequestNumber<T>(
         location: string,
         headers: object = this.getHeaders(),
@@ -377,24 +395,6 @@ export class Api {
                 return this.sendGetRequestNumberList(location, headers);
             case "POST":
                 return this.sendPostRequestNumberList(location, headers, body);
-            default:
-                throw new Error(`Unsupported method type '${method}'`);
-        }
-    }
-
-    sendRequestKeyParsable(
-        location: string,
-        headers: object = this.getHeaders(),
-        method: Method,
-        parser: (v: any) => any,
-        key: string,
-        body?: unknown
-    ): Promise<Either<string, any>> {
-        switch (method) {
-            case "GET":
-                return this.sendGetRequestKeyParsable(location, headers, parser, key);
-            case "POST":
-                return this.sendPostRequestKeyParsable(location, headers, parser, key, body);
             default:
                 throw new Error(`Unsupported method type '${method}'`);
         }

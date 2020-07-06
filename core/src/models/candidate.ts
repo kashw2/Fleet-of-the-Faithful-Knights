@@ -11,12 +11,12 @@ import {JsonBuilder} from "../misc/json-builder";
 export class Candidate {
 
     constructor(
-        private id: Option<number> = None,
-        private discordId: Option<string> = None,
-        private discordUsername: Option<string> = None,
-        private avatar: Option<string> = None,
-        private group: Option<Group> = None,
-        private memberSince: Option<string> = None,
+        readonly id: Option<number> = None,
+        readonly discordId: Option<string> = None,
+        readonly discordUsername: Option<string> = None,
+        readonly avatar: Option<string> = None,
+        readonly group: Option<Group> = None,
+        readonly memberSince: Option<string> = None,
     ) {
     }
 

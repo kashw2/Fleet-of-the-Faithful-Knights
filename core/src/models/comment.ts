@@ -8,10 +8,10 @@ import {User, UserJsonSerializer} from "./user";
 export class Comment {
 
     constructor(
-        private id: Option<number> = None,
-        private user: Option<User> = None,
-        private content: Option<string> = None,
-        private createdDate: Option<string> = None,
+        readonly id: Option<number> = None,
+        readonly user: Option<User> = None,
+        readonly content: Option<string> = None,
+        readonly createdDate: Option<string> = None,
     ) {
     }
 

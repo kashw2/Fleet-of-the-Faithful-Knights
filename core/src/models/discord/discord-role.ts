@@ -18,49 +18,49 @@ export class DiscordRole {
     ) {
     }
 
-    getColor(): Option<number> {
+    public getColor(): Option<number> {
         return this.color;
     }
 
-    getHoist(): Option<boolean> {
+    public getHoist(): Option<boolean> {
         return this.hoist;
     }
 
-    getId(): Option<string> {
+    public getId(): Option<string> {
         return this.id;
     }
 
-    getManaged(): Option<boolean> {
+    public getManaged(): Option<boolean> {
         return this.managed;
     }
 
-    getMentionable(): Option<boolean> {
+    public getMentionable(): Option<boolean> {
         return this.mentionable;
     }
 
-    getName(): Option<string> {
+    public getName(): Option<string> {
         return this.name;
     }
 
-    getPermissions(): Option<number> {
+    public getPermissions(): Option<number> {
         return this.permissions;
     }
 
-    getPosition(): Option<number> {
+    public getPosition(): Option<number> {
         return this.position;
     }
 
-    isHoisted(): boolean {
+    public isHoisted(): boolean {
         return this.getHoist()
             .contains(true);
     }
 
-    isManaged(): boolean {
+    public isManaged(): boolean {
         return this.getManaged()
             .contains(true);
     }
 
-    isMentionable(): boolean {
+    public isMentionable(): boolean {
         return this.getMentionable()
             .contains(true);
     }

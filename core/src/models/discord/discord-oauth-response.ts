@@ -19,27 +19,27 @@ export class DiscordOAuthResponse {
     ) {
     }
 
-    getAccessToken(): Option<string> {
+    public getAccessToken(): Option<string> {
         return this.accessToken;
     }
 
-    getExpiresIn(): Option<number> {
+    public getExpiresIn(): Option<number> {
         return this.expiresIn;
     }
 
-    getRefreshToken(): Option<string> {
+    public getRefreshToken(): Option<string> {
         return this.refreshToken;
     }
 
-    getScope(): Option<string> {
+    public getScope(): Option<string> {
         return this.scope;
     }
 
-    getTokenType(): Option<string> {
+    public getTokenType(): Option<string> {
         return this.tokenType;
     }
 
-    isUseful(): boolean {
+    public isUseful(): boolean {
         return this.getAccessToken()
             .nonEmpty();
     }
