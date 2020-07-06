@@ -2,7 +2,7 @@ import {Either, Left, None, Option, Right, Some} from "funfix-core";
 import {List, Set} from "immutable";
 import * as moment from "moment";
 import {IRecordSet} from "mssql";
-import {SimpleJsonSerializer} from "..";
+import {OptionUtils, SimpleJsonSerializer} from "..";
 
 /**
  * getJsonFromRecordSet()
@@ -135,6 +135,10 @@ export function parseListFromArray(array: []): List<any> {
 
 export function parseSetFromArray(array: []): Set<any> {
     return Set(array);
+}
+
+export function parseListEffector<T>(list: List<any>, f: (v: any) => Option<T>): List<T> {
+    return OptionUtils.flattenList(list.map(x => f(x)));
 }
 
 export function parseList<T>(list: T): List<T> {

@@ -21,42 +21,42 @@ export class DiscordUser {
     ) {
     }
 
-    public getAvatar(): Option<string> {
+    getAvatar(): Option<string> {
         return this.avatar;
     }
 
-    public getDiscriminator(): Option<string> {
+    getDiscriminator(): Option<string> {
         return this.discriminator;
     }
 
-    public getDiscriminatorWithSymbol(): Option<string> {
+    getDiscriminatorWithSymbol(): Option<string> {
         return this.getDiscriminator()
             .map(x => "#".concat(x));
     }
 
-    public getId(): Option<string> {
+    getId(): Option<string> {
         return this.id;
     }
 
-    public getLocale(): Option<string> {
+    getLocale(): Option<string> {
         return this.locale;
     }
 
-    public getRequestFormedAvatarUrl(): Option<string> {
+    getRequestFormedAvatarUrl(): Option<string> {
         return Option.map2(this.getAvatar(), this.getId(), (avatar, id) => {
             return `/avatars/${id}/${avatar}.png`;
         });
     }
 
-    public getRoles(): Set<string> {
+    getRoles(): Set<string> {
         return this.roles;
     }
 
-    public getUsername(): Option<string> {
+    getUsername(): Option<string> {
         return this.username;
     }
 
-    public withRoles(roles: List<string>): DiscordUser {
+    withRoles(roles: List<string>): DiscordUser {
         return new DiscordUser(
             this.getId(),
             this.getUsername(),

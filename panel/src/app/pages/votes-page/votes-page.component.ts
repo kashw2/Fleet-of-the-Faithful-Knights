@@ -1,5 +1,4 @@
-import { Component, OnInit } from "@angular/core";
-import {Option} from "funfix-core";
+import {Component, OnInit} from "@angular/core";
 import {List} from "immutable";
 import {Vote} from "../../../../../core/src/models/vote";
 import {UserStateService} from "../../services/user-state.service";

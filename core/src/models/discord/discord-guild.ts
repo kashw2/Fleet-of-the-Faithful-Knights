@@ -17,15 +17,15 @@ export class DiscordGuild {
     ) {
     }
 
-    public getApproximateMemberCount(): Option<number> {
+    getApproximateMemberCount(): Option<number> {
         return this.memberCount;
     }
 
-    public getId(): Option<string> {
+    getId(): Option<string> {
         return this.id;
     }
 
-    public getName(): Option<string> {
+    getName(): Option<string> {
         return this.name;
     }
 

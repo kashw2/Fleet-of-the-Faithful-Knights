@@ -20,19 +20,19 @@ export class DiscordGuildMember {
     ) {
     }
 
-    public getJoinedAt(): Option<string> {
+    getJoinedAt(): Option<string> {
         return this.joinedAt;
     }
 
-    public getNickname(): Option<string> {
+    getNickname(): Option<string> {
         return this.nickname;
     }
 
-    public getRoles(): Set<string> {
+    getRoles(): Set<string> {
         return this.roles;
     }
 
-    public getRolesSortedHierarchy(): Set<string> {
+    getRolesSortedHierarchy(): Set<string> {
         if (GroupUtils.containsNonGuestRoles(this.getRoles())) {
             return this.getRoles().filterNot(role => !GroupUtils.isNonGuestRole(role))
                 .map(x => GroupUtils.getGroupNameFromDiscordRoleId(x));
@@ -41,11 +41,11 @@ export class DiscordGuildMember {
             .map(role => GroupUtils.getGroupNameFromDiscordRoleId(role));
     }
 
-    public getUser(): Option<DiscordUser> {
+    getUser(): Option<DiscordUser> {
         return this.user;
     }
 
-    public withDiscordUserLocale(user: DiscordUser): DiscordGuildMember {
+    withDiscordUserLocale(user: DiscordUser): DiscordGuildMember {
         return new DiscordGuildMember(
             this.getUser().flatMap(u => Some(user)),
             this.getNickname(),
@@ -54,7 +54,7 @@ export class DiscordGuildMember {
         );
     }
 
-    public withRole(role: string): DiscordGuildMember {
+    withRole(role: string): DiscordGuildMember {
         return new DiscordGuildMember(
             this.getUser(),
             this.getNickname(),

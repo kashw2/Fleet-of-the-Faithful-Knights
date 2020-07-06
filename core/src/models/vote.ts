@@ -14,15 +14,15 @@ import {FfkDateFormat} from "../misc/type-defs";
 export class Vote {
 
     constructor(
-        readonly id: Option<number> = None,
-        readonly sponsor: Option<User> = None,
-        readonly candidate: Option<Candidate> = None,
-        readonly group: Option<string> = None,
-        readonly notes: Option<string> = None,
-        readonly voters: Set<Voter> = Set(),
-        readonly status: Option<boolean> = Some(false),
-        readonly comments: List<Comment> = List(),
-        readonly createdDate: Option<string> = None,
+        private id: Option<number> = None,
+        private sponsor: Option<User> = None,
+        private candidate: Option<Candidate> = None,
+        private group: Option<string> = None,
+        private notes: Option<string> = None,
+        private voters: Set<Voter> = Set(),
+        private status: Option<boolean> = Some(false),
+        private comments: List<Comment> = List(),
+        private createdDate: Option<string> = None,
     ) {
     }
 

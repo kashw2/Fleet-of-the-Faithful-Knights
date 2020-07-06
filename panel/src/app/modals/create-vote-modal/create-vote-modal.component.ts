@@ -1,15 +1,16 @@
 import {Component, OnInit} from "@angular/core";
 import {None, Option} from "funfix-core";
 import {List} from "immutable";
-import {CandidateJsonSerializer, User} from "../../../../../core/src";
+import {User} from "../../../../../core/src";
 import {Candidate} from "../../../../../core/src/models/candidate";
 import {GroupUtils} from "../../../../../core/src/util/group-utils";
 import {UserStateService} from "../../services/user-state.service";
-import {MDBModalRef} from "angular-bootstrap-md";
+import {MDBModalRef} from "ng-uikit-pro-standard";
 import {BehaviorSubject} from "rxjs";
 import {FfkApiService} from "../../services/ffk-api.service";
 import {Vote} from "../../../../../core/src/models/vote";
 import {NotificationService} from "../../services/notification.service";
+import {Permission} from "../../../../../core/src/models/permission";
 
 @Component({
   selector: "app-create-vote-modal",
@@ -58,6 +59,11 @@ export class CreateVoteModalComponent implements OnInit {
       .getCandidates();
   }
 
+  getGroups(): List<Permission> {
+    return this.userStateService
+      .getPermissions();
+  }
+
   getNotes(): Option<string> {
     return this.notes
       .getValue();
@@ -83,6 +89,13 @@ export class CreateVoteModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.populateGroups();
+  }
+
+  async populateGroups(): Promise<void> {
+    const groups = await this.ffkApi.listPermissions();
+    this.notificationService.showNotificationBasedOnEitherEffector(groups, values => `Loaded ${values.size} Groups`)
+      .map(gs => this.userStateService.permissions.next(gs));
   }
 
   updateCandidate(candidate: Candidate): void {
@@ -99,8 +112,8 @@ export class CreateVoteModalComponent implements OnInit {
     this.notes.next(Option.of(event.target.value));
   }
 
-  updatePromotionGroup(event): void {
-    this.promotionGroup.next(Option.of(event.target.value));
+  updatePromotionGroup(group: Option<string>): void {
+    this.promotionGroup.next(group);
   }
 
 }

@@ -8,6 +8,7 @@ import {Candidate} from "../../../../core/src/models/candidate";
 import {News} from "../../../../core/src/models/news";
 import {Vote} from "../../../../core/src/models/vote";
 import {DiscordMessage} from "../../../../core/src/models/discord/discord-message";
+import {Permission} from "../../../../core/src/models/permission";
 
 @Injectable({
   providedIn: "root",
@@ -20,6 +21,7 @@ export class UserStateService {
   candidates: BehaviorSubject<List<Candidate>> = new BehaviorSubject<List<Candidate>>(List());
   discordMessages: BehaviorSubject<List<DiscordMessage>> = new BehaviorSubject<List<DiscordMessage>>(List());
   news: BehaviorSubject<List<News>> = new BehaviorSubject<List<News>>(List());
+  permissions: BehaviorSubject<List<Permission>> = new BehaviorSubject<List<Permission>>(List());
   user: BehaviorSubject<Option<User>> = new BehaviorSubject<Option<User>>(None);
   users: BehaviorSubject<List<User>> = new BehaviorSubject<List<User>>(List());
   votes: BehaviorSubject<List<Vote>> = new BehaviorSubject<List<Vote>>(List());
@@ -40,6 +42,11 @@ export class UserStateService {
 
   getNews(): List<News> {
     return this.news
+      .getValue();
+  }
+
+  getPermissions(): List<Permission> {
+    return this.permissions
       .getValue();
   }
 

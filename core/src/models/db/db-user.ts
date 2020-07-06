@@ -16,12 +16,12 @@ import {DiscordGuildMember} from "../discord/discord-guild-member";
 export class DbUser {
 
     constructor(
-        readonly username: string,
-        readonly discordId: string,
-        readonly discriminator: string,
-        readonly groupId: number,
-        readonly avatar: string,
-        readonly locale: string = "en-US",
+        private username: string,
+        private discordId: string,
+        private discriminator: string,
+        private groupId: number,
+        private avatar: string,
+        private locale: string = "en-US",
     ) {
     }
 

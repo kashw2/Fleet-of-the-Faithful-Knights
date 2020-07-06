@@ -41,70 +41,70 @@ export class DiscordMessage {
     ) {
     }
 
-    public getAuthor(): Option<DiscordUser> {
+    getAuthor(): Option<DiscordUser> {
         return this.author;
     }
 
-    public getChannelId(): Option<string> {
+    getChannelId(): Option<string> {
         return this.channelId;
     }
 
-    public getContent(): Option<string> {
+    getContent(): Option<string> {
         return this.content;
     }
 
-    public getEditedTimestamp(): Option<string> {
+    getEditedTimestamp(): Option<string> {
         return this.editedTimestamp;
     }
 
-    public getGuildId(): Option<string> {
+    getGuildId(): Option<string> {
         return this.guildId;
     }
 
-    public getId(): Option<string> {
+    getId(): Option<string> {
         return this.id;
     }
 
-    public getMember(): Option<DiscordGuildMember> {
+    getMember(): Option<DiscordGuildMember> {
         return this.member;
     }
 
-    public getMentionedRoles(): List<DiscordRole> {
+    getMentionedRoles(): List<DiscordRole> {
         return this.mentionRoles;
     }
 
-    public getMentionEveryone(): Option<boolean> {
+    getMentionEveryone(): Option<boolean> {
         return this.mentionEveryone;
     }
 
-    public getMentions(): List<DiscordUser> {
+    getMentions(): List<DiscordUser> {
         return this.mentions;
     }
 
-    public getTimestamp(): Option<string> {
+    getTimestamp(): Option<string> {
         return this.timestamp;
     }
 
-    public getTts(): Option<boolean> {
+    getTts(): Option<boolean> {
         return this.tts;
     }
 
-    public isAuthoredBy(authorId: string): boolean {
+    isAuthoredBy(authorId: string): boolean {
         return this.getAuthor()
             .flatMap(a => a.getId())
             .contains(authorId);
     }
 
-    public isEdited(): boolean {
+    isEdited(): boolean {
         return this.getEditedTimestamp().nonEmpty();
     }
 
-    public isMentioningEveryone(): boolean {
+    isMentioningEveryone(): boolean {
         return this.getMentionEveryone()
             .contains(true);
     }
 
-    public isTts(): boolean {
+    isTts(): boolean {
         return this.getTts()
             .contains(true);
     }

@@ -59,81 +59,81 @@ export class DiscordChannel {
     ) {
     }
 
-    public getApplicationId(): Option<string> {
+    getApplicationId(): Option<string> {
         return this.applicationId;
     }
 
-    public getBitrate(): Option<number> {
+    getBitrate(): Option<number> {
         return this.bitrate;
     }
 
-    public getGuildId(): Option<string> {
+    getGuildId(): Option<string> {
         return this.guildId;
     }
 
-    public getIcon(): Option<string> {
+    getIcon(): Option<string> {
         return this.icon;
     }
 
-    public getId(): Option<string> {
+    getId(): Option<string> {
         return this.id;
     }
 
-    public getLastMessageId(): Option<string> {
+    getLastMessageId(): Option<string> {
         return this.lastMessageId;
     }
 
-    public getLastPinTimestamp(): Option<string> {
+    getLastPinTimestamp(): Option<string> {
         return this.lastPinTimestamp;
     }
 
-    public getName(): Option<string> {
+    getName(): Option<string> {
         return this.name;
     }
 
-    public getNSFW(): Option<boolean> {
+    getNSFW(): Option<boolean> {
         return this.nsfw;
     }
 
-    public getOwnerId(): Option<string> {
+    getOwnerId(): Option<string> {
         return this.ownerId;
     }
 
-    public getParentId(): Option<string> {
+    getParentId(): Option<string> {
         return this.parentId;
     }
 
-    public getPosition(): Option<number> {
+    getPosition(): Option<number> {
         return this.position;
     }
 
-    public getRateLimitPerUser(): Option<number> {
+    getRateLimitPerUser(): Option<number> {
         return this.rateLimitPerUser;
     }
 
-    public getRecipients(): List<DiscordUser> {
+    getRecipients(): List<DiscordUser> {
         return this.recipients;
     }
 
-    public getTopic(): Option<string> {
+    getTopic(): Option<string> {
         return this.topic;
     }
 
-    public getType(): Option<number> {
+    getType(): Option<number> {
         return this.type;
     }
 
-    public getTypeWithDiscordChannelType(): Option<ChannelType> {
+    getTypeWithDiscordChannelType(): Option<ChannelType> {
         // @ts-ignore
         return this.getType()
             .map(typeId => ChannelTypeMap.get(typeId));
     }
 
-    public getUserLimit(): Option<number> {
+    getUserLimit(): Option<number> {
         return this.userLimit;
     }
 
-    public isNSFW(): boolean {
+    isNSFW(): boolean {
         return this.nsfw
             .getOrElse(false);
     }

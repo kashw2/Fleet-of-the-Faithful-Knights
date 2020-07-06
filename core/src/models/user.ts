@@ -21,16 +21,16 @@ import {Permission, PermissionJsonSerializer} from "./permission";
 export class User {
 
     constructor(
-        readonly id: Option<number> = None,
-        readonly discordId: Option<string> = None,
-        readonly discriminator: Option<string> = None,
-        readonly username: Option<string> = None,
-        readonly locale: Option<string> = Some("en-US"),
-        readonly avatar: Option<string> = None,
-        readonly token: Option<string> = None,
-        readonly group: Option<string> = None,
-        readonly permissions: List<Permission> = List(),
-        readonly memberSince: Option<string> = None,
+        private id: Option<number> = None,
+        private discordId: Option<string> = None,
+        private discriminator: Option<string> = None,
+        private username: Option<string> = None,
+        private locale: Option<string> = Some("en-US"),
+        private avatar: Option<string> = None,
+        private token: Option<string> = None,
+        private group: Option<string> = None,
+        private permissions: List<Permission> = List(),
+        private memberSince: Option<string> = None,
     ) {
     }
 

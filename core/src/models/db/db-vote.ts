@@ -7,10 +7,10 @@ import {DbCandidate, DbCandidateJsonSerializer} from "./db-candidate";
 export class DbVote {
 
     constructor(
-        readonly sponsorId: number,
-        readonly candidate: DbCandidate,
-        readonly groupId: number,
-        readonly notes: string = "",
+        private sponsorId: number,
+        private candidate: DbCandidate,
+        private groupId: number,
+        private notes: string = "",
     ) {
     }
 

@@ -1,5 +1,5 @@
 import {AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild} from "@angular/core";
-import {MDBModalService, MdbTableDirective, MdbTablePaginationComponent, ModalOptions} from "angular-bootstrap-md";
+import {MDBModalService, MdbTableDirective, MdbTablePaginationComponent, ModalOptions} from "ng-uikit-pro-standard";
 import {None, Option, Some} from "funfix-core";
 import {List} from "immutable";
 import {BehaviorSubject, fromEvent} from "rxjs";
@@ -108,7 +108,7 @@ export class VoteTableComponent implements OnInit, AfterViewInit {
   }
 
   openVoteModal(): void {
-    const options: ModalOptions = {backdrop: true, animated: true};
+    const options: ModalOptions = {backdrop: false, animated: true, containerClass: "z-index-1"};
     this.mdbModalService.show(CreateVoteModalComponent, options);
   }
 

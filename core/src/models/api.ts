@@ -3,7 +3,7 @@ import {Url} from "./url";
 import {SimpleJsonSerializer} from "../misc/simple-json-serializer";
 import axios, {AxiosError} from "axios";
 import {List} from "immutable";
-import {Primitive, Method} from "../misc/type-defs";
+import {Method, Primitive} from "../misc/type-defs";
 import {parseNumber, parseString} from "..";
 
 export class Api {
@@ -190,7 +190,25 @@ export class Api {
                 if (this.isFailureStatusCode(x.status)) {
                     return Left(`${x.status}: ${x.statusText} - ${x.data}`);
                 }
-                return Right(parseString(x.data).value!);
+                return Right(parseString(x.data).get());
+            })
+            // @ts-ignore
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
+    }
+
+    private sendGetRequestStringList<T>(
+        location: string,
+        headers: object = this.getHeaders(),
+    ): Promise<Either<string, List<string>>> {
+        return axios.get(this.getBaseUrl().concat(location), {
+                headers,
+            },
+        )
+            .then(x => {
+                if (this.isFailureStatusCode(x.status)) {
+                    return Left(`${x.status}: ${x.statusText} - ${x.data}`);
+                }
+                return Right(List(x.data).map(val => parseString(val).value!));
             })
             // @ts-ignore
             .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
@@ -331,10 +349,10 @@ export class Api {
             .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
     }
 
-    private sendPostRequestString<T>(
+    private sendPostRequestString(
         location: string,
         headers: object = this.getHeaders(),
-        body?: unknown
+        body?: unknown,
     ): Promise<Either<string, string>> {
         return axios.post(this.getBaseUrl().concat(location), body, {
                 headers,
@@ -345,6 +363,25 @@ export class Api {
                     return Left(`${x.status}: ${x.statusText} - ${x.data}`);
                 }
                 return Right(parseString(x.data).value!);
+            })
+            // @ts-ignore
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
+    }
+
+    private sendPostRequestStringList<T>(
+        location: string,
+        headers: object = this.getHeaders(),
+        body?: unknown
+    ): Promise<Either<string, List<string>>> {
+        return axios.post(this.getBaseUrl().concat(location), body, {
+                headers,
+            },
+        )
+            .then(x => {
+                if (this.isFailureStatusCode(x.status)) {
+                    return Left(`${x.status}: ${x.statusText} - ${x.data}`);
+                }
+                return Right(List(x.data).map(val => parseString(Some(val)).value!));
             })
             // @ts-ignore
             .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
@@ -480,6 +517,22 @@ export class Api {
                 return this.sendGetRequestString(location, headers);
             case "POST":
                 return this.sendPostRequestString(location, headers, body);
+            default:
+                throw new Error(`Unsupported method type '${method}'`);
+        }
+    }
+
+    sendRequestStringList<T>(
+        location: string,
+        headers: object = this.getHeaders(),
+        method: Method,
+        body?: unknown,
+    ): Promise<Either<string, List<string>>> {
+        switch (method) {
+            case "GET":
+                return this.sendGetRequestStringList(location, headers);
+            case "POST":
+                return this.sendPostRequestStringList(location, headers, body);
             default:
                 throw new Error(`Unsupported method type '${method}'`);
         }
