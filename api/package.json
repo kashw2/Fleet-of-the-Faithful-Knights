@@ -21,6 +21,6 @@
     "cors": "^2.8.5"
   },
   "devDependencies": {
-    "typescript": "3.9.6"
+    "typescript": "3.8.3"
   }
 }

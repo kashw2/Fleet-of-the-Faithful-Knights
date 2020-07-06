@@ -276,49 +276,9 @@
   max-width: 50vh;
 }
 
-// Custom Select
-
-select {
-
-  min-height: 35px;
-  min-width: 70px;
-
-  appearance: none !important;
-
-  background-color: transparent;
-
-  border-top: 0px !important;
-  border-right: 0px !important;
-  border-left: 0px !important;
-  border-bottom: 0px !important;
-
-  &.border-success {
-    border-bottom: 2px solid #00C851 !important;
-  }
-
-  &.border-danger {
-    border-bottom: 2px solid #ff3547 !important;
-  }
-
-  &.border-information {
-    border-bottom: 2px solid #33b5e5 !important;
-  }
-
-  &.border-warning {
-    border-bottom: 2px solid #ffbb33 !important;
-  }
-
-  &option {
-    border: none !important;
-    appearance: none !important;
-  }
-
-  border-radius: 0px !important;
-
-  width: fit-content;
-
-  padding: 1px 7px 1px 7px;
-
-  transition: none;
-
+.z-index-1 {
+  z-index: 1;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

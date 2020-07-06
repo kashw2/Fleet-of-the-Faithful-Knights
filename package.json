@@ -27,11 +27,6 @@
     "rxjs": "^6.5.5"
   },
   "devDependencies": {
-    "duplicate-package-checker-webpack-plugin": "^3.0.0",
-    "ts-loader": "^7.0.5",
-    "typescript": "^3.9.6",
-    "webpack": "4.43.0",
-    "webpack-merge": "^4.2.2",
-    "webpack-node-externals": "^1.7.2"
+    "webpack": "^4.43.0"
   }
 }
