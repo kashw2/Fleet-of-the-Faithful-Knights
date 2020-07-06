@@ -21,8 +21,9 @@ import {VotePageComponent} from "./pages/vote-page/vote-page.component";
 import {CandidateExtraInfoContainerComponent} from "./children/candidate-extra-info-container/candidate-extra-info-container.component";
 import {MessageContainerComponent} from "./components/message-container/message-container.component";
 import {AdminPageComponent} from "./pages/admin-page/admin-page.component";
-import { AdminContainerComponent } from './components/admin-container/admin-container.component';
-import { CheckboxComponent } from './components/checkbox/checkbox.component';
+import {AdminContainerComponent} from "./components/admin-container/admin-container.component";
+import {CheckboxComponent} from "./components/checkbox/checkbox.component";
+import {MDBBootstrapModulesPro} from "ng-uikit-pro-standard";
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -44,7 +45,7 @@ import { CheckboxComponent } from './components/checkbox/checkbox.component';
     CheckboxComponent,
   ],
   imports: [
-    MDBBootstrapModule.forRoot(),
+    MDBBootstrapModulesPro.forRoot(),
     BrowserModule,
     AppRoutingModule,
     ToastrModule.forRoot(),
