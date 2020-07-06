@@ -3,7 +3,6 @@ import {NgModule} from "@angular/core";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserModule} from "@angular/platform-browser";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {MDBBootstrapModule} from "angular-bootstrap-md";
 import {CookieService} from "ngx-cookie-service";
 import {ToastrModule} from "ngx-toastr";
 import {AppRoutingModule} from "./app-routing.module";
@@ -21,8 +20,9 @@ import {VotePageComponent} from "./pages/vote-page/vote-page.component";
 import {CandidateExtraInfoContainerComponent} from "./children/candidate-extra-info-container/candidate-extra-info-container.component";
 import {MessageContainerComponent} from "./components/message-container/message-container.component";
 import {AdminPageComponent} from "./pages/admin-page/admin-page.component";
-import { AdminContainerComponent } from './components/admin-container/admin-container.component';
-import { CheckboxComponent } from './components/checkbox/checkbox.component';
+import {AdminContainerComponent} from "./components/admin-container/admin-container.component";
+import {CheckboxComponent} from "./components/checkbox/checkbox.component";
+import {MDBBootstrapModulesPro, MDBSpinningPreloader} from "ng-uikit-pro-standard";
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -44,7 +44,7 @@ import { CheckboxComponent } from './components/checkbox/checkbox.component';
     CheckboxComponent,
   ],
   imports: [
-    MDBBootstrapModule.forRoot(),
+    MDBBootstrapModulesPro.forRoot(),
     BrowserModule,
     AppRoutingModule,
     ToastrModule.forRoot(),
@@ -53,7 +53,7 @@ import { CheckboxComponent } from './components/checkbox/checkbox.component';
     ReactiveFormsModule,
     FormsModule,
   ],
-  providers: [NotificationService, CookieService],
+  providers: [NotificationService, CookieService, MDBSpinningPreloader],
 })
 
 export class AppModule {

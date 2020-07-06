@@ -9,4 +9,8 @@
 *.js
 *.js.map
 
+*.d.ts
+
+# This was done to fix the MDB Pro issue but means that it has to be removed if we add new packages
+/panel/package.json
 package-lock.json

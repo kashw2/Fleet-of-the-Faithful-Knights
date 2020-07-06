@@ -3,28 +3,22 @@
     <h4 class="modal-title text-center font-weight-normal">Create Vote</h4>
   </div>
   <div class="modal-body">
-    <select mdbInput name="candidate-select" class="text-center my-4" (change)="updateCandidateViaSelect($event)">
-      <option hidden selected>Select Candidate</option>
-      <option
-        *ngFor="let candidate of getCandidates(); let i = index"
-        [ngValue]="candidate"
-        [attr.data-value]="candidate.getId().getOrElse(i)"
+    <mdb-select-2 class="text-center" placeholder="Select Candidate">
+      <mdb-select-option
+        *ngFor="let candidate of getCandidates()"
         (click)="updateCandidate(candidate)"
-      >{{candidate.getDiscordUsername().get()}}</option>
-    </select>
-    <select mdbInput name="group-select" class="text-center my-4" (click)="updatePromotionGroup($event)">
-      <option hidden selected>Select Group</option>
-      <option *ngIf="canCreateVoteForGroup('Grand Master')" value="Grand Master" (click)="updatePromotionGroup($event)">Grand Master</option>
-      <option *ngIf="canCreateVoteForGroup('Master Commander')" value="Master Commander" (click)="updatePromotionGroup($event)">Master Commander</option>
-      <option *ngIf="canCreateVoteForGroup('Knight Commander')" value="Knight Commander" (click)="updatePromotionGroup($event)">Knight Commander</option>
-      <option *ngIf="canCreateVoteForGroup('Knight Lieutenant')" value="Knight Lieutenant" (click)="updatePromotionGroup($event)">Knight Lieutenant</option>
-      <option *ngIf="canCreateVoteForGroup('Knight')" value="Knight" (click)="updatePromotionGroup($event)">Knight</option>
-      <option *ngIf="canCreateVoteForGroup('Sergeant First Class')" value="Sergeant First Class" (click)="updatePromotionGroup($event)">Sergeant First Class</option>
-      <option *ngIf="canCreateVoteForGroup('Sergeant')" value="Sergeant" (click)="updatePromotionGroup($event)">Sergeant</option>
-      <option *ngIf="canCreateVoteForGroup('Squire')" value="Squire" (click)="updatePromotionGroup($event)">Squire</option>
-      <option *ngIf="canCreateVoteForGroup('Companion at Arms')" value="Companion at Arms" (click)="updatePromotionGroup($event)">Companion at Arms</option>
-      <option *ngIf="canCreateVoteForGroup('Guest')" value="Guest" (click)="updatePromotionGroup($event)">Guest</option>
-    </select>
+      >
+        {{candidate.getDiscordUsername().get()}}
+      </mdb-select-option>
+    </mdb-select-2>
+    <mdb-select-2 class="text-center" placeholder="Select Group">
+      <mdb-select-option
+        *ngFor="let group of getGroups()"
+        (click)="updatePromotionGroup(group.getLabel())"
+      >
+        {{group.getLabel().getOrElse("Error loading Group")}}
+      </mdb-select-option>
+    </mdb-select-2>
     <div class="md-form">
       <textarea mdbInput id="candidate-notes" class="md-textarea form-control my-4" (change)="updateNotes($event)"></textarea>
       <label for="candidate-notes">Notes</label>
@@ -32,6 +26,7 @@
   </div>
   <div class="modal-footer">
     <button mdbBtn mdbWavesEffect type="button" color="danger" outline="false" class="btn waves-effect" (click)="hide()">Cancel</button>
-    <button mdbBtn mdbWavesEffect type="button" color="success" outline="false" class="btn waves-effect" (click)="createVote()">Create</button>
+    <button mdbBtn mdbWavesEffect type="button" color="success" outline="false" class="btn waves-effect" (click)="createVote()">Create
+    </button>
   </div>
 </div>

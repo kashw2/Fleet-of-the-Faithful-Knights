@@ -8,7 +8,7 @@ import {Comment} from "../../../../../core/src/models/comment";
 import {MomentUtils} from "../../../../../core/src/util/moment-utils";
 import {BehaviorSubject} from "rxjs";
 import {FfkApiService} from "../../services/ffk-api.service";
-import {DiscordApi, EitherUtils, User} from "../../../../../core/src";
+import {EitherUtils, User} from "../../../../../core/src";
 import {NotificationService} from "../../services/notification.service";
 import {Candidate} from "../../../../../core/src/models/candidate";
 import {DiscordApiService} from "../../services/discord-api.service";
