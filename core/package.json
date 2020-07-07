@@ -1,5 +1,5 @@
 {
-  "name": "ffk-core",
+  "name": "@ffk/core",
   "version": "1.0.0",
   "description": "",
   "private": true,
@@ -7,10 +7,7 @@
   "author": "kashw2 <supra4keanu@hotmail.com>",
   "license": "ISC",
   "devDependencies": {
-    "ts-loader": "^6.2.2",
-    "typescript": "3.8.3",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.12"
+    "typescript": "3.8.3"
   },
   "dependencies": {
     "axios": "^0.19.2",
