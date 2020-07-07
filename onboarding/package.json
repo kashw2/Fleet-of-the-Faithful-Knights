@@ -1,5 +1,5 @@
 {
-  "name": "ffk-onboarding",
+  "name": "@ffk/onboarding",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
