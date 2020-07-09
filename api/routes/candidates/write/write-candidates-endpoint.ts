@@ -18,7 +18,7 @@ export class WriteCandidatesEndpoint extends PostEndpoint {
     }
 
     isAuthorized(user: User): boolean {
-        return true;
+        return user.isDeveloper();
     }
 
     run(req: Request, res: Response): void {
