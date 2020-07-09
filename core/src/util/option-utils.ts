@@ -1,5 +1,5 @@
 import {None, Option} from "funfix-core";
-import {List} from "immutable";
+import {List, Set} from "immutable";
 
 export class OptionUtils {
 
@@ -16,6 +16,11 @@ export class OptionUtils {
 
     static flattenList<A>(list: List<Option<A>>): List<A> {
         return list.filterNot(x => x.isEmpty())
+            .map(x => x.get());
+    }
+
+    static flattenSet<A>(set: Set<Option<A>>): Set<A> {
+        return set.filterNot(x => x.isEmpty())
             .map(x => x.get());
     }
 

@@ -2,7 +2,7 @@ import {Either, Left, Right, Some} from "funfix-core";
 import {Url} from "./url";
 import {SimpleJsonSerializer} from "../misc/simple-json-serializer";
 import axios, {AxiosError} from "axios";
-import {List} from "immutable";
+import {List, Set, Collection} from "immutable";
 import {Method, Primitive} from "../misc/type-defs";
 import {parseNumber, parseString} from "..";
 
@@ -214,6 +214,24 @@ export class Api {
             .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
     }
 
+    private sendGetRequestStringSet<T>(
+        location: string,
+        headers: object = this.getHeaders(),
+    ): Promise<Either<string, Set<string>>> {
+        return axios.get(this.getBaseUrl().concat(location), {
+                headers,
+            },
+        )
+            .then(x => {
+                if (this.isFailureStatusCode(x.status)) {
+                    return Left(`${x.status}: ${x.statusText} - ${x.data}`);
+                }
+                return Right(Set(x.data).map(val => parseString(val).value!));
+            })
+            // @ts-ignore
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
+    }
+
     private sendPostRequestKeyParsable(
         location: string,
         headers: object = this.getHeaders(),
@@ -387,6 +405,25 @@ export class Api {
             .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
     }
 
+    private sendPostRequestStringSet<T>(
+        location: string,
+        headers: object = this.getHeaders(),
+        body?: unknown
+    ): Promise<Either<string, Set<string>>> {
+        return axios.post(this.getBaseUrl().concat(location), body, {
+                headers,
+            },
+        )
+            .then(x => {
+                if (this.isFailureStatusCode(x.status)) {
+                    return Left(`${x.status}: ${x.statusText} - ${x.data}`);
+                }
+                return Right(Set(x.data).map(val => parseString(Some(val)).value!));
+            })
+            // @ts-ignore
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
+    }
+
     sendRequestKeyParsable(
         location: string,
         headers: object = this.getHeaders(),
@@ -538,5 +575,20 @@ export class Api {
         }
     }
 
+    sendRequestStringSet<T>(
+        location: string,
+        headers: object = this.getHeaders(),
+        method: Method,
+        body?: unknown,
+    ): Promise<Either<string, Set<string>>> {
+        switch (method) {
+            case "GET":
+                return this.sendGetRequestStringSet(location, headers);
+            case "POST":
+                return this.sendPostRequestStringSet(location, headers, body);
+            default:
+                throw new Error(`Unsupported method type '${method}'`);
+        }
+    }
 
 }

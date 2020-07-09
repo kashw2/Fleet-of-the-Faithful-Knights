@@ -1,14 +1,14 @@
 import {Api} from "../models/api";
 import {Url} from "../models/url";
 import {Either} from "funfix-core";
-import {List} from "immutable";
+import {List, Set} from "immutable";
 import {EitherUtils} from "../util/either-utils";
 import {Candidate, CandidateJsonSerializer} from "../models/candidate";
 import {Comment, CommentJsonSerializer} from "../models/comment";
 import {User, UserJsonSerializer} from "../models/user";
 import {Vote, VoteJsonSerializer} from "../models/vote";
 import {News, NewsJsonSerializer} from "../models/news";
-import {DiscordOAuthResponse, DiscordOAuthResponseJsonSerializer, idKey, parseNumber} from "..";
+import {DiscordOAuthResponse, DiscordOAuthResponseJsonSerializer, idKey, labelKey, parseNumber, parseSet} from "..";
 import {Permission, PermissionJsonSerializer} from "../models/permission";
 
 export class FfkApi {
@@ -75,6 +75,15 @@ export class FfkApi {
         return this.api.sendRequestSerializedList(
             "/candidates",
             CandidateJsonSerializer.instance,
+            this.getHeaders(),
+            "GET",
+        );
+    }
+
+    listGroups(): Promise<Either<string, List<Permission>>> {
+        return this.api.sendRequestSerializedList(
+            "/groups",
+            PermissionJsonSerializer.instance,
             this.getHeaders(),
             "GET",
         );

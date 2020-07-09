@@ -19,6 +19,7 @@ import {WriteVoteResponseEndpoint} from "./votes/write/write-vote-response-endpo
 import {ListMissingCandidatesEndpoint} from "./candidates/list/list-missing-candidates-endpoint";
 import {ListUsersEndpoint} from "./users/list/list-users-endpoint";
 import {ListPermissionsEndpoint} from "./permissions/list/list-permissions-endpoint";
+import {ListGroupsEndpoint} from "./groups/list/list-groups-endpoint";
 
 export class AllEndpoints {
 
@@ -42,6 +43,7 @@ export class AllEndpoints {
         new ListMissingCandidatesEndpoint(db).routeEndpoint(router);
         new ListUsersEndpoint(db).routeEndpoint(router);
         new ListPermissionsEndpoint(db).routeEndpoint(router);
+        new ListGroupsEndpoint(db).routeEndpoint(router);
     }
 
 }

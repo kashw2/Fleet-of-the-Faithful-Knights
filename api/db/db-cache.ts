@@ -1,4 +1,4 @@
-import {List} from "immutable";
+import {List, Set} from "immutable";
 import {interval} from "rxjs";
 import {UserCache} from "../../core/src";
 import {CandidateCache} from "../../core/src/models/candidate-cache";
@@ -6,6 +6,7 @@ import {NewsCache} from "../../core/src/models/news-cache";
 import {VoteCache} from "../../core/src/models/vote-cache";
 import {DbProcedures} from "./procedures/db-procedures";
 import {PermissionCache} from "../../core/src/models/permission-cache";
+import {GroupCache} from "../../core/src/models/group-cache";
 
 export class DbCache {
 
@@ -17,6 +18,7 @@ export class DbCache {
     }
 
     candidates: CandidateCache = new CandidateCache(List());
+    groups: GroupCache = new GroupCache(Set());
     news: NewsCache = new NewsCache(List());
     permissions: PermissionCache = new PermissionCache(List());
     users: UserCache = new UserCache(List());
@@ -30,6 +32,16 @@ export class DbCache {
                     console.log(`Cached ${x.size} Candidates`);
                 });
             });
+    }
+
+    cacheGroups(): void {
+        this.procedures.read.getGroups()
+            .then(result => {
+                result.forEach(x => {
+                    this.groups = new GroupCache(x);
+                    console.log(`Cached ${x.size} Groups`);
+                })
+            })
     }
 
     cacheNews(): void {
@@ -79,6 +91,7 @@ export class DbCache {
             this.cacheVotes(),
             this.cacheCandidates(),
             this.cachePermissions(),
+            this.cacheGroups(),
         ]);
     }
 

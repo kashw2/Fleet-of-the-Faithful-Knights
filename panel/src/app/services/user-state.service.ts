@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {None, Option} from "funfix-core";
-import {List} from "immutable";
+import {List, Set} from "immutable";
 import {CookieService} from "ngx-cookie-service";
 import {BehaviorSubject} from "rxjs";
 import {User} from "../../../../core/src";
@@ -20,6 +20,7 @@ export class UserStateService {
 
   candidates: BehaviorSubject<List<Candidate>> = new BehaviorSubject<List<Candidate>>(List());
   discordMessages: BehaviorSubject<List<DiscordMessage>> = new BehaviorSubject<List<DiscordMessage>>(List());
+  groups: BehaviorSubject<List<Permission>> = new BehaviorSubject<List<Permission>>(List());
   news: BehaviorSubject<List<News>> = new BehaviorSubject<List<News>>(List());
   permissions: BehaviorSubject<List<Permission>> = new BehaviorSubject<List<Permission>>(List());
   user: BehaviorSubject<Option<User>> = new BehaviorSubject<Option<User>>(None);
@@ -37,6 +38,11 @@ export class UserStateService {
 
   getDiscordMessages(): List<DiscordMessage> {
     return this.discordMessages
+      .getValue();
+  }
+
+  getGroups(): List<Permission> {
+    return this.groups
       .getValue();
   }
 

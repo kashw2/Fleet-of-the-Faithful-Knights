@@ -141,6 +141,10 @@ export function parseListEffector<T>(list: List<any>, f: (v: any) => Option<T>):
     return OptionUtils.flattenList(list.map(x => f(x)));
 }
 
+export function parseSetEffector<T>(set: Set<any>, f: (v: any) => Option<T>): Set<T> {
+    return OptionUtils.flattenSet(set.map(x => f(x)));
+}
+
 export function parseList<T>(list: T): List<T> {
     if (Option.of(list).isEmpty()) {
         return List();
