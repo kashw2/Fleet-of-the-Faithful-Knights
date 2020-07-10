@@ -20,9 +20,9 @@ export class UserStateService {
 
   candidates: BehaviorSubject<List<Candidate>> = new BehaviorSubject<List<Candidate>>(List());
   discordMessages: BehaviorSubject<List<DiscordMessage>> = new BehaviorSubject<List<DiscordMessage>>(List());
-  groups: BehaviorSubject<List<Enum>> = new BehaviorSubject<List<Enum>>(List());
+  groups: BehaviorSubject<Set<Enum>> = new BehaviorSubject<Set<Enum>>(Set());
   news: BehaviorSubject<List<News>> = new BehaviorSubject<List<News>>(List());
-  permissions: BehaviorSubject<List<Enum>> = new BehaviorSubject<List<Enum>>(List());
+  permissions: BehaviorSubject<Set<Enum>> = new BehaviorSubject<Set<Enum>>(Set());
   user: BehaviorSubject<Option<User>> = new BehaviorSubject<Option<User>>(None);
   users: BehaviorSubject<List<User>> = new BehaviorSubject<List<User>>(List());
   votes: BehaviorSubject<List<Vote>> = new BehaviorSubject<List<Vote>>(List());
@@ -41,7 +41,7 @@ export class UserStateService {
       .getValue();
   }
 
-  getGroups(): List<Enum> {
+  getGroups(): Set<Enum> {
     return this.groups
       .getValue();
   }
@@ -51,7 +51,7 @@ export class UserStateService {
       .getValue();
   }
 
-  getPermissions(): List<Enum> {
+  getPermissions(): Set<Enum> {
     return this.permissions
       .getValue();
   }

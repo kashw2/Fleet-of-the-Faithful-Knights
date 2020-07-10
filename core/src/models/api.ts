@@ -178,6 +178,25 @@ export class Api {
             .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
     }
 
+    private sendGetRequestSetSerialized<T>(
+        location: string,
+        serializer: SimpleJsonSerializer<T>,
+        headers: object = this.getHeaders(),
+    ): Promise<Either<string, Set<T>>> {
+        return axios.get(this.getBaseUrl().concat(location), {
+                headers,
+            },
+        )
+            .then(x => {
+                if (this.isFailureStatusCode(x.status)) {
+                    return Left(`${x.status}: ${x.statusText} - ${x.data}`);
+                }
+                return Right(serializer.fromJsonArray(x.data).toSet());
+            })
+            // @ts-ignore
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
+    }
+
     private sendGetRequestString(
         location: string,
         headers: object = this.getHeaders(),
@@ -367,6 +386,25 @@ export class Api {
             .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
     }
 
+    private sendPostRequestSetSerialized<T>(
+        location: string,
+        serializer: SimpleJsonSerializer<T>,
+        headers: object = this.getHeaders(),
+        body?: unknown,
+    ): Promise<Either<string, Set<T>>> {
+        return axios.post(this.getBaseUrl().concat(location), body, {
+            headers,
+        })
+            .then(x => {
+                if (this.isFailureStatusCode(x.status)) {
+                    return Left(`${x.status}: ${x.statusText} - ${x.data}`);
+                }
+                return Right(serializer.fromJsonArray(x.data).toSet());
+            })
+            // @ts-ignore
+            .catch((x: AxiosError) => Left(`${x.response.status}: ${x.response.statusText!} - ${x.response.data || x.message}`));
+    }
+
     private sendPostRequestString(
         location: string,
         headers: object = this.getHeaders(),
@@ -538,6 +576,23 @@ export class Api {
                 return this.sendGetRequestListSerialized(location, serializer, headers);
             case "POST":
                 return this.sendPostRequestListSerialized(location, serializer, headers, body);
+            default:
+                throw new Error(`Unsupported method type '${method}'`)
+        }
+    }
+
+    sendRequestSerializedSet<T>(
+        location: string,
+        serializer: SimpleJsonSerializer<T>,
+        headers: object = this.getHeaders(),
+        method: Method,
+        body?: unknown,
+    ): Promise<Either<string, Set<T>>> {
+        switch (method) {
+            case "GET":
+                return this.sendGetRequestSetSerialized(location, serializer, headers);
+            case "POST":
+                return this.sendPostRequestSetSerialized(location, serializer, headers, body);
             default:
                 throw new Error(`Unsupported method type '${method}'`)
         }

@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {None, Option} from "funfix-core";
 import {User} from "../../../../../core/src";
-import {List} from "immutable";
-import {Permission} from "../../../../../core/src/models/permission";
+import {List, Set} from "immutable";
+import {Enum} from "../../../../../core/src/models/enum";
 
 @Component({
   selector: "app-admin-container",
@@ -16,19 +16,19 @@ export class AdminContainerComponent implements OnInit {
   @Input()
   user: Option<User> = None;
 
-  descriptionExtractor = (v: Permission) => v.getDescription();
+  descriptionExtractor = (v: Enum) => v.getValue();
 
   getUser(): Option<User> {
     return this.user;
   }
 
-  getUserPermissions(): List<Permission> {
+  getUserPermissions(): Set<Enum> {
     return this.getUser()
       .map(x => x.getPermissions())
-      .getOrElse(List());
+      .getOrElse(Set());
   }
 
-  labelExtractor = (v: Permission) => v.getLabel();
+  labelExtractor = (v: Enum) => v.getLabel();
 
   ngOnInit(): void {
   }
