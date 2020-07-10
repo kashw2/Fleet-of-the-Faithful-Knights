@@ -1,11 +1,11 @@
-import {List} from "immutable";
+import {List, Set} from "immutable";
 import {interval} from "rxjs";
 import {UserCache} from "../../core/src";
 import {CandidateCache} from "../../core/src/models/candidate-cache";
 import {NewsCache} from "../../core/src/models/news-cache";
 import {VoteCache} from "../../core/src/models/vote-cache";
 import {DbProcedures} from "./procedures/db-procedures";
-import {PermissionCache} from "../../core/src/models/permission-cache";
+import {EnumCache} from "../../core/src/models/enum-cache";
 
 export class DbCache {
 
@@ -17,8 +17,9 @@ export class DbCache {
     }
 
     candidates: CandidateCache = new CandidateCache(List());
+    groups: EnumCache = new EnumCache(Set());
     news: NewsCache = new NewsCache(List());
-    permissions: PermissionCache = new PermissionCache(List());
+    permissions: EnumCache = new EnumCache(Set());
     users: UserCache = new UserCache(List());
     votes: VoteCache = new VoteCache(List());
 
@@ -30,6 +31,16 @@ export class DbCache {
                     console.log(`Cached ${x.size} Candidates`);
                 });
             });
+    }
+
+    cacheGroups(): void {
+        this.procedures.read.getGroups()
+            .then(result => {
+                result.forEach(x => {
+                    this.groups = new EnumCache(x);
+                    console.log(`Cached ${x.size} Groups`);
+                })
+            })
     }
 
     cacheNews(): void {
@@ -46,7 +57,7 @@ export class DbCache {
         this.procedures.read.getPermissions()
             .then(result => {
                 result.forEach(x => {
-                    this.permissions = new PermissionCache(x);
+                    this.permissions = new EnumCache(x);
                     console.log(`Cached ${x.size} Permissions`);
                 })
             })
@@ -79,6 +90,7 @@ export class DbCache {
             this.cacheVotes(),
             this.cacheCandidates(),
             this.cachePermissions(),
+            this.cacheGroups(),
         ]);
     }
 

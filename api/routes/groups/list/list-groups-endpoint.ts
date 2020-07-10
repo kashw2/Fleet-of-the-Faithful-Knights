@@ -2,17 +2,17 @@ import {ApiUtils, GetEndpoint, User} from "../../../../core/src";
 import {Database} from "../../../db/database";
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
-import {Enum, EnumJsonSerializer} from "../../../../core/src/models/enum";
 import {Set} from "immutable";
+import {Enum, EnumJsonSerializer} from "../../../../core/src/models/enum";
 
-export class ListPermissionsEndpoint extends GetEndpoint {
+export class ListGroupsEndpoint extends GetEndpoint {
 
     constructor(readonly db: Database) {
-        super("/permissions", db);
+        super("/groups", db);
     }
 
-    private getPermissions(): Either<string, Set<Enum>> {
-        return this.db.cache.permissions.getEnumsEither();
+    private getGroups(): Either<string, Set<Enum>> {
+        return this.db.cache.groups.getEnumsEither();
     }
 
     isAuthorized(user: User): boolean {
@@ -20,8 +20,7 @@ export class ListPermissionsEndpoint extends GetEndpoint {
     }
 
     run(req: Request, res: Response): void {
-        ApiUtils.sendSerializedCollectionResult(this.getPermissions(), EnumJsonSerializer.instance, res);
+        ApiUtils.sendSerializedCollectionResult(this.getGroups(), EnumJsonSerializer.instance, res);
     }
 
 }
-

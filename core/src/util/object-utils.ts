@@ -67,6 +67,9 @@ export function parseString(s: unknown): Option<string> {
     if (typeof s === "string") {
         return Option.of(s);
     }
+    if (typeof s === "number") {
+        return Option.of(s.toString());
+    }
     return None;
 }
 
@@ -139,6 +142,10 @@ export function parseSetFromArray(array: []): Set<any> {
 
 export function parseListEffector<T>(list: List<any>, f: (v: any) => Option<T>): List<T> {
     return OptionUtils.flattenList(list.map(x => f(x)));
+}
+
+export function parseSetEffector<T>(set: Set<any>, f: (v: any) => Option<T>): Set<T> {
+    return OptionUtils.flattenSet(set.map(x => f(x)));
 }
 
 export function parseList<T>(list: T): List<T> {

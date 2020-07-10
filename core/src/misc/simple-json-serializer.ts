@@ -30,7 +30,7 @@ export abstract class SimpleJsonSerializer<T> {
 
     abstract toJson(value: T, builder: JsonBuilder): object;
 
-    toJsonArray(collection: Collection<number, T>): object {
+    toJsonArray(collection: Collection<any, T>): object {
         return collection.map(x => this.toJsonImpl(x));
     }
 

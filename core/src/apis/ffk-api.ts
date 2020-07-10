@@ -9,7 +9,7 @@ import {User, UserJsonSerializer} from "../models/user";
 import {Vote, VoteJsonSerializer} from "../models/vote";
 import {News, NewsJsonSerializer} from "../models/news";
 import {DiscordOAuthResponse, DiscordOAuthResponseJsonSerializer, idKey, parseNumber} from "..";
-import {Permission, PermissionJsonSerializer} from "../models/permission";
+import {Enum, EnumJsonSerializer} from "../models/enum";
 
 export class FfkApi {
 
@@ -80,6 +80,15 @@ export class FfkApi {
         );
     }
 
+    listGroups(): Promise<Either<string, List<Enum>>> {
+        return this.api.sendRequestSerializedList(
+            "/groups",
+            EnumJsonSerializer.instance,
+            this.getHeaders(),
+            "GET",
+        );
+    }
+
     listMissingCandidates(candidates: List<Candidate>): Promise<Either<string, List<Candidate>>> {
         return this.api.sendRequestSerializedList(
             "/candidates/missing",
@@ -99,10 +108,10 @@ export class FfkApi {
         );
     }
 
-    listPermissions(): Promise<Either<string, List<Permission>>> {
+    listPermissions(): Promise<Either<string, List<Enum>>> {
         return this.api.sendRequestSerializedList(
             "/permissions",
-            PermissionJsonSerializer.instance,
+            EnumJsonSerializer.instance,
             this.getHeaders(),
             "GET",
         );

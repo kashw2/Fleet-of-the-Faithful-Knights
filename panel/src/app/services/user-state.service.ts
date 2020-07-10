@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {None, Option} from "funfix-core";
-import {List} from "immutable";
+import {List, Set} from "immutable";
 import {CookieService} from "ngx-cookie-service";
 import {BehaviorSubject} from "rxjs";
 import {User} from "../../../../core/src";
@@ -8,7 +8,7 @@ import {Candidate} from "../../../../core/src/models/candidate";
 import {News} from "../../../../core/src/models/news";
 import {Vote} from "../../../../core/src/models/vote";
 import {DiscordMessage} from "../../../../core/src/models/discord/discord-message";
-import {Permission} from "../../../../core/src/models/permission";
+import {Enum} from "../../../../core/src/models/enum";
 
 @Injectable({
   providedIn: "root",
@@ -20,8 +20,9 @@ export class UserStateService {
 
   candidates: BehaviorSubject<List<Candidate>> = new BehaviorSubject<List<Candidate>>(List());
   discordMessages: BehaviorSubject<List<DiscordMessage>> = new BehaviorSubject<List<DiscordMessage>>(List());
+  groups: BehaviorSubject<List<Enum>> = new BehaviorSubject<List<Enum>>(List());
   news: BehaviorSubject<List<News>> = new BehaviorSubject<List<News>>(List());
-  permissions: BehaviorSubject<List<Permission>> = new BehaviorSubject<List<Permission>>(List());
+  permissions: BehaviorSubject<List<Enum>> = new BehaviorSubject<List<Enum>>(List());
   user: BehaviorSubject<Option<User>> = new BehaviorSubject<Option<User>>(None);
   users: BehaviorSubject<List<User>> = new BehaviorSubject<List<User>>(List());
   votes: BehaviorSubject<List<Vote>> = new BehaviorSubject<List<Vote>>(List());
@@ -40,12 +41,17 @@ export class UserStateService {
       .getValue();
   }
 
+  getGroups(): List<Enum> {
+    return this.groups
+      .getValue();
+  }
+
   getNews(): List<News> {
     return this.news
       .getValue();
   }
 
-  getPermissions(): List<Permission> {
+  getPermissions(): List<Enum> {
     return this.permissions
       .getValue();
   }

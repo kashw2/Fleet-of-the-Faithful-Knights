@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {None, Option} from "funfix-core";
-import {List} from "immutable";
+import {List, Set} from "immutable";
 import {User} from "../../../../../core/src";
 import {Candidate} from "../../../../../core/src/models/candidate";
 import {GroupUtils} from "../../../../../core/src/util/group-utils";
@@ -11,6 +11,7 @@ import {FfkApiService} from "../../services/ffk-api.service";
 import {Vote} from "../../../../../core/src/models/vote";
 import {NotificationService} from "../../services/notification.service";
 import {Permission} from "../../../../../core/src/models/permission";
+import {Enum} from "../../../../../core/src/models/enum";
 
 @Component({
   selector: "app-create-vote-modal",
@@ -59,9 +60,9 @@ export class CreateVoteModalComponent implements OnInit {
       .getCandidates();
   }
 
-  getGroups(): List<Permission> {
+  getGroups(): List<Enum> {
     return this.userStateService
-      .getPermissions();
+      .getGroups();
   }
 
   getNotes(): Option<string> {
@@ -93,18 +94,12 @@ export class CreateVoteModalComponent implements OnInit {
   }
 
   async populateGroups(): Promise<void> {
-    const groups = await this.ffkApi.listPermissions();
+    const groups = await this.ffkApi.listGroups();
     this.notificationService.showNotificationBasedOnEitherEffector(groups, values => `Loaded ${values.size} Groups`)
-      .map(gs => this.userStateService.permissions.next(gs));
+      .map(gs => this.userStateService.groups.next(gs));
   }
 
   updateCandidate(candidate: Candidate): void {
-    this.candidate.next(Option.of(candidate));
-  }
-
-  updateCandidateViaSelect(event): void {
-    const candidate = this.getCandidates()
-      .find(c => c.getId().contains(+event.target.selectedOptions[0].dataset.value));
     this.candidate.next(Option.of(candidate));
   }
 
