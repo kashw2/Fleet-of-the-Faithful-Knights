@@ -7,10 +7,10 @@ export const DiscordGroupIdMap: Map<string, string> = Map({
     "541834583268917248": "Master Commander",
     "539194625056047106": "Knight Commander",
     // ..
-    "631948957664280586": "Developer",
+    // "631948957664280586": "Developer",
     "541834732376424448": "Knight Lieutenant",
     // .
-    "549080433900650536": "Developer",
+    // "549080433900650536": "Developer",
     "541839842435137577": "Knight",
     "539194544575741993": "Sergeant First Class",
     "541835663373369344": "Sergeant",
@@ -41,10 +41,10 @@ export class GroupUtils {
                 case "541834583268917248":
                 case "539194625056047106":
                 // ..
-                case "631948957664280586":
+                // case "631948957664280586":
                 case "541834732376424448":
                 // .
-                case "549080433900650536":
+                // case "549080433900650536":
                 case "541839842435137577":
                 case "539194544575741993":
                 case "541835663373369344":
@@ -96,13 +96,13 @@ export class GroupUtils {
             case "539194625056047106":
                 return "Knight Commander";
             // ..
-            case "631948957664280586":
-                return "Developer";
+            // case "631948957664280586":
+            //     return "Developer";
             case "541834732376424448":
                 return "Knight Lieutenant";
             // .
-            case "549080433900650536":
-                return "Developer";
+            // case "549080433900650536":
+            //     return "Developer";
             case "541839842435137577":
                 return "Knight";
             case "539194544575741993":
@@ -135,10 +135,10 @@ export class GroupUtils {
             case "541834583268917248":
             case "539194625056047106":
             // ..
-            case "631948957664280586":
+            // case "631948957664280586":
             case "541834732376424448":
             // .
-            case "549080433900650536":
+            // case "549080433900650536":
             case "541839842435137577":
             case "539194544575741993":
             case "541835663373369344":
