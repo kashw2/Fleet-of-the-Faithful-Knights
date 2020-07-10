@@ -14,9 +14,9 @@
     <mdb-select-2 class="text-center" placeholder="Select Group">
       <mdb-select-option
         *ngFor="let group of getGroups()"
-        (click)="updatePromotionGroup(group.getLabel())"
+        (click)="updatePromotionGroup(group.getValue())"
       >
-        {{group.getLabel().getOrElse("Error loading Group")}}
+        {{group.getValue().getOrElse("Error")}}
       </mdb-select-option>
     </mdb-select-2>
     <div class="md-form">

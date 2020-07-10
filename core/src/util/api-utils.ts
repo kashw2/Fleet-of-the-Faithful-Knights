@@ -111,7 +111,7 @@ export class ApiUtils {
             });
     }
 
-    static sendSerializedCollectionResult<A>(req: Either<string, Collection<number, A>>, serializer: SimpleJsonSerializer<A>, res: Response): void {
+    static sendSerializedCollectionResult<A>(req: Either<string, Collection<any, A>>, serializer: SimpleJsonSerializer<A>, res: Response): void {
         if (req.isLeft()) {
             res.send(req.value);
             return;

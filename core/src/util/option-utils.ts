@@ -7,11 +7,13 @@ export class OptionUtils {
         return opt.flatMap(v => f(v));
     }
 
-    static exists2<A, B, C>(opt1: Option<A>, opt2: Option<B>, f: (a: A, b: B) => boolean): boolean {
-        if (opt1.nonEmpty() && opt2.nonEmpty()) {
-            return f(opt1.get(), opt2.get());
-        }
-        return false;
+    static exists2<A, B>(
+        opt1: Option<A>,
+        opt2: Option<B>,
+        tester: (t1: A, t2: B) => boolean,
+    ): boolean {
+        return Option.map2(opt1, opt2, (o1, o2) => tester(o1, o2))
+            .getOrElse(false);
     }
 
     static flattenList<A>(list: List<Option<A>>): List<A> {

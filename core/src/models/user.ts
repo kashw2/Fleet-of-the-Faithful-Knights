@@ -11,11 +11,11 @@ import {
     tokenKey,
     usernameKey
 } from "../misc/json-keys";
-import {parseNumber, parseSerializedList, parseString} from "../util/object-utils";
+import {parseNumber, parseSerializedSet, parseString} from "../util/object-utils";
 import {JsonBuilder} from "../misc/json-builder";
 import {SimpleJsonSerializer} from "../misc/simple-json-serializer";
-import {List} from "immutable";
-import {Permission, PermissionJsonSerializer} from "./permission";
+import {Set} from "immutable";
+import {Enum, EnumJsonSerializer} from "./enum";
 
 
 export class User {
@@ -29,7 +29,7 @@ export class User {
         private avatar: Option<string> = None,
         private token: Option<string> = None,
         private group: Option<string> = None,
-        private permissions: List<Permission> = List(),
+        private permissions: Set<Enum> = Set(),
         private memberSince: Option<string> = None,
     ) {
     }
@@ -77,7 +77,7 @@ export class User {
         return this.memberSince;
     }
 
-    public getPermissions(): List<Permission> {
+    public getPermissions(): Set<Enum> {
         return this.permissions;
     }
 
@@ -193,7 +193,7 @@ export class UserJsonSerializer extends SimpleJsonSerializer<User> {
             parseString(json[avatarKey]),
             parseString(json[tokenKey]),
             parseString(json[groupKey]),
-            parseSerializedList(json[permissionsKey], PermissionJsonSerializer.instance),
+            parseSerializedSet(json[permissionsKey], EnumJsonSerializer.instance),
             parseString(json[memberSinceKey]),
         );
     }
@@ -208,7 +208,7 @@ export class UserJsonSerializer extends SimpleJsonSerializer<User> {
             .addOptional(value.getToken(), tokenKey)
             .addOptional(value.getLocale(), localeKey)
             .addOptional(value.getGroup(), groupKey)
-            .addListSerialized(value.getPermissions(), permissionsKey, PermissionJsonSerializer.instance)
+            .addSetSerialized(value.getPermissions(), permissionsKey, EnumJsonSerializer.instance)
             .addOptional(value.getMemberSince(), memberSinceKey)
             .build();
     }

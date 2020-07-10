@@ -69,3 +69,4 @@ export const mentionsKey = "mentions";
 export const mentionRolesKey = "mention_roles";
 export const labelKey = "label";
 export const descriptionKey = "description";
+export const valueKey = "value";

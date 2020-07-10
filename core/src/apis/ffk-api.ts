@@ -1,15 +1,15 @@
 import {Api} from "../models/api";
 import {Url} from "../models/url";
 import {Either} from "funfix-core";
-import {List, Set} from "immutable";
+import {List} from "immutable";
 import {EitherUtils} from "../util/either-utils";
 import {Candidate, CandidateJsonSerializer} from "../models/candidate";
 import {Comment, CommentJsonSerializer} from "../models/comment";
 import {User, UserJsonSerializer} from "../models/user";
 import {Vote, VoteJsonSerializer} from "../models/vote";
 import {News, NewsJsonSerializer} from "../models/news";
-import {DiscordOAuthResponse, DiscordOAuthResponseJsonSerializer, idKey, labelKey, parseNumber, parseSet} from "..";
-import {Permission, PermissionJsonSerializer} from "../models/permission";
+import {DiscordOAuthResponse, DiscordOAuthResponseJsonSerializer, idKey, parseNumber} from "..";
+import {Enum, EnumJsonSerializer} from "../models/enum";
 
 export class FfkApi {
 
@@ -80,10 +80,10 @@ export class FfkApi {
         );
     }
 
-    listGroups(): Promise<Either<string, List<Permission>>> {
+    listGroups(): Promise<Either<string, List<Enum>>> {
         return this.api.sendRequestSerializedList(
             "/groups",
-            PermissionJsonSerializer.instance,
+            EnumJsonSerializer.instance,
             this.getHeaders(),
             "GET",
         );
@@ -108,10 +108,10 @@ export class FfkApi {
         );
     }
 
-    listPermissions(): Promise<Either<string, List<Permission>>> {
+    listPermissions(): Promise<Either<string, List<Enum>>> {
         return this.api.sendRequestSerializedList(
             "/permissions",
-            PermissionJsonSerializer.instance,
+            EnumJsonSerializer.instance,
             this.getHeaders(),
             "GET",
         );

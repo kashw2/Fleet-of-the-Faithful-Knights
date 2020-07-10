@@ -11,6 +11,7 @@ import {FfkApiService} from "../../services/ffk-api.service";
 import {Vote} from "../../../../../core/src/models/vote";
 import {NotificationService} from "../../services/notification.service";
 import {Permission} from "../../../../../core/src/models/permission";
+import {Enum} from "../../../../../core/src/models/enum";
 
 @Component({
   selector: "app-create-vote-modal",
@@ -59,7 +60,7 @@ export class CreateVoteModalComponent implements OnInit {
       .getCandidates();
   }
 
-  getGroups(): List<Permission> {
+  getGroups(): List<Enum> {
     return this.userStateService
       .getGroups();
   }

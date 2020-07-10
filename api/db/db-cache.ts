@@ -5,8 +5,7 @@ import {CandidateCache} from "../../core/src/models/candidate-cache";
 import {NewsCache} from "../../core/src/models/news-cache";
 import {VoteCache} from "../../core/src/models/vote-cache";
 import {DbProcedures} from "./procedures/db-procedures";
-import {PermissionCache} from "../../core/src/models/permission-cache";
-import {GroupCache} from "../../core/src/models/group-cache";
+import {EnumCache} from "../../core/src/models/enum-cache";
 
 export class DbCache {
 
@@ -18,9 +17,9 @@ export class DbCache {
     }
 
     candidates: CandidateCache = new CandidateCache(List());
-    groups: GroupCache = new GroupCache(Set());
+    groups: EnumCache = new EnumCache(Set());
     news: NewsCache = new NewsCache(List());
-    permissions: PermissionCache = new PermissionCache(List());
+    permissions: EnumCache = new EnumCache(Set());
     users: UserCache = new UserCache(List());
     votes: VoteCache = new VoteCache(List());
 
@@ -38,7 +37,7 @@ export class DbCache {
         this.procedures.read.getGroups()
             .then(result => {
                 result.forEach(x => {
-                    this.groups = new GroupCache(x);
+                    this.groups = new EnumCache(x);
                     console.log(`Cached ${x.size} Groups`);
                 })
             })
@@ -58,7 +57,7 @@ export class DbCache {
         this.procedures.read.getPermissions()
             .then(result => {
                 result.forEach(x => {
-                    this.permissions = new PermissionCache(x);
+                    this.permissions = new EnumCache(x);
                     console.log(`Cached ${x.size} Permissions`);
                 })
             })

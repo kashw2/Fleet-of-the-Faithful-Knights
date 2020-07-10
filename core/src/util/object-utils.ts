@@ -67,6 +67,9 @@ export function parseString(s: unknown): Option<string> {
     if (typeof s === "string") {
         return Option.of(s);
     }
+    if (typeof s === "number") {
+        return Option.of(s.toString());
+    }
     return None;
 }
 

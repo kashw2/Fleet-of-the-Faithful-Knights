@@ -3,6 +3,7 @@ import {Database} from "../../../db/database";
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {Set} from "immutable";
+import {Enum, EnumJsonSerializer} from "../../../../core/src/models/enum";
 
 export class ListGroupsEndpoint extends GetEndpoint {
 
@@ -10,8 +11,8 @@ export class ListGroupsEndpoint extends GetEndpoint {
         super("/groups", db);
     }
 
-    private getGroups(): Either<string, Set<string>> {
-        return this.db.cache.groups.getGroupsEither();
+    private getGroups(): Either<string, Set<Enum>> {
+        return this.db.cache.groups.getEnumsEither();
     }
 
     isAuthorized(user: User): boolean {
@@ -19,7 +20,7 @@ export class ListGroupsEndpoint extends GetEndpoint {
     }
 
     run(req: Request, res: Response): void {
-        ApiUtils.sendResult(this.getGroups(), res);
+        ApiUtils.sendSerializedCollectionResult(this.getGroups(), EnumJsonSerializer.instance, res);
     }
 
 }
