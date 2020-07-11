@@ -5,6 +5,7 @@ import {Group} from "../misc/type-defs";
 export const DiscordGroupIdMap: Map<string, string> = Map({
     "541835139701800962": "Grand Master",
     "541834583268917248": "Master Commander",
+    "698756805177901076": "Developer",
     "539194625056047106": "Knight Commander",
     // ..
     // "631948957664280586": "Developer",
@@ -22,6 +23,7 @@ export const GroupMapByName: Map<string, number> = Map({
     "Developer": 1,
     "Grand Master": 2,
     "Master Commander": 3,
+    "Developer (Unverified)": 12,
     "Knight Commander": 4,
     "Knight Lieutenant": 5,
     "Knight": 6,
@@ -39,6 +41,7 @@ export class GroupUtils {
             switch (id) {
                 case "541835139701800962":
                 case "541834583268917248":
+                case "698756805177901076":
                 case "539194625056047106":
                 // ..
                 // case "631948957664280586":
@@ -61,6 +64,8 @@ export class GroupUtils {
         switch (name) {
             case "Developer":
                 return 1;
+            case "Developer (Unverified)":
+                return 12;
             case "Grand Master":
                 return 2;
             case "Master Commander":
@@ -93,6 +98,8 @@ export class GroupUtils {
                 return "Grand Master";
             case "541834583268917248":
                 return "Master Commander";
+            case "698756805177901076":
+                return "Developer (Unverified)";
             case "539194625056047106":
                 return "Knight Commander";
             // ..
@@ -129,10 +136,52 @@ export class GroupUtils {
         return this.getGroupIdFromName(this.parseGroup(comparator)) < GroupMapByName.get(group);
     }
 
+    static isInRoleHierarchy(role: string, method: "DISCORD" | "NAME" = "DISCORD"): boolean {
+        switch (method) {
+            case "DISCORD":
+                switch (this.getGroupNameFromDiscordRoleId(role)) {
+                    case "Developer":
+                    case "Developer (Unverified)":
+                    case "Grand Master":
+                    case "Master Commander":
+                    case "Knight Commander":
+                    case "Knight Lieutenant":
+                    case "Knight":
+                    case "Sergeant First Class":
+                    case "Sergeant":
+                    case "Companion at Arms":
+                    case "Squire":
+                        return true;
+                    default:
+                        return false;
+                }
+            case "NAME":
+                switch (role as Group) {
+                    case "Developer":
+                    case "Developer (Unverified)":
+                    case "Grand Master":
+                    case "Master Commander":
+                    case "Knight Commander":
+                    case "Knight Lieutenant":
+                    case "Knight":
+                    case "Sergeant First Class":
+                    case "Sergeant":
+                    case "Companion at Arms":
+                    case "Squire":
+                        return true;
+                    default:
+                        return false;
+                }
+            default:
+                throw new Error(`Unsupported method '${method}'`);
+        }
+    }
+
     static isNonGuestRole(id: string): boolean {
         switch (id) {
             case "541835139701800962":
             case "541834583268917248":
+            case "698756805177901076":
             case "539194625056047106":
             // ..
             // case "631948957664280586":
@@ -153,7 +202,9 @@ export class GroupUtils {
     static parseGroup(name: string): Group {
         switch (name) {
             case "Developer":
-                return "Developer";
+                return "Developer (Unverified)";
+            case "Developer (Unverified)":
+                return "Developer (Unverified)";
             case "Guest":
                 return "Guest";
             case "Grand Master":
@@ -170,10 +221,10 @@ export class GroupUtils {
                 return "Sergeant First Class";
             case "Sergeant":
                 return "Sergeant";
-            case "Squire":
-                return "Squire";
             case "Companion at Arms":
                 return "Companion at Arms";
+            case "Squire":
+                return "Squire";
             default:
                 console.log(`${name} is not a recognised group, defaulting to Guest`);
                 return "Guest";

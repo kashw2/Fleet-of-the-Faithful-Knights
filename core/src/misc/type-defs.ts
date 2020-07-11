@@ -5,6 +5,7 @@ export type FfkDateFormat = "DMY" | "DMYHM" | "12HT";
 export type ChannelType = "GUILD_TEXT" | "DM" | "GUILD_VOICE" | "GROUP_DM" | "GUILD_CATEGORY" | "GUILD_NEWS" | "GUILD_STORE";
 export type Group =
     "Developer"
+    | "Developer (Unverified)"
     | "Guest"
     | "Grand Master"
     | "Master Commander"
