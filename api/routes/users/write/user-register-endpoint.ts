@@ -1,23 +1,19 @@
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
-import {ApiUtils, EitherUtils, OptionUtils, User} from "../../../../core/src";
-import {GetEndpoint} from "../../../../core/src/server/get-endpoint";
+import {ApiUtils, EitherUtils, User} from "../../../../core/src";
 import {Database} from "../../../db/database";
 import {DiscordApi} from "../../../../core/src/apis/discord-api";
 import {DbUser} from "../../../../core/src/models/db/db-user";
+import {UnauthenticatedGetEndpoint} from "../../../../core/src/server/unauthenticated/unauthenticated-get-endpoint";
 
-export class UserRegisterEndpoint extends GetEndpoint {
+export class UserRegisterEndpoint extends UnauthenticatedGetEndpoint {
 
     constructor(readonly db: Database) {
-        super("/user/register", db);
+        super("/user/register");
     }
 
     private getResponseCode(req: Request): Either<string, string> {
         return ApiUtils.parseStringFromQuery(req, "code");
-    }
-
-    isAuthorized(user: User): boolean {
-        return true;
     }
 
     run(req: Request, res: Response): void {

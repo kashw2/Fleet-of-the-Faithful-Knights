@@ -26,7 +26,7 @@ export class FfkApi {
         return EitherUtils.liftEither(process.env.FFK_API_ADDRESS!, "FFK_API_ADDRESS is undefined");
     }
 
-    private getHeaders(): object {
+    protected getHeaders(): object {
         if (this.getFfkApiToken().isRight()) {
             return {
                 "X-Api-Token": this.getFfkApiToken().get(),
@@ -195,7 +195,7 @@ export class FfkApi {
         return this.api.sendRequestSerialized(
             `/user/register?code=${code}`,
             DiscordOAuthResponseJsonSerializer.instance,
-            this.getHeaders(),
+            {},
             "GET",
         );
     }

@@ -18,6 +18,12 @@ export class FfkApiService extends FfkApi {
     super();
   }
 
+  protected getHeaders(): object {
+    return {
+    "X-Api-Token": this.cookieService.get("token"),
+    }
+  }
+
   async loginOrRegisterUser(code: string): Promise<Either<string, User>> {
     const response = await this.writeUser(code);
     if (response.isLeft()) {

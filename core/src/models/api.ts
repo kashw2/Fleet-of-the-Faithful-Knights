@@ -2,7 +2,7 @@ import {Either, Left, Right, Some} from "funfix-core";
 import {Url} from "./url";
 import {SimpleJsonSerializer} from "../misc/simple-json-serializer";
 import axios, {AxiosError} from "axios";
-import {List, Set, Collection} from "immutable";
+import {List, Set} from "immutable";
 import {Method, Primitive} from "../misc/type-defs";
 import {parseNumber, parseString} from "..";
 

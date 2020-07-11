@@ -21,8 +21,6 @@ export class Candidate {
     }
 
     static fromDiscordGuildMember(member: DiscordGuildMember, idx: Option<number> = None): Candidate {
-        const c = member.getRolesSortedHierarchy().first();
-        console.log(c);
         return new Candidate(
             idx,
             member.getUser().flatMap(u => u.getId()),
