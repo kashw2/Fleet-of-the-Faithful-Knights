@@ -34,8 +34,18 @@ export class DiscordGuildMember {
 
     getRolesSortedHierarchy(): Set<string> {
         if (GroupUtils.containsNonGuestRoles(this.getRoles())) {
-            return this.getRoles().filterNot(role => !GroupUtils.isNonGuestRole(role))
-                .map(x => GroupUtils.getGroupNameFromDiscordRoleId(x));
+            return this.getRoles()
+                .filter(role => GroupUtils.isInRoleHierarchy(role, "DISCORD"))
+                .map(x => GroupUtils.getGroupNameFromDiscordRoleId(x))
+                .sort((now, previous) => {
+                    if (GroupUtils.isGroupHigher(now, previous)) {
+                        return 1;
+                    }
+                    if (GroupUtils.isGroupLower(now, previous)) {
+                        return -1;
+                    }
+                    return 0;
+                })
         }
         return this.getRoles()
             .map(role => GroupUtils.getGroupNameFromDiscordRoleId(role));

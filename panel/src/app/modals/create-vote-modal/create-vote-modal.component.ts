@@ -10,7 +10,6 @@ import {BehaviorSubject} from "rxjs";
 import {FfkApiService} from "../../services/ffk-api.service";
 import {Vote} from "../../../../../core/src/models/vote";
 import {NotificationService} from "../../services/notification.service";
-import {Permission} from "../../../../../core/src/models/permission";
 import {Enum} from "../../../../../core/src/models/enum";
 
 @Component({
@@ -60,7 +59,7 @@ export class CreateVoteModalComponent implements OnInit {
       .getCandidates();
   }
 
-  getGroups(): List<Enum> {
+  getGroups(): Set<Enum> {
     return this.userStateService
       .getGroups();
   }

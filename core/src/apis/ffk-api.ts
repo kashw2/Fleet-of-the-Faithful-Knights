@@ -1,7 +1,7 @@
 import {Api} from "../models/api";
 import {Url} from "../models/url";
 import {Either} from "funfix-core";
-import {List} from "immutable";
+import {List, Set} from "immutable";
 import {EitherUtils} from "../util/either-utils";
 import {Candidate, CandidateJsonSerializer} from "../models/candidate";
 import {Comment, CommentJsonSerializer} from "../models/comment";
@@ -80,8 +80,8 @@ export class FfkApi {
         );
     }
 
-    listGroups(): Promise<Either<string, List<Enum>>> {
-        return this.api.sendRequestSerializedList(
+    listGroups(): Promise<Either<string, Set<Enum>>> {
+        return this.api.sendRequestSerializedSet(
             "/groups",
             EnumJsonSerializer.instance,
             this.getHeaders(),
