@@ -37,7 +37,7 @@ export class DbUser {
                     username,
                     discordId,
                     discriminator,
-                    GroupUtils.getGroupIdFromName(GroupUtils.getGroupNameFromDiscordRoleId(guildMember.getRoles().first())),
+                    GroupUtils.getGroupIdFromName(GroupUtils.parseGroup(guildMember.getRolesSortedHierarchy().first())),
                     avatar,
                     locale,
                 );

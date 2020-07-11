@@ -17,7 +17,7 @@ export class ListCandidatesEndpoint extends GetEndpoint {
     }
 
     isAuthorized(user: User): boolean {
-        return true;
+        return !user.isGuest();
     }
 
     run(req: Request, res: Response): void {

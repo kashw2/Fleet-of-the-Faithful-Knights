@@ -177,28 +177,6 @@ export class GroupUtils {
         }
     }
 
-    static isNonGuestRole(id: string): boolean {
-        switch (id) {
-            case "541835139701800962":
-            case "541834583268917248":
-            case "698756805177901076":
-            case "539194625056047106":
-            // ..
-            // case "631948957664280586":
-            case "541834732376424448":
-            // .
-            // case "549080433900650536":
-            case "541839842435137577":
-            case "539194544575741993":
-            case "541835663373369344":
-            case "539194387674955776":
-            case "539194424001953793":
-                return true;
-            default:
-                return false;
-        }
-    }
-
     static parseGroup(name: string): Group {
         switch (name) {
             case "Developer":
