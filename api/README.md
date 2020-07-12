@@ -20,8 +20,8 @@ A: Webpack requires that you have a version of typescript accessible from the pr
 
 Q: How do I debug?
 
-A: The easiest way to do this would be to ```npm run initialise-dev``` which will compile, build and run the code with node/nodemons --inspect flag enabled, from there you can connect to the specified port (usually 9229) with your debugger. Bare in mind, source maps must be enabled in your tsconfig
+A: The easiest way to do this would be to ```npm run build-dev-watch``` which will compile, build and run the code with node/nodemons --inspect flag enabled, from there you can connect to the specified port (usually 9229) with your debugger. Bear in mind, source maps must be enabled in your tsconfig
 
 Q: How do I add a dependency to this project?
 
-A: run ```lerna add yourDependencyHere --scope=ffk-api```
+A: run ```lerna add yourDependencyHere --scope=@ffk/api```
