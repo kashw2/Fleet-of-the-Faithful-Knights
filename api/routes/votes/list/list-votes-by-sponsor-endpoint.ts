@@ -12,6 +12,10 @@ export class ListVotesBySponsorEndpoint extends GetEndpoint {
         super("/votes/sponsor/:id", db);
     }
 
+    getEndpointName(): string {
+        return "List Votes By Sponsor";
+    }
+
     private getUserId(req: Request): Either<string, number> {
         return ApiUtils.parseNumberFromPath(req, "id");
     }

@@ -10,6 +10,10 @@ export class WriteVoteResponseEndpoint extends GetEndpoint {
         super("/vote/response/:voteid/:response", db);
     }
 
+    getEndpointName(): string {
+        return "Write Vote Response";
+    }
+
     private getOnboardedResponse(req: Request): Either<string, string> {
         return this.getResponse(req)
             .flatMap(response => {

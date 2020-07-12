@@ -3,6 +3,7 @@ import {Either} from "funfix-core";
 import {Collection, List, Set} from "immutable";
 import {parseBoolean, SimpleJsonSerializer} from "..";
 import {EitherUtils} from "./either-utils";
+import {StringUtils} from "./string-utils";
 
 export class ApiUtils {
 
@@ -49,27 +50,27 @@ export class ApiUtils {
 
     static sendError(req: Either<string, any>, res: Response): void {
         if (req.isLeft()) {
-            res.send(req.value);
+            res.send(StringUtils.toTitleCase(req.value));
         }
     }
 
     static sendError409(req: Either<string, any>, res: Response): void {
         if (req.isLeft()) {
-            res.status(409)
-                .send(req.value);
+            res.sendStatus(409)
+                .send(StringUtils.toTitleCase(req.value));
         }
     }
 
     static sendError500(req: Either<string, any>, res: Response): void {
         if (req.isLeft()) {
             res.sendStatus(500)
-                .send(req.value);
+                .send(StringUtils.toTitleCase(req.value));
         }
     }
 
     static sendResult<A>(req: Either<string, A>, res: Response): void {
         if (req.isLeft()) {
-            res.send(req.value);
+            res.send(StringUtils.toTitleCase(req.value));
             return;
         }
         res.send(req.get());
@@ -77,43 +78,45 @@ export class ApiUtils {
 
     static sendResultEffector<A>(req: Either<string, A>, res: Response, f: (v: A) => unknown): void {
         if (req.isLeft()) {
-            res.send(req.value);
+            res.send(StringUtils.toTitleCase(req.value));
             return;
         }
         res.send(f(req.get()));
     }
-    
+
     static sendResultPromise<A>(req: Promise<Either<string, A>>, res: Response): void {
         req.then(x => {
             if (x.isLeft()) {
-                res.send(x.value);
+                res.send(StringUtils.toTitleCase(x.value));
                 return;
             }
             res.send(x.get());
         })
             .catch(x => {
                 console.error(x);
-                res.send(x).status(500);
+                res.send(StringUtils.toTitleCase(x))
+                    .status(500);
             });
     }
 
     static sendResultPromiseEffector<A>(req: Promise<Either<string, A>>, res: Response, f: (x: any) => object): void {
         req.then(x => {
             if (x.isLeft()) {
-                res.send(x.value);
+                res.send(StringUtils.toTitleCase(x.value));
                 return;
             }
             res.send(f(x.get()));
         })
             .catch(x => {
                 console.error(x);
-                res.send(x).status(500);
+                res.send(x)
+                    .status(500);
             });
     }
 
     static sendSerializedCollectionResult<A>(req: Either<string, Collection<any, A>>, serializer: SimpleJsonSerializer<A>, res: Response): void {
         if (req.isLeft()) {
-            res.send(req.value);
+            res.send(StringUtils.toTitleCase(req.value));
             return;
         }
         res.send(serializer.toJsonArray(req.get()));
@@ -121,7 +124,7 @@ export class ApiUtils {
 
     static sendSerializedResponse<A>(req: Either<string, A>, serializer: SimpleJsonSerializer<A>, res: Response): void {
         if (req.isLeft()) {
-            res.send(req.value);
+            res.send(StringUtils.toTitleCase(req.value));
             return;
         }
         res.send(serializer.toJsonImpl(req.get()));

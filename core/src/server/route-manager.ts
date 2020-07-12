@@ -10,6 +10,8 @@ export abstract class RouteManager {
             .flatMap(token => db.cache.users.getUserByToken(token));
     }
 
+    abstract getEndpointName(): string;
+
     private getUserToken(req: Request): Either<string, string> {
         return ApiUtils.parseStringFromHeader(req, "X-Api-Token");
     }

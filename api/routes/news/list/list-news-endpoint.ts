@@ -12,12 +12,16 @@ export class ListNewsEndpoint extends GetEndpoint {
         super("/news", db);
     }
 
+    getEndpointName(): string {
+        return "List News";
+    }
+
     private getNewsArticles(): Either<string, List<News>> {
         return this.db.cache.news.getNewsEither();
     }
 
     isAuthorized(user: User): boolean {
-        return true;
+        return !user.isGuest();
     }
 
     run(req: Request, res: Response): void {

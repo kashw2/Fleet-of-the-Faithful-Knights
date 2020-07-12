@@ -12,6 +12,10 @@ export class ListVotesPassedEndpoint extends GetEndpoint {
         super("/votes/passed/:userid", db);
     }
 
+    getEndpointName(): string {
+        return "List Passed Votes";
+    }
+
     private getFailedOrPendingVotes(req: Request): Either<string, List<Vote>> {
         return this.getUserId(req)
             .flatMap(uid => this.db.cache.votes.getFailedVotesByUserEither(uid))

@@ -10,6 +10,10 @@ export class ReadUserByIdEndpoint extends GetEndpoint {
         super("/user/id/:id", db);
     }
 
+    getEndpointName(): string {
+        return "Read User By Id";
+    }
+
     private getUser(userId: number): Either<string, User> {
         return this.db.cache.users.getByIdEither(userId);
     }

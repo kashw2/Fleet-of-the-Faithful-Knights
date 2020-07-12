@@ -11,6 +11,10 @@ export class ListPermissionsEndpoint extends GetEndpoint {
         super("/permissions", db);
     }
 
+    getEndpointName(): string {
+        return "List Permissions";
+    }
+
     private getPermissions(): Either<string, Set<Enum>> {
         return this.db.cache.permissions.getEnumsEither();
     }

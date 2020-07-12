@@ -10,6 +10,10 @@ export class ReadUserByUsernameEndpoint extends GetEndpoint {
         super("/user/username/:username", db);
     }
 
+    getEndpointName(): string {
+        return "Read Users By Username";
+    }
+
     private getName(req: Request): Either<string, string> {
         return ApiUtils.parseStringFromPath(req, usernameKey);
     }

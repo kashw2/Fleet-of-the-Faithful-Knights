@@ -16,8 +16,12 @@ export class ListVotesEndpoint extends GetEndpoint {
         return this.db.cache.votes.getVotesEither();
     }
 
+    getEndpointName(): string {
+        return "List Votes";
+    }
+
     isAuthorized(user: User): boolean {
-        return true;
+        return !user.isGuest();
     }
 
     run(req: Request, res: Response): void {
