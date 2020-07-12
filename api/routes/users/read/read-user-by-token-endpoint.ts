@@ -10,6 +10,10 @@ export class ReadUserByTokenEndpoint extends GetEndpoint {
         super("/user/token/:token", db);
     }
 
+    getEndpointName(): string {
+        return "Read User By Token"
+    }
+
     private getToken(req: Request): Either<string, string> {
         return ApiUtils.parseStringFromPath(req, "token");
     }

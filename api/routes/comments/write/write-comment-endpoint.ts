@@ -16,6 +16,10 @@ export class WriteCommentEndpoint extends PostEndpoint {
         return ApiUtils.parseSerializedFromBody(req, "comment", CommentJsonSerializer.instance);
     }
 
+    getEndpointName(): string {
+        return "Write Comment";
+    }
+
     private getVoteId(req: Request): Either<string, number> {
         return ApiUtils.parseNumberFromPath(req, "voteid");
     }

@@ -10,6 +10,10 @@ export class ListUsersByGroupEndpoint extends GetEndpoint {
         super("/users/:group", db);
     }
 
+    getEndpointName(): string {
+        return "List Users By Group";
+    }
+
     private getGroup(req: Request): Either<string, string> {
         return ApiUtils.parseStringFromPath(req, groupKey);
     }

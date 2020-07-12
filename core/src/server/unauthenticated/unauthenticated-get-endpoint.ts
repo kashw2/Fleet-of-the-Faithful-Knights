@@ -1,6 +1,4 @@
-import {Database} from "../../../../api/db/database";
 import {Request, Response, Router} from "express";
-import {ApiUtils} from "../..";
 
 export abstract class UnauthenticatedGetEndpoint {
 
@@ -10,6 +8,8 @@ export abstract class UnauthenticatedGetEndpoint {
     private getEndpoint(): string {
         return this.endpoint;
     }
+
+    abstract getEndpointName(): string;
 
     routeEndpoint(router: Router): void {
         router.get(this.getEndpoint(), ((req, res, next) => {

@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
-import {ApiUtils, EitherUtils, User} from "../../../../core/src";
+import {ApiUtils, EitherUtils} from "../../../../core/src";
 import {Database} from "../../../db/database";
 import {DiscordApi} from "../../../../core/src/apis/discord-api";
 import {DbUser} from "../../../../core/src/models/db/db-user";
@@ -10,6 +10,10 @@ export class UserRegisterEndpoint extends UnauthenticatedGetEndpoint {
 
     constructor(readonly db: Database) {
         super("/user/register");
+    }
+
+    getEndpointName(): string {
+        return "Register User";
     }
 
     private getResponseCode(req: Request): Either<string, string> {

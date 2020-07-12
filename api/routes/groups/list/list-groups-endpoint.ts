@@ -11,6 +11,10 @@ export class ListGroupsEndpoint extends GetEndpoint {
         super("/groups", db);
     }
 
+    getEndpointName(): string {
+        return "List Groups";
+    }
+
     private getGroups(): Either<string, Set<Enum>> {
         return this.db.cache.groups.getEnumsEither();
     }

@@ -128,12 +128,12 @@ export class GroupUtils {
 
     static isGroupHigher(group: string, comparator: string): boolean {
         // @ts-ignore
-        return this.getGroupIdFromName(this.parseGroup(comparator)) >= GroupMapByName.get(group);
+        return GroupMapByName.get(comparator) >= GroupMapByName.get(group);
     }
 
     static isGroupLower(group: string, comparator: string): boolean {
         // @ts-ignore
-        return this.getGroupIdFromName(this.parseGroup(comparator)) < GroupMapByName.get(group);
+        return GroupMapByName.get(comparator) < GroupMapByName.get(group);
     }
 
     static isInRoleHierarchy(role: string, method: "DISCORD" | "NAME" = "DISCORD"): boolean {

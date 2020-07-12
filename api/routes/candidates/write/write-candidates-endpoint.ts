@@ -17,6 +17,10 @@ export class WriteCandidatesEndpoint extends PostEndpoint {
         return ApiUtils.parseSerializedListFromBody(req, "candidates", CandidateJsonSerializer.instance);
     }
 
+    getEndpointName(): string {
+        return "Write Candidates";
+    }
+
     isAuthorized(user: User): boolean {
         return user.isDeveloper();
     }

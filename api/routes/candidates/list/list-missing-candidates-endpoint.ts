@@ -2,7 +2,7 @@ import {Request, Response} from "express";
 import {Candidate, CandidateJsonSerializer} from "../../../../core/src/models/candidate";
 import {Database} from "../../../db/database";
 import {Either} from "funfix-core";
-import {List, Set} from "immutable";
+import {List} from "immutable";
 import {PostEndpoint} from "../../../../core/src/server/post-endpoint";
 import {ApiUtils, User} from "../../../../core/src";
 
@@ -19,6 +19,10 @@ export class ListMissingCandidatesEndpoint extends PostEndpoint {
 
     private getCandidates(req: Request): Either<string, List<Candidate>> {
         return ApiUtils.parseSerializedListFromBody(req, "candidates", CandidateJsonSerializer.instance)
+    }
+
+    getEndpointName(): string {
+        return "List Missing Candidates";
     }
 
     private getMissingCandidates(req: Request): Either<string, List<Candidate>> {

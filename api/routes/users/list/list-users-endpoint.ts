@@ -10,6 +10,10 @@ export class ListUsersEndpoint extends GetEndpoint {
         super("/users", db);
     }
 
+    getEndpointName(): string {
+        return "List Users";
+    }
+
     private getUsers(): Either<string, List<User>> {
         return this.db.cache.users.getUsersWithoutToken();
     }

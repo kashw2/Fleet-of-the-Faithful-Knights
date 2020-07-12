@@ -18,6 +18,10 @@ export class WriteVoteEndpoint extends PostEndpoint {
             .getOrElse(false);
     }
 
+    getEndpointName(): string {
+        return "Write Vote";
+    }
+
     private getVote(req: Request): Either<string, Vote> {
         return ApiUtils.parseSerializedFromBody(req, "vote", VoteJsonSerializer.instance);
     }

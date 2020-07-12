@@ -11,6 +11,10 @@ export class ReadVoteByIdEndpoint extends GetEndpoint {
         super("/vote/id/:id", db);
     }
 
+    getEndpointName(): string {
+        return "Read Vote By Id";
+    }
+
     private getVote(voteId: number): Either<string, Vote> {
         return this.db.cache.votes.getByVoteIdEither(voteId);
     }

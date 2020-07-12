@@ -16,6 +16,10 @@ export class ListRecentVotesEndpoint extends GetEndpoint {
         return ApiUtils.parseNumberFromPath(req, "amount");
     }
 
+    getEndpointName(): string {
+        return "List Recent Votes";
+    }
+
     getRecentVotes(req: Request): Either<string, List<Vote>> {
         return this.getAmount(req)
             .flatMap(n => this.db.cache.votes.getLastVotes(n));

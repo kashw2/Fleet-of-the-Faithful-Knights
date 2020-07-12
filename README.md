@@ -13,9 +13,9 @@ I want to say that most of this stuff will just be plug and play but who knows, 
 Name                      | Version
 ------------------------- | -------
 TypeScript                | 3.8.5
-Concurrently              | 5.1.0
-Nodemon                   | 2.0.3
-Node                      | 11.x.x
+Concurrently              | 5.2.0
+Nodemon                   | 2.0.4
+Node                      | 12.x.x
 Lerna                     | 3.20.2
 
 Having all these ensures that you will be able to compile, build and run all projects in the repo.

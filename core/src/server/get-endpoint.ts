@@ -28,7 +28,8 @@ export abstract class GetEndpoint extends RouteManager {
                                 .send(exception);
                         }
                     } else {
-                        res.sendStatus(403);
+                        res.status(403)
+                            .send(`${this.getEndpointName()} Endpoint Access Denied`);
                     }
                 });
             if (this.getApiUser(req, this.db).isLeft()) {

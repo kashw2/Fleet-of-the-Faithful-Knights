@@ -16,6 +16,10 @@ export class ListCandidatesEndpoint extends GetEndpoint {
         return this.db.cache.candidates.getCandidatesEither();
     }
 
+    getEndpointName(): string {
+        return "List Candidates";
+    }
+
     isAuthorized(user: User): boolean {
         return !user.isGuest();
     }
