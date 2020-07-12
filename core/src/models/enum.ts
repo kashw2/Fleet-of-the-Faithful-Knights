@@ -35,7 +35,7 @@ export class Enum {
         return this.buildEnum(id, label, effector(value))
     }
 
-    public fromMap<A>(map: Map<string, string>): Enum {
+    public fromMap(map: Map<string, string>): Enum {
         return map.reduce((red, value, label) => this.buildEnum(this.getId(), Some(label), Some(value)))
     }
 
@@ -71,6 +71,12 @@ export class Enum {
     public nonEmpty(): boolean {
         return this.getValue()
             .nonEmpty();
+    }
+
+    public toMap(): Map<string, string> {
+       return Option.map2(this.getLabel(), this.getValue(), (label, value) => {
+            return Map<string, string>().set(label, value);
+        }).getOrElse(Map<string, string>())
     }
 
 }
