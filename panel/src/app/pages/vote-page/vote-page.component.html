@@ -11,7 +11,17 @@
           <img *ngIf="getCandidateAvatar().nonEmpty()" class="pl-0" src="https://cdn.discordapp.com{{this.getCandidateAvatar().get()}}">
         </div>
         <div class="col-auto">
-          <p *ngIf="getVoteId().nonEmpty()" class="text-dark">Vote Id: {{getVoteId().get()}}</p>
+          <p *ngIf="getVoteId().nonEmpty()" class="text-dark m-0">Vote Id: {{getVoteId().get()}}</p>
+          <div class="row">
+            <div class="col">
+              <p class="text-success m-0">For</p>
+              <p *ngFor="let supporter of getSupporters()" class="m-0">{{supporter.getVoterUsername().get()}}</p>
+            </div>
+            <div class="col">
+              <p class="text-danger m-0">Against</p>
+              <p *ngFor="let opponent of getOpposition()" class="m-0">{{opponent.getVoterUsername().get()}}</p>
+            </div>
+          </div>
         </div>
       </div>
       <h5 *ngIf="getCandidateGroup().nonEmpty() && getVoteGroup().nonEmpty() && isPromotion()" class="mt-2 mb-1">

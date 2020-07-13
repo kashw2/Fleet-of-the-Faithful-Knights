@@ -112,7 +112,10 @@ export class Vote {
 
     public hasPassed(): boolean {
         return this.getStatus()
-            .contains(true);
+            .contains(true)
+            || this.getVoters()
+                .filter(v => v.didAffirm())
+                .size >= 4;
     }
 
     public isCAAVote(): boolean {
