@@ -35,18 +35,39 @@ export class WriteVoteResponseEndpoint extends GetEndpoint {
         return ApiUtils.parseNumberFromPath(req, "voteid");
     }
 
+    private hasVoteFailed(req: Request): boolean {
+        return this.getVoteId(req)
+            .flatMap(vid => this.db.cache.votes.getByVoteIdEither(vid))
+            .exists(v => v.hasFailed());
+    }
+
+    private hasVotePassed(req: Request): boolean {
+        return this.getVoteId(req)
+            .flatMap(vid => this.db.cache.votes.getByVoteIdEither(vid))
+            .exists(v => v.hasPassed());
+    }
+
     isAuthorized(user: User): boolean {
         return true;
     }
 
+    private isCapableOfVoting(req: Request): boolean {
+        return !this.hasVotePassed(req) && !this.hasVoteFailed(req);
+    }
+
     run(req: Request, res: Response): void {
         ApiUtils.sendError(this.getOnboardedResponse(req), res);
+        if (!this.isCapableOfVoting(req)) {
+            ApiUtils.sendError409(Left("Vote has either passed or failed"), res);
+            return;
+        }
         Either.map3(
             this.getOnboardedResponse(req),
             this.getVoteId(req),
             this.getApiUser(req, this.db),
             (response, vid, user) => {
-                user.getId().map(uid => ApiUtils.sendResultPromise(this.db.procedures.insert.insertVoteResponse(vid, uid, response), res));
+                user.getId()
+                    .map(uid => ApiUtils.sendResultPromise(this.db.procedures.insert.insertVoteResponse(vid, uid, response), res));
                 this.db.cache.cacheVotes();
             });
     }

@@ -94,6 +94,11 @@ export class VotePageComponent implements OnInit {
       .flatMap(c => c.getDiscordUsername());
   }
 
+  getOpposition(): Set<Voter> {
+    return this.getVoters()
+      .filter(v => v.didDeny());
+  }
+
   private getSponsor(): Option<User> {
     return this.getVote()
       .flatMap(v => v.getSponsor());
@@ -102,6 +107,11 @@ export class VotePageComponent implements OnInit {
   getSponsorUsername(): Option<string> {
     return this.getSponsor()
       .flatMap(s => s.getUsername());
+  }
+
+  getSupporters(): Set<Voter> {
+    return this.getVoters()
+      .filter(v => v.didAffirm());
   }
 
   getUser(): Option<User> {
@@ -179,7 +189,7 @@ export class VotePageComponent implements OnInit {
   submitVoteResponse(response: "Y" | "N"): void {
     Option.map2(this.getUserId(), this.getVoteId(), async (uid, vid) => {
       const res = await this.ffkApi.writeResponse(vid, response);
-      this.notificationService.showNotificationBasedOnEither(res, "Vote Submitted");
+      this.notificationService.showNotificationBasedOnEitherEffector(res, value => `Submitted Response ${value}`);
     })
   }
 
