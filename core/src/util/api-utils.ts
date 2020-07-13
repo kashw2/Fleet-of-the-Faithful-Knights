@@ -56,14 +56,14 @@ export class ApiUtils {
 
     static sendError409(req: Either<string, any>, res: Response): void {
         if (req.isLeft()) {
-            res.sendStatus(409)
+            res.status(409)
                 .send(StringUtils.toTitleCase(req.value));
         }
     }
 
     static sendError500(req: Either<string, any>, res: Response): void {
         if (req.isLeft()) {
-            res.sendStatus(500)
+            res.status(500)
                 .send(StringUtils.toTitleCase(req.value));
         }
     }

@@ -34,6 +34,21 @@ export const GroupMapByName: Map<string, number> = Map({
     "Guest": 11,
 });
 
+export const GroupMapByRanking: Map<string, number> = Map({
+    "Developer": 12,
+    "Grand Master": 11,
+    "Master Commander": 10,
+    "Knight Commander": 9,
+    "Knight Lieutenant": 8,
+    "Knight": 7,
+    "Sergeant First Class": 6,
+    "Sergeant": 5,
+    "Companion at Arms": 4,
+    "Squire": 3,
+    "Guest": 2,
+    "Developer (Unverified)": 1,
+})
+
 export class GroupUtils {
 
     static containsNonGuestRoles(ids: Set<string>): boolean {
@@ -128,12 +143,12 @@ export class GroupUtils {
 
     static isGroupHigher(group: string, comparator: string): boolean {
         // @ts-ignore
-        return GroupMapByName.get(comparator) >= GroupMapByName.get(group);
+        return GroupMapByRanking.get(group) >= GroupMapByRanking.get(comparator);
     }
 
     static isGroupLower(group: string, comparator: string): boolean {
         // @ts-ignore
-        return GroupMapByName.get(comparator) < GroupMapByName.get(group);
+        return GroupMapByRanking.get(group) < GroupMapByRanking.get(comparator);
     }
 
     static isInRoleHierarchy(role: string, method: "DISCORD" | "NAME" = "DISCORD"): boolean {
