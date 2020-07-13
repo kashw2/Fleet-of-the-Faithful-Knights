@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Either, None, Option, Some} from "funfix-core";
-import {Collection, List, Set} from "immutable";
+import {List, Set} from "immutable";
 import {ToastrService} from "ngx-toastr";
 
 @Injectable({
@@ -9,10 +9,11 @@ import {ToastrService} from "ngx-toastr";
 export class NotificationService {
 
   constructor(private toastr: ToastrService) {
+    this.toastr.toastrConfig.preventDuplicates = true;
   }
 
   showFailureNotification(message: string, title: string = "Uh oh!", timeout: number = 2500): void {
-    this.toastr.error(message, title, {timeOut: timeout, progressBar: true, enableHtml: true});
+    this.toastr.error(message, title, {timeOut: timeout, progressBar: true, enableHtml: true, newestOnTop: true});
   }
 
   showFailureNotificationAndRecoverList<T>(e: Either<string, List<T>>, title: string = "Uh oh!", timeout?: number): List<T> {
@@ -32,7 +33,7 @@ export class NotificationService {
   }
 
   showInfoNotification(message: string, title: string = "Info", timeout: number = 5000): void {
-    this.toastr.info(message, title, {timeOut: timeout, progressBar: true, enableHtml: true});
+    this.toastr.info(message, title, {timeOut: timeout, progressBar: true, enableHtml: true, newestOnTop: true});
   }
 
   showNotificationBasedOnEither<T>(e: Either<string, T>, successMessage: string, timeout?: number): Option<T> {
@@ -54,11 +55,11 @@ export class NotificationService {
   }
 
   showSuccessNotification(message: string, title: string = "Success!", timeout: number = 1500): void {
-    this.toastr.success(message, title, {timeOut: timeout, progressBar: true, enableHtml: true});
+    this.toastr.success(message, title, {timeOut: timeout, progressBar: true, enableHtml: true, newestOnTop: true});
   }
 
   showWarningNotification(message: string, title: string = "Warning", timeout: number = 3000): void {
-    this.toastr.warning(message, title, {timeOut: timeout, progressBar: true, enableHtml: true});
+    this.toastr.warning(message, title, {timeOut: timeout, progressBar: true, enableHtml: true, newestOnTop: true});
   }
 
 }
