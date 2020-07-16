@@ -7,7 +7,7 @@
   "author": "kashw2 <supra4keanu@hotmail.com>",
   "license": "ISC",
   "devDependencies": {
-    "typescript": "3.8.3"
+    "typescript": "3.9.7"
   },
   "dependencies": {
     "axios": "0.19.2",
