@@ -48,7 +48,7 @@
       <a *ngIf="isLoggedIn()" class="dropdown-item py-1" (click)="goToProfilePage()">Profile</a>
       <div *ngIf="isLoggedIn()" class="dropdown-divider my-1"></div>
       <a *ngIf="isLoggedIn()" class="dropdown-item py-1" href="#">Settings</a>
-      <a *ngIf="isLoggedIn()" class="dropdown-item py-1" (click)="goToAdminPage()">Admin</a>
+      <a *ngIf="isLoggedIn() && canViewAdminPanel()" class="dropdown-item py-1" (click)="goToAdminPage()">Admin</a>
     </div>
   </div>
 </mdb-navbar>

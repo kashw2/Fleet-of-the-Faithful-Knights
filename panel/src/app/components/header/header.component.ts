@@ -20,8 +20,12 @@ export class HeaderComponent implements OnInit {
 
   canUserViewVoteSection(group: string): boolean {
     return this.getUserGroup()
-      .map(g => GroupUtils.isGroupHigher(g, group))
-      .getOrElse(false);
+      .exists(g => GroupUtils.isGroupHigher(g, group));
+  }
+
+  canViewAdminPanel(): boolean {
+    return this.getUserGroup()
+      .exists(g => GroupUtils.isGroupHigher(g, "Sergeant"));
   }
 
   getUser(): Option<User> {
