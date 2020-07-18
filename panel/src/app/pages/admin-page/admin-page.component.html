@@ -3,23 +3,20 @@
     <div class="col">
       <h2 class="mb-0">Administration</h2>
       <small *ngIf="getUsername().nonEmpty()">Should you be here <b>{{getUsername().get()}}</b>?</small>
-      <!-- TODO: When done, remove dev check -->
-      <div *ngIf="canViewDeveloperTab()" class="row">
-        <div class="col-auto">
-          <select class="border-information text-center">
-            <option selected hidden>Select User</option>
-            <option *ngFor="let user of getUsers()" (click)="updateUser(user)">{{user.getUsername().get()}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <app-admin-container
-            *ngIf="getSelectedUser().nonEmpty()"
-            [user]="getSelectedUser()"
-          ></app-admin-container>
-        </div>
-      </div>
+    </div>
+    <div class="col-auto">
+      <h6 *ngIf="canViewSpecificAdminPanel('Developer')" class="d-inline-block mx-2 cursor-click developer" (click)="updateSelectedAdminPanelIndex(0)">Developer</h6>
+      <h6 *ngIf="canViewSpecificAdminPanel('Grand Master')" class="d-inline-block mx-2 cursor-click" (click)="updateSelectedAdminPanelIndex(1)">Special</h6>
+      <h6 *ngIf="canViewSpecificAdminPanel('Knight')" class="d-inline-block mx-2 cursor-click knight" (click)="updateSelectedAdminPanelIndex(2)">Knight</h6>
+      <h6 *ngIf="canViewSpecificAdminPanel('Sergeant')" class="d-inline-block mx-2 cursor-click sergeant" (click)="updateSelectedAdminPanelIndex(3)">Sergeant</h6>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <app-developer-panel *ngIf="isViewingDeveloperPanel()"></app-developer-panel>
+      <app-knight-panel *ngIf="isViewingKnightPanel()"></app-knight-panel>
+      <app-sergeant-panel *ngIf="isViewingSergeantPanel()"></app-sergeant-panel>
+      <app-special-panel *ngIf="isViewingSpecialPanel()"></app-special-panel>
     </div>
   </div>
 </div>

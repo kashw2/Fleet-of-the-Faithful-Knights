@@ -125,7 +125,7 @@
 }
 
 @keyframes rainbow {
-  0%,100% {
+  0%, 100% {
     background-position: 0 0;
   }
 
@@ -133,7 +133,6 @@
     background-position: 100% 0;
   }
 }
-
 
 
 .hover-red {
@@ -280,5 +279,16 @@
   z-index: 1;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.cdk-overlay-container {
+  z-index: 1090;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+

@@ -12,6 +12,7 @@ export class ViewStateService {
   constructor() { }
 
   pageIndex: BehaviorSubject<number> = new BehaviorSubject<number>(1);
+  selectedAdminPanelViewIndex: BehaviorSubject<Option<number>> = new BehaviorSubject<Option<number>>(None);
   selectedCandidateExtraInfoViewIndex: BehaviorSubject<Option<number>> = new BehaviorSubject<Option<number>>(Some(1));
   selectedUser: BehaviorSubject<Option<User>> = new BehaviorSubject<Option<User>>(None);
   selectedVote: BehaviorSubject<Option<Vote>> = new BehaviorSubject<Option<Vote>>(None);
@@ -19,6 +20,11 @@ export class ViewStateService {
 
   getPageIndex(): number {
     return this.pageIndex
+      .getValue();
+  }
+
+  getSelectedAdminPanelIndex(): Option<number> {
+    return this.selectedAdminPanelViewIndex
       .getValue();
   }
 

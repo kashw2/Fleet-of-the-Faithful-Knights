@@ -19,8 +19,7 @@ export class ListUsersEndpoint extends GetEndpoint {
     }
 
     isAuthorized(user: User): boolean {
-        // TODO: Implement permissions
-        return user.isDeveloper();
+        return !user.isGuest();
     }
 
     run(req: Request, res: Response): void {

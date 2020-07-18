@@ -108,8 +108,8 @@ export class FfkApi {
         );
     }
 
-    listPermissions(): Promise<Either<string, List<Enum>>> {
-        return this.api.sendRequestSerializedList(
+    listPermissions(): Promise<Either<string, Set<Enum>>> {
+        return this.api.sendRequestSerializedSet(
             "/permissions",
             EnumJsonSerializer.instance,
             this.getHeaders(),
