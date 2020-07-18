@@ -124,6 +124,17 @@ export class User {
             && this.getMemberSince().isEmpty();
     }
 
+    public isGenericKnight(): boolean {
+        return this.isKnightCommander()
+            || this.isKnightLieutenant()
+            || this.isKnight();
+    }
+
+    public isGenericSergeant(): boolean {
+        return this.isSergeantFirstClass()
+            || this.isSergeant();
+    }
+
     public isGrandMaster(): boolean {
         return this.getGroup()
             .contains("Grand Master");
@@ -172,9 +183,21 @@ export class User {
             .contains("Sergeant First Class");
     }
 
+    public isSpecial(): boolean {
+        return this.isDeveloper()
+            || this.isGrandMaster()
+            || this.isMasterCommander()
+            || this.isKnightCommander();
+    }
+
     public isSquire(): boolean {
         return this.getGroup()
             .contains("Squire");
+    }
+
+    public isUnverifiedDeveloper(): boolean {
+        return this.getGroup()
+            .contains("Developer (Unverified)");
     }
 
 }
