@@ -108,7 +108,7 @@ export class VoteTableComponent implements OnInit, AfterViewInit {
   }
 
   openVoteModal(): void {
-    const options: ModalOptions = {backdrop: false, animated: true, containerClass: "z-index-1"};
+    const options: ModalOptions = {backdrop: true, animated: true};
     this.mdbModalService.show(CreateVoteModalComponent, options);
   }
 
