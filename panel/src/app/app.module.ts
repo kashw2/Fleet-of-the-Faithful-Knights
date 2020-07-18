@@ -20,9 +20,12 @@ import {VotePageComponent} from "./pages/vote-page/vote-page.component";
 import {CandidateExtraInfoContainerComponent} from "./children/candidate-extra-info-container/candidate-extra-info-container.component";
 import {MessageContainerComponent} from "./components/message-container/message-container.component";
 import {AdminPageComponent} from "./pages/admin-page/admin-page.component";
-import {AdminContainerComponent} from "./components/admin-container/admin-container.component";
 import {CheckboxComponent} from "./components/checkbox/checkbox.component";
 import {MDBBootstrapModulesPro, MDBSpinningPreloader} from "ng-uikit-pro-standard";
+import { DeveloperPanelComponent } from './children/developer-panel/developer-panel.component';
+import { KnightPanelComponent } from './children/knight-panel/knight-panel.component';
+import { SergeantPanelComponent } from './children/sergeant-panel/sergeant-panel.component';
+import { SpecialPanelComponent } from './children/special-panel/special-panel.component';
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -40,8 +43,11 @@ import {MDBBootstrapModulesPro, MDBSpinningPreloader} from "ng-uikit-pro-standar
     CandidateExtraInfoContainerComponent,
     MessageContainerComponent,
     AdminPageComponent,
-    AdminContainerComponent,
     CheckboxComponent,
+    DeveloperPanelComponent,
+    KnightPanelComponent,
+    SergeantPanelComponent,
+    SpecialPanelComponent,
   ],
   imports: [
     MDBBootstrapModulesPro.forRoot(),
