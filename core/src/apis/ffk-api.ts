@@ -16,7 +16,7 @@ export class FfkApi {
     static instance: FfkApi = new FfkApi();
 
     // TODO: Make this fallback to the live url
-    private api: Api = new Api(Url.buildFromUri(this.getFfkApiUrl().getOrElse("localhost:8008")));
+    private api: Api = new Api(Url.buildFromUri(this.getFfkApiUrl().getOrElse("http://34.66.221.40:8080/")));
 
     private getFfkApiToken(): Either<string, string> {
         return EitherUtils.liftEither(process.env.FFK_API_TOKEN!, "FFK_API_TOKEN is undefined");

@@ -502,6 +502,7 @@ export class Api {
         method: Method,
         body?: unknown,
     ): Promise<Either<string, List<number>>> {
+        console.info(`Sending ${method} Request To ${location}`);
         switch (method) {
             case "GET":
                 return this.sendGetRequestNumberList(location, headers);
@@ -519,6 +520,7 @@ export class Api {
         parser: (v: any) => any,
         body?: unknown
     ): Promise<Either<string, any>> {
+        console.info(`Sending ${method} Request To ${location}`);
         switch (method) {
             case "GET":
                 return this.sendGetRequestParsable(location, headers, parser);
@@ -537,6 +539,7 @@ export class Api {
         method: Method,
         body?: unknown,
     ): Promise<Either<string, Primitive>> {
+        console.info(`Sending ${method} Request To ${location}`);
         switch (method) {
             case "GET":
                 return this.sendGetRequestPrimitive(location, headers);
@@ -554,6 +557,7 @@ export class Api {
         method: Method,
         body?: unknown,
     ): Promise<Either<string, T>> {
+        console.info(`Sending ${method} Request To ${location}`);
         switch (method) {
             case "GET":
                 return this.sendGetRequestSerialized(location, serializer, headers);
@@ -571,6 +575,7 @@ export class Api {
         method: Method,
         body?: unknown,
     ): Promise<Either<string, List<T>>> {
+        console.info(`Sending ${method} Request To ${location}`);
         switch (method) {
             case "GET":
                 return this.sendGetRequestListSerialized(location, serializer, headers);
@@ -588,6 +593,7 @@ export class Api {
         method: Method,
         body?: unknown,
     ): Promise<Either<string, Set<T>>> {
+        console.info(`Sending ${method} Request To ${location}`);
         switch (method) {
             case "GET":
                 return this.sendGetRequestSetSerialized(location, serializer, headers);
@@ -604,6 +610,7 @@ export class Api {
         method: Method,
         body?: unknown,
     ): Promise<Either<string, string>> {
+        console.info(`Sending ${method} Request To ${location}`);
         switch (method) {
             case "GET":
                 return this.sendGetRequestString(location, headers);
@@ -620,6 +627,7 @@ export class Api {
         method: Method,
         body?: unknown,
     ): Promise<Either<string, List<string>>> {
+        console.info(`Sending ${method} Request To ${location}`);
         switch (method) {
             case "GET":
                 return this.sendGetRequestStringList(location, headers);
@@ -636,6 +644,7 @@ export class Api {
         method: Method,
         body?: unknown,
     ): Promise<Either<string, Set<string>>> {
+        console.info(`Sending ${method} Request To ${location}`);
         switch (method) {
             case "GET":
                 return this.sendGetRequestStringSet(location, headers);

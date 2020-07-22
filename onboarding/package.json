@@ -9,7 +9,11 @@
     "start-dev": "nodemon --inspect=9228 app.js",
     "build": "tsc",
     "build-watch": "tsc --watch",
-    "build-dev-watch": "concurrently \" npm run build-watch \" \" npm run start-dev \""
+    "build-dev-watch": "concurrently \" npm run build-watch \" \" npm run start-dev \"",
+    "docker-build": "docker build -t gcr.io/fast-academy-283910/onboarding .",
+    "docker-run": "docker run -p 8000:8000 -e FFK_DISCORD_PANEL_BOT_TOKEN=$FFK_DISCORD_PANEL_BOT_TOKEN -e FFK_API_TOKEN=$FFK_API_TOKEN -e FFK_API_ADDRESS=$FFK_API_ADDRESS gcr.io/fast-academy-283910/onboarding",
+    "docker-push": "docker push gcr.io/fast-academy-283910/onboarding",
+    "release": "npm run docker-build && npm run docker-push"
   },
   "author": "kashw2 <supra4keanu@hotmail.com>",
   "license": "ISC",
@@ -17,9 +21,13 @@
     "@types/body-parser": "^1.19.0",
     "@types/cors": "^2.8.6",
     "@types/node": "^13.13.12",
+    "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "immutable": "^4.0.0-rc.12"
+    "express": "^4.17.1",
+    "funfix-core": "^7.0.1",
+    "immutable": "^4.0.0-rc.12",
+    "moment": "^2.27.0"
   },
   "devDependencies": {
     "typescript": "3.9.7"
