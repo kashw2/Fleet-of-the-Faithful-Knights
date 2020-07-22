@@ -9,7 +9,11 @@
     "start-dev": "nodemon --inspect=9229 app.js",
     "build": "tsc",
     "build-watch": "tsc --watch",
-    "build-dev-watch": "concurrently \" npm run build-watch \" \" npm run start-dev \""
+    "build-dev-watch": "concurrently \" npm run build-watch \" \" npm run start-dev \"",
+    "docker-build": "docker build -t gcr.io/fast-academy-283910/api .",
+    "docker-run": "docker run -p 8080:8080 -e FFK_DB_USER=$FFK_DB_USER -e FFK_DB_PASSWORD=$FFK_DB_PASSWORD -e FFK_DB_NAME=$FFK_DB_NAME -e FFK_DB_SERVER=$FFK_DB_SERVER gcr.io/fast-academy-283910/api",
+    "docker-push": "docker push gcr.io/fast-academy-283910/api",
+    "release": "npm run docker-build && npm run docker-push"
   },
   "author": "kashw2 <supra4keanu@hotmail.com>",
   "license": "ISC",
@@ -18,7 +22,13 @@
     "@types/cors": "^2.8.6",
     "@types/node": "^13.13.12",
     "body-parser": "^1.19.0",
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "funfix-core": "^7.0.1",
+    "immutable": "^4.0.0-rc.12",
+    "moment": "^2.27.0",
+    "mssql": "^6.2.0",
+    "rxjs": "^6.6.0"
   },
   "devDependencies": {
     "typescript": "3.9.7"
