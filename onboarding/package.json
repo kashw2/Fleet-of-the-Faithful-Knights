@@ -11,7 +11,7 @@
     "build-watch": "tsc --watch",
     "build-dev-watch": "concurrently \" npm run build-watch \" \" npm run start-dev \"",
     "docker-build": "docker build -t gcr.io/fast-academy-283910/onboarding .",
-    "docker-run": "docker run -p 8000:8000 -e FFK_DISCORD_PANEL_BOT_TOKEN=$FFK_DISCORD_PANEL_BOT_TOKEN -e FFK_API_TOKEN=$FFK_API_TOKEN -e FFK_API_ADDRESS=$FFK_API_ADDRESS gcr.io/fast-academy-283910/onboarding",
+    "docker-run": "docker run -p 8008:8008 -e FFK_DISCORD_PANEL_BOT_TOKEN=$FFK_DISCORD_PANEL_BOT_TOKEN -e FFK_API_TOKEN=$FFK_API_TOKEN -e FFK_API_ADDRESS=$FFK_API_ADDRESS gcr.io/fast-academy-283910/onboarding",
     "docker-push": "docker push gcr.io/fast-academy-283910/onboarding",
     "release": "npm run docker-build && npm run docker-push"
   },
