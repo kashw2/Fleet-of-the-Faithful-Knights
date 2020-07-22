@@ -6,6 +6,11 @@ export abstract class SimpleJsonSerializer<T> {
     abstract fromJson(json: any): T;
 
     fromJsonArray(list: List<T>): List<T> {
+        // FIXME: We should never have an instance of String
+        if (list instanceof String) {
+            // @ts-ignore
+            throw new Error(list as string);
+        }
         if (list instanceof Array) {
             return List(list)
                 .map(x => this.fromJson(x));

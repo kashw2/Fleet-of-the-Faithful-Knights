@@ -41,8 +41,10 @@ export class DiscordCandidateOnboarding extends CandidateOnboarding {
     async onboard(): Promise<void> {
         this.listCandidates()
             .then(async cs => {
-                const candidates = await this.listMissingCandidates(EitherUtils.toList(cs))
-                FfkApi.instance.writeCandidates(EitherUtils.toList(candidates));
+                // FIXME: There's an issue with listMissing, don't know much more tbh
+                // const candidates = await this.listMissingCandidates(EitherUtils.toList(cs))
+                const candidates = EitherUtils.toList(cs);
+                FfkApi.instance.writeCandidates(candidates);
             });
     }
 
