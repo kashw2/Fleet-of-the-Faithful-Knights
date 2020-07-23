@@ -7,7 +7,11 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "docker-build": "docker build -t gcr.io/fast-academy-283910/panel .",
+    "docker-run": "docker run -p 80:80 gcr.io/fast-academy-283910/panel",
+    "docker-push": "docker push gcr.io/fast-academy-283910/panel",
+    "release": "npm run docker-build && npm run docker-push"
   },
   "private": true,
   "dependencies": {
