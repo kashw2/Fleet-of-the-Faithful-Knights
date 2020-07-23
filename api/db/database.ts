@@ -22,6 +22,9 @@ export class Database {
         connectionTimeout: 300000,
         requestTimeout: 300000,
         parseJSON: true,
+        options: {
+            enableArithAbort: true,
+        }
     };
 
     procedures: DbProcedures;
