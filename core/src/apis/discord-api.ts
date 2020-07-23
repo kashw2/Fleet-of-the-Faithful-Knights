@@ -101,14 +101,23 @@ export class DiscordApi {
     }
 
     getOAuthPayload(code: string): string {
-        return querystring.encode({
-            client_id: this.getPanelClientId().get(),
-            client_secret: this.getPanelClientSecret().get(),
-            grant_type: "authorization_code",
-            code,
-            redirect_uri: this.getRedirectUrl().get(),
-            scope: "identify guilds",
-        })
+        if (this.getPanelClientId().isRight()) {
+            if (this.getPanelClientSecret().isRight()) {
+                if (this.getRedirectUrl().isRight()) {
+                    return querystring.encode({
+                        client_id: this.getPanelClientId().get(),
+                        client_secret: this.getPanelClientSecret().get(),
+                        grant_type: "authorization_code",
+                        code,
+                        redirect_uri: this.getRedirectUrl().get(),
+                        scope: "identify guilds",
+                    })
+                }
+                throw new Error(this.getRedirectUrl().value);
+            }
+            throw new Error(this.getPanelClientSecret().value);
+        }
+        throw new Error(this.getPanelClientId().value);
     }
 
     private getPanelClientId(): Either<string, string> {
