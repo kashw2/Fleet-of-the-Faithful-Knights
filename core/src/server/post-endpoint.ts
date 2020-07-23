@@ -18,6 +18,7 @@ export abstract class PostEndpoint extends RouteManager {
 
     routeEndpoint(router: Router): void {
         router.post(this.getEndpoint(), ((req, res, next) => {
+            req.setTimeout(30000, () => res.sendStatus(408).send(`${this.getEndpoint()} Timed out`));
             this.getApiUser(req, this.db)
                 .forEach(user => {
                     if (this.isAuthorized(user)) {

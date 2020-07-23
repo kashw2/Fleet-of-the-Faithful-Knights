@@ -13,6 +13,7 @@ export abstract class UnauthenticatedGetEndpoint {
 
     routeEndpoint(router: Router): void {
         router.get(this.getEndpoint(), ((req, res, next) => {
+            req.setTimeout(30000, () => res.sendStatus(408).send(`${this.getEndpoint()} Timed out`));
             try {
                 this.run(req, res);
             } catch (exception) {
