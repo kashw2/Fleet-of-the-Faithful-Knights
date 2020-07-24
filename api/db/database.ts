@@ -19,8 +19,8 @@ export class Database {
         password: process.env.FFK_DB_PASSWORD,
         database: process.env.FFK_DB_NAME!,
         server: process.env.FFK_DB_SERVER!,
-        connectionTimeout: 300000,
-        requestTimeout: 300000,
+        connectionTimeout: 30000,
+        requestTimeout: 30000,
         parseJSON: true,
         options: {
             enableArithAbort: true,
