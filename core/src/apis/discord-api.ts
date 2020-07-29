@@ -31,7 +31,7 @@ export class DiscordApi {
     }
 
     private getDiscordApiUrl(): string {
-        return "https://discordapp.com/api";
+        return "https://discord.com/api";
     }
 
     private getDiscordPanelBotToken(): Either<string, string> {
@@ -80,35 +80,35 @@ export class DiscordApi {
      * @returns DiscordOAuthResponse
      */
     getOAuth(code: string): Promise<Either<string, DiscordOAuthResponse>> {
-        if (this.getRedirectUrl().isRight()) {
-            if (this.getPanelClientId().isRight()) {
-                if (this.getPanelClientSecret().isRight()) {
-                    return this.api.sendRequestSerialized(
-                        "/oauth2/token",
-                        DiscordOAuthResponseJsonSerializer.instance,
-                        {
-                            "Content-Type": "application/x-www-form-urlencoded",
-                        },
-                        "POST",
-                        (this.getOAuthPayload(code)),
-                    );
-                }
-                return Promise.resolve(Left(this.getPanelClientSecret().value));
-            }
-            return Promise.resolve(Left(this.getPanelClientId().value));
-        }
-        return Promise.resolve(Left(this.getRedirectUrl().value));
+        return this.api.sendRequestSerialized(
+            "/oauth2/token",
+            DiscordOAuthResponseJsonSerializer.instance,
+            {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            "POST",
+            this.getOAuthPayload(code),
+        );
     }
 
     getOAuthPayload(code: string): string {
-        return querystring.encode({
-            client_id: this.getPanelClientId().get(),
-            client_secret: this.getPanelClientSecret().get(),
-            grant_type: "authorization_code",
-            code,
-            redirect_uri: this.getRedirectUrl().get(),
-            scope: "identify guilds",
-        })
+        if (this.getPanelClientId().isRight()) {
+            if (this.getPanelClientSecret().isRight()) {
+                if (this.getRedirectUrl().isRight()) {
+                    return querystring.encode({
+                        client_id: this.getPanelClientId().get(),
+                        client_secret: this.getPanelClientSecret().get(),
+                        grant_type: "authorization_code",
+                        code,
+                        redirect_uri: this.getRedirectUrl().get(),
+                        scope: "identify guilds",
+                    })
+                }
+                throw new Error(this.getRedirectUrl().value);
+            }
+            throw new Error(this.getPanelClientSecret().value);
+        }
+        throw new Error(this.getPanelClientId().value);
     }
 
     private getPanelClientId(): Either<string, string> {
