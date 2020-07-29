@@ -30,7 +30,7 @@ export class Api {
             case 409:
             case 429:
             case 500:
-                return false;
+                return true;
             default:
                 return !this.isSuccessStatusCode(statusCode);
         }
