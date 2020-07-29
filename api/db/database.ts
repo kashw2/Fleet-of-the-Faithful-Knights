@@ -13,6 +13,7 @@ export class Database {
         this.procedures = new DbProcedures(this.requests);
         this.cache = new DbCache(this.procedures);
     }
+
     cache: DbCache;
     dbConfig: config = {
         user: process.env.FFK_DB_USER,
@@ -21,6 +22,9 @@ export class Database {
         server: process.env.FFK_DB_SERVER!,
         connectionTimeout: 300000,
         requestTimeout: 300000,
+        options: {
+            enableArithAbort: true,
+        },
         parseJSON: true,
     };
 
