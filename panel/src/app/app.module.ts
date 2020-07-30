@@ -22,10 +22,10 @@ import {MessageContainerComponent} from "./components/message-container/message-
 import {AdminPageComponent} from "./pages/admin-page/admin-page.component";
 import {CheckboxComponent} from "./components/checkbox/checkbox.component";
 import {MDBBootstrapModulesPro, MDBSpinningPreloader} from "ng-uikit-pro-standard";
-import { DeveloperPanelComponent } from './children/developer-panel/developer-panel.component';
-import { KnightPanelComponent } from './children/knight-panel/knight-panel.component';
-import { SergeantPanelComponent } from './children/sergeant-panel/sergeant-panel.component';
-import { SpecialPanelComponent } from './children/special-panel/special-panel.component';
+import {DeveloperPanelComponent} from "./children/developer-panel/developer-panel.component";
+import {KnightPanelComponent} from "./children/knight-panel/knight-panel.component";
+import {SergeantPanelComponent} from "./children/sergeant-panel/sergeant-panel.component";
+import {SpecialPanelComponent} from "./children/special-panel/special-panel.component";
 
 @NgModule({
   bootstrap: [AppComponent],

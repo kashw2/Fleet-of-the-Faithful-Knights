@@ -10,10 +10,13 @@
     "build": "tsc",
     "build-watch": "tsc --watch",
     "build-dev-watch": "concurrently \" npm run build-watch \" \" npm run start-dev \"",
-    "docker-build": "docker build -t gcr.io/fast-academy-283910/api .",
-    "docker-run": "docker run -p 8080:8080 -e FFK_DB_USER=$FFK_DB_USER -e FFK_DB_PASSWORD=$FFK_DB_PASSWORD -e FFK_DB_NAME=$FFK_DB_NAME -e FFK_DB_SERVER=$FFK_DB_SERVER gcr.io/fast-academy-283910/api",
-    "docker-push": "docker push gcr.io/fast-academy-283910/api",
-    "release": "npm run docker-build && npm run docker-push"
+    "docker-build": "npm run build && docker build -t cloud.canister.io:5000/928779879786/api .",
+    "docker-run": "docker run -d --name api --network=host -p 8080:8080 -e FFK_DB_SERVER=$FFK_DB_SERVER -e FFK_DB_NAME=$FFK_DB_NAME -e FFK_DB_USER=$FFK_DB_USER -e FFK_DB_PASSWORD=$FFK_DB_PASSWORD -e FFK_API_ADDRESS=$FFK_API_ADDRESS -e FFK_DISOCRD_PANEL_CLIENT_ID=$FFK_DISOCRD_PANEL_CLIENT_ID cloud.canister.io:5000/928779879786/api",
+    "docker-push": "docker push cloud.canister.io:5000/928779879786/api",
+    "deploy": "ssh $USER@4.71.159.157 'docker stop api | docker rm api | docker run --name api -d -p 8080:8080 -e FFK_DB_USER=$FFK_DB_USER -e FFK_DB_PASSWORD=$FFK_DB_PASSWORD -e FFK_DB_NAME=$FFK_DB_NAME -e FFK_DB_SERVER=$FFK_DB_SERVER -e FFK_DISOCRD_PANEL_CLIENT_ID=$FFK_DISOCRD_PANEL_CLIENT_ID cloud.canister.io:5000/928779879786/api'",
+    "update": "ssh $USER@4.71.159.157 'docker pull cloud.canister.io:5000/928779879786/api && docker commit api api:latest'",
+    "release-cold": "npm run docker-build && npm run docker-push && npm run deploy",
+    "release-hot": "npm run docker-build && npm run docker-push && npm run update"
   },
   "author": "kashw2 <supra4keanu@hotmail.com>",
   "license": "ISC",
@@ -27,7 +30,7 @@
     "funfix-core": "^7.0.1",
     "immutable": "^4.0.0-rc.12",
     "moment": "^2.27.0",
-    "mssql": "^6.0.1",
+    "mssql": "^6.2.1",
     "rxjs": "^6.6.0"
   },
   "devDependencies": {

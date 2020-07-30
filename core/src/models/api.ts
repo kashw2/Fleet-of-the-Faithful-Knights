@@ -12,7 +12,7 @@ export class Api {
     }
 
     public getBaseUrl(): string {
-        return this.url.getUri();
+        return this.stripSlash(this.url.getUri());
     }
 
     private getHeaders(): object {
@@ -502,7 +502,7 @@ export class Api {
         method: Method,
         body?: unknown,
     ): Promise<Either<string, List<number>>> {
-        console.info(`Sending ${method} Request To ${this.getBaseUrl()}${location}`);
+        console.info(`Sending ${method} Request To ${this.getBaseUrl().concat(location)}`);
         switch (method) {
             case "GET":
                 return this.sendGetRequestNumberList(location, headers);
@@ -520,7 +520,7 @@ export class Api {
         parser: (v: any) => any,
         body?: unknown
     ): Promise<Either<string, any>> {
-        console.info(`Sending ${method} Request To ${this.getBaseUrl()}${location}`);
+        console.info(`Sending ${method} Request To ${this.getBaseUrl().concat(location)}`);
         switch (method) {
             case "GET":
                 return this.sendGetRequestParsable(location, headers, parser);
@@ -539,7 +539,7 @@ export class Api {
         method: Method,
         body?: unknown,
     ): Promise<Either<string, Primitive>> {
-        console.info(`Sending ${method} Request To ${this.getBaseUrl()}${location}`);
+        console.info(`Sending ${method} Request To ${this.getBaseUrl().concat(location)}`);
         switch (method) {
             case "GET":
                 return this.sendGetRequestPrimitive(location, headers);
@@ -557,7 +557,7 @@ export class Api {
         method: Method,
         body?: unknown,
     ): Promise<Either<string, T>> {
-        console.info(`Sending ${method} Request To ${this.getBaseUrl()}${location}`);
+        console.info(`Sending ${method} Request To ${this.getBaseUrl().concat(location)}`);
         switch (method) {
             case "GET":
                 return this.sendGetRequestSerialized(location, serializer, headers);
@@ -575,7 +575,7 @@ export class Api {
         method: Method,
         body?: unknown,
     ): Promise<Either<string, List<T>>> {
-        console.info(`Sending ${method} Request To ${this.getBaseUrl()}${location}`);
+        console.info(`Sending ${method} Request To ${this.getBaseUrl().concat(location)}`);
         switch (method) {
             case "GET":
                 return this.sendGetRequestListSerialized(location, serializer, headers);
@@ -593,7 +593,7 @@ export class Api {
         method: Method,
         body?: unknown,
     ): Promise<Either<string, Set<T>>> {
-        console.info(`Sending ${method} Request To ${this.getBaseUrl()}${location}`);
+        console.info(`Sending ${method} Request To ${this.getBaseUrl().concat(location)}`);
         switch (method) {
             case "GET":
                 return this.sendGetRequestSetSerialized(location, serializer, headers);
@@ -610,7 +610,7 @@ export class Api {
         method: Method,
         body?: unknown,
     ): Promise<Either<string, string>> {
-        console.info(`Sending ${method} Request To ${this.getBaseUrl()}${location}`);
+        console.info(`Sending ${method} Request To ${this.getBaseUrl().concat(location)}`);
         switch (method) {
             case "GET":
                 return this.sendGetRequestString(location, headers);
@@ -627,7 +627,7 @@ export class Api {
         method: Method,
         body?: unknown,
     ): Promise<Either<string, List<string>>> {
-        console.info(`Sending ${method} Request To ${this.getBaseUrl()}${location}`);
+        console.info(`Sending ${method} Request To ${this.getBaseUrl().concat(location)}`);
         switch (method) {
             case "GET":
                 return this.sendGetRequestStringList(location, headers);
@@ -644,7 +644,7 @@ export class Api {
         method: Method,
         body?: unknown,
     ): Promise<Either<string, Set<string>>> {
-        console.info(`Sending ${method} Request To ${this.getBaseUrl()}${location}`);
+        console.info(`Sending ${method} Request To ${this.getBaseUrl().concat(location)}`);
         switch (method) {
             case "GET":
                 return this.sendGetRequestStringSet(location, headers);
@@ -653,6 +653,13 @@ export class Api {
             default:
                 throw new Error(`Unsupported method type '${method}'`);
         }
+    }
+
+    private stripSlash(url: string): string {
+        if (url.endsWith("/")) {
+            return url.slice(0, url.length - 1);
+        }
+        return url;
     }
 
 }
