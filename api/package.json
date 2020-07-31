@@ -13,7 +13,7 @@
     "docker-build": "npm run build && docker build -t cloud.canister.io:5000/928779879786/api .",
     "docker-run": "docker run -d --name api --network=host -p 8080:8080 -e FFK_DB_SERVER=$FFK_DB_SERVER -e FFK_DB_NAME=$FFK_DB_NAME -e FFK_DB_USER=$FFK_DB_USER -e FFK_DB_PASSWORD=$FFK_DB_PASSWORD -e FFK_API_ADDRESS=$FFK_API_ADDRESS -e FFK_DISOCRD_PANEL_CLIENT_ID=$FFK_DISOCRD_PANEL_CLIENT_ID cloud.canister.io:5000/928779879786/api",
     "docker-push": "docker push cloud.canister.io:5000/928779879786/api",
-    "deploy": "ssh $USER@4.71.159.157 'docker rm -f api && docker run -d --name api -p 8080:8080 -e FFK_DB_SERVER=$FFK_DB_SERVER -e FFK_DB_NAME=$FFK_DB_NAME -e FFK_DB_USER=$FFK_DB_USER -e FFK_DB_PASSWORD=$FFK_DB_PASSWORD -e FFK_API_ADDRESS=$FFK_API_ADDRESS -e FFK_PANEL_ADDRESS=$FFK_PANEL_ADDRESS -e FFK_DISOCRD_PANEL_CLIENT_ID=$FFK_DISOCRD_PANEL_CLIENT_ID -e FFK_DISCORD_PANEL_SECRET=$FFK_DISCORD_PANEL_SECRET -e FFK_DISCORD_PANEL_BOT_TOKEN=$FFK_DISCORD_PANEL_BOT_TOKEN cloud.canister.io:5000/928779879786/api'",
+    "deploy": "ssh $USER@4.71.159.157 'docker rm -f api | docker run -d --name api -p 8080:8080 -e FFK_DB_SERVER=$FFK_DB_SERVER -e FFK_DB_NAME=$FFK_DB_NAME -e FFK_DB_USER=$FFK_DB_USER -e FFK_DB_PASSWORD=$FFK_DB_PASSWORD -e FFK_API_ADDRESS=$FFK_API_ADDRESS -e FFK_PANEL_ADDRESS=$FFK_PANEL_ADDRESS -e FFK_DISOCRD_PANEL_CLIENT_ID=$FFK_DISOCRD_PANEL_CLIENT_ID -e FFK_DISCORD_PANEL_SECRET=$FFK_DISCORD_PANEL_SECRET -e FFK_DISCORD_PANEL_BOT_TOKEN=$FFK_DISCORD_PANEL_BOT_TOKEN cloud.canister.io:5000/928779879786/api'",
     "release": "npm run docker-build && npm run docker-push && npm run deploy"
   },
   "author": "kashw2 <supra4keanu@hotmail.com>",
