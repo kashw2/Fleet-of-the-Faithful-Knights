@@ -50,7 +50,7 @@ export class CreateVoteModalComponent implements OnInit {
   }
 
   getAccessibleGroups(): Set<Enum> {
-    return this.getGroups()
+    return GroupUtils.sortGroupEnumsHierarchy(this.getGroups())
       .filter(x => OptionUtils.exists2(this.getUserGroup(), x.getValue(), (userGroup, voteGroup) => GroupUtils.isGroupLower(voteGroup, userGroup)))
       .filterNot(x => x.getValue().contains("Developer (Unverified)"));
   }
