@@ -13,7 +13,7 @@
     </mdb-select-2>
     <mdb-select-2 class="text-center" placeholder="Select Group">
       <mdb-select-option
-        *ngFor="let group of getGroups()"
+        *ngFor="let group of getAccessibleGroups()"
         (click)="updatePromotionGroup(group.getValue())"
       >
         {{group.getValue().getOrElse("Error")}}
