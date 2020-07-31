@@ -37,6 +37,7 @@ export class DiscordGuildMember {
             return this.getRoles()
                 .filter(role => GroupUtils.isInRoleHierarchy(role, "DISCORD"))
                 .map(x => GroupUtils.getGroupNameFromDiscordRoleId(x))
+                // TODO: Investigate using GroupUtils methods here.
                 .sort((now, previous) => {
                     if (GroupUtils.isGroupHigher(now, previous)) {
                         return 1;

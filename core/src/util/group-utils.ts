@@ -1,6 +1,8 @@
 import {Option} from "funfix-core";
 import {Map, Set} from "immutable";
 import {Group} from "../misc/type-defs";
+import {Enum} from "../models/enum";
+import {OptionUtils} from "./option-utils";
 
 export const DiscordGroupIdMap: Map<string, string> = Map({
     "541835139701800962": "Grand Master",
@@ -226,6 +228,32 @@ export class GroupUtils {
 
     static parseGroupOption(name: string): Option<Group> {
         return Option.of(this.parseGroup(name));
+    }
+
+    static sortGroupEnumsHierarchy(groups: Set<Enum>): Set<Enum> {
+        return groups.sort((now, previous) => {
+           return Option.map2(now.getValue(), previous.getValue(), (v1, v2) => {
+               if (GroupUtils.isGroupLower(v1, v2)) {
+                   return 1;
+               }
+               if (GroupUtils.isGroupHigher(v1, v2)) {
+                   return -1;
+               }
+               return 0;
+           }).getOrElse(1);
+        });
+    }
+
+    static sortGroupsHierarchy(groups: Set<string>): Set<string> {
+        return groups.sort((now, previous) => {
+            if (GroupUtils.isGroupLower(now, previous)) {
+                return 1;
+            }
+            if (GroupUtils.isGroupHigher(now, previous)) {
+                return -1;
+            }
+            return 0;
+        });
     }
 
 }

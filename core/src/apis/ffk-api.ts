@@ -16,23 +16,29 @@ export class FfkApi {
     static instance: FfkApi = new FfkApi();
 
     // TODO: Make this fallback to the live url
-    private api: Api = new Api(Url.buildFromUri(this.getFfkApiUrl().getOrElse("http://34.66.221.40:8080/")));
+    private api: Api = new Api(Url.buildFromUri(this.getFfkApiUrl()));
 
-    private getFfkApiToken(): Either<string, string> {
-        return EitherUtils.liftEither(process.env.FFK_API_TOKEN!, "FFK_API_TOKEN is undefined");
+    private getFfkApiToken(): string {
+        const token = EitherUtils.liftEither(process.env.FFK_API_TOKEN!, "FFK_API_TOKEN is undefined");
+        if (token.isLeft()) {
+            throw token.value;
+        }
+        return token.get();
     }
 
-    private getFfkApiUrl(): Either<string, string> {
-        return EitherUtils.liftEither(process.env.FFK_API_ADDRESS!, "FFK_API_ADDRESS is undefined");
+    private getFfkApiUrl(): string {
+        // TODO: Fix this, had issues going live with env vars
+        const url = EitherUtils.liftEither("http://4.71.159.157:8080", "FFK_API_ADDRESS is undefined");
+        if (url.isLeft()) {
+            throw url.value;
+        }
+        return url.get();
     }
 
     protected getHeaders(): object {
-        if (this.getFfkApiToken().isRight()) {
-            return {
-                "X-Api-Token": this.getFfkApiToken().get(),
-            };
-        }
-        throw new Error(this.getFfkApiToken().value);
+        return {
+            "X-Api-Token": this.getFfkApiToken(),
+        };
     }
 
     getUserById(userId: number): Promise<Either<string, User>> {

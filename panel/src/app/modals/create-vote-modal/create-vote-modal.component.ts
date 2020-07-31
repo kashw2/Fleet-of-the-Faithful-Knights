@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {None, Option} from "funfix-core";
 import {List, Set} from "immutable";
-import {User} from "../../../../../core/src";
+import {OptionUtils, User} from "../../../../../core/src";
 import {Candidate} from "../../../../../core/src/models/candidate";
 import {GroupUtils} from "../../../../../core/src/util/group-utils";
 import {UserStateService} from "../../services/user-state.service";
@@ -47,6 +47,12 @@ export class CreateVoteModalComponent implements OnInit {
         this.notificationService.showNotificationBasedOnEitherEffector(vote, value => `Created Vote ${value}`)
         this.userStateService.candidates.next(this.getCandidates().push(candidate));
       })
+  }
+
+  getAccessibleGroups(): Set<Enum> {
+    return GroupUtils.sortGroupEnumsHierarchy(this.getGroups())
+      .filter(x => OptionUtils.exists2(this.getUserGroup(), x.getValue(), (userGroup, voteGroup) => GroupUtils.isGroupLower(voteGroup, userGroup)))
+      .filterNot(x => x.getValue().contains("Developer (Unverified)"));
   }
 
   getCandidate(): Option<Candidate> {

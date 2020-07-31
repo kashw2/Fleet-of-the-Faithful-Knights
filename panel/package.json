@@ -8,10 +8,13 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "docker-build": "docker build -t gcr.io/fast-academy-283910/panel .",
-    "docker-run": "docker run -p 80:80 gcr.io/fast-academy-283910/panel",
-    "docker-push": "docker push gcr.io/fast-academy-283910/panel",
-    "release": "npm run docker-build && npm run docker-push"
+    "docker-build": "docker build -t cloud.canister.io:5000/928779879786/panel .",
+    "docker-run": "docker run --network=host -p 4200:80 cloud.canister.io:5000/928779879786/panel",
+    "docker-push": "docker push cloud.canister.io:5000/928779879786/panel",
+    "deploy": "ssh $USER@4.71.159.157 'docker stop panel | docker rm panel | docker run -d --name panel -p 80:80 cloud.canister.io:5000/928779879786/panel'",
+    "update": "ssh $USER@4.71.159.157 'docker pull cloud.canister.io:5000/928779879786/panel | docker commit api panel:latest'",
+    "release-cold": "npm run docker-build && npm run docker-push && npm run deploy",
+    "release-hot": "npm run docker-build && npm run docker-push && npm run update"
   },
   "private": true,
   "dependencies": {

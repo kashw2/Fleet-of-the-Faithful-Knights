@@ -4,6 +4,7 @@ import {flatMap, map} from "rxjs/operators";
 import {DbCache} from "./db-cache";
 import {DbRequest} from "./db-request";
 import {DbProcedures} from "./procedures/db-procedures";
+import {EitherUtils} from "../../core/src";
 
 export class Database {
 
@@ -13,14 +14,18 @@ export class Database {
         this.procedures = new DbProcedures(this.requests);
         this.cache = new DbCache(this.procedures);
     }
+
     cache: DbCache;
     dbConfig: config = {
-        user: process.env.FFK_DB_USER,
-        password: process.env.FFK_DB_PASSWORD,
-        database: process.env.FFK_DB_NAME!,
-        server: process.env.FFK_DB_SERVER!,
+        user: this.getFfkDbUser(),
+        password: this.getFfkDbPassword(),
+        database: this.getFfkDbName(),
+        server: this.getFfkDbServer(),
         connectionTimeout: 300000,
         requestTimeout: 300000,
+        options: {
+            enableArithAbort: true,
+        },
         parseJSON: true,
     };
 
@@ -48,5 +53,38 @@ export class Database {
     private getConnectionPool(): ConnectionPool {
         return new ConnectionPool(this.dbConfig);
     }
+
+    private getFfkDbName(): string {
+        const dbName = EitherUtils.liftEither(process.env.FFK_DB_NAME!, "FFK_DB_NAME is undefined");
+        if (dbName.isLeft()) {
+            throw dbName.value;
+        }
+        return dbName.get();
+    }
+
+    private getFfkDbPassword(): string {
+        const dbPassword = EitherUtils.liftEither(process.env.FFK_DB_PASSWORD!, "FFK_DB_PASSWORD is undefined");
+        if (dbPassword.isLeft()) {
+            throw dbPassword.value;
+        }
+        return dbPassword.get();
+    }
+
+    private getFfkDbServer(): string {
+        const dbServer = EitherUtils.liftEither(process.env.FFK_DB_SERVER!, "FFK_DB_SERVER is undefined");
+        if (dbServer.isLeft()) {
+            throw dbServer.value;
+        }
+        return dbServer.get();
+    }
+
+    private getFfkDbUser(): string {
+        const dbUser = EitherUtils.liftEither(process.env.FFK_DB_USER!, "FFK_DB_USER is undefined");
+        if (dbUser.isLeft()) {
+            throw dbUser.value;
+        }
+        return dbUser.get();
+    }
+
 
 }

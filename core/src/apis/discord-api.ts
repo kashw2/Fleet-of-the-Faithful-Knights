@@ -1,6 +1,6 @@
 import {Api} from "../models/api";
 import {Url} from "../models/url";
-import {Either, Left} from "funfix-core";
+import {Either} from "funfix-core";
 import {DiscordGuild, DiscordGuildJsonSerializer} from "../models/discord/discord-guild";
 import {DiscordGuildMember, DiscordGuildMemberJsonSerializer} from "../models/discord/discord-guild-member";
 import {List} from "immutable";
@@ -31,11 +31,15 @@ export class DiscordApi {
     }
 
     private getDiscordApiUrl(): string {
-        return "https://discordapp.com/api";
+        return "https://discord.com/api";
     }
 
-    private getDiscordPanelBotToken(): Either<string, string> {
-        return EitherUtils.liftEither(process.env.FFK_DISCORD_PANEL_BOT_TOKEN!, "FFK_DISCORD_PANEL_BOT_TOKEN is not defined");
+    private getDiscordPanelBotToken(): string {
+        const token = EitherUtils.liftEither(process.env.FFK_DISCORD_PANEL_BOT_TOKEN!, "FFK_DISCORD_PANEL_BOT_TOKEN is not defined");
+        if (token.isLeft()) {
+            throw token.value;
+        }
+        return token.get();
     }
 
     private getFfkGuildId(): string {
@@ -61,12 +65,9 @@ export class DiscordApi {
     }
 
     private getHeaders(): object {
-        if (this.getDiscordPanelBotToken().isRight()) {
-            return {
-                Authorization: `Bot ${this.getDiscordPanelBotToken().get()}`,
-            };
-        }
-        throw new Error(this.getDiscordPanelBotToken().value);
+        return {
+            Authorization: `Bot ${this.getDiscordPanelBotToken()}`,
+        };
     }
 
     /**
@@ -80,47 +81,51 @@ export class DiscordApi {
      * @returns DiscordOAuthResponse
      */
     getOAuth(code: string): Promise<Either<string, DiscordOAuthResponse>> {
-        if (this.getRedirectUrl().isRight()) {
-            if (this.getPanelClientId().isRight()) {
-                if (this.getPanelClientSecret().isRight()) {
-                    return this.api.sendRequestSerialized(
-                        "/oauth2/token",
-                        DiscordOAuthResponseJsonSerializer.instance,
-                        {
-                            "Content-Type": "application/x-www-form-urlencoded",
-                        },
-                        "POST",
-                        (this.getOAuthPayload(code)),
-                    );
-                }
-                return Promise.resolve(Left(this.getPanelClientSecret().value));
-            }
-            return Promise.resolve(Left(this.getPanelClientId().value));
-        }
-        return Promise.resolve(Left(this.getRedirectUrl().value));
+        return this.api.sendRequestSerialized(
+            "/oauth2/token",
+            DiscordOAuthResponseJsonSerializer.instance,
+            {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            "POST",
+            this.getOAuthPayload(code),
+        );
     }
 
-    getOAuthPayload(code: string): string {
+    private getOAuthPayload(code: string): string {
         return querystring.encode({
-            client_id: this.getPanelClientId().get(),
-            client_secret: this.getPanelClientSecret().get(),
+            client_id: this.getPanelClientId(),
+            client_secret: this.getPanelClientSecret(),
             grant_type: "authorization_code",
             code,
-            redirect_uri: this.getRedirectUrl().get(),
+            redirect_uri: this.getRedirectUrl(),
             scope: "identify guilds",
-        })
+        });
     }
 
-    private getPanelClientId(): Either<string, string> {
-        return EitherUtils.liftEither(process.env.FFK_DISOCRD_PANEL_CLIENT_ID!, "FFK_DISOCRD_PANEL_CLIENT_ID is undefined");
+    private getPanelClientId(): string {
+        const clientId = EitherUtils.liftEither(process.env.FFK_DISOCRD_PANEL_CLIENT_ID!, "FFK_DISOCRD_PANEL_CLIENT_ID is undefined");
+        if (clientId.isLeft()) {
+            throw clientId.value;
+        }
+        return clientId.get();
     }
 
-    private getPanelClientSecret(): Either<string, string> {
-        return EitherUtils.liftEither(process.env.FFK_DISCORD_PANEL_SECRET!, "FFK_DISCORD_PANEL_SECRET is undefined");
+    private getPanelClientSecret(): string {
+        const clientSecret = EitherUtils.liftEither(process.env.FFK_DISCORD_PANEL_SECRET!, "FFK_DISCORD_PANEL_SECRET is undefined");
+        if (clientSecret.isLeft()) {
+            throw clientSecret.value;
+        }
+        return clientSecret.get();
     }
 
-    private getRedirectUrl(): Either<string, string> {
-        return EitherUtils.liftEither(process.env.FFK_PANEL_ADDRESS!, "FFK_PANEL_ADDRESS is undefined");
+    private getRedirectUrl(): string {
+        // TODO: Fix this, had issues going live with env vars
+        const url = EitherUtils.liftEither("http://4.71.159.157:80", "FFK_PANEL_ADDRESS is undefined");
+        if (url.isLeft()) {
+            throw url.value;
+        }
+        return url.get();
     }
 
     listChannelMessages(channelId: string): Promise<Either<string, List<DiscordMessage>>> {
