@@ -52,7 +52,7 @@
     "@angular/compiler-cli": "10.0.7",
     "@angular/language-service": "10.0.7",
     "@ngrx/store-devtools": "9.2.0",
-    "@types/jasmine": "3.5.11",
+    "@types/jasmine": "3.5.12",
     "@types/jasminewd2": "2.0.8",
     "codelyzer": "6.0.0",
     "jasmine-core": "3.5.0",
