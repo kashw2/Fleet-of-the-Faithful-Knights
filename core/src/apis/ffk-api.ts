@@ -16,7 +16,16 @@ export class FfkApi {
     static instance: FfkApi = new FfkApi();
 
     // TODO: Make this fallback to the live url
-    private api: Api = new Api(Url.buildFromUri(this.getFfkApiUrl()));
+    private api: Api = new Api(Url.buildFromUri(this.getFfkApiAddress()));
+
+    private getFfkApiAddress(): string {
+        // TODO: Fix this, had issues going live with env vars
+        const url = EitherUtils.liftEither(process.env.FFK_API_ADDRESS || "http://4.71.159.157:8080", "FFK_API_ADDRESS is undefined");
+        if (url.isLeft()) {
+            throw url.value;
+        }
+        return url.get();
+    }
 
     private getFfkApiToken(): string {
         const token = EitherUtils.liftEither(process.env.FFK_API_TOKEN!, "FFK_API_TOKEN is undefined");
@@ -24,15 +33,6 @@ export class FfkApi {
             throw token.value;
         }
         return token.get();
-    }
-
-    private getFfkApiUrl(): string {
-        // TODO: Fix this, had issues going live with env vars
-        const url = EitherUtils.liftEither("http://4.71.159.157:8080", "FFK_API_ADDRESS is undefined");
-        if (url.isLeft()) {
-            throw url.value;
-        }
-        return url.get();
     }
 
     protected getHeaders(): object {

@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, isDevMode, OnInit} from "@angular/core";
 import {Option} from "funfix-core";
 import {User} from "../../../../../core/src";
 import {GroupUtils} from "../../../../../core/src/util/group-utils";
@@ -51,9 +51,17 @@ export class HeaderComponent implements OnInit {
     this.viewStateService.setVotePageType(type);
   }
 
+  isDevMode(): boolean {
+    return isDevMode();
+  }
+
   isLoggedIn(): boolean {
     return this.userStateService
       .isLoggedIn();
+  }
+
+  isProdMode(): boolean {
+    return !this.isDevMode();
   }
 
   ngOnInit(): void {
