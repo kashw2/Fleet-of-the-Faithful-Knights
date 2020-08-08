@@ -1,11 +1,10 @@
 import {Either} from "funfix-core";
 import {List} from "immutable";
-import {EitherUtils, FfkApi} from "../../../core/src";
-import {Candidate} from "../../../core/src/models/candidate";
-import {DiscordGuild} from "../../../core/src/models/discord/discord-guild";
 import {CandidateOnboarding} from "../candidate-onboarding";
 import {Onboarding} from "../../onboarding";
-import {DiscordApi} from "../../../core/typescript/src/apis/discord-api";
+import {DiscordRole, DiscordGuild, Candidate, EitherUtils} from "@ffk/lib-ts";
+import {DiscordApi} from "../../../core/src/apis/discord-api";
+import {FfkApi} from "../../../core/src/apis/ffk-api";
 
 export class DiscordCandidateOnboarding extends CandidateOnboarding {
 
