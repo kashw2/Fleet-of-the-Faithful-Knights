@@ -1,10 +1,8 @@
 import {Request, Response} from "express";
 import {Either, Left} from "funfix-core";
-import {ApiUtils, User} from "../../../../core/src";
-import {DbVote} from "../../../../core/src/models/db/db-vote";
-import {Vote, VoteJsonSerializer} from "../../../../core/src/models/vote";
 import {PostEndpoint} from "../../../../core/src/server/post-endpoint";
 import {Database} from "../../../db/database";
+import { Vote, VoteJsonSerializer, ApiUtils, User, DbVote } from "@ffk/lib-ts";
 
 export class WriteVoteEndpoint extends PostEndpoint {
 

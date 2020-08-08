@@ -1,10 +1,9 @@
 import {Request, Response} from "express";
-import {Candidate, CandidateJsonSerializer} from "../../../../core/src/models/candidate";
+import {ApiUtils, Candidate, CandidateJsonSerializer, User} from "@ffk/lib-ts";
 import {Database} from "../../../db/database";
 import {Either} from "funfix-core";
 import {List} from "immutable";
-import {PostEndpoint} from "../../../../core/src/server/post-endpoint";
-import {ApiUtils, User} from "../../../../core/src";
+import {PostEndpoint} from "../../../../core/src/server/post-endpoint"
 
 
 export class ListMissingCandidatesEndpoint extends PostEndpoint {
@@ -28,7 +27,7 @@ export class ListMissingCandidatesEndpoint extends PostEndpoint {
     private getMissingCandidates(req: Request): Either<string, List<Candidate>> {
         return Either.map2(this.getCacheCandidates(), this.getCandidates(req), (cached, candidates) => {
             return candidates.toOrderedSet().subtract(cached.toOrderedSet()).toList();
-        })
+        });
     }
 
     isAuthorized(user: User): boolean {

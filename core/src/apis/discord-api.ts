@@ -1,15 +1,23 @@
-import {Api} from "../models/api";
-import {Url} from "../models/url";
-import {Either} from "funfix-core";
-import {DiscordGuild, DiscordGuildJsonSerializer} from "../models/discord/discord-guild";
-import {DiscordGuildMember, DiscordGuildMemberJsonSerializer} from "../models/discord/discord-guild-member";
+import {
+    Api,
+    DiscordChannel,
+    DiscordChannelJsonSerializer,
+    DiscordGuild,
+    DiscordGuildJsonSerializer,
+    DiscordGuildMember,
+    DiscordGuildMemberJsonSerializer,
+    DiscordMessage,
+    DiscordMessageJsonSerializer,
+    DiscordOAuthResponse,
+    DiscordOAuthResponseJsonSerializer,
+    DiscordUser,
+    DiscordUserJsonSerilaizer,
+    EitherUtils,
+    Url
+} from "@ffk/lib-ts";
 import {List} from "immutable";
-import {DiscordUser, DiscordUserJsonSerilaizer} from "../models/discord/discord-user";
-import {DiscordOAuthResponse, DiscordOAuthResponseJsonSerializer} from "../models/discord/discord-oauth-response";
 import * as querystring from "querystring";
-import {DiscordChannel, DiscordChannelJsonSerializer} from "../models/discord/discord-channel";
-import {DiscordMessage, DiscordMessageJsonSerializer} from "../models/discord/discord-message";
-import {EitherUtils} from "../util/either-utils";
+import {Either} from "funfix-core";
 
 export class DiscordApi {
 

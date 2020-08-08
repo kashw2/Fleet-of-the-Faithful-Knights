@@ -1,15 +1,27 @@
-import {Api} from "../models/api";
-import {Url} from "../models/url";
+import {
+    Api,
+    Candidate,
+    CandidateJsonSerializer,
+    Comment,
+    CommentJsonSerializer,
+    DiscordOAuthResponse,
+    DiscordOAuthResponseJsonSerializer,
+    EitherUtils,
+    Enum,
+    EnumJsonSerializer,
+    idKey,
+    News,
+    NewsJsonSerializer,
+    parseNumber,
+    parseString,
+    Url,
+    User,
+    UserJsonSerializer,
+    Vote,
+    VoteJsonSerializer
+} from "@ffk/lib-ts";
 import {Either} from "funfix-core";
 import {List, Set} from "immutable";
-import {EitherUtils} from "../util/either-utils";
-import {Candidate, CandidateJsonSerializer} from "../models/candidate";
-import {Comment, CommentJsonSerializer} from "../models/comment";
-import {User, UserJsonSerializer} from "../models/user";
-import {Vote, VoteJsonSerializer} from "../models/vote";
-import {News, NewsJsonSerializer} from "../models/news";
-import {DiscordOAuthResponse, DiscordOAuthResponseJsonSerializer, idKey, parseNumber, parseString} from "..";
-import {Enum, EnumJsonSerializer} from "../models/enum";
 
 export class FfkApi {
 

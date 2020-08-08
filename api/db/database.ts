@@ -4,7 +4,7 @@ import {flatMap, map} from "rxjs/operators";
 import {DbCache} from "./db-cache";
 import {DbRequest} from "./db-request";
 import {DbProcedures} from "./procedures/db-procedures";
-import {EitherUtils} from "../../core/src";
+import {EitherUtils} from "@ffk/lib-ts";
 
 export class Database {
 

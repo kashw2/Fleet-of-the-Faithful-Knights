@@ -1,10 +1,16 @@
 import {Either} from "funfix-core";
 import {List} from "immutable";
 import {IRecordSet} from "mssql";
-import {DbCandidate, DbCandidateJsonSerializer} from "../../../core/src/models/db/db-candidate";
-import {DbComment, DbCommentJsonSerializer} from "../../../core/src/models/db/db-comment";
-import {DbUser, DbUserJsonSerializer} from "../../../core/src/models/db/db-user";
-import {DbVote, DbVoteJsonSerializer} from "../../../core/src/models/db/db-vote";
+import {
+    DbCandidate,
+    DbCandidateJsonSerializer,
+    DbComment,
+    DbVote,
+    DbVoteJsonSerializer,
+    DbCommentJsonSerializer,
+    DbUser,
+    DbUserJsonSerializer
+} from "@ffk/lib-ts";
 import {DbRequest} from "../db-request";
 
 export class DbInsert {

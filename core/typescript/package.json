@@ -1,0 +1,21 @@
+{
+  "name": "@ffk/lib-ts",
+  "version": "1.0.0",
+  "description": "Fleet of the Faithful Knights TypeScript Library",
+  "main": "./dist/lib-ts.js",
+  "typings": "./dist/src/index.d.ts",
+  "scripts": {
+    "build": "webpack --display-error-details --display-modules --config webpack/webpack.config.ts"
+  },
+  "author": "Keanu Ashwell",
+  "private": true,
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^3.9.7"
+  },
+  "devDependencies": {
+    "ts-loader": "^8.0.2",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  }
+}

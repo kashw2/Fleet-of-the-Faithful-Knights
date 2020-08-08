@@ -1,9 +1,8 @@
 import {Either, Left} from "funfix-core";
 import {List, Set} from "immutable";
 import {ConnectionPool, IRecordSet} from "mssql";
-import {getJsonFromRecordSet, SimpleJsonSerializer} from "../../core/src";
+import {getJsonFromRecordSet, SimpleJsonSerializer, Enum, EnumJsonSerializer} from "@ffk/lib-ts";
 import {Database} from "./database";
-import {Enum, EnumJsonSerializer} from "../../core/src/models/enum";
 
 export class DbRequest {
 

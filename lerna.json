@@ -4,7 +4,8 @@
   "packages": [
     ".",
     "./api",
-    "./core",
+    "./core/typescript",
+    "./core/server",
     "./panel",
     "./discord-bot",
     "./onboarding"

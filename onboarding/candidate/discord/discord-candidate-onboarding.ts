@@ -5,7 +5,7 @@ import {Candidate} from "../../../core/src/models/candidate";
 import {DiscordGuild} from "../../../core/src/models/discord/discord-guild";
 import {CandidateOnboarding} from "../candidate-onboarding";
 import {Onboarding} from "../../onboarding";
-import {DiscordApi} from "../../../core/src/apis/discord-api";
+import {DiscordApi} from "../../../core/typescript/src/apis/discord-api";
 
 export class DiscordCandidateOnboarding extends CandidateOnboarding {
 

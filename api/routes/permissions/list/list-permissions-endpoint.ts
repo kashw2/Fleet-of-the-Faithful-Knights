@@ -1,9 +1,9 @@
-import {ApiUtils, GetEndpoint, User} from "../../../../core/src";
+import {ApiUtils, User, EnumJsonSerializer, Enum} from "@ffk/lib-ts";
 import {Database} from "../../../db/database";
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
-import {Enum, EnumJsonSerializer} from "../../../../core/src/models/enum";
 import {Set} from "immutable";
+import { GetEndpoint } from "../../../../core/src/server/get-endpoint";
 
 export class ListPermissionsEndpoint extends GetEndpoint {
 

@@ -1,10 +1,8 @@
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {List} from "immutable";
-import {ApiUtils, EitherUtils, OptionUtils, User} from "../../../../core/src";
-import {Candidate, CandidateJsonSerializer} from "../../../../core/src/models/candidate";
-import {DbCandidate} from "../../../../core/src/models/db/db-candidate";
-import {PostEndpoint} from "../../../../core/src/server/post-endpoint";
+import {ApiUtils, CandidateJsonSerializer, EitherUtils, OptionUtils, User, Candidate, DbCandidate} from "@ffk/lib-ts";
+import {PostEndpoint} from "../../../../core/src/server/post-endpoint"
 import {Database} from "../../../db/database";
 
 export class WriteCandidatesEndpoint extends PostEndpoint {

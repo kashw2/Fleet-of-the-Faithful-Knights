@@ -1,8 +1,9 @@
 import {Request, Response} from "express";
-import {ApiUtils, GetEndpoint, User, UserJsonSerializer} from "../../../../core/src";
+import {ApiUtils, User, UserJsonSerializer} from "@ffk/lib-ts";
 import {Database} from "../../../db/database";
 import {Either} from "funfix-core";
 import {List} from "immutable";
+import { GetEndpoint } from "../../../../core/src/server/get-endpoint";
 
 export class ListUsersEndpoint extends GetEndpoint {
 

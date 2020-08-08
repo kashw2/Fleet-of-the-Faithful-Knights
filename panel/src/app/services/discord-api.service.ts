@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {DiscordApi} from "../../../../core/src/apis/discord-api";
+import {DiscordApi} from "../../../../core/typescript/src/apis/discord-api";
 import {List} from "immutable";
 import {DiscordUser, EitherUtils, OptionUtils} from "../../../../core/src";
 import {DiscordMessage} from "../../../../core/src/models/discord/discord-message";

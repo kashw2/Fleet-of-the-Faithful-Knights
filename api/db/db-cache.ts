@@ -1,11 +1,7 @@
 import {List, Set} from "immutable";
 import {interval} from "rxjs";
-import {UserCache} from "../../core/src";
-import {CandidateCache} from "../../core/src/models/candidate-cache";
-import {NewsCache} from "../../core/src/models/news-cache";
-import {VoteCache} from "../../core/src/models/vote-cache";
+import {UserCache, CandidateCache, NewsCache, EnumCache, VoteCache} from "@ffk/lib-ts";
 import {DbProcedures} from "./procedures/db-procedures";
-import {EnumCache} from "../../core/src/models/enum-cache";
 
 export class DbCache {
 
