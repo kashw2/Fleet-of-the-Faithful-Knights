@@ -16,6 +16,16 @@ export class OptionUtils {
             .getOrElse(false);
     }
 
+    static exists3<A, B, C>(
+        opt1: Option<A>,
+        opt2: Option<B>,
+        opt3: Option<C>,
+        tester: (t1: A, t2: B, t3: C) => boolean,
+    ): boolean {
+        return Option.map3(opt1, opt2, opt3, (o1, o2, o3) => tester(o1, o2, o3))
+            .getOrElse(false);
+    }
+
     static flattenList<A>(list: List<Option<A>>): List<A> {
         return list.filterNot(x => x.isEmpty())
             .map(x => x.get());
