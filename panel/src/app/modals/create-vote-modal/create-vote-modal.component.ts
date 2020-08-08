@@ -43,9 +43,17 @@ export class CreateVoteModalComponent implements OnInit {
       this.getPromotionGroup(),
       this.getNotes(),
       async (candidate, sponsor, group, notes) => {
-        const vote = await this.ffkApi.writeVote(Vote.forVoteCreation(candidate, sponsor, group, notes));
-        this.notificationService.showNotificationBasedOnEitherEffector(vote, value => `Created Vote ${value}`)
-        this.userStateService.candidates.next(this.getCandidates().push(candidate));
+        const voteId = await this.ffkApi.writeVote(Vote.forVoteCreation(candidate, sponsor, group, notes));
+        this.notificationService.showNotificationBasedOnEitherEffector(voteId, value => `Created Vote ${value}`)
+        voteId.forEach(async vid  => {
+          const vote = await this.ffkApi.getVoteById(vid);
+          if (vote.isLeft()) {
+            this.notificationService.showFailureNotification(vote.value);
+            return;
+          }
+        this.userStateService.votes.next(this.getVotes().push(vote.get()));
+        })
+        this.modalRef.hide();
       })
   }
 
@@ -88,6 +96,10 @@ export class CreateVoteModalComponent implements OnInit {
   getUserGroup(): Option<string> {
     return this.getUser()
       .flatMap(u => u.getGroup());
+  }
+
+  getVotes(): List<Vote> {
+    return this.userStateService.getVotes();
   }
 
   hide(): void {

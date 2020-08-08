@@ -1,13 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Either, Left} from "funfix-core";
-import {List} from "immutable";
 import {CookieService} from "ngx-cookie-service";
 import {FfkApi, User} from "../../../../core/src";
-import {News} from "../../../../core/src/models/news";
-import {Vote} from "../../../../core/src/models/vote";
-import {environment} from "../../environments/environment.prod";
-import {Candidate} from "../../../../core/src/models/candidate";
-import {Comment} from "../../../../core/src/models/comment";
 
 @Injectable({
   providedIn: "root",
