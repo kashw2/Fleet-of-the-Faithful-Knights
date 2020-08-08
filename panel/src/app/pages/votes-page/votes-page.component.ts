@@ -1,8 +1,8 @@
 import {Component, OnInit} from "@angular/core";
 import {List} from "immutable";
-import {Vote} from "../../../../../core/src/models/vote";
 import {UserStateService} from "../../services/user-state.service";
 import {ViewStateService} from "../../services/view-state.service";
+import {Vote} from "@ffk/lib-ts";
 
 @Component({
   selector: "app-votes-page",

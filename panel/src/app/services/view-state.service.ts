@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
 import {BehaviorSubject} from "rxjs";
 import {None, Option, Some} from "funfix-core";
-import {Vote} from "../../../../core/src/models/vote";
-import {User} from "../../../../core/src";
+import {User, Vote} from "@ffk/lib-ts";
 
 @Injectable({
   providedIn: "root",

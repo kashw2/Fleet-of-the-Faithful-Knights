@@ -1,16 +1,11 @@
 import {Component, OnInit} from "@angular/core";
 import {Option} from "funfix-core";
-import {Vote} from "../../../../../core/src/models/vote";
 import {UserStateService} from "../../services/user-state.service";
 import {ViewStateService} from "../../services/view-state.service";
-import {Candidate} from "../../../../../core/src/models/candidate";
-import {OptionUtils, User} from "../../../../../core/src";
-import {GroupUtils} from "../../../../../core/src/util/group-utils";
-import {MomentUtils} from "../../../../../core/src/util/moment-utils";
 import {FfkApiService} from "../../services/ffk-api.service";
 import {NotificationService} from "../../services/notification.service";
 import {List, Set} from "immutable";
-import {Voter} from "../../../../../core/src/models/voter";
+import { GroupUtils, Candidate, MomentUtils, Voter, User, Vote, OptionUtils } from '@ffk/lib-ts';
 
 @Component({
   selector: "app-vote-page",

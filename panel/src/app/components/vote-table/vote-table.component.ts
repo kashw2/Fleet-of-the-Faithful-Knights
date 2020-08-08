@@ -4,10 +4,10 @@ import {None, Option, Some} from "funfix-core";
 import {List} from "immutable";
 import {BehaviorSubject, fromEvent} from "rxjs";
 import {debounceTime, distinctUntilChanged, first} from "rxjs/operators";
-import {Vote} from "../../../../../core/src/models/vote";
 import {CreateVoteModalComponent} from "../../modals/create-vote-modal/create-vote-modal.component";
 import {NotificationService} from "../../services/notification.service";
 import {ViewStateService} from "../../services/view-state.service";
+import { Vote } from '@ffk/lib-ts';
 
 @Component({
   selector: "app-vote-table",

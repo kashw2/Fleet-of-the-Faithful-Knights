@@ -52,9 +52,9 @@ import {SpecialPanelComponent} from "./children/special-panel/special-panel.comp
   imports: [
     MDBBootstrapModulesPro.forRoot(),
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     ToastrModule.forRoot(),
-    HttpClientModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,

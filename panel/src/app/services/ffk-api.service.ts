@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
 import {Either, Left} from "funfix-core";
 import {CookieService} from "ngx-cookie-service";
-import {FfkApi, User} from "../../../../core/src";
+import {FfkApi} from "../../../../core/src/apis/ffk-api";
+import { User } from '@ffk/lib-ts';
 
 @Injectable({
   providedIn: "root",
