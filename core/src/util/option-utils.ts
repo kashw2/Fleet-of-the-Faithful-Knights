@@ -13,7 +13,7 @@ export class OptionUtils {
         tester: (t1: A, t2: B) => boolean,
     ): boolean {
         return Option.map2(opt1, opt2, (o1, o2) => tester(o1, o2))
-            .getOrElse(false);
+            .contains(true);
     }
 
     static exists3<A, B, C>(
@@ -23,7 +23,7 @@ export class OptionUtils {
         tester: (t1: A, t2: B, t3: C) => boolean,
     ): boolean {
         return Option.map3(opt1, opt2, opt3, (o1, o2, o3) => tester(o1, o2, o3))
-            .getOrElse(false);
+            .contains(true);
     }
 
     static flattenList<A>(list: List<Option<A>>): List<A> {
