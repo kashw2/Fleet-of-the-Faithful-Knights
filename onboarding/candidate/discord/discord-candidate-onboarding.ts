@@ -2,7 +2,7 @@ import {Either} from "funfix-core";
 import {List} from "immutable";
 import {CandidateOnboarding} from "../candidate-onboarding";
 import {Onboarding} from "../../onboarding";
-import {DiscordRole, DiscordGuild, Candidate, EitherUtils} from "@ffk/lib-ts";
+import {DiscordGuild, Candidate, EitherUtils} from "@ffk/lib-ts";
 import {DiscordApi} from "../../../core/src/apis/discord-api";
 import {FfkApi} from "../../../core/src/apis/ffk-api";
 

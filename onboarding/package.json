@@ -1,7 +1,7 @@
 {
   "name": "@ffk/onboarding",
   "version": "1.0.0",
-  "description": "",
+  "description": "Fleet of the Faithful Knights Data Onboarding and Ingestion Server",
   "main": "app.js",
   "keywords": [],
   "scripts": {
