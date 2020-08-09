@@ -1,10 +1,8 @@
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
-import {ApiUtils, User} from "../../../../core/src";
-import {Comment, CommentJsonSerializer} from "../../../../core/src/models/comment";
-import {DbComment} from "../../../../core/src/models/db/db-comment";
-import {PostEndpoint} from "../../../../core/src/server/post-endpoint";
 import {Database} from "../../../db/database";
+import {PostEndpoint} from "../../../../core/src/server/post-endpoint"
+import {ApiUtils, Comment, CommentJsonSerializer, DbComment, User} from "@ffk/lib-ts";
 
 export class WriteCommentEndpoint extends PostEndpoint {
 

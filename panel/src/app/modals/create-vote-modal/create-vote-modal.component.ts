@@ -1,16 +1,12 @@
 import {Component, OnInit} from "@angular/core";
 import {None, Option} from "funfix-core";
 import {List, Set} from "immutable";
-import {OptionUtils, User} from "../../../../../core/src";
-import {Candidate} from "../../../../../core/src/models/candidate";
-import {GroupUtils} from "../../../../../core/src/util/group-utils";
 import {UserStateService} from "../../services/user-state.service";
 import {MDBModalRef} from "ng-uikit-pro-standard";
 import {BehaviorSubject} from "rxjs";
 import {FfkApiService} from "../../services/ffk-api.service";
-import {Vote} from "../../../../../core/src/models/vote";
 import {NotificationService} from "../../services/notification.service";
-import {Enum} from "../../../../../core/src/models/enum";
+import {Candidate, Enum, GroupUtils, OptionUtils, User, Vote} from "@ffk/lib-ts";
 
 @Component({
   selector: "app-create-vote-modal",

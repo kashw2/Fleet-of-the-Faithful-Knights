@@ -1,9 +1,8 @@
 import {Injectable} from "@angular/core";
-import {DiscordApi} from "../../../../core/src/apis/discord-api";
 import {List} from "immutable";
-import {DiscordUser, EitherUtils, OptionUtils} from "../../../../core/src";
-import {DiscordMessage} from "../../../../core/src/models/discord/discord-message";
+import {DiscordMessage, DiscordUser} from "@ffk/lib-ts";
 import {Either} from "funfix-core";
+import {DiscordApi} from "../../../../core/src/apis/discord-api";
 
 @Injectable({
   providedIn: "root"

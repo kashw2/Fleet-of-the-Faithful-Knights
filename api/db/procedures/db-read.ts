@@ -1,11 +1,17 @@
 import {Either} from "funfix-core";
 import {List, Set} from "immutable";
-import {User, UserJsonSerializer} from "../../../core/src";
-import {Candidate, CandidateJsonSerializer} from "../../../core/src/models/candidate";
-import {News, NewsJsonSerializer} from "../../../core/src/models/news";
-import {Vote, VoteJsonSerializer} from "../../../core/src/models/vote";
+import {
+    Candidate,
+    CandidateJsonSerializer,
+    Enum,
+    News,
+    NewsJsonSerializer,
+    User,
+    UserJsonSerializer,
+    Vote,
+    VoteJsonSerializer
+} from "@ffk/lib-ts";
 import {DbRequest} from "../db-request";
-import {Enum} from "../../../core/src/models/enum";
 
 export class DbRead {
 

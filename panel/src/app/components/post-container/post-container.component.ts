@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, Output} from "@angular/core";
 import {None, Option} from "funfix-core";
-import {MomentUtils} from "../../../../../core/src/util/moment-utils";
+import { MomentUtils } from "@ffk/lib-ts";
 
 @Component({
   selector: "app-post-container",

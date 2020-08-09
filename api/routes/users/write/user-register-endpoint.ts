@@ -1,10 +1,9 @@
 import {Request, Response} from "express";
 import {Either, Left} from "funfix-core";
-import {ApiUtils, EitherUtils} from "../../../../core/src";
 import {Database} from "../../../db/database";
-import {DiscordApi} from "../../../../core/src/apis/discord-api";
-import {DbUser} from "../../../../core/src/models/db/db-user";
+import {ApiUtils, EitherUtils, DbUser} from "@ffk/lib-ts";
 import {UnauthenticatedGetEndpoint} from "../../../../core/src/server/unauthenticated/unauthenticated-get-endpoint";
+import {DiscordApi} from "../../../../core/src/apis/discord-api";
 
 export class UserRegisterEndpoint extends UnauthenticatedGetEndpoint {
 

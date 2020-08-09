@@ -1,7 +1,7 @@
 import {Either} from "funfix-core";
 import {List} from "immutable";
-import {Candidate} from "../../core/src/models/candidate";
-import {FfkApi} from "../../core/src";
+import {FfkApi} from "../../core/src/apis/ffk-api";
+import {Candidate} from "@ffk/lib-ts";
 
 export abstract class CandidateOnboarding {
 

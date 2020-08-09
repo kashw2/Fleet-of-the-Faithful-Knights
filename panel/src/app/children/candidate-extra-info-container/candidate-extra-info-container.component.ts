@@ -1,18 +1,13 @@
 import {Component, OnInit} from "@angular/core";
 import {ViewStateService} from "../../services/view-state.service";
 import {None, Option, Some} from "funfix-core";
-import {Vote} from "../../../../../core/src/models/vote";
 import {UserStateService} from "../../services/user-state.service";
 import {List} from "immutable";
-import {Comment} from "../../../../../core/src/models/comment";
-import {MomentUtils} from "../../../../../core/src/util/moment-utils";
 import {BehaviorSubject} from "rxjs";
 import {FfkApiService} from "../../services/ffk-api.service";
-import {EitherUtils, User} from "../../../../../core/src";
 import {NotificationService} from "../../services/notification.service";
-import {Candidate} from "../../../../../core/src/models/candidate";
 import {DiscordApiService} from "../../services/discord-api.service";
-import {DiscordMessage} from "../../../../../core/src/models/discord/discord-message";
+import {Candidate, DiscordMessage, EitherUtils, MomentUtils, User, Vote, Comment} from "@ffk/lib-ts";
 
 @Component({
   selector: "app-candidate-extra-info-container",

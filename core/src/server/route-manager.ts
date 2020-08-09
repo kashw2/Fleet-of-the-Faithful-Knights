@@ -1,6 +1,6 @@
 import {Request} from "express";
 import {Either} from "funfix-core";
-import {ApiUtils, User} from "..";
+import {ApiUtils, User} from "@ffk/lib-ts";
 import {Database} from "../../../api/db/database";
 
 export abstract class RouteManager {

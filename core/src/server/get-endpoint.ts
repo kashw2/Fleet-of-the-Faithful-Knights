@@ -1,6 +1,6 @@
 import {Request, Response, Router} from "express";
 import {RouteManager} from "./route-manager";
-import {ApiUtils} from "..";
+import {ApiUtils} from "@ffk/lib-ts";
 import {Database} from "../../../api/db/database";
 
 export abstract class GetEndpoint extends RouteManager {

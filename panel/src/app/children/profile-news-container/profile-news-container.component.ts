@@ -2,10 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import {None, Option, Some} from "funfix-core";
 import {List} from "immutable";
 import {BehaviorSubject} from "rxjs";
-import {User} from "../../../../../core/src";
-import {News} from "../../../../../core/src/models/news";
-import {GroupUtils} from "../../../../../core/src/util/group-utils";
 import {UserStateService} from "../../services/user-state.service";
+import {GroupUtils, News, User} from "@ffk/lib-ts";
 
 @Component({
   selector: "app-profile-news-container",

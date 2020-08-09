@@ -1,9 +1,8 @@
 import {Component, isDevMode, OnInit} from "@angular/core";
 import {Option} from "funfix-core";
-import {User} from "../../../../../core/src";
-import {GroupUtils} from "../../../../../core/src/util/group-utils";
 import {UserStateService} from "../../services/user-state.service";
 import {ViewStateService} from "../../services/view-state.service";
+import {GroupUtils, User} from "@ffk/lib-ts";
 
 @Component({
   selector: "app-header",

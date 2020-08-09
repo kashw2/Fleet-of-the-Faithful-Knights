@@ -1,10 +1,8 @@
 import {Component, OnInit} from "@angular/core";
 import {Option} from "funfix-core";
 import {List} from "immutable";
-import {User} from "../../../../../core/src";
-import {Vote} from "../../../../../core/src/models/vote";
-import {MomentUtils} from "../../../../../core/src/util/moment-utils";
 import {UserStateService} from "../../services/user-state.service";
+import {MomentUtils, User, Vote} from "@ffk/lib-ts";
 
 @Component({
   selector: "app-profile-page",

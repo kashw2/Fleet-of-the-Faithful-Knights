@@ -3,12 +3,7 @@ import {None, Option} from "funfix-core";
 import {List, Set} from "immutable";
 import {CookieService} from "ngx-cookie-service";
 import {BehaviorSubject} from "rxjs";
-import {User} from "../../../../core/src";
-import {Candidate} from "../../../../core/src/models/candidate";
-import {News} from "../../../../core/src/models/news";
-import {Vote} from "../../../../core/src/models/vote";
-import {DiscordMessage} from "../../../../core/src/models/discord/discord-message";
-import {Enum} from "../../../../core/src/models/enum";
+import {Candidate, DiscordMessage, Enum, News, User, Vote} from "@ffk/lib-ts";
 
 @Injectable({
   providedIn: "root",

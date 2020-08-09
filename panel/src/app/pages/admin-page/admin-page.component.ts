@@ -3,9 +3,9 @@ import {FfkApiService} from "../../services/ffk-api.service";
 import {UserStateService} from "../../services/user-state.service";
 import {NotificationService} from "../../services/notification.service";
 import {Option, Some} from "funfix-core";
-import {GroupUtils, User} from "../../../../../core/src";
 import {List} from "immutable";
 import {ViewStateService} from "../../services/view-state.service";
+import {GroupUtils, User} from "@ffk/lib-ts";
 
 @Component({
   selector: "app-admin-page",

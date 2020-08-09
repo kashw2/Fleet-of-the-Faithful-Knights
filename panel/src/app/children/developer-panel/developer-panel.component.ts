@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import {List} from "immutable";
-import {User} from "../../../../../core/src";
 import {UserStateService} from "../../services/user-state.service";
+import {User} from "@ffk/lib-ts";
 
 @Component({
   selector: "app-developer-panel",
