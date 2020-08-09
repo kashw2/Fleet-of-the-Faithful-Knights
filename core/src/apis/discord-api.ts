@@ -129,7 +129,7 @@ export class DiscordApi {
 
     private getRedirectUrl(): string {
         // TODO: Fix this, had issues going live with env vars
-        const url = EitherUtils.liftEither("http://4.71.159.157:80", "FFK_PANEL_ADDRESS is undefined");
+        const url = EitherUtils.liftEither(process.env.FFK_PANEL_ADDRESS! || "http://4.71.159.157:80", "FFK_PANEL_ADDRESS is undefined");
         if (url.isLeft()) {
             throw url.value;
         }

@@ -5,7 +5,8 @@
   "main": "./dist/lib-ts.js",
   "typings": "./dist/src/index.d.ts",
   "scripts": {
-    "build": "webpack --display-error-details --display-modules --config webpack/webpack.config.ts"
+    "build": "webpack --display-error-details --display-modules --config webpack/webpack.config.ts",
+    "build-dev-watch": "webpack --display-error-details --display-modules --config webpack/webpack.dev.config.ts --watch"
   },
   "author": "Keanu Ashwell",
   "private": true,
@@ -20,7 +21,7 @@
   },
   "browser": {
     "http": false,
-    "https":false,
+    "https": false,
     "net": false,
     "path": false,
     "stream": false,

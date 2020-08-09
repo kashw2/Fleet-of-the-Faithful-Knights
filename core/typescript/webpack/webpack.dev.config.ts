@@ -1,6 +1,6 @@
 module.exports = {
     entry: "./src/index.ts",
-    mode: "production",
+    mode: "development",
     devtool: "source-map",
     target: "node",
     module: {

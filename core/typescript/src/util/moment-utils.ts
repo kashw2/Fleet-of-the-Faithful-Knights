@@ -1,4 +1,5 @@
-import * as moment from "moment";
+const moment = require("moment");
+// https://stackoverflow.com/questions/56503281/typescript-import-as-moment-from-moment-vs-import-moment-from-moment
 import {FfkDateFormat} from "../misc/type-defs";
 
 export class MomentUtils {
