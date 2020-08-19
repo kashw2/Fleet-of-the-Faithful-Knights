@@ -29,7 +29,7 @@
     "@angular/router": "10.0.10",
     "@fortawesome/fontawesome-free": "5.14.0",
     "@ngrx/store": "10.0.0",
-    "@types/chart.js": "2.9.23",
+    "@types/chart.js": "2.9.24",
     "angular-bootstrap-md": "9.3.1",
     "animate.css": "4.1.0",
     "axios": "0.19.2",
