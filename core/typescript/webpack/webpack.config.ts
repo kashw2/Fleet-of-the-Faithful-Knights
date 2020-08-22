@@ -16,5 +16,9 @@ module.exports = {
         globalObject: "typeof self !== 'undefined' ? self : this", // See https://github.com/webpack/webpack/issues/6522
         libraryTarget: "umd",
         filename: "lib-ts.js"
+    },
+    resolve: {
+        extensions: [".ts", ".js"],
+        modules: ['src', 'node_modules']
     }
 }
