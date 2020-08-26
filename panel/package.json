@@ -60,7 +60,7 @@
     "@angular/compiler-cli": "10.0.12",
     "@angular/language-service": "10.0.12",
     "@ngrx/store-devtools": "10.0.0",
-    "@types/jasmine": "3.5.13",
+    "@types/jasmine": "3.5.14",
     "@types/jasminewd2": "2.0.8",
     "@ffk/lib-ts": "@file:../core/typescript",
     "codelyzer": "6.0.0",
