@@ -33,7 +33,7 @@
     "angular-bootstrap-md": "9.4.0",
     "animate.css": "4.1.0",
     "axios": "0.20.0",
-    "chart.js": "3.0.0-alpha",
+    "chart.js": "3.0.0-beta",
     "crypto": "1.0.1",
     "easy-pie-chart": "2.1.7",
     "fs": "0.0.2",
