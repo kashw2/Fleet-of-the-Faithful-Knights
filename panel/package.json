@@ -45,7 +45,7 @@
     "net": "1.0.2",
     "ng-uikit-pro-standard": "git+https://oauth2:jRNULFUq6iNYr-xpD8cS@git.mdbootstrap.com/mdb/angular/ng-uikit-pro-standard.git",
     "ngx-cookie-service": "10.1.1",
-    "ngx-toastr": "13.0.1",
+    "ngx-toastr": "13.1.0",
     "path": "0.12.7",
     "rxjs": "7.0.0-beta.7",
     "screenfull": "5.0.2",
