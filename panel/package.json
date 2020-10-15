@@ -47,7 +47,7 @@
     "ngx-cookie-service": "10.1.1",
     "ngx-toastr": "13.1.0",
     "path": "0.12.7",
-    "rxjs": "7.0.0-beta.7",
+    "rxjs": "7.0.0-beta.8",
     "screenfull": "5.0.2",
     "stream": "0.0.2",
     "tslib": "2.0.2",
