@@ -15,7 +15,7 @@
     "typescript": "4.0.5",
     "ts-loader": "8.0.7",
     "webpack": "5.3.2",
-    "webpack-cli": "3.3.12"
+    "webpack-cli": "4.1.0"
   },
   "browser": {
     "http": false,
