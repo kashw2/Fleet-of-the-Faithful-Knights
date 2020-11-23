@@ -30,7 +30,7 @@
     "@fortawesome/fontawesome-free": "5.15.1",
     "@ngrx/store": "10.0.1",
     "@types/chart.js": "2.9.28",
-    "angular-bootstrap-md": "10.0.0",
+    "angular-bootstrap-md": "10.0.1",
     "animate.css": "4.1.1",
     "axios": "0.21.0",
     "chart.js": "3.0.0-beta.6",
