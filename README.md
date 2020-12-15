@@ -12,21 +12,24 @@ I want to say that most of this stuff will just be plug and play but who knows, 
 
 Name                      | Version
 ------------------------- | -------
-TypeScript                | 3.8.5
-Concurrently              | 5.2.0
-Nodemon                   | 2.0.4
-Node                      | 12.x.x
-Lerna                     | 3.20.2
+TypeScript                | 4.x.x
+Concurrently              | 5.3.0
+Nodemon                   | 2.0.6
+Node                      | 14.x.x
+Lerna                     | 3.22.1
+Webpack                   | 5.10.1
 
 Having all these ensures that you will be able to compile, build and run all projects in the repo.
 
 Here's a one line install. Do note that it is a global install. 
  
-```npm i typescript concurrently nodemon node lerna -g```
+```npm i typescript concurrently nodemon node lerna webpack -g```
 
 These packages can be located at the default locations at either ```AppData/npm/node_modules``` on Windows machines or ```usr/local/lib/node_modules``` on Linux.
 
 Once you have installed the above, run ```lerna bootstrap``` from the root of the repository to 'bootstrap' or install all dependencies for all projects in the repo.
+
+An optional installation is eslint for linting. At the time of writing the version of so is 7.15.0. ```npm i -g eslint@7.15.0```
 
 #### Environment Variables
 
@@ -36,8 +39,3 @@ FFK_DB_USER                 | The database login username.
 FFK_DB_PASSWORD             | The database login password.
 FFK_DB_NAME                 | The name of the database.
 FFK_DB_SERVER               | The ip or dns that the database is stored on.
-FFK_PANEL_ADDRESS           | The host/address of the panel including the protocol.
-FFK_API_ADDRESS             | The host/address of the api including the protocol.
-FFK_DISCORD_PANEL_SECRET    | The secret of the bot used to interact between the discord server and panel provided on [Discords Developer Portal](https://discordapp.com/developers/).
-FFK_DISCORD_PANEL_BOT_TOKEN | The token of the bot used to interact between the discord server and panel provided on [Discords Developer Portal](https://discordapp.com/developers/).
-FFK_DISOCRD_PANEL_CLIENT_ID | The respective Id of the application, this is made available via the [Discords Developer Portal](https://discordapp.com/developers/).
