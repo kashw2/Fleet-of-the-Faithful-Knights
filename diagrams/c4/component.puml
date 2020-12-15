@@ -1,0 +1,59 @@
+@startuml
+
+title Fleet of the Faithful Knights Component Diagram
+
+actor User
+actor Candidate
+
+cloud "Google Cloud Platform" as GCP
+rectangle GitHub
+rectangle "Discord API" as Discord
+database MSSQL {
+    rectangle live
+    rectangle dev
+}
+
+component "Container Registry" as ContainerRegistry
+component "Cloud Run" as CloudRun
+component "NPM Package Registry" as NPMRegistry
+
+component "@ffk/lib-ts" as LibTs
+component "@ffk/lib-util" as LibUtil
+component "@ffk/lib-server" as LibServer
+component "@ffk/lib-external" as LibExternal
+
+component API
+component "Onboarding Server" as Onboarding
+component "Voting Panel" as Panel
+
+GCP ---> ContainerRegistry
+GCP -> CloudRun
+ContainerRegistry -> CloudRun
+GitHub -> NPMRegistry
+
+CloudRun -> API
+CloudRun --> Onboarding
+CloudRun --> Panel
+
+MSSQL ---> API
+
+Discord --> API
+Discord -> Onboarding
+
+Panel ---> ContainerRegistry
+Onboarding ---> ContainerRegistry
+API ---> ContainerRegistry
+
+Onboarding -> API
+API <-> Panel
+
+LibTs --> NPMRegistry
+LibServer --> NPMRegistry
+LibExternal --> NPMRegistry
+LibUtil --> NPMRegistry
+
+User -> Panel
+Candidate -> Onboarding
+
+
+@enduml
