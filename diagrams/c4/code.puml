@@ -1,0 +1,176 @@
+@startuml
+
+title Fleet of the Faithful Knights Code Diagram
+
+class "Enum" {
+    Option<Number>: id
+    Option<String>: label
+    Option<String>: value
+    .. Getter Methods ..
+    + getId()
+    + getLabel()
+    + getValue()
+}
+
+class "User" {
+    Option<Number>: id
+    Option<String>: discordId
+    Option<String>: discordDiscriminator
+    Option<String>: username
+    Option<String>: locale
+    Option<String>: avatar
+    Option<String>: token
+    Option<String>: group
+    Option<Enum>: permissions
+    Option<Moment>: memberSince
+    .. Getter Methods ..
+    + getId()
+    + getDiscordId()
+    + getDiscordDiscriminator()
+    + getUsername()
+    + getLocale()
+    + getAvatar()
+    + getToken()
+    + getGroup()
+    + getPermissions()
+    + getMemberSince()
+    .. Comparison Methods ..
+    + isCompanionAtArms()
+    + isDeveloper()
+    + isGenericKnight()
+    + isGenericSergeant()
+    + isGrandMaster()
+    + isGuest()
+    + isKnight()
+    + isKnightCommander()
+    + isKnightLieutenant()
+    + isMasterCommander()
+    + isSergeant()
+    + isSergeantFirstClass()
+    + isSpecial()
+    + isSquire()
+    + isUnverifiedDeveloper()
+    .. Other Methods ..
+    + withoutToken()
+    + hasAllPermissions()
+    + hasOneOfPermissions()
+    + hasPermission()
+    + isEmpty()
+
+}
+
+class "Comment" {
+    Option<Number>: id
+    Option<User>: user
+    Option<String>: content
+    Option<Moment>: createdDate
+    .. Getter Methods ..
+    + getId()
+    + getUser()
+    + getContent()
+    + getCreatedDate()
+    .. Other Methods ..
+    + forCommentWriting()
+    + getUserId()
+    + getUsername()
+}
+
+class "Candidate" {
+    Option<Number>: id
+    Option<String>: discordId
+    Option<String>: discordUsername
+    Option<String>: avatar
+    Option<Group>: group
+    Option<Moment>: memberSince
+    .. Getter Methods ..
+    + getId()
+    + getDiscordId()
+    + getDiscordUsername()
+    + getAvatar()
+    + getMemberSince()
+    .. Other Methods ..
+    + fromDiscordGuildMember()
+    + fromDiscordGuildMembers()
+    + getSanitizedDiscordUsername()
+    + getSanitizedMemberSince()
+}
+
+class "Vote" {
+    Option<Number>: id
+    Option<User>: sponsor
+    Option<Candidate>: candidate
+    Option<String>: group
+    Option<String>: notes
+    Set<Voter>: voters
+    Option<Boolean>: status
+    List<Comment>: comments
+    Option<Moment>: createdDate
+    .. Getter Methods ..
+    + getId()
+    + getSponsor()
+    + getCandidate()
+    + getGroup()
+    + getNotes()
+    + getVoters()
+    + getStatus()
+    + getComments()
+    + getCreatedDate()
+    + getCandidateName()
+    + getFormattedCreatedDate(format)
+    + getSponsorId()
+    + getSponsorUsername()
+    .. Other Methods ..
+    + forVoteCreation()
+    + hasFailed()
+    + hasPassed()
+    + isCAAVote()
+    + isEmpty()
+    + isKnightCommanderVote()
+    + isKnightLieutenantVote()
+    + isKnightVote()
+    + isSergeantFirstClassVote()
+    + isSergeantVote()
+    + isSquireVote()
+    + shouldBeInKnightVoting()
+    + shouldBeInSergeantVoting()
+}
+
+class "Voter" {
+    Option<number>: id
+    Option<User>: user
+    Option<String>: response
+    .. Getter Methods ..
+    + getId()
+    + getUser()
+    + getResponse()
+    + getVoterUsername()
+    .. Other Methods ..
+    + didAffirm()
+    + didDeny()
+}
+
+class "News" {
+    Option<Number>: id
+    Option<User>: user
+    Option<String>: content
+    Option<String>: title
+    Option<Moment>: date
+    .. Getter Methods ..
+    + getContent()
+    + getDate()
+    + getId()
+    + getTitle()
+    + getUser()
+    + getUserGroup()
+    + getUsername()
+}
+
+Enum -> User
+User -> Comment
+User -> Voter
+User -> Vote
+Voter -> Vote
+Comment -> Vote
+Candidate -> Vote
+User -> News
+@enduml

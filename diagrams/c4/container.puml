@@ -1,0 +1,36 @@
+@startuml
+
+'Frontend is represented in White
+'Backend is represented in Grey
+'External to FFK is represented in Yellow
+
+title Fleet of the Faithful Knights Solution Diagram
+
+actor "Authorised User" as User
+actor "Candidate"
+
+component "FFK Panel" as Panel #White
+component "API" #Grey
+component "Onboarding Server" as Onboarding #Grey
+
+artifact Providers {
+component "Discord API" as Discord #Yellow
+database MSSQL
+cloud "Google Cloud Platform" as Cloud
+}
+
+Cloud ---0)- Panel
+Cloud ---0)- API
+Cloud ---0)- Onboarding
+
+MSSQL ---- API
+
+Discord ----> Onboarding
+Discord -> API
+Onboarding <-> API
+API <-> Panel
+
+Candidate --> Onboarding
+User --> Panel
+
+@enduml

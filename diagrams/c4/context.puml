@@ -1,0 +1,20 @@
+@startuml
+
+title Fleet of the Faithful Knights Context Diagram
+
+actor "User" as LoggedInUser
+actor Voters
+actor Candidate
+
+rectangle Panel
+rectangle "Vote Process" as Vote
+
+LoggedInUser ---> Panel: - - - - User creates vote for Candidate
+Panel -> Vote: - - - - Vote is created
+Voters ---> Vote: - - - - Observers vote on created vote
+Vote ---> Candidate: - - - - Vote either succeeds or is denied
+
+
+
+
+@enduml
