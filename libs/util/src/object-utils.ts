@@ -42,7 +42,8 @@ export function parseNumber(n: unknown): Option<number> {
                 .filter(v => !isNaN(+v))
                 .map(v => +v);
         case "number":
-            return Option.of(n);
+            return Option.of(n)
+                .filter(v => !isNaN(v));
         case "bigint":
             return Option.of(Number(n));
         case "boolean":
