@@ -14,22 +14,24 @@
   },
   "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights#readme",
   "dependencies": {
-    "@ffk/lib-util": "file:libs/util",
     "@ffk/lib-external": "file:libs/external",
+    "@ffk/lib-util": "file:libs/util",
     "@types/express": "4.17.9",
-    "@types/moment": "2.13.0",
     "@types/mssql": "6.0.7",
     "@types/node": "14.14.13",
+    "@typescript-eslint/eslint-plugin": "^4.10.0",
+    "@typescript-eslint/parser": "^4.10.0",
+    "eslint": "^7.16.0",
     "express": "4.17.1",
     "funfix-core": "7.0.1",
     "immutable": "4.0.0-rc.12",
     "moment": "2.29.1",
     "mssql": "6.3.0",
+    "ng-uikit-pro-standard": "git+https://oauth2:jRNULFUq6iNYr-xpD8cS@git.mdbootstrap.com/mdb/angular/ng-uikit-pro-standard.git",
     "rxjs": "6.6.3",
     "screenfull": "5.0.2",
-    "tslib": "2.0.0",
-    "zone.js": "0.10.2",
     "ts-node": "8.3.0",
-    "ng-uikit-pro-standard": "git+https://oauth2:jRNULFUq6iNYr-xpD8cS@git.mdbootstrap.com/mdb/angular/ng-uikit-pro-standard.git"
+    "tslib": "2.0.0",
+    "zone.js": "0.10.2"
   }
 }
