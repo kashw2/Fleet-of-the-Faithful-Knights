@@ -158,7 +158,7 @@ export class ChannelJsonSerializer extends JsonSerializer<Channel> {
 		);
 	}
 
-	toJson(value: Channel, builder: JsonBuilder): object {
+	toJson(value: Channel, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getId(), idKey)
 			.addOptional(value.getType(), typeKey)
 			.addOptional(value.getGuildId(), guildIdKey)

@@ -70,7 +70,7 @@ export class GuildMemberJsonSerializer extends JsonSerializer<GuildMember> {
 		);
 	}
 
-	toJson(value: GuildMember, builder: JsonBuilder): object {
+	toJson(value: GuildMember, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptionalSerialized(value.getUser(), userKey, UserJsonSerializer.instance)
 			.addOptional(value.getNick(), nickKey)
 			.addIterable(value.getRoles(), rolesKey)

@@ -37,7 +37,7 @@ export class SecretJsonSerializer extends JsonSerializer<Secret> {
 		);
 	}
 
-	toJson(value: Secret, builder: JsonBuilder): object {
+	toJson(value: Secret, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getJoin(), joinKey)
 			.addOptional(value.getSpectate(), spectateKey)
 			.addOptional(value.getMatch(), matchKey)

@@ -53,7 +53,7 @@ export class PresenceJsonSerializer extends JsonSerializer<Presence> {
 		);
 	}
 
-	toJson(value: Presence, builder: JsonBuilder): object {
+	toJson(value: Presence, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptionalSerialized(value.getUser(), userKey, UserJsonSerializer.instance)
 			.addOptional(value.getGuildId(), guildIdKey)
 			.addOptional(value.getStatus(), statusKey)

@@ -85,7 +85,7 @@ export class RoleJsonSerializer extends JsonSerializer<Role> {
 		);
 	}
 
-	toJson(value: Role, builder: JsonBuilder): object {
+	toJson(value: Role, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getId(), idKey)
 			.addOptional(value.getName(), nameKey)
 			.addOptional(value.getColor(), colorKey)

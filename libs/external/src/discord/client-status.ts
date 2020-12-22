@@ -37,7 +37,7 @@ export class ClientStatusJsonSerializer extends JsonSerializer<ClientStatus> {
 		);
 	}
 
-	toJson(value: ClientStatus, builder: JsonBuilder): object {
+	toJson(value: ClientStatus, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getDesktop(), desktopKey)
 			.addOptional(value.getMobile(), mobileKey)
 			.addOptional(value.getWeb(), webKey);

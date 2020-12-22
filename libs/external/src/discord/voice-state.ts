@@ -105,7 +105,7 @@ export class VoiceStateJsonSerializer extends JsonSerializer<VoiceState> {
 		);
 	}
 
-	toJson(value: VoiceState, builder: JsonBuilder): object {
+	toJson(value: VoiceState, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getGuildId(), guildIdKey)
 			.addOptional(value.getChannelId(), channelIdKey)
 			.addOptional(value.getUserId(), userIdKey)

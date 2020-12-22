@@ -32,7 +32,7 @@ export class TimestampJsonSerializer extends JsonSerializer<Timestamp> {
 		);
 	}
 
-	toJson(value: Timestamp, builder: JsonBuilder): object {
+	toJson(value: Timestamp, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptionalDate(value.getStart(), startKey)
 			.addOptionalDate(value.getEnd(), endKey)
 			.build();

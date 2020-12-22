@@ -43,7 +43,7 @@ export class OverwriteJsonSerializer extends JsonSerializer<Overwrite> {
 		);
 	}
 
-	toJson(value: Overwrite, builder: JsonBuilder): object {
+	toJson(value: Overwrite, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getId(), idKey)
 			.addOptional(value.getType(), typeKey)
 			.addOptional(value.getAllow(), allowKey)
