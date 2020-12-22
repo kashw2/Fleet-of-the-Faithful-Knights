@@ -16,6 +16,7 @@
   "dependencies": {
     "@ffk/lib-external": "file:libs/external",
     "@ffk/lib-util": "file:libs/util",
+    "@ffk/lib-ts": "file:libs/typescript",
     "@types/express": "4.17.9",
     "@types/mssql": "6.0.7",
     "@types/node": "14.14.13",
