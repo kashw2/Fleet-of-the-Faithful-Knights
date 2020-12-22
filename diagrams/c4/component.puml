@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 
 title Fleet of the Faithful Knights Component Diagram
 
@@ -26,23 +27,23 @@ component API
 component "Onboarding Server" as Onboarding
 component "Voting Panel" as Panel
 
-GCP ---> ContainerRegistry
-GCP -> CloudRun
+GCP --> ContainerRegistry
+GCP --> CloudRun
 ContainerRegistry -> CloudRun
 GitHub -> NPMRegistry
 
-CloudRun -> API
-CloudRun --> Onboarding
-CloudRun --> Panel
+CloudRun ---> API
+CloudRun ---> Onboarding
+CloudRun -> Panel
 
-MSSQL ---> API
+MSSQL -----> API
 
-Discord --> API
+Discord -> API
 Discord -> Onboarding
 
-Panel ---> ContainerRegistry
-Onboarding ---> ContainerRegistry
-API ---> ContainerRegistry
+Panel -> ContainerRegistry
+Onboarding -> ContainerRegistry
+API -> ContainerRegistry
 
 Onboarding -> API
 API <-> Panel
@@ -51,6 +52,19 @@ LibTs --> NPMRegistry
 LibServer --> NPMRegistry
 LibExternal --> NPMRegistry
 LibUtil --> NPMRegistry
+
+LibUtil -> LibTs
+LibUtil -> LibServer
+LibUtil -> LibExternal
+
+LibTs ----> Onboarding
+LibTs ----> API
+LibTs ----> Panel
+
+LibServer ----> API
+LibServer ----> Onboarding
+
+LibExternal --> Onboarding
 
 User -> Panel
 Candidate -> Onboarding

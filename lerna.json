@@ -1,12 +1,16 @@
 {
-  "version": "independent",
+  "version": "1.0.0",
+  "npmClient": "npm",
   "parallel": true,
+  "command": {
+    "bootstrap": {
+      "npmClientArgs": ["--no-package-lock"]
+    }
+  },
   "packages": [
     ".",
-    "./api",
-    "./core/typescript",
-    "./panel",
-    "./discord-bot",
-    "./onboarding"
+    "./libs/util",
+    "./libs/external",
+    "./libs/typescript"
   ]
 }
