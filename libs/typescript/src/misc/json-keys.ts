@@ -1,0 +1,14 @@
+export const idKey = 'id';
+export const userKey = 'user';
+export const ccKey = 'cc';
+export const titleKey = 'title';
+export const contentKey = 'content';
+export const dateKey = 'date';
+export const usernameKey = 'username';
+export const localeKey = 'locale';
+export const avatarKey = 'avatar';
+export const discordIdKey = 'discord_id';
+export const discordDiscriminatorKey = 'discord_discriminator';
+export const groupKey = 'group';
+export const permissionsKey = 'permissions';
+export const memberSinceKey = 'member_since';
