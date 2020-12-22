@@ -1,7 +1,7 @@
-import {JsonBuilder, JsonSerializer, parseDate, parseSet, parseString} from '@ffk/lib-util';
-import {None, Option} from 'funfix-core';
 import {Set} from 'immutable';
 import {Moment} from 'moment';
+import {JsonBuilder, JsonSerializer, parseDate, parseSet, parseString} from '@ffk/lib-util';
+import {None, Option} from 'funfix-core';
 import {
 	avatarKey,
 	discordDiscriminatorKey,
@@ -85,7 +85,7 @@ export class UserJsonSerializer extends JsonSerializer<User> {
 		);
 	}
 
-	toJson(value: User, builder: JsonBuilder): object {
+	toJson(value: User, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getId(), idKey)
 			.addOptional(value.getUsername(), usernameKey)
 			.addOptional(value.getLocale(), localeKey)

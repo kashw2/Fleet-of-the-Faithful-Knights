@@ -37,7 +37,7 @@ export class RoleTagJsonSerializer extends JsonSerializer<RoleTag> {
 		);
 	}
 
-	toJson(value: RoleTag, builder: JsonBuilder): object {
+	toJson(value: RoleTag, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getBotId(), botIdKey)
 			.addOptional(value.getIntegrationId(), integrationIdKey)
 			.addOptional(value.getPremiumSubscriber(), premiumSubscriberKey)

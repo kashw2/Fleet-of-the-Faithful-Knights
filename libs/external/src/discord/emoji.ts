@@ -69,7 +69,7 @@ export class EmojiJsonSerializer extends JsonSerializer<Emoji> {
 		);
 	}
 
-	toJson(value: Emoji, builder: JsonBuilder): object {
+	toJson(value: Emoji, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getId(), idKey)
 			.addOptional(value.getName(), nameKey)
 			.addIterable(value.getRoles(), rolesKey)

@@ -58,7 +58,7 @@ export class NewsJsonSerializer extends JsonSerializer<News> {
 		);
 	}
 
-	toJson(value: News, builder: JsonBuilder): object {
+	toJson(value: News, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getId(), idKey)
 			.addOptionalSerialized(value.getUser(), userKey, UserJsonSerializer.instance)
 			.addIterableSerialized(value.getCc(), ccKey, UserJsonSerializer.instance)

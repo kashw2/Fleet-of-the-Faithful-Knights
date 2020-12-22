@@ -32,7 +32,7 @@ export class PartyJsonSerializer extends JsonSerializer<Party> {
 		);
 	}
 
-	toJson(value: Party, builder: JsonBuilder): object {
+	toJson(value: Party, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getId(), idKey)
 			.addIterable(value.getSize(), sizeKey)
 			.build();

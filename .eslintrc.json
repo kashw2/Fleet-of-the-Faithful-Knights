@@ -23,6 +23,10 @@
           "{}": {
             "message": "Use object instead",
             "fixWith": "object"
+          },
+          "object": {
+            "message": "Avoid the object type, as it is currently hard to use due to not being able to assert that keys exist.",
+            "fixWith": "Record<string, any>"
           }
         }
       }

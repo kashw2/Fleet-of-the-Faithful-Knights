@@ -43,7 +43,7 @@ export class AssetJsonSerializer extends JsonSerializer<Asset> {
 		);
 	}
 
-	toJson(value: Asset, builder: JsonBuilder): object {
+	toJson(value: Asset, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getLargeImage(), largeImageKey)
 			.addOptional(value.getLargeText(), largeTextKey)
 			.addOptional(value.getSmallImage(), smallImageKey)

@@ -133,7 +133,7 @@ export class ActivityJsonSerializer extends JsonSerializer<Activity> {
 		);
 	}
 
-	toJson(value: Activity, builder: JsonBuilder): object {
+	toJson(value: Activity, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getName(), nameKey)
 			.addOptional(value.getType(), typeKey)
 			.addOptional(value.getUrl(), urlKey)

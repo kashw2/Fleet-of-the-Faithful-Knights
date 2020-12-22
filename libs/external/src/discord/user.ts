@@ -104,7 +104,7 @@ export class UserJsonSerializer extends JsonSerializer<User> {
 		);
 	}
 
-	toJson(value: User, builder: JsonBuilder): object {
+	toJson(value: User, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getId(), idKey)
 			.addOptional(value.getUsername(), usernameKey)
 			.addOptional(value.getDiscriminator(), discriminatorKey)

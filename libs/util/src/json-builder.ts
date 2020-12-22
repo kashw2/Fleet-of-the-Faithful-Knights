@@ -43,7 +43,7 @@ export class JsonBuilder {
 		return this;
 	}
 
-	public build(): object {
+	public build(): Record<string, any> {
 		return this.jsonObject;
 	}
 
