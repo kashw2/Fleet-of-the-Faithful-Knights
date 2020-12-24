@@ -1,7 +1,7 @@
 import {Option} from 'funfix-core';
 import {Collection} from 'immutable';
 import {JsonSerializer} from './json-serializer';
-import {Moment} from 'moment';
+import * as moment from 'moment';
 
 export class JsonBuilder {
 
@@ -32,7 +32,7 @@ export class JsonBuilder {
 			.getOrElse(this);
 	}
 
-	public addOptionalDate(value: Option<Moment>, key: string): JsonBuilder {
+	public addOptionalDate(value: Option<moment.Moment>, key: string): JsonBuilder {
 		return value.map(m => m.isValid())
 			.map(m => this.add(m, key))
 			.getOrElse(this);

@@ -1,6 +1,6 @@
 import {JsonBuilder, JsonSerializer, parseDate, parseSetSerialized, parseString} from '@ffk/lib-util';
 import {None, Option} from 'funfix-core';
-import {Moment} from 'moment';
+import * as moment from 'moment';
 import {User, UserJsonSerializer} from './user';
 import {Set} from 'immutable';
 import {ccKey, contentKey, dateKey, idKey, titleKey, userKey} from '../misc/json-keys';
@@ -13,7 +13,7 @@ export class News {
 		private cc: Set<User> = Set(),
 		private title: Option<string> = None,
 		private content: Option<string> = None,
-		private date: Option<Moment> = None,
+		private date: Option<moment.Moment> = None,
 	) {
 	}
 
@@ -37,7 +37,7 @@ export class News {
 		return this.content;
 	}
 
-	public getDate(): Option<Moment> {
+	public getDate(): Option<moment.Moment> {
 		return this.date;
 	}
 

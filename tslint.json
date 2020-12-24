@@ -1,0 +1,34 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended"
+  ],
+  "jsRules": {},
+  "rules": {
+    "no-var-requires": false,
+    "arrow-parens": false,
+    "max-classes-per-file": false,
+    "max-line-length": false,
+    "member-access": false,
+    "member-ordering": [
+      true,
+      {
+        "order": [
+          "static-field",
+          "instance-field",
+          "static-method",
+          "instance-method"
+        ],
+        "alphabetize": true
+      }
+    ],
+    "no-console": false,
+    "no-unused-expression": false,
+    "no-unused-variable": true,
+    "no-for-in-array": false,
+    "forin": false,
+    "quotemark": false,
+    "object-literal-sort-keys": false
+  },
+  "rulesDirectory": []
+}

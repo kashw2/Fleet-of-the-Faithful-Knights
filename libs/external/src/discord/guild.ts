@@ -1,6 +1,6 @@
 import {None, Option} from 'funfix-core';
 import {List, Set} from 'immutable';
-import {Moment} from 'moment';
+import * as moment from 'moment';
 import {Emoji, EmojiJsonSerializer} from './emoji';
 import {Role, RoleJsonSerializer} from './role';
 import {VoiceState, VoiceStateJsonSerializer} from './voice-state';
@@ -90,7 +90,7 @@ export class Guild {
 		readonly systemChannelId: Option<string> = None,
 		readonly systemChannelFlags: Option<number> = None,
 		readonly rulesChannelId: Option<string> = None,
-		readonly joinedAt: Option<Moment> = None,
+		readonly joinedAt: Option<moment.Moment> = None,
 		readonly large: Option<boolean> = None,
 		readonly unavailable: Option<boolean> = None,
 		readonly memberCount: Option<number> = None,
@@ -212,7 +212,7 @@ export class Guild {
 		return this.rulesChannelId;
 	}
 
-	public getJoinedAt(): Option<Moment> {
+	public getJoinedAt(): Option<moment.Moment> {
 		return this.joinedAt;
 	}
 

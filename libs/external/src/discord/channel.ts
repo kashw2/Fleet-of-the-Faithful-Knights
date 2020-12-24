@@ -2,7 +2,7 @@ import {None, Option} from 'funfix-core';
 import {Overwrite, OverwriteJsonSerializer} from './overwrite';
 import {Set} from 'immutable';
 import {User, UserJsonSerializer} from './user';
-import {Moment} from 'moment';
+import * as moment from 'moment';
 import {
 	JsonBuilder,
 	JsonSerializer,
@@ -53,11 +53,11 @@ export class Channel {
 		readonly ownerId: Option<string> = None,
 		readonly applicationId: Option<string> = None,
 		readonly parentId: Option<string> = None,
-		readonly lastPinTimestamp: Option<Moment> = None,
+		readonly lastPinTimestamp: Option<moment.Moment> = None,
 	) {
 	}
 
-	public getLastPinTimestamp(): Option<Moment> {
+	public getLastPinTimestamp(): Option<moment.Moment> {
 		return this.lastPinTimestamp;
 	}
 

@@ -10,6 +10,8 @@
   "packages": [
     "./libs/util",
     "./libs/external",
-    "./libs/typescript"
+    "./libs/typescript",
+    "./libs/angular",
+    "./panel"
   ]
 }

@@ -1,21 +1,21 @@
 import {None, Option} from 'funfix-core';
-import {Moment} from 'moment';
+import * as moment from 'moment';
 import {JsonBuilder, JsonSerializer, parseDate} from '@ffk/lib-util';
 import {endKey, startKey} from './json-keys';
 
 export class Timestamp {
 
 	constructor(
-		readonly start: Option<Moment> = None,
-		readonly end: Option<Moment> = None,
+		readonly start: Option<moment.Moment> = None,
+		readonly end: Option<moment.Moment> = None,
 	) {
 	}
 
-	getStart(): Option<Moment> {
+	getStart(): Option<moment.Moment> {
 		return this.start;
 	}
 
-	getEnd(): Option<Moment> {
+	getEnd(): Option<moment.Moment> {
 		return this.end;
 	}
 

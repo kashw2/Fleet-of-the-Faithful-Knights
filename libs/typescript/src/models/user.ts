@@ -1,5 +1,5 @@
 import {Set} from 'immutable';
-import {Moment} from 'moment';
+import * as moment from 'moment';
 import {JsonBuilder, JsonSerializer, parseDate, parseSet, parseString} from '@ffk/lib-util';
 import {None, Option} from 'funfix-core';
 import {
@@ -25,7 +25,7 @@ export class User {
 		private discordDiscriminator: Option<string> = None,
 		private group: Option<string> = None,
 		private permissions: Set<string> = Set(), // TODO: Make this Set<Enum>
-		private memberSince: Option<Moment> = None,
+		private memberSince: Option<moment.Moment> = None,
 	) {
 	}
 
@@ -61,7 +61,7 @@ export class User {
 		return this.permissions;
 	}
 
-	public getMemberSince(): Option<Moment> {
+	public getMemberSince(): Option<moment.Moment> {
 		return this.memberSince;
 	}
 
