@@ -29,40 +29,40 @@ export class User {
 	) {
 	}
 
-	public getId(): Option<string> {
-		return this.id;
-	}
-
-	public getUsername(): Option<string> {
-		return this.username;
-	}
-
-	public getLocale(): Option<string> {
-		return this.locale;
-	}
-
 	public getAvatar(): Option<string> {
 		return this.avatar;
-	}
-
-	public getDiscordId(): Option<string> {
-		return this.discordId;
 	}
 
 	public getDiscordDiscriminator(): Option<string> {
 		return this.discordDiscriminator;
 	}
 
+	public getDiscordId(): Option<string> {
+		return this.discordId;
+	}
+
 	public getGroup(): Option<string> {
 		return this.group;
+	}
+
+	public getId(): Option<string> {
+		return this.id;
+	}
+
+	public getLocale(): Option<string> {
+		return this.locale;
+	}
+
+	public getMemberSince(): Option<moment.Moment> {
+		return this.memberSince;
 	}
 
 	public getPermissions(): Set<string> {
 		return this.permissions;
 	}
 
-	public getMemberSince(): Option<moment.Moment> {
-		return this.memberSince;
+	public getUsername(): Option<string> {
+		return this.username;
 	}
 
 }

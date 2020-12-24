@@ -17,20 +17,8 @@ export class News {
 	) {
 	}
 
-	public getId(): Option<string> {
-		return this.id;
-	}
-
-	public getUser(): Option<User> {
-		return this.user;
-	}
-
 	public getCc(): Set<User> {
 		return this.cc;
-	}
-
-	public getTitle(): Option<string> {
-		return this.title;
 	}
 
 	public getContent(): Option<string> {
@@ -39,6 +27,18 @@ export class News {
 
 	public getDate(): Option<moment.Moment> {
 		return this.date;
+	}
+
+	public getId(): Option<string> {
+		return this.id;
+	}
+
+	public getTitle(): Option<string> {
+		return this.title;
+	}
+
+	public getUser(): Option<User> {
+		return this.user;
 	}
 
 }
