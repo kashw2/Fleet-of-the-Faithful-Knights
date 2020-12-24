@@ -29,14 +29,6 @@ export class Role {
 	) {
 	}
 
-	public getId(): Option<string> {
-		return this.id;
-	}
-
-	public getName(): Option<string> {
-		return this.name;
-	}
-
 	public getColor(): Option<number> {
 		return this.color;
 	}
@@ -45,12 +37,8 @@ export class Role {
 		return this.hoist;
 	}
 
-	public getPosition(): Option<number> {
-		return this.position;
-	}
-
-	public getPermissions(): Option<string> {
-		return this.permissions;
+	public getId(): Option<string> {
+		return this.id;
 	}
 
 	public getManaged(): Option<boolean> {
@@ -59,6 +47,18 @@ export class Role {
 
 	public getMentionable(): Option<boolean> {
 		return this.mentionable;
+	}
+
+	public getName(): Option<string> {
+		return this.name;
+	}
+
+	public getPermissions(): Option<string> {
+		return this.permissions;
+	}
+
+	public getPosition(): Option<number> {
+		return this.position;
 	}
 
 	public getTags(): List<RoleTag> {

@@ -33,36 +33,12 @@ export class User {
 	) {
 	}
 
-	public getId(): Option<string> {
-		return this.id;
-	}
-
-	public getUsername(): Option<string> {
-		return this.username;
-	}
-
-	public getDiscriminator(): Option<string> {
-		return this.discriminator;
-	}
-
 	public getBot(): Option<boolean> {
 		return this.bot;
 	}
 
-	public getSystem(): Option<boolean> {
-		return this.system;
-	}
-
-	public getMfaEnabled(): Option<boolean> {
-		return this.mfaEnabled;
-	}
-
-	public getLocale(): Option<string> {
-		return this.locale;
-	}
-
-	public getVerified(): Option<boolean> {
-		return this.verified;
+	public getDiscriminator(): Option<string> {
+		return this.discriminator;
 	}
 
 	public getEmail(): Option<string> {
@@ -73,12 +49,36 @@ export class User {
 		return this.flags;
 	}
 
+	public getId(): Option<string> {
+		return this.id;
+	}
+
+	public getLocale(): Option<string> {
+		return this.locale;
+	}
+
+	public getMfaEnabled(): Option<boolean> {
+		return this.mfaEnabled;
+	}
+
 	public getPremiumType(): Option<number> {
 		return this.premiumType;
 	}
 
 	public getPublicFlags(): Option<string> {
 		return this.publicFlags;
+	}
+
+	public getSystem(): Option<boolean> {
+		return this.system;
+	}
+
+	public getUsername(): Option<string> {
+		return this.username;
+	}
+
+	public getVerified(): Option<boolean> {
+		return this.verified;
 	}
 
 }

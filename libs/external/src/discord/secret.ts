@@ -15,12 +15,12 @@ export class Secret {
 		return this.join;
 	}
 
-	public getSpectate(): Option<string> {
-		return this.spectate;
-	}
-
 	public getMatch(): Option<string> {
 		return this.match;
+	}
+
+	public getSpectate(): Option<string> {
+		return this.spectate;
 	}
 
 }

@@ -6,7 +6,9 @@ export abstract class JsonSerializer<A> {
 
 	abstract fromJson(json: any): A;
 
-	abstract toJson(value: A, builder: JsonBuilder): Record<string, any>;
+	public fromJsonArray(json: Collection<any, any>): Collection<any, A> {
+		return json.map(v => this.fromJson(v));
+	}
 
 	public fromJsonImpl(json: any): Option<A> {
 		return Option.of(json)
@@ -15,9 +17,7 @@ export abstract class JsonSerializer<A> {
 			.map(v => this.fromJson(v));
 	}
 
-	public fromJsonArray(json: Collection<any, any>): Collection<any, A> {
-		return json.map(v => this.fromJson(v));
-	}
+	abstract toJson(value: A, builder: JsonBuilder): Record<string, any>;
 
 	public toJsonArray(values: Collection<any, A>, builder: JsonBuilder): Collection<any, Record<string, any>> {
 		return values.map(v => this.toJson(v, builder));

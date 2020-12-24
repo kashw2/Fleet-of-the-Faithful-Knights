@@ -57,56 +57,48 @@ export class Channel {
 	) {
 	}
 
-	public getLastPinTimestamp(): Option<moment.Moment> {
-		return this.lastPinTimestamp;
-	}
-
-	public getParentId(): Option<string> {
-		return this.parentId;
-	}
-
 	public getApplicationId(): Option<string> {
 		return this.applicationId;
-	}
-
-	public getOwnerId(): Option<string> {
-		return this.ownerId;
-	}
-
-	public getIcon(): Option<string> {
-		return this.icon;
-	}
-
-	public getRecipients(): Set<User> {
-		return this.recipients;
-	}
-
-	public getRateLimitPerUser(): Option<number> {
-		return this.rateLimitPerUser;
-	}
-
-	public getUserLimit(): Option<number> {
-		return this.userLimit;
 	}
 
 	public getBitrate(): Option<number> {
 		return this.bitrate;
 	}
 
+	public getGuildId(): Option<string> {
+		return this.guildId;
+	}
+
+	public getIcon(): Option<string> {
+		return this.icon;
+	}
+
+	public getId(): Option<string> {
+		return this.id;
+	}
+
 	public getLastMessageId(): Option<string> {
 		return this.lastMessageId;
+	}
+
+	public getLastPinTimestamp(): Option<moment.Moment> {
+		return this.lastPinTimestamp;
+	}
+
+	public getName(): Option<string> {
+		return this.name;
 	}
 
 	public getNsfw(): Option<boolean> {
 		return this.nsfw;
 	}
 
-	public getTopic(): Option<string> {
-		return this.topic;
+	public getOwnerId(): Option<string> {
+		return this.ownerId;
 	}
 
-	public getName(): Option<string> {
-		return this.name;
+	public getParentId(): Option<string> {
+		return this.parentId;
 	}
 
 	public getPermissionOverwrites(): Set<Overwrite> {
@@ -117,16 +109,24 @@ export class Channel {
 		return this.position;
 	}
 
-	public getGuildId(): Option<string> {
-		return this.guildId;
+	public getRateLimitPerUser(): Option<number> {
+		return this.rateLimitPerUser;
+	}
+
+	public getRecipients(): Set<User> {
+		return this.recipients;
+	}
+
+	public getTopic(): Option<string> {
+		return this.topic;
 	}
 
 	public getType(): Option<number> {
 		return this.type;
 	}
 
-	public getId(): Option<string> {
-		return this.id;
+	public getUserLimit(): Option<number> {
+		return this.userLimit;
 	}
 
 }

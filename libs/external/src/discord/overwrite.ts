@@ -12,20 +12,20 @@ export class Overwrite {
 	) {
 	}
 
-	public getId(): Option<string> {
-		return this.id;
-	}
-
-	public getType(): Option<number> {
-		return this.type;
-	}
-
 	public getAllow(): Option<string> {
 		return this.allow;
 	}
 
 	public getDeny(): Option<string> {
 		return this.deny;
+	}
+
+	public getId(): Option<string> {
+		return this.id;
+	}
+
+	public getType(): Option<number> {
+		return this.type;
 	}
 
 }

@@ -11,12 +11,12 @@ export class Timestamp {
 	) {
 	}
 
-	getStart(): Option<moment.Moment> {
-		return this.start;
-	}
-
 	getEnd(): Option<moment.Moment> {
 		return this.end;
+	}
+
+	getStart(): Option<moment.Moment> {
+		return this.start;
 	}
 
 }

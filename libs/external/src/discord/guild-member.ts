@@ -19,36 +19,36 @@ export class GuildMember {
 	) {
 	}
 
-	public getUser(): Option<User> {
-		return this.user;
-	}
-
-	public getNick(): Option<string> {
-		return this.nick;
-	}
-
-	public getRoles(): Set<string> {
-		return this.roles;
+	public getDeaf(): Option<boolean> {
+		return this.deaf;
 	}
 
 	public getJoinedAt(): Option<moment.Moment> {
 		return this.joinedAt;
 	}
 
-	public getPremiumSince(): Option<moment.Moment> {
-		return this.premiumSince;
-	}
-
-	public getDeaf(): Option<boolean> {
-		return this.deaf;
-	}
-
 	public getMute(): Option<boolean> {
 		return this.mute;
 	}
 
+	public getNick(): Option<string> {
+		return this.nick;
+	}
+
 	public getPending(): Option<boolean> {
 		return this.pending;
+	}
+
+	public getPremiumSince(): Option<moment.Moment> {
+		return this.premiumSince;
+	}
+
+	public getRoles(): Set<string> {
+		return this.roles;
+	}
+
+	public getUser(): Option<User> {
+		return this.user;
 	}
 
 }

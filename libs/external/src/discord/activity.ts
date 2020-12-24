@@ -52,6 +52,26 @@ export class Activity {
 	) {
 	}
 
+	public getApplicationId(): Option<string> {
+		return this.applicationId;
+	}
+
+	public getAssets(): Option<Asset> {
+		return this.assets;
+	}
+
+	public getCreatedAt(): Option<moment.Moment> {
+		return this.createdAt;
+	}
+
+	public getDetails(): Option<string> {
+		return this.details;
+	}
+
+	public getEmoji(): Option<Emoji> {
+		return this.emoji;
+	}
+
 	public getFlags(): Option<number> {
 		return this.flags;
 	}
@@ -60,52 +80,32 @@ export class Activity {
 		return this.instance;
 	}
 
-	public getSecret(): Option<Secret> {
-		return this.secrets;
-	}
-
-	public getAssets(): Option<Asset> {
-		return this.assets;
+	public getName(): Option<string> {
+		return this.name;
 	}
 
 	public getParty(): Option<Party> {
 		return this.party;
 	}
 
-	public getEmoji(): Option<Emoji> {
-		return this.emoji;
+	public getSecret(): Option<Secret> {
+		return this.secrets;
 	}
 
 	public getState(): Option<string> {
 		return this.state;
 	}
 
-	public getDetails(): Option<string> {
-		return this.details;
-	}
-
-	public getApplicationId(): Option<string> {
-		return this.applicationId;
-	}
-
 	public getTimestamps(): List<Timestamp> {
 		return this.timestamps;
-	}
-
-	public getCreatedAt(): Option<moment.Moment> {
-		return this.createdAt;
-	}
-
-	public getUrl(): Option<string> {
-		return this.url;
 	}
 
 	public getType(): Option<number> {
 		return this.type;
 	}
 
-	public getName(): Option<string> {
-		return this.name;
+	public getUrl(): Option<string> {
+		return this.url;
 	}
 
 }

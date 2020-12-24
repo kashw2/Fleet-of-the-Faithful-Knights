@@ -20,12 +20,12 @@ export class Asset {
 		return this.largeText;
 	}
 
-	public getSmallText(): Option<string> {
-		return this.smallText;
-	}
-
 	public getSmallImage(): Option<string> {
 		return this.smallImage;
+	}
+
+	public getSmallText(): Option<string> {
+		return this.smallText;
 	}
 
 }
