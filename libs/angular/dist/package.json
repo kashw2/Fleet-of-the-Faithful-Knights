@@ -2,8 +2,8 @@
   "name": "@kashw2/lib-angular",
   "version": "1.0.0",
   "description": "Fleet of the Faithful Knights Angular Componentry, Services, Data Models",
-  "main": "./dist/bundles/kashw2-lib-angular.umd.min.js",
-  "typings": "./dist/kashw2-lib-angular.d.ts",
+  "main": "bundles/kashw2-lib-angular.umd.js",
+  "typings": "kashw2-lib-angular.d.ts",
   "sideEffects": false,
   "nyc": {
     "exclude": [
@@ -15,9 +15,6 @@
     ],
     "instrument": false,
     "sourceMap": false
-  },
-  "scripts": {
-    "build": "ng build"
   },
   "repository": {
     "type": "git",
@@ -42,6 +39,14 @@
     "@angular-devkit/build-ng-packagr": "0.1002.0",
     "@angular/compiler": "11.0.5",
     "@angular/compiler-cli": "11.0.5",
-    "ng-packagr": "11.0.3"
+    "ng-packagr": "11.0.3",
+    "tslib": "^2.0.0"
+  },
+  "module": "fesm2015/kashw2-lib-angular.js",
+  "es2015": "fesm2015/kashw2-lib-angular.js",
+  "esm2015": "esm2015/kashw2-lib-angular.js",
+  "fesm2015": "fesm2015/kashw2-lib-angular.js",
+  "scripts": {
+    "prepublishOnly": "node --eval \"console.error('ERROR: Trying to publish a package that has been compiled by Ivy. This is not allowed.\\nPlease delete and rebuild the package, without compiling with Ivy, before attempting to publish.\\n')\" && exit 1"
   }
 }
