@@ -1,16 +1,28 @@
-<div class="d-flex container-fluid flex-grow-1 h-100">
-  <div class="d-flex col-1 flex-grow-1 justify-content-center p-0">
-    <a href="/home" class="d-flex flex-grow-1 justify-content-center">
-      <img src="assets/Fleet_of_the_Faithful_Knights_Shield.png"
-           class="m-1"
-           width="65px"
-           height="65px">
-    </a>
-  </div>
-  <div class="d-flex col flex-grow-1 align-self-center justify-content-end p-0">
-    <a *ngFor="let link of getHyperlinkMap()"
-       [href]="link.getHyperlink().get()"
-       class="mx-3 text-danger animated-underline"
-    >{{link.getLabel().get()}}</a>
+<div class="container-fluid">
+  <div class="row">
+    <div *ngIf="getBrandImageRedirectUrl().nonEmpty() || getBrandImage().nonEmpty()" class="col-1">
+      <a *ngIf="getBrandImageRedirectUrl().nonEmpty()" [href]="getBrandImageRedirectUrl().get()">
+        <img *ngIf="getBrandImage().nonEmpty()"
+             [src]="getBrandImage().get()"
+             height="75px"
+             width="75px"
+             class="img-fluid m-1"
+        >
+      </a>
+      <img *ngIf="getBrandImageRedirectUrl().isEmpty() && getBrandImage().nonEmpty()"
+           [src]="getBrandImage().get()"
+           height="75px"
+           width="75px"
+           class="img-fluid m-1"
+      >
+    </div>
+    <div *ngIf="!getHyperlinkMap().isEmpty()" class="d-flex col align-self-center justify-content-end">
+      <a *ngFor="let link of getHyperlinkMap()"
+         [href]="link.getHyperlink().get()"
+         class="text-danger"
+      >
+        <span *ngIf="link.getLabel().nonEmpty()" class="animated-underline">{{shouldCapitalise() ? link.getLabel().get().toUpperCase() : link.getLabel().get()}}</span>
+      </a>
+    </div>
   </div>
 </div>

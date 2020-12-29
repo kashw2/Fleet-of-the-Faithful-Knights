@@ -18,10 +18,16 @@ export class HeaderComponent implements OnInit {
 
   @Input() brandImageRedirectUrl: Option<string> = None;
 
+  @Input() capitalise: Option<boolean> = None;
+
   @Input() hyperlinkMap: Set<HyperlinkMap> = this.getDefault();
 
-  getHyperlinkMap(): Set<HyperlinkMap> {
-    return this.hyperlinkMap;
+  getBrandImage(): Option<string> {
+    return this.brandImage;
+  }
+
+  getBrandImageRedirectUrl(): Option<string> {
+    return this.brandImageRedirectUrl;
   }
 
   getDefault(): Set<HyperlinkMap> {
@@ -31,7 +37,15 @@ export class HeaderComponent implements OnInit {
     );
   }
 
+  getHyperlinkMap(): Set<HyperlinkMap> {
+    return this.hyperlinkMap;
+  }
+
   ngOnInit(): void {
+  }
+
+  shouldCapitalise(): boolean {
+    return this.capitalise.contains(true);
   }
 
 }

@@ -1,6 +1,11 @@
-<div class="d-flex container-fluid flex-column p-0 h-100">
-  <div class="d-flex row flex-column z-depth-2">
-    <app-header></app-header>
+<div class="d-flex container-fluid flex-column flex-grow-1">
+  <div class="d-flex row">
+    <div class="col">
+      <app-header [brandImageRedirectUrl]="getBrandImageRedirectUrl()"
+                  [brandImage]="getBrandImage()"
+                  [hyperlinkMap]="getHyperlinkMap()"
+      ></app-header>
+    </div>
   </div>
-  <div class="d-flex row flex-column flex-grow-1"></div>
 </div>
+
