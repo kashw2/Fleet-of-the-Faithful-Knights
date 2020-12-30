@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid z-depth-2 mb-4">
   <div class="row">
     <div *ngIf="getBrandImageRedirectUrl().nonEmpty() || getBrandImage().nonEmpty()" class="col-1">
       <a *ngIf="getBrandImageRedirectUrl().nonEmpty()" [href]="getBrandImageRedirectUrl().get()">
@@ -21,7 +21,7 @@
          [href]="link.getHyperlink().get()"
          class="text-danger"
       >
-        <span *ngIf="link.getLabel().nonEmpty()" class="animated-underline">{{shouldCapitalise() ? link.getLabel().get().toUpperCase() : link.getLabel().get()}}</span>
+        <span *ngIf="link.getLabel().nonEmpty()" [ngClass]="link.isActive() ? 'active-underline' : 'animated-underline'">{{shouldCapitalise() ? link.getLabel().get().toUpperCase() : link.getLabel().get()}}</span>
       </a>
     </div>
   </div>
