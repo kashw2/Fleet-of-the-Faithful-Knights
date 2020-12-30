@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import {Option, Some} from 'funfix-core';
+import {Component, OnInit} from '@angular/core';
+import {None, Option, Some} from 'funfix-core';
 import {HyperlinkMap} from '@ffk/lib-angular';
-import {Set} from 'immutable';
+import {List, Set} from 'immutable';
+import {News, User} from '@ffk/lib-ts';
+import {CollectionUtils} from '@ffk/lib-util';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-home-page',
@@ -10,7 +13,25 @@ import {Set} from 'immutable';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
+
+  contentExtractor = (news: News) => news.getContent();
+
+  dateExtractor = (news: News) => news.getDate();
+
+  getArticles(): List<Option<News>> {
+    return CollectionUtils.optionify(List.of(
+      new News(
+        Some('0'),
+        Some(new User(None, Some('Keanu'))),
+        Set(),
+        Some('Hello World'),
+        Some('This is the first news piece'),
+        Some(moment()),
+      ),
+    )).toList();
+  }
 
   getBrandImage(): Option<string> {
     return Some('assets/images/Fleet_of_the_Faithful_Knights_Shield.png');
@@ -23,10 +44,14 @@ export class HomePageComponent implements OnInit {
   getHyperlinkMap(): Set<HyperlinkMap> {
     return Set.of(
       new HyperlinkMap(Some('home'), Some('home'), Some(true))
-    )
+    );
   }
 
   ngOnInit(): void {
   }
+
+  titleExtractor = (news: News) => news.getTitle();
+
+  usernameExtractor = (news: News) => news.getUser().flatMap(u => u.getUsername());
 
 }

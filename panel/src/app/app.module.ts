@@ -5,12 +5,16 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HomePageComponent} from './pages/home-page/home-page.component';
 import { HeaderComponent } from './components/header/header.component';
+import { ArticleComponent } from './components/article/article.component';
+import { ColouredTextComponent } from './components/coloured-text/coloured-text.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		HomePageComponent,
-		HeaderComponent
+		HeaderComponent,
+		ArticleComponent,
+		ColouredTextComponent
 	],
 	imports: [
 		BrowserModule,

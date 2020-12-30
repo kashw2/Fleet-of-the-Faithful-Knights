@@ -5,3 +5,16 @@
 html, body {
   height: 100% !important;
 }
+
+.active-underline {
+  &:after {
+    display: block;
+    position: relative;
+    content: '';
+    top: 0px;
+    height: 2px;
+    width: 100%;
+    background-color: #ff3547 !important;
+  }
+}
+

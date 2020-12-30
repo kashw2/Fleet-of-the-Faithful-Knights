@@ -3,7 +3,10 @@ import {Option} from 'funfix-core';
 
 export class CollectionUtils {
 
-	optionify<A>(collection: Collection<any, A>): Collection<any, Option<A>> {
+	/**
+	 * Takes a given collection (assumes a functor) and transforms the contents into a Monad creating a HKT
+	 */
+	static optionify<A>(collection: Collection<any, A>): Collection<any, Option<A>> {
 		return collection.map(v => Option.of(v))
 			.filter(v => v.nonEmpty());
 	}
