@@ -3,7 +3,9 @@
     <div class="col-auto px-1 mx-1">
       <small *ngIf="getTitle().nonEmpty()">{{getTitle().get()}}</small>
       <br *ngIf="getUsername().nonEmpty()">
-      <small *ngIf="getUsername().nonEmpty()">{{getUsername().get()}}</small>
+      <app-coloured-text *ngIf="getUsername().nonEmpty() && getUserGroupColour().nonEmpty()"
+                         [type]="'small'"
+                         [hex]="getUserGroupColour()">{{getUsername().get()}}</app-coloured-text>
     </div>
     <div class="d-flex col justify-content-end">
       <small *ngIf="getDate().nonEmpty()">{{getDate().get()}}</small>

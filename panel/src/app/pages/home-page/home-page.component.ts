@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {None, Option, Some} from 'funfix-core';
 import {HyperlinkMap} from '@ffk/lib-angular';
 import {List, Set} from 'immutable';
-import {News, User} from '@ffk/lib-ts';
+import {News, User, Group} from '@ffk/lib-ts';
 import {CollectionUtils} from '@ffk/lib-util';
 import * as moment from 'moment';
 
@@ -24,7 +24,7 @@ export class HomePageComponent implements OnInit {
     return CollectionUtils.optionify(List.of(
       new News(
         Some('0'),
-        Some(new User(None, Some('Keanu'))),
+        Some(new User(None, Some('Keanu'), None, None, None, None, Some(new Group(None, Some('Developer'), Some('Rainbow'))))),
         Set(),
         Some('Hello World'),
         Some('This is the first news piece'),
@@ -52,6 +52,6 @@ export class HomePageComponent implements OnInit {
 
   titleExtractor = (news: News) => news.getTitle();
 
-  usernameExtractor = (news: News) => news.getUser().flatMap(u => u.getUsername());
+  userExtractor = (news: News) => news.getUser();
 
 }

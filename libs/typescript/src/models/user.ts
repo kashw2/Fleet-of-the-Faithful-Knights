@@ -13,6 +13,7 @@ import {
 	permissionsKey,
 	usernameKey
 } from '../misc/json-keys';
+import {Group, GroupJsonSerializer} from './group';
 
 export class User {
 
@@ -23,7 +24,7 @@ export class User {
 		private avatar: Option<string> = None,
 		private discordId: Option<string> = None,
 		private discordDiscriminator: Option<string> = None,
-		private group: Option<string> = None,
+		private group: Option<Group> = None,
 		private permissions: Set<string> = Set(), // TODO: Make this Set<Enum>
 		private memberSince: Option<moment.Moment> = None,
 	) {
@@ -41,7 +42,7 @@ export class User {
 		return this.discordId;
 	}
 
-	public getGroup(): Option<string> {
+	public getGroup(): Option<Group> {
 		return this.group;
 	}
 
@@ -79,7 +80,7 @@ export class UserJsonSerializer extends JsonSerializer<User> {
 			parseString(json[avatarKey]),
 			parseString(json[discordIdKey]),
 			parseString(json[discordDiscriminatorKey]),
-			parseString(json[groupKey]),
+			GroupJsonSerializer.instance.fromJsonImpl(json[groupKey]),
 			parseSet(json[permissionsKey]),
 			parseDate(json[memberSinceKey]),
 		);
@@ -92,7 +93,7 @@ export class UserJsonSerializer extends JsonSerializer<User> {
 			.addOptional(value.getAvatar(), avatarKey)
 			.addOptional(value.getDiscordId(), discordIdKey)
 			.addOptional(value.getDiscordDiscriminator(), discordDiscriminatorKey)
-			.addOptional(value.getGroup(), groupKey)
+			.addOptionalSerialized(value.getGroup(), groupKey, GroupJsonSerializer.instance)
 			.addIterable(value.getPermissions(), permissionsKey)
 			.addOptionalDate(value.getMemberSince(), memberSinceKey)
 			.build();

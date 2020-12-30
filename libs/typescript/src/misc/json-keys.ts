@@ -12,3 +12,5 @@ export const discordDiscriminatorKey = 'discord_discriminator';
 export const groupKey = 'group';
 export const permissionsKey = 'permissions';
 export const memberSinceKey = 'member_since';
+export const labelKey = 'label';
+export const colourKey = 'colour';

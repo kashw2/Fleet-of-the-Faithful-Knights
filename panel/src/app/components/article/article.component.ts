@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {None, Option} from 'funfix-core';
-import {News} from '@ffk/lib-ts';
+import {News, User} from '@ffk/lib-ts';
 import * as moment from 'moment';
 
 @Component({
@@ -20,7 +20,7 @@ export class ArticleComponent implements OnInit {
 
   @Input() titleExtractor: (news: News) => Option<string>;
 
-  @Input() usernameExtractor: (news: News) => Option<string>;
+  @Input() userExtractor: (news: News) => Option<User>;
 
   getContent(): Option<string> {
     return this.getNews()
@@ -42,9 +42,20 @@ export class ArticleComponent implements OnInit {
       .flatMap(n => this.titleExtractor(n));
   }
 
-  getUsername(): Option<string> {
+  getUser(): Option<User> {
     return this.getNews()
-      .flatMap(n => this.usernameExtractor(n));
+      .flatMap(n => this.userExtractor(n));
+  }
+
+  getUserGroupColour(): Option<string> {
+    return this.getUser()
+      .flatMap(u => u.getGroup())
+      .flatMap(g => g.getColour());
+  }
+
+  getUsername(): Option<string> {
+    return this.getUser()
+      .flatMap(u => u.getUsername());
   }
 
   ngOnInit(): void {

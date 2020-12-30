@@ -1,0 +1,8 @@
+<h1 *ngIf="shouldDisplayH1()" [ngClass]="isRainbowText() ? 'rainbow-text' : ''" [style]="getHex().getOrElse('')"><ng-content></ng-content></h1>
+<h2 *ngIf="shouldDisplayH2()" [ngClass]="isRainbowText() ? 'rainbow-text' : ''" [style]="getHex().getOrElse('')"><ng-content></ng-content></h2>
+<h3 *ngIf="shouldDisplayH3()" [ngClass]="isRainbowText() ? 'rainbow-text' : ''" [style]="getHex().getOrElse('')"><ng-content></ng-content></h3>
+<h4 *ngIf="shouldDisplayH4()" [ngClass]="isRainbowText() ? 'rainbow-text' : ''" [style]="getHex().getOrElse('')"><ng-content></ng-content></h4>
+<h5 *ngIf="shouldDisplayH5()" [ngClass]="isRainbowText() ? 'rainbow-text' : ''" [style]="getHex().getOrElse('')"><ng-content></ng-content></h5>
+<h6 *ngIf="shouldDisplayH6()" [ngClass]="isRainbowText() ? 'rainbow-text' : ''" [style]="getHex().getOrElse('')"><ng-content></ng-content></h6>
+<p *ngIf="shouldDisplayP()" [ngClass]="isRainbowText() ? 'rainbow-text' : ''" [style]="getHex().getOrElse('')"><ng-content></ng-content></p>
+<small *ngIf="shouldDisplaySmall()" [ngClass]="isRainbowText() ? 'rainbow-text' : ''" [style]="getHex().getOrElse('')"><ng-content></ng-content></small>
