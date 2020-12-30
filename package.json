@@ -2,7 +2,10 @@
   "name": "fleet-of-the-faithful-knights",
   "version": "1.0.0",
   "description": "FFK Monorepo",
-  "scripts": {},
+  "scripts": {
+    "build": "echo \"$(tput setaf 2)Running Build Script$(tput srg0)\"",
+    "build-dev": "echo \"$(tput setaf 2)Running Development Build Script$(tput srg0)\""
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kashw2/Fleet-of-the-Faithful-Knights.git"

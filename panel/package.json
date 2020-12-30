@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "@ffk/lib-angular": "file:../libs/angular",
+    "@ffk/lib-ts": "file:../libs/typescript",
     "@angular-devkit/build-angular": "0.1100.4",
     "@angular/cli": "11.0.4",
     "@angular/compiler-cli": "11.0.4",
