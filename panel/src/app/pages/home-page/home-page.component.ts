@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {None, Option, Some} from 'funfix-core';
 import {HyperlinkMap} from '@ffk/lib-angular';
 import {List, Set} from 'immutable';
-import {News, User, Group} from '@ffk/lib-ts';
+import {Group, News, User} from '@ffk/lib-ts';
 import {CollectionUtils} from '@ffk/lib-util';
 import * as moment from 'moment';
 
@@ -43,7 +43,13 @@ export class HomePageComponent implements OnInit {
 
   getHyperlinkMap(): Set<HyperlinkMap> {
     return Set.of(
-      new HyperlinkMap(Some('home'), Some('home'), Some(true))
+      new HyperlinkMap(Some('Home'), Some('home'), Some(true)),
+        new HyperlinkMap(Some('Profile'), Some('profile'), None,
+            Set.of(
+                new HyperlinkMap(Some('Account'), Some('account'), None),
+                new HyperlinkMap(Some('Settings'), Some('settings'), None)
+            ),
+        )
     );
   }
 

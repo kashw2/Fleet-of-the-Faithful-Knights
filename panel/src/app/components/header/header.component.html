@@ -1,4 +1,4 @@
-<div class="container-fluid z-depth-2 mb-4">
+<div class="container-fluid z-depth-2">
   <div class="row">
     <div *ngIf="getBrandImageRedirectUrl().nonEmpty() || getBrandImage().nonEmpty()" class="col-1">
       <a *ngIf="getBrandImageRedirectUrl().nonEmpty()" [href]="getBrandImageRedirectUrl().get()">
@@ -17,12 +17,19 @@
       >
     </div>
     <div *ngIf="!getHyperlinkMap().isEmpty()" class="d-flex col align-self-center justify-content-end">
-      <a *ngFor="let link of getHyperlinkMap()"
-         [href]="link.getHyperlink().get()"
-         class="text-danger"
-      >
-        <span *ngIf="link.getLabel().nonEmpty()" [ngClass]="link.isActive() ? 'active-underline' : 'animated-underline'">{{shouldCapitalise() ? link.getLabel().get().toUpperCase() : link.getLabel().get()}}</span>
-      </a>
+      <div *ngFor="let link of getHyperlinkMap()" class="mx-2">
+        <a
+          *ngIf="link.getHyperlink().nonEmpty() && link.getLabel().nonEmpty()"
+          [href]="link.getHyperlink().get()"
+          [ngClass]="link.isActive() ? 'active-underline text-danger' : 'animated-underline text-danger'"
+        >
+          {{shouldCapitalise() ? link.getLabel().get().toUpperCase() : link.getLabel().get()}}
+        </a>
+        <p *ngIf="link.getHyperlink().isEmpty() && link.getLabel().nonEmpty()"
+           [ngClass]="link.isActive() ? 'active-underline text-danger mb-0 cursor-default' : 'animated-underline text-danger mb-0 cursor-default'"
+        >{{shouldCapitalise() ? link.getLabel().get().toUpperCase() : link.getLabel().get()}}
+        </p>
+      </div>
     </div>
   </div>
 </div>

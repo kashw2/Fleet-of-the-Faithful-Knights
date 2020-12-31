@@ -14,7 +14,7 @@ import { ColouredTextComponent } from './components/coloured-text/coloured-text.
 		HomePageComponent,
 		HeaderComponent,
 		ArticleComponent,
-		ColouredTextComponent
+		ColouredTextComponent,
 	],
 	imports: [
 		BrowserModule,

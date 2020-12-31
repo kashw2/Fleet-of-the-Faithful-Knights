@@ -1,8 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HyperlinkMap} from '@ffk/lib-angular';
 import {Set} from 'immutable';
-import {Option, Some} from 'funfix-core';
-import { None } from 'funfix-core';
+import {None, Option} from 'funfix-core';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +19,7 @@ export class HeaderComponent implements OnInit {
 
   @Input() capitalise: Option<boolean> = None;
 
-  @Input() hyperlinkMap: Set<HyperlinkMap> = this.getDefault();
+  @Input() hyperlinkMap: Set<HyperlinkMap> = Set();
 
   getBrandImage(): Option<string> {
     return this.brandImage;
@@ -28,13 +27,6 @@ export class HeaderComponent implements OnInit {
 
   getBrandImageRedirectUrl(): Option<string> {
     return this.brandImageRedirectUrl;
-  }
-
-  getDefault(): Set<HyperlinkMap> {
-    return Set.of(
-      new HyperlinkMap(Some('Panel'), Some('panel'), None),
-      new HyperlinkMap(Some('Profile'), Some('profile'), None),
-    );
   }
 
   getHyperlinkMap(): Set<HyperlinkMap> {

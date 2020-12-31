@@ -5,6 +5,7 @@
   ],
   "jsRules": {},
   "rules": {
+    "no-empty": false,
     "no-var-requires": false,
     "arrow-parens": false,
     "max-classes-per-file": false,
