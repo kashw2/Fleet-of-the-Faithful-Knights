@@ -18,13 +18,13 @@ export class ColouredTextComponent implements OnInit {
     return this.hex;
   }
 
+  getType(): Option<"h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "small"> {
+    return Option.of(this.type);
+  }
+
   isRainbowText(): boolean {
     return this.getHex()
       .contains('Rainbow');
-  }
-
-  getType(): Option<"h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "small"> {
-    return Option.of(this.type);
   }
 
   ngOnInit(): void {
