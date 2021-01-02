@@ -7,6 +7,7 @@ import {HomePageComponent} from './pages/home-page/home-page.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ArticleComponent } from './components/article/article.component';
 import { ColouredTextComponent } from './components/coloured-text/coloured-text.component';
+import { VotingPanelPageComponent } from './pages/voting-panel-page/voting-panel-page.component';
 
 @NgModule({
 	declarations: [
@@ -15,6 +16,7 @@ import { ColouredTextComponent } from './components/coloured-text/coloured-text.
 		HeaderComponent,
 		ArticleComponent,
 		ColouredTextComponent,
+		VotingPanelPageComponent,
 	],
 	imports: [
 		BrowserModule,

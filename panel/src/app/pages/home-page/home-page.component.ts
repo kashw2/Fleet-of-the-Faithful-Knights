@@ -44,12 +44,13 @@ export class HomePageComponent implements OnInit {
   getHyperlinkMap(): Set<HyperlinkMap> {
     return Set.of(
       new HyperlinkMap(Some('Home'), Some('home'), Some(true)),
-        new HyperlinkMap(Some('Profile'), Some('profile'), None,
-            Set.of(
-                new HyperlinkMap(Some('Account'), Some('account'), None),
-                new HyperlinkMap(Some('Settings'), Some('settings'), None)
-            ),
-        )
+      new HyperlinkMap(Some('Panel'), Some('voting-panel')),
+      new HyperlinkMap(Some('Profile'), Some('profile'), None,
+        Set.of(
+          new HyperlinkMap(Some('Account'), Some('account'), None),
+          new HyperlinkMap(Some('Settings'), Some('settings'), None)
+        ),
+      ),
     );
   }
 
