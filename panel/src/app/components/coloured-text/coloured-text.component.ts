@@ -8,23 +8,30 @@ import {None, Option} from 'funfix-core';
 })
 export class ColouredTextComponent implements OnInit {
 
-  constructor() { }
+  constructor() {}
 
-  @Input() hex: Option<string | 'Rainbow'> = None;
+  @Input() hex: Option<string> = None;
 
-  @Input() type: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "small" = "p";
+  @Input() type: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "td" | "p" | "small" = "p";
 
-  getHex(): Option<string | 'Rainbow'> {
+  getHex(): Option<string> {
     return this.hex;
   }
 
-  getType(): Option<"h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "small"> {
+  getStyle(): Option<string> {
+    if (this.getHex().contains('#rain')) {
+      return None;
+    }
+    return this.getHex()
+      .map(v => `color: ${v}`);
+  }
+
+  getType(): Option<"h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "td" | "p" | "small"> {
     return Option.of(this.type);
   }
 
   isRainbowText(): boolean {
-    return this.getHex()
-      .contains('Rainbow');
+    return this.hex.contains('#rain');
   }
 
   ngOnInit(): void {
@@ -68,6 +75,11 @@ export class ColouredTextComponent implements OnInit {
   shouldDisplaySmall(): boolean {
     return this.getType()
       .contains('small');
+  }
+
+  shouldDisplayTd(): boolean {
+    return this.getType()
+      .contains("td");
   }
 
 }

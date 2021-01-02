@@ -1,0 +1,41 @@
+<div class="d-flex container-fluid flex-column flex-grow-1 h-100">
+  <div class="d-flex row">
+    <div class="col p-0">
+      <app-header [brandImageRedirectUrl]="getBrandImageRedirectUrl()"
+                  [brandImage]="getBrandImage()"
+                  [hyperlinkMap]="getHyperlinkMap()"
+      ></app-header>
+    </div>
+  </div>
+  <div class="d-flex row flex-grow-1">
+    <div class="d-flex col flex-column p-0">
+      <table class="w-100 mt-4 text-center">
+        <tr class="bg-white">
+          <td class="small">Candidate</td>
+          <td class="small">Sponsor</td>
+          <td class="small">Group</td>
+          <td class="small">Promotion Group</td>
+          <td class="small">Date</td>
+        </tr>
+        <tr *ngFor="let vote of getVotes()">
+          <td *ngIf="vote.getCandidateUsername().nonEmpty()" class="small">{{vote.getCandidateUsername().get()}}</td>
+          <td *ngIf="vote.getSponsorUsername().nonEmpty()" class="small">{{vote.getSponsorUsername().get()}}</td>
+          <app-coloured-text
+            class="d-table-cell"
+            *ngIf="vote.getPromotionGroupName().nonEmpty()"
+            [type]="'small'"
+            [hex]="vote.getPromotionGroupColour()"
+          >{{vote.getPromotionGroupName().get()}}</app-coloured-text>
+          <app-coloured-text
+            class="d-table-cell"
+            *ngIf="vote.getCandidateGroupName().nonEmpty()"
+            [type]="'small'"
+            [hex]="vote.getCandidateGroupColour()"
+          >{{vote.getCandidateGroupName().get()}}</app-coloured-text>
+          <td *ngIf="vote.getFormattedCreatedString('DMY').nonEmpty()" class="small">{{vote.getFormattedCreatedString('DMY').get()}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+

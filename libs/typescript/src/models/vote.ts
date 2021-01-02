@@ -1,4 +1,4 @@
-import {JsonBuilder, JsonSerializer, parseDate, parseSetSerialized, parseString} from '@ffk/lib-util';
+import {JsonBuilder, JsonSerializer, MomentUtils, parseDate, parseSetSerialized, parseString} from '@ffk/lib-util';
 import {None, Option} from 'funfix-core';
 import {ballotsKey, candidateKey, createdKey, groupKey, idKey, sponsorKey} from '../misc/json-keys';
 import {User, UserJsonSerializer} from './user';
@@ -28,14 +28,29 @@ export class Vote {
 		return this.candidate;
 	}
 
-	public getCandidateGroup(): Option<string> {
+	public getCandidateGroupColour(): Option<string> {
+		return this.getCandidate()
+			.flatMap(c => c.getGroup())
+			.flatMap(g => g.getColour());
+	}
+
+	public getCandidateGroupName(): Option<string> {
 		return this.getCandidate()
 			.flatMap(c => c.getGroup())
 			.flatMap(g => g.getLabel());
 	}
 
+	public getCandidateUsername(): Option<string> {
+		return this.getCandidate()
+			.flatMap(c => c.getDiscordUsername());
+	}
+
 	public getCreated(): Option<moment.Moment> {
 		return this.created;
+	}
+
+	public getFormattedCreatedString(format: 'DMY'): Option<string> {
+		return MomentUtils.format(this.getCreated(), format);
 	}
 
 	public getId(): Option<string> {
@@ -46,9 +61,14 @@ export class Vote {
 		return this.promotionGroup;
 	}
 
+	public getPromotionGroupColour(): Option<string> {
+		return this.getPromotionGroup()
+			.flatMap(g => g.getColour());
+	}
+
 	public getPromotionGroupName(): Option<string> {
 		return this.getPromotionGroup()
-			.flatMap(g => g.getLabel())
+			.flatMap(g => g.getLabel());
 	}
 
 	public getSponsor(): Option<User> {
