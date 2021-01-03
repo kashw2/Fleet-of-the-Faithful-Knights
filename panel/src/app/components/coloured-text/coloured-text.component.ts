@@ -12,7 +12,7 @@ export class ColouredTextComponent implements OnInit {
 
   @Input() hex: Option<string> = None;
 
-  @Input() type: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "td" | "p" | "small" = "p";
+  @Input() type: "h1" | "h2" | "h3" | "h4" | "h5" | "h6"  | "p" | "small" = "p";
 
   getHex(): Option<string> {
     return this.hex;
@@ -26,7 +26,7 @@ export class ColouredTextComponent implements OnInit {
       .map(v => `color: ${v}`);
   }
 
-  getType(): Option<"h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "td" | "p" | "small"> {
+  getType(): Option<"h1" | "h2" | "h3" | "h4" | "h5" | "h6"  | "p" | "small"> {
     return Option.of(this.type);
   }
 
@@ -75,11 +75,6 @@ export class ColouredTextComponent implements OnInit {
   shouldDisplaySmall(): boolean {
     return this.getType()
       .contains('small');
-  }
-
-  shouldDisplayTd(): boolean {
-    return this.getType()
-      .contains("td");
   }
 
 }

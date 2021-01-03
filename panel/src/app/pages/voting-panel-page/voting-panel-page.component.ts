@@ -39,8 +39,8 @@ export class VotingPanelPageComponent implements OnInit {
     return Set.of(
       new Vote(
         None,
-        Some(new User(None, Some('Keanu'))),
-        Some(new Candidate(None, Some('Bship'), None, None, Some(new Group(None, Some('Master Commander'), Some('#000000'))))),
+        Some(new User(Some('12345'), Some('Keanu'))),
+        Some(new Candidate(Some('123'), Some('Bship'), None, None, Some(new Group(None, Some('Master Commander'), Some('#000000'))))),
         Some(new Group(None, Some('Developer'), Some('#rain'))),
         Set(),
         Some(moment())

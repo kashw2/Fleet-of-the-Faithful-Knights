@@ -4,6 +4,5 @@
 <h4 *ngIf="shouldDisplayH4()" [ngClass]="isRainbowText() ? 'rainbow-text' : ''" [style]="getStyle().getOrElse('')"><ng-content></ng-content></h4>
 <h5 *ngIf="shouldDisplayH5()" [ngClass]="isRainbowText() ? 'rainbow-text' : ''" [style]="getStyle().getOrElse('')"><ng-content></ng-content></h5>
 <h6 *ngIf="shouldDisplayH6()" [ngClass]="isRainbowText() ? 'rainbow-text' : ''" [style]="getStyle().getOrElse('')"><ng-content></ng-content></h6>
-<td *ngIf="shouldDisplayTd()" [ngClass]="isRainbowText() ? 'rainbow-text' : ''" [style]="getStyle().getOrElse('')"><ng-content></ng-content></td>
 <p *ngIf="shouldDisplayP()" [ngClass]="isRainbowText() ? 'rainbow-text' : ''" [style]="getStyle().getOrElse('')"><ng-content></ng-content></p>
 <small *ngIf="shouldDisplaySmall()" [ngClass]="isRainbowText() ? 'rainbow-text' : ''" [style]="getStyle().getOrElse('')"><ng-content></ng-content></small>

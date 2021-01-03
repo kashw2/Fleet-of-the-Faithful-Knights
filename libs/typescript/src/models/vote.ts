@@ -75,6 +75,11 @@ export class Vote {
 		return this.sponsor;
 	}
 
+	public getSponsorId(): Option<string> {
+		return this.getSponsor()
+			.flatMap(s => s.getId());
+	}
+
 	public getSponsorUsername(): Option<string> {
 		return this.getSponsor()
 			.flatMap(s => s.getUsername());

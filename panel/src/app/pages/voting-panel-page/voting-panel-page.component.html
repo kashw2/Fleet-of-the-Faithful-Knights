@@ -18,21 +18,19 @@
           <td class="small">Date</td>
         </tr>
         <tr *ngFor="let vote of getVotes()">
-          <td *ngIf="vote.getCandidateUsername().nonEmpty()" class="small">{{vote.getCandidateUsername().get()}}</td>
-          <td *ngIf="vote.getSponsorUsername().nonEmpty()" class="small">{{vote.getSponsorUsername().get()}}</td>
-          <app-coloured-text
-            class="d-table-cell"
-            *ngIf="vote.getPromotionGroupName().nonEmpty()"
-            [type]="'small'"
-            [hex]="vote.getPromotionGroupColour()"
-          >{{vote.getPromotionGroupName().get()}}</app-coloured-text>
-          <app-coloured-text
-            class="d-table-cell"
-            *ngIf="vote.getCandidateGroupName().nonEmpty()"
-            [type]="'small'"
-            [hex]="vote.getCandidateGroupColour()"
-          >{{vote.getCandidateGroupName().get()}}</app-coloured-text>
-          <td *ngIf="vote.getFormattedCreatedString('DMY').nonEmpty()" class="small">{{vote.getFormattedCreatedString('DMY').get()}}</td>
+          <app-safe-td [content]="vote.getCandidateUsername()"></app-safe-td>
+          <app-safe-td [content]="vote.getSponsorUsername()"
+                       [hyperlink]="vote.getSponsorId()"
+                       class="d-table-cell">
+          </app-safe-td>
+          <app-safe-td [content]="vote.getCandidateGroupName()"
+                       [colour]="vote.getCandidateGroupColour()"
+          ></app-safe-td>
+          <app-safe-td [content]="vote.getPromotionGroupName()"
+                       [colour]="vote.getPromotionGroupColour()"
+                       class="d-table-cell"
+          ></app-safe-td>
+          <app-safe-td [content]="vote.getFormattedCreatedString('DMY')"></app-safe-td>
         </tr>
       </table>
     </div>

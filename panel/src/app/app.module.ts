@@ -8,6 +8,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { ArticleComponent } from './components/article/article.component';
 import { ColouredTextComponent } from './components/coloured-text/coloured-text.component';
 import { VotingPanelPageComponent } from './pages/voting-panel-page/voting-panel-page.component';
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+import { SafeTdComponent } from './components/safe-td/safe-td.component';
 
 @NgModule({
 	declarations: [
@@ -17,6 +19,8 @@ import { VotingPanelPageComponent } from './pages/voting-panel-page/voting-panel
 		ArticleComponent,
 		ColouredTextComponent,
 		VotingPanelPageComponent,
+		ProfilePageComponent,
+		SafeTdComponent,
 	],
 	imports: [
 		BrowserModule,
