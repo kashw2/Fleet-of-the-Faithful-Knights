@@ -1,4 +1,4 @@
-import {Collection, List} from 'immutable';
+import {Collection, List, Set} from 'immutable';
 import {Option, Some} from 'funfix-core';
 
 export class OptionUtils {
@@ -12,5 +12,8 @@ export class OptionUtils {
 		return OptionUtils.toCollection(List.of(...items)).toList();
 	}
 
+	static toSet<T>(...items: Option<T>[]): Set<T> {
+		return OptionUtils.toCollection(Set.of(...items)).toSet();
+	}
 
 }

@@ -57,6 +57,11 @@ export class Vote {
 		return this.id;
 	}
 
+	public getProfileLocation(): Option<string> {
+		return this.getSponsorId()
+			.map(id => `/profile/${id}`);
+	}
+
 	public getPromotionGroup(): Option<Group> {
 		return this.promotionGroup;
 	}

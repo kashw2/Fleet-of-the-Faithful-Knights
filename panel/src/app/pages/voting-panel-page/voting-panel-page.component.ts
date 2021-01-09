@@ -12,7 +12,8 @@ import * as moment from 'moment';
 })
 export class VotingPanelPageComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   getBrandImage(): Option<string> {
     return Some('assets/images/Fleet_of_the_Faithful_Knights_Shield.png');
@@ -44,7 +45,7 @@ export class VotingPanelPageComponent implements OnInit {
         Some(new Group(None, Some('Developer'), Some('#rain'))),
         Set(),
         Some(moment())
-        )
+      ),
     );
   }
 

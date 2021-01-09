@@ -10,12 +10,32 @@ export class ColouredTextComponent implements OnInit {
 
   constructor() {}
 
+  @Input() content: Option<string> = None;
+
   @Input() hex: Option<string> = None;
+
+  @Input() position: "Start" | "Center" | "End" = "Center";
 
   @Input() type: "h1" | "h2" | "h3" | "h4" | "h5" | "h6"  | "p" | "small" = "p";
 
+  getContent(): Option<string> {
+    return this.content;
+  }
+
   getHex(): Option<string> {
     return this.hex;
+  }
+
+  getPosition(): string {
+    switch (this.position) {
+    case 'Start':
+      return 'justify-content-start';
+    default:
+    case 'Center':
+      return 'justify-content-center';
+    case 'End':
+      return 'justify-content-end';
+    }
   }
 
   getStyle(): Option<string> {

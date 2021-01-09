@@ -19,3 +19,28 @@ html, body {
   }
 }
 
+.tag {
+
+  width: auto;
+  height: auto;
+
+  background-color: #ffffff;
+
+  margin: 4px !important;
+
+  border: 0.5px solid #ff0000;
+
+  border-radius: 30px !important;
+
+  > small {
+
+    padding-top: 5px !important;
+    padding-right: 1px !important;
+    padding-bottom: 5px !important;
+    padding-left: 1px !important;
+
+    font-size: 0.5rem !important;
+
+  }
+
+}

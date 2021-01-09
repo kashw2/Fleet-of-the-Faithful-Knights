@@ -1,0 +1,34 @@
+<div class="d-flex container-fluid flex-column flex-grow-1 h-100">
+  <div class="d-flex row">
+    <div class="col p-0">
+      <app-header [brandImageRedirectUrl]="getBrandImageRedirectUrl()"
+                  [brandImage]="getBrandImage()"
+                  [hyperlinkMap]="getHyperlinkMap()"
+      ></app-header>
+    </div>
+  </div>
+  <div class="d-flex row flex-grow-1">
+    <div class="d-flex col-auto flex-column my-3">
+      <div *ngIf="getUserAvatar().nonEmpty()">
+        <img [src]="getUserAvatar().get()" height="250px" width="250px">
+      </div>
+    </div>
+    <div class="d-flex col flex-column my-3 pl-0">
+      <h4 *ngIf="getUserName().nonEmpty()" class="my-0">{{getUserName().get()}}</h4>
+      <hr class="my-2 mr-5">
+      <small *ngIf="getId().nonEmpty()">{{getId().get()}}</small>
+      <app-coloured-text [content]="getGroupName()"
+                         [hex]="getGroupColour()"
+                         type="small"
+                         position="Start"
+      ></app-coloured-text>
+      <small *ngIf="getMemberSince().nonEmpty()">Member Since: {{getMemberSince().get()}}</small>
+      <hr class="my-2 mr-5">
+      <div class="d-flex container flex-row flex-wrap px-0 my-1 tag-bg">
+        <div *ngFor="let permission of getPermissions()" class="d-flex col-auto tag justify-content-center align-content-center z-depth-1">
+          <small>{{permission}}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

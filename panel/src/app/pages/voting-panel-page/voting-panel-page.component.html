@@ -20,7 +20,7 @@
         <tr *ngFor="let vote of getVotes()">
           <app-safe-td [content]="vote.getCandidateUsername()"></app-safe-td>
           <app-safe-td [content]="vote.getSponsorUsername()"
-                       [hyperlink]="vote.getSponsorId()"
+                       [hyperlink]="vote.getProfileLocation()"
                        class="d-table-cell">
           </app-safe-td>
           <app-safe-td [content]="vote.getCandidateGroupName()"
