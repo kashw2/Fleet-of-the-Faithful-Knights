@@ -27,7 +27,7 @@
     "funfix-core": "7.0.1",
     "immutable": "4.0.0-rc.12",
     "moment": "2.29.1",
-    "mssql": "6.3.0",
+    "mssql": "6.3.1",
     "ng-uikit-pro-standard": "git+https://oauth2:jRNULFUq6iNYr-xpD8cS@git.mdbootstrap.com/mdb/angular/ng-uikit-pro-standard.git",
     "rxjs": "6.6.3",
     "screenfull": "5.0.2",
