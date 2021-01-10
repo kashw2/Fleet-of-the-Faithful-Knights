@@ -24,7 +24,7 @@ export class HomePageComponent implements OnInit {
     return CollectionUtils.optionify(List.of(
       new News(
         Some('0'),
-        Some(new User(None, Some('Keanu'), None, None, None, None, Some(new Group(None, Some('Developer'), Some('#rain'))))),
+        Some(new User(Some('123'), Some('Keanu'), None, None, None, None, Some(new Group(None, Some('Developer'), Some('#rain'))))),
         Set(),
         Some('Hello World'),
         Some('This is the first news piece'),

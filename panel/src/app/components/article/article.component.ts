@@ -37,6 +37,11 @@ export class ArticleComponent implements OnInit {
     return this.news;
   }
 
+  getProfileHyperlink(): Option<string> {
+    return this.getUserId()
+      .map(uid => `profile/${uid}`);
+  }
+
   getTitle(): Option<string> {
     return this.getNews()
       .flatMap(n => this.titleExtractor(n));
@@ -51,6 +56,11 @@ export class ArticleComponent implements OnInit {
     return this.getUser()
       .flatMap(u => u.getGroup())
       .flatMap(g => g.getColour());
+  }
+
+  getUserId(): Option<string> {
+    return this.getUser()
+      .flatMap(u => u.getId());
   }
 
   getUsername(): Option<string> {

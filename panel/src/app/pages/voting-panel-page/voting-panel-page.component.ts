@@ -4,6 +4,7 @@ import {None, Option, Some} from 'funfix-core';
 import {Set} from 'immutable';
 import {HyperlinkMap} from '@ffk/lib-angular';
 import * as moment from 'moment';
+import {NavigationService} from '../../service/navigation.service';
 
 @Component({
   selector: 'app-voting-panel-page',
@@ -12,7 +13,7 @@ import * as moment from 'moment';
 })
 export class VotingPanelPageComponent implements OnInit {
 
-  constructor() {
+  constructor(readonly navigationService: NavigationService) {
   }
 
   getBrandImage(): Option<string> {
@@ -39,7 +40,7 @@ export class VotingPanelPageComponent implements OnInit {
   getVotes(): Set<Vote> {
     return Set.of(
       new Vote(
-        None,
+        Some('123'),
         Some(new User(Some('12345'), Some('Keanu'))),
         Some(new Candidate(Some('123'), Some('Bship'), None, None, Some(new Group(None, Some('Master Commander'), Some('#000000'))))),
         Some(new Group(None, Some('Developer'), Some('#rain'))),

@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {None, Option} from 'funfix-core';
+import {NavigationService} from '../../service/navigation.service';
 
 @Component({
   selector: 'app-coloured-text',
@@ -8,11 +9,13 @@ import {None, Option} from 'funfix-core';
 })
 export class ColouredTextComponent implements OnInit {
 
-  constructor() {}
+  constructor(readonly navigationService: NavigationService) {}
 
   @Input() content: Option<string> = None;
 
   @Input() hex: Option<string> = None;
+
+  @Input() hyperlink: Option<string> = None;
 
   @Input() position: "Start" | "Center" | "End" = "Center";
 
@@ -24,6 +27,10 @@ export class ColouredTextComponent implements OnInit {
 
   getHex(): Option<string> {
     return this.hex;
+  }
+
+  getHyperlink(): Option<string> {
+    return this.hyperlink;
   }
 
   getPosition(): string {

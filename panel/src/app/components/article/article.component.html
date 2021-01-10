@@ -4,6 +4,7 @@
       <small *ngIf="getTitle().nonEmpty()">{{getTitle().get()}}</small>
       <br *ngIf="getUsername().nonEmpty()">
       <app-coloured-text [content]="getUsername()"
+                         [hyperlink]="getProfileHyperlink()"
                          [hex]="getUserGroupColour()"
                          position="Start"
                          type="small">
