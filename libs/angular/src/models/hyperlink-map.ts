@@ -13,8 +13,8 @@ export class HyperlinkMap {
 	) {
 	}
 
-	public getCallback(): Option<any> {
-		return Option.of(this.callback);
+	public getCallback(): any {
+		return this.callback;
 	}
 
 	public getDropdownHyperlinks(): Set<HyperlinkMap> {

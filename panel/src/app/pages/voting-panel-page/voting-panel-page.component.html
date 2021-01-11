@@ -17,20 +17,22 @@
           <td class="small">Promotion Group</td>
           <td class="small">Date</td>
         </tr>
-        <tr *ngFor="let vote of getVotes()" class="cursor-pointer" (click)="navigationService.goToVote(vote.getId())">
-          <app-safe-td [content]="vote.getCandidateUsername()"></app-safe-td>
+        <tr *ngFor="let vote of getVotes()" class="cursor-pointer">
+          <app-safe-td [content]="vote.getCandidateUsername()" (click)="navigationService.goToVote(vote.getId())"></app-safe-td>
           <app-safe-td [content]="vote.getSponsorUsername()"
                        [hyperlink]="vote.getProfileLocation()"
                        class="d-table-cell">
           </app-safe-td>
           <app-safe-td [content]="vote.getCandidateGroupName()"
                        [colour]="vote.getCandidateGroupColour()"
-          ></app-safe-td>
+                       (click)="navigationService.goToVote(vote.getId())">
+          </app-safe-td>
           <app-safe-td [content]="vote.getPromotionGroupName()"
                        [colour]="vote.getPromotionGroupColour()"
                        class="d-table-cell"
-          ></app-safe-td>
-          <app-safe-td [content]="vote.getFormattedCreatedString('DMY')"></app-safe-td>
+                       (click)="navigationService.goToVote(vote.getId())">
+          </app-safe-td>
+          <app-safe-td [content]="vote.getFormattedCreatedString('DMY')" (click)="navigationService.goToVote(vote.getId())"></app-safe-td>
         </tr>
       </table>
     </div>

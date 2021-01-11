@@ -10,6 +10,7 @@ import { ColouredTextComponent } from './components/coloured-text/coloured-text.
 import { VotingPanelPageComponent } from './pages/voting-panel-page/voting-panel-page.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { SafeTdComponent } from './components/safe-td/safe-td.component';
+import { VotePageComponent } from './pages/vote-page/vote-page.component';
 
 @NgModule({
 	declarations: [
@@ -21,6 +22,7 @@ import { SafeTdComponent } from './components/safe-td/safe-td.component';
 		VotingPanelPageComponent,
 		ProfilePageComponent,
 		SafeTdComponent,
+		VotePageComponent,
 	],
 	imports: [
 		BrowserModule,
