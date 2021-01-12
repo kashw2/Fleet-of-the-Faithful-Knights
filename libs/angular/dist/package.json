@@ -40,7 +40,7 @@
     "@angular/compiler": "11.0.5",
     "@angular/compiler-cli": "11.0.5",
     "ng-packagr": "11.0.3",
-    "tslib": "^2.0.0"
+    "tslib": "2.1.0"
   },
   "module": "fesm2015/kashw2-lib-angular.js",
   "es2015": "fesm2015/kashw2-lib-angular.js",
