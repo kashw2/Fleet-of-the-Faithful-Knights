@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {None, Option} from 'funfix-core';
 import {News, User} from '@ffk/lib-ts';
 import * as moment from 'moment';
+import {MomentUtils} from '../../../../../libs/util';
 
 @Component({
   selector: 'app-article',
@@ -28,9 +29,8 @@ export class ArticleComponent implements OnInit {
   }
 
   getDate(): Option<string> {
-    return this.getNews()
-      .flatMap(n => this.dateExtractor(n))
-      .map(v => v.format('d/m/y'));
+    return MomentUtils.format(this.getNews()
+      .flatMap(n => this.dateExtractor(n)), 'DMY')
   }
 
   getNews(): Option<News> {

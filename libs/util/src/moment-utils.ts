@@ -7,7 +7,7 @@ export class MomentUtils {
 		switch (format) {
 		case 'DMY':
 		default:
-			return mnt.map(m => m.format('D/M/Y'));
+			return mnt.map(m => m.format('D/MM/YYYY'));
 		}
 	}
 
