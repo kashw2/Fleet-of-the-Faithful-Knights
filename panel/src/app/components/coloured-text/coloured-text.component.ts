@@ -21,6 +21,19 @@ export class ColouredTextComponent implements OnInit {
 
   @Input() type: "h1" | "h2" | "h3" | "h4" | "h5" | "h6"  | "p" | "small" = "p";
 
+  // @Input() underline: boolean = true;
+
+  getClass(): string {
+    const style: string = this.getPosition().concat(' d-inline-flex');
+    if (this.isRainbowText()) {
+      return style.concat(' rainbow-text');
+    }
+    // if (this.isUnderlined()) {
+    //   return style.concat(' active-underline');
+    // }
+    return style;
+  }
+
   getContent(): Option<string> {
     return this.content;
   }
@@ -60,6 +73,10 @@ export class ColouredTextComponent implements OnInit {
   isRainbowText(): boolean {
     return this.hex.contains('#rain');
   }
+
+  // isUnderlined(): boolean {
+  //   return this.underline;
+  // }
 
   ngOnInit(): void {
   }
