@@ -1,6 +1,6 @@
 import {None, Option} from 'funfix-core';
 import {List, Set} from 'immutable';
-import {Moment} from 'moment';
+import * as moment from 'moment';
 import {Emoji, EmojiJsonSerializer} from './emoji';
 import {Role, RoleJsonSerializer} from './role';
 import {VoiceState, VoiceStateJsonSerializer} from './voice-state';
@@ -90,7 +90,7 @@ export class Guild {
 		readonly systemChannelId: Option<string> = None,
 		readonly systemChannelFlags: Option<number> = None,
 		readonly rulesChannelId: Option<string> = None,
-		readonly joinedAt: Option<Moment> = None,
+		readonly joinedAt: Option<moment.Moment> = None,
 		readonly large: Option<boolean> = None,
 		readonly unavailable: Option<boolean> = None,
 		readonly memberCount: Option<number> = None,
@@ -112,12 +112,52 @@ export class Guild {
 	) {
 	}
 
-	public getId(): Option<string> {
-		return this.id;
+	public getAfkChannelId(): Option<string> {
+		return this.afkChannelId;
 	}
 
-	public getName(): Option<string> {
-		return this.name;
+	public getAfkTimeout(): Option<number> {
+		return this.afkTimeout;
+	}
+
+	public getApplicationId(): Option<string> {
+		return this.applicationId;
+	}
+
+	public getApproximatePresenceCount(): Option<number> {
+		return this.approximatePresenceCount;
+	}
+
+	public getBanner(): Option<string> {
+		return this.banner;
+	}
+
+	public getChannels(): Set<Channel> {
+		return this.channels;
+	}
+
+	public getDefaultMessageNotifications(): Option<number> {
+		return this.defaultMessageNotifications;
+	}
+
+	public getDescriptions(): Option<string> {
+		return this.descriptions;
+	}
+
+	public getDiscoverySplash(): Option<string> {
+		return this.discoverySplash;
+	}
+
+	public getEmojis(): Set<Emoji> {
+		return this.emojis;
+	}
+
+	public getExplicitContentFilter(): Option<number> {
+		return this.explicitContentFilter;
+	}
+
+	public getFeatures(): Set<string> {
+		return this.features;
 	}
 
 	public getIcon(): Option<string> {
@@ -128,12 +168,44 @@ export class Guild {
 		return this.iconHash;
 	}
 
-	public getSplash(): Option<string> {
-		return this.splash;
+	public getId(): Option<string> {
+		return this.id;
 	}
 
-	public getDiscoverySplash(): Option<string> {
-		return this.discoverySplash;
+	public getJoinedAt(): Option<moment.Moment> {
+		return this.joinedAt;
+	}
+
+	public getLarge(): Option<boolean> {
+		return this.large;
+	}
+
+	public getMaxMembers(): Option<number> {
+		return this.maxMembers;
+	}
+
+	public getMaxPresences(): Option<number> {
+		return this.maxPresences;
+	}
+
+	public getMaxVideoChannelCount(): Option<number> {
+		return this.maxVideoChannelCount;
+	}
+
+	public getMemberCount(): Option<number> {
+		return this.memberCount;
+	}
+
+	public getMembers(): Set<GuildMember> {
+		return this.members;
+	}
+
+	public getMfaLevel(): Option<number> {
+		return this.mfaLevel;
+	}
+
+	public getName(): Option<string> {
+		return this.name;
 	}
 
 	public getOwner(): Option<boolean> {
@@ -148,144 +220,72 @@ export class Guild {
 		return this.permissions;
 	}
 
-	public getRegion(): Option<string> {
-		return this.region;
-	}
-
-	public getAfkChannelId(): Option<string> {
-		return this.afkChannelId;
-	}
-
-	public getAfkTimeout(): Option<number> {
-		return this.afkTimeout;
-	}
-
-	public getWidgetEnabled(): Option<boolean> {
-		return this.widgetEnabled;
-	}
-
-	public getWidgetChannelId(): Option<string> {
-		return this.widgetChannelId;
-	}
-
-	public getVerificationLevel(): Option<number> {
-		return this.verificationLevel;
-	}
-
-	public getDefaultMessageNotifications(): Option<number> {
-		return this.defaultMessageNotifications;
-	}
-
-	public getExplicitContentFilter(): Option<number> {
-		return this.explicitContentFilter;
-	}
-
-	public getRoles(): Set<Role> {
-		return this.roles;
-	}
-
-	public getEmojis(): Set<Emoji> {
-		return this.emojis;
-	}
-
-	public getFeatures(): Set<string> {
-		return this.features;
-	}
-
-	public getMfaLevel(): Option<number> {
-		return this.mfaLevel;
-	}
-
-	public getApplicationId(): Option<string> {
-		return this.applicationId;
-	}
-
-	public getSystemChannelId(): Option<string> {
-		return this.systemChannelId;
-	}
-
-	public getSystemChannelFlags(): Option<number> {
-		return this.systemChannelFlags;
-	}
-
-	public getRulesChannelId(): Option<string> {
-		return this.rulesChannelId;
-	}
-
-	public getJoinedAt(): Option<Moment> {
-		return this.joinedAt;
-	}
-
-	public getLarge(): Option<boolean> {
-		return this.large;
-	}
-
-	public getUnavailable(): Option<boolean> {
-		return this.unavailable;
-	}
-
-	public getMemberCount(): Option<number> {
-		return this.memberCount;
-	}
-
-	public getVoiceStates(): List<VoiceState> {
-		return this.voiceStates;
-	}
-
-	public getMembers(): Set<GuildMember> {
-		return this.members;
-	}
-
-	public getChannels(): Set<Channel> {
-		return this.channels;
-	}
-
-	public getPresences(): Set<Presence> {
-		return this.presences;
-	}
-
-	public getMaxPresences(): Option<number> {
-		return this.maxPresences;
-	}
-
-	public getMaxMembers(): Option<number> {
-		return this.maxMembers;
-	}
-
-	public getVanityUrlCode(): Option<string> {
-		return this.vanityUrlCode;
-	}
-
-	public getDescriptions(): Option<string> {
-		return this.descriptions;
-	}
-
-	public getBanner(): Option<string> {
-		return this.banner;
-	}
-
-	public getPremiumTier(): Option<number> {
-		return this.premiumTier;
+	public getPreferredLocale(): Option<string> {
+		return this.preferredLocale;
 	}
 
 	public getPremiumSubscriptionCount(): Option<number> {
 		return this.premiumSubscriptionCount;
 	}
 
-	public getPreferredLocale(): Option<string> {
-		return this.preferredLocale;
+	public getPremiumTier(): Option<number> {
+		return this.premiumTier;
+	}
+
+	public getPresences(): Set<Presence> {
+		return this.presences;
 	}
 
 	public getPublicUpdatesChannelId(): Option<string> {
 		return this.publicUpdatesChannelId;
 	}
 
-	public getMaxVideoChannelCount(): Option<number> {
-		return this.maxVideoChannelCount;
+	public getRegion(): Option<string> {
+		return this.region;
 	}
 
-	public getApproximatePresenceCount(): Option<number> {
-		return this.approximatePresenceCount;
+	public getRoles(): Set<Role> {
+		return this.roles;
+	}
+
+	public getRulesChannelId(): Option<string> {
+		return this.rulesChannelId;
+	}
+
+	public getSplash(): Option<string> {
+		return this.splash;
+	}
+
+	public getSystemChannelFlags(): Option<number> {
+		return this.systemChannelFlags;
+	}
+
+	public getSystemChannelId(): Option<string> {
+		return this.systemChannelId;
+	}
+
+	public getUnavailable(): Option<boolean> {
+		return this.unavailable;
+	}
+
+	public getVanityUrlCode(): Option<string> {
+		return this.vanityUrlCode;
+	}
+
+	public getVerificationLevel(): Option<number> {
+		return this.verificationLevel;
+	}
+
+	public getVoiceStates(): List<VoiceState> {
+		return this.voiceStates;
+	}
+
+	public getWidgetChannelId(): Option<string> {
+		return this.widgetChannelId;
+	}
+
+	public getWidgetEnabled(): Option<boolean> {
+		return this.widgetEnabled;
 	}
 
 }

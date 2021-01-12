@@ -1,0 +1,46 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "app/scss/animations";
+@import "app/scss/cursors";
+
+html, body {
+  height: 100% !important;
+}
+
+.active-underline {
+  &:after {
+    display: block;
+    position: relative;
+    content: '';
+    top: 0px;
+    height: 2px;
+    width: 100%;
+    background-color: #ff3547 !important;
+  }
+}
+
+.tag {
+
+  width: auto;
+  height: auto;
+
+  background-color: #ffffff;
+
+  margin: 4px !important;
+
+  border: 0.5px solid #ff0000;
+
+  border-radius: 30px !important;
+
+  > small {
+
+    padding-top: 5px !important;
+    padding-right: 1px !important;
+    padding-bottom: 5px !important;
+    padding-left: 1px !important;
+
+    font-size: 0.5rem !important;
+
+  }
+
+}

@@ -34,28 +34,20 @@ export class VoiceState {
 	) {
 	}
 
-	public getGuildId(): Option<string> {
-		return this.guildId;
-	}
-
 	public getChannelId(): Option<string> {
 		return this.channelId;
 	}
 
-	public getUserId(): Option<string> {
-		return this.userId;
+	public getDeaf(): Option<boolean> {
+		return this.deaf;
+	}
+
+	public getGuildId(): Option<string> {
+		return this.guildId;
 	}
 
 	public getMember(): Option<GuildMember> {
 		return this.member;
-	}
-
-	public getSessionId(): Option<string> {
-		return this.sessionId;
-	}
-
-	public getDeaf(): Option<boolean> {
-		return this.deaf;
 	}
 
 	public getMute(): Option<boolean> {
@@ -78,8 +70,16 @@ export class VoiceState {
 		return this.selfVideo;
 	}
 
+	public getSessionId(): Option<string> {
+		return this.sessionId;
+	}
+
 	public getSuppress(): Option<boolean> {
 		return this.suppress;
+	}
+
+	public getUserId(): Option<string> {
+		return this.userId;
 	}
 
 }

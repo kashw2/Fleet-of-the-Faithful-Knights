@@ -1,0 +1,33 @@
+<div class="d-flex container-fluid flex-column flex-grow-1 h-100">
+  <div class="d-flex row">
+    <div class="col p-0">
+      <app-header [brandImageRedirectUrl]="getBrandImageRedirectUrl()"
+                  [brandImage]="getBrandImage()"
+                  [hyperlinkMap]="getHyperlinkMap()"
+      ></app-header>
+    </div>
+  </div>
+  <div class="d-flex row flex-grow-1">
+    <div class="d-flex col-auto flex-column my-3">
+      <div *ngIf="getCandidateAvatar().nonEmpty()">
+        <img [src]="getCandidateAvatar().get()" height="250px" width="250px">
+      </div>
+    </div>
+    <div class="d-flex col flex-column my-3">
+      <h4 *ngIf="getCandidateUsername().nonEmpty()" class="my-0">{{getCandidateUsername().get()}}</h4>
+      <hr class="my-2 mr-5">
+      <div class="d-flex container flex-row px-0">
+        <app-coloured-text [content]="getChatText()"
+                           type="small"
+                           position="Start"
+                           class="text-success mr-2">
+        </app-coloured-text>
+        <app-coloured-text [content]="getStarCitizenText()"
+                           type="small"
+                           position="Start"
+                           class="text-primary mr-2">
+        </app-coloured-text>
+      </div>
+    </div>
+  </div>
+</div>

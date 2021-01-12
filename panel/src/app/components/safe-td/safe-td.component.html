@@ -1,0 +1,18 @@
+<a *ngIf="getHyperlink().nonEmpty()" [href]="getHyperlink().get()">
+  <td *ngIf="getContent().nonEmpty() && getColour().isEmpty()"
+      [ngClass]="shouldBeSmall() ? 'small' : ''">{{getContent().get()}}</td>
+  <td *ngIf="getContent().isEmpty() && getColour().isEmpty()" [ngClass]="shouldBeSmall() ? 'small' : ''"></td>
+  <app-coloured-text *ngIf="getColour().nonEmpty() && getContent().nonEmpty()"
+                     [content]="getContent()"
+                     [hex]="getColour()"
+                     [type]="'small'">
+  </app-coloured-text>
+</a>
+
+<td *ngIf="getContent().nonEmpty() && getHyperlink().isEmpty() && getColour().isEmpty()" [ngClass]="shouldBeSmall() ? 'small' : ''">{{getContent().get()}}</td>
+<td *ngIf="getContent().isEmpty() && getHyperlink().isEmpty()" [ngClass]="shouldBeSmall() ? 'small' : ''"></td>
+<app-coloured-text *ngIf="getColour().nonEmpty() && getContent().nonEmpty() && getHyperlink().isEmpty()"
+                   [content]="getContent()"
+                   [hex]="getColour()"
+                   [type]="'small'">
+</app-coloured-text>

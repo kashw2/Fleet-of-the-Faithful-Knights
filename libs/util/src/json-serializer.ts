@@ -1,12 +1,17 @@
 import {JsonBuilder} from './json-builder';
 import {Option} from 'funfix-core';
-import {Collection} from 'immutable';
+import {Collection, List, Set} from 'immutable';
+import {OptionUtils} from './option-utils';
 
 export abstract class JsonSerializer<A> {
 
 	abstract fromJson(json: any): A;
 
-	abstract toJson(value: A, builder: JsonBuilder): Record<string, any>;
+	fromJsonArray<B>(obj: object[] | undefined): List<A> {
+		return OptionUtils.toList(Option.of(obj))
+			.flatMap(v => v.map(x => this.fromJson(x)));
+	}
+
 
 	public fromJsonImpl(json: any): Option<A> {
 		return Option.of(json)
@@ -15,9 +20,7 @@ export abstract class JsonSerializer<A> {
 			.map(v => this.fromJson(v));
 	}
 
-	public fromJsonArray(json: Collection<any, any>): Collection<any, A> {
-		return json.map(v => this.fromJson(v));
-	}
+	abstract toJson(value: A, builder: JsonBuilder): Record<string, any>;
 
 	public toJsonArray(values: Collection<any, A>, builder: JsonBuilder): Collection<any, Record<string, any>> {
 		return values.map(v => this.toJson(v, builder));

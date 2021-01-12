@@ -14,6 +14,14 @@
   "bugs": {
     "url": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights/issues"
   },
+  "browser": {
+    "http": false,
+    "https": false,
+    "net": false,
+    "path": false,
+    "stream": false,
+    "tls": false
+  },
   "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights#readme",
   "dependencies": {
     "ts-loader": "8.0.12",

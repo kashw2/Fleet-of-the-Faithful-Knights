@@ -17,8 +17,12 @@ export class Presence {
 	) {
 	}
 
-	public getUser(): Option<User> {
-		return this.user;
+	public getActivities(): List<Activity> {
+		return this.activities;
+	}
+
+	public getClientStatus(): Option<ClientStatus> {
+		return this.clientStatus;
 	}
 
 	public getGuildId(): Option<string> {
@@ -29,12 +33,8 @@ export class Presence {
 		return this.status;
 	}
 
-	public getActivities(): List<Activity> {
-		return this.activities;
-	}
-
-	public getClientStatus(): Option<ClientStatus> {
-		return this.clientStatus;
+	public getUser(): Option<User> {
+		return this.user;
 	}
 
 }

@@ -2,7 +2,7 @@ import {None, Option} from 'funfix-core';
 import {Overwrite, OverwriteJsonSerializer} from './overwrite';
 import {Set} from 'immutable';
 import {User, UserJsonSerializer} from './user';
-import {Moment} from 'moment';
+import * as moment from 'moment';
 import {
 	JsonBuilder,
 	JsonSerializer,
@@ -53,60 +53,52 @@ export class Channel {
 		readonly ownerId: Option<string> = None,
 		readonly applicationId: Option<string> = None,
 		readonly parentId: Option<string> = None,
-		readonly lastPinTimestamp: Option<Moment> = None,
+		readonly lastPinTimestamp: Option<moment.Moment> = None,
 	) {
-	}
-
-	public getLastPinTimestamp(): Option<Moment> {
-		return this.lastPinTimestamp;
-	}
-
-	public getParentId(): Option<string> {
-		return this.parentId;
 	}
 
 	public getApplicationId(): Option<string> {
 		return this.applicationId;
 	}
 
-	public getOwnerId(): Option<string> {
-		return this.ownerId;
+	public getBitrate(): Option<number> {
+		return this.bitrate;
+	}
+
+	public getGuildId(): Option<string> {
+		return this.guildId;
 	}
 
 	public getIcon(): Option<string> {
 		return this.icon;
 	}
 
-	public getRecipients(): Set<User> {
-		return this.recipients;
-	}
-
-	public getRateLimitPerUser(): Option<number> {
-		return this.rateLimitPerUser;
-	}
-
-	public getUserLimit(): Option<number> {
-		return this.userLimit;
-	}
-
-	public getBitrate(): Option<number> {
-		return this.bitrate;
+	public getId(): Option<string> {
+		return this.id;
 	}
 
 	public getLastMessageId(): Option<string> {
 		return this.lastMessageId;
 	}
 
-	public getNsfw(): Option<boolean> {
-		return this.nsfw;
-	}
-
-	public getTopic(): Option<string> {
-		return this.topic;
+	public getLastPinTimestamp(): Option<moment.Moment> {
+		return this.lastPinTimestamp;
 	}
 
 	public getName(): Option<string> {
 		return this.name;
+	}
+
+	public getNsfw(): Option<boolean> {
+		return this.nsfw;
+	}
+
+	public getOwnerId(): Option<string> {
+		return this.ownerId;
+	}
+
+	public getParentId(): Option<string> {
+		return this.parentId;
 	}
 
 	public getPermissionOverwrites(): Set<Overwrite> {
@@ -117,16 +109,24 @@ export class Channel {
 		return this.position;
 	}
 
-	public getGuildId(): Option<string> {
-		return this.guildId;
+	public getRateLimitPerUser(): Option<number> {
+		return this.rateLimitPerUser;
+	}
+
+	public getRecipients(): Set<User> {
+		return this.recipients;
+	}
+
+	public getTopic(): Option<string> {
+		return this.topic;
 	}
 
 	public getType(): Option<number> {
 		return this.type;
 	}
 
-	public getId(): Option<string> {
-		return this.id;
+	public getUserLimit(): Option<number> {
+		return this.userLimit;
 	}
 
 }

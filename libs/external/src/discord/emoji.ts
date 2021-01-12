@@ -18,36 +18,36 @@ export class Emoji {
 	) {
 	}
 
+	public getAnimated(): Option<boolean> {
+		return this.animated;
+	}
+
 	public getAvailable(): Option<boolean> {
 		return this.available;
 	}
 
-	public getAnimated(): Option<boolean> {
-		return this.animated;
+	public getId(): Option<string> {
+		return this.id;
 	}
 
 	public getManaged(): Option<boolean> {
 		return this.managed;
 	}
 
-	public getRequireColons(): Option<boolean> {
-		return this.requireColons;
+	public getName(): Option<string> {
+		return this.name;
 	}
 
-	public getUser(): Option<User> {
-		return this.user;
+	public getRequireColons(): Option<boolean> {
+		return this.requireColons;
 	}
 
 	public getRoles(): Set<string> {
 		return this.roles;
 	}
 
-	public getName(): Option<string> {
-		return this.name;
-	}
-
-	public getId(): Option<string> {
-		return this.id;
+	public getUser(): Option<User> {
+		return this.user;
 	}
 
 }

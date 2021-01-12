@@ -1,5 +1,5 @@
 import {Set} from 'immutable';
-import {Moment} from 'moment';
+import * as moment from 'moment';
 import {JsonBuilder, JsonSerializer, parseDate, parseSet, parseString} from '@ffk/lib-util';
 import {None, Option} from 'funfix-core';
 import {
@@ -13,6 +13,7 @@ import {
 	permissionsKey,
 	usernameKey
 } from '../misc/json-keys';
+import {Group, GroupJsonSerializer} from './group';
 
 export class User {
 
@@ -23,46 +24,46 @@ export class User {
 		private avatar: Option<string> = None,
 		private discordId: Option<string> = None,
 		private discordDiscriminator: Option<string> = None,
-		private group: Option<string> = None,
+		private group: Option<Group> = None,
 		private permissions: Set<string> = Set(), // TODO: Make this Set<Enum>
-		private memberSince: Option<Moment> = None,
+		private memberSince: Option<moment.Moment> = None,
 	) {
-	}
-
-	public getId(): Option<string> {
-		return this.id;
-	}
-
-	public getUsername(): Option<string> {
-		return this.username;
-	}
-
-	public getLocale(): Option<string> {
-		return this.locale;
 	}
 
 	public getAvatar(): Option<string> {
 		return this.avatar;
 	}
 
-	public getDiscordId(): Option<string> {
-		return this.discordId;
-	}
-
 	public getDiscordDiscriminator(): Option<string> {
 		return this.discordDiscriminator;
 	}
 
-	public getGroup(): Option<string> {
+	public getDiscordId(): Option<string> {
+		return this.discordId;
+	}
+
+	public getGroup(): Option<Group> {
 		return this.group;
+	}
+
+	public getId(): Option<string> {
+		return this.id;
+	}
+
+	public getLocale(): Option<string> {
+		return this.locale;
+	}
+
+	public getMemberSince(): Option<moment.Moment> {
+		return this.memberSince;
 	}
 
 	public getPermissions(): Set<string> {
 		return this.permissions;
 	}
 
-	public getMemberSince(): Option<Moment> {
-		return this.memberSince;
+	public getUsername(): Option<string> {
+		return this.username;
 	}
 
 }
@@ -79,7 +80,7 @@ export class UserJsonSerializer extends JsonSerializer<User> {
 			parseString(json[avatarKey]),
 			parseString(json[discordIdKey]),
 			parseString(json[discordDiscriminatorKey]),
-			parseString(json[groupKey]),
+			GroupJsonSerializer.instance.fromJsonImpl(json[groupKey]),
 			parseSet(json[permissionsKey]),
 			parseDate(json[memberSinceKey]),
 		);
@@ -92,7 +93,7 @@ export class UserJsonSerializer extends JsonSerializer<User> {
 			.addOptional(value.getAvatar(), avatarKey)
 			.addOptional(value.getDiscordId(), discordIdKey)
 			.addOptional(value.getDiscordDiscriminator(), discordDiscriminatorKey)
-			.addOptional(value.getGroup(), groupKey)
+			.addOptionalSerialized(value.getGroup(), groupKey, GroupJsonSerializer.instance)
 			.addIterable(value.getPermissions(), permissionsKey)
 			.addOptionalDate(value.getMemberSince(), memberSinceKey)
 			.build();

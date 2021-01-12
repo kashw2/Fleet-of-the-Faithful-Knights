@@ -1,0 +1,17 @@
+.animated-underline {
+  &:after {
+    display: block;
+    position: relative;
+    content: '';
+    top: 0px;
+    height: 2px;
+    width: 0%;
+    background-color: #ff3547 !important;
+    transition: width 0.3s cubic-bezier(.05, .60, .70, 1);
+  }
+  &:hover {
+    &:after {
+      width: 100%;
+    }
+  }
+}

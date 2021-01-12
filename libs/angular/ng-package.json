@@ -1,0 +1,16 @@
+{
+  "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "dist",
+  "whitelistedNonPeerDependencies": [
+    "@angular/compiler",
+    "@angular-devkit/build-angular",
+    "@angular-devkit/build-ng-packagr",
+    "ng-packagr"
+  ],
+  "lib": {
+    "entryFile": "src/index.ts",
+    "umdModuleIds": {
+      "funfix-core": "funfix-core"
+    }
+  }
+}

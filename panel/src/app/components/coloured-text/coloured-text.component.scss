@@ -1,0 +1,18 @@
+.rainbow-text {
+  background-image: repeating-linear-gradient(319deg, #7fd82b 0%, #7696ef 37%, #f1ff5e 57%, #e557c6 100%);
+  text-align: center;
+  background-size: 800% 800%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow 2s ease-in-out infinite;
+}
+
+@keyframes rainbow {
+  0%, 100% {
+    background-position: 0 0;
+  }
+
+  50% {
+    background-position: 100% 0;
+  }
+}
