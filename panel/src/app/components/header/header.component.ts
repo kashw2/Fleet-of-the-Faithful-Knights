@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {HyperlinkMap} from '@ffk/lib-angular';
 import {Set} from 'immutable';
 import {None, Option} from 'funfix-core';
+import {User} from '@ffk/lib-ts';
+import {NavigationService} from '../../service/navigation.service';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +12,7 @@ import {None, Option} from 'funfix-core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() {
+  constructor(readonly navigationService: NavigationService) {
   }
 
   @Input() brandImage: Option<string> = None;
@@ -20,6 +22,8 @@ export class HeaderComponent implements OnInit {
   @Input() capitalise: Option<boolean> = None;
 
   @Input() hyperlinkMap: Set<HyperlinkMap> = Set();
+
+  @Input() user: Option<User> = None;
 
   getBrandImage(): Option<string> {
     return this.brandImage;
@@ -31,6 +35,25 @@ export class HeaderComponent implements OnInit {
 
   getHyperlinkMap(): Set<HyperlinkMap> {
     return this.hyperlinkMap;
+  }
+
+  getUser(): Option<User> {
+    return this.user;
+  }
+
+  getUserAvatar(): Option<string> {
+    return this.getUser()
+      .flatMap(u => u.getAvatar());
+  }
+
+  getUserId(): Option<string> {
+    return this.getUser()
+      .flatMap(u => u.getId());
+  }
+
+  getUserName(): Option<string> {
+    return this.getUser()
+      .flatMap(u => u.getUsername());
   }
 
   ngOnInit(): void {

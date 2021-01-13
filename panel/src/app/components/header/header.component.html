@@ -1,19 +1,19 @@
 <div class="container-fluid z-depth-2">
   <div class="row">
-    <div *ngIf="getBrandImageRedirectUrl().nonEmpty() || getBrandImage().nonEmpty()" class="col-1">
+    <div *ngIf="getBrandImageRedirectUrl().nonEmpty() || getBrandImage().nonEmpty()" class="d-flex col-auto align-items-center">
       <a *ngIf="getBrandImageRedirectUrl().nonEmpty()" [href]="getBrandImageRedirectUrl().get()">
         <img *ngIf="getBrandImage().nonEmpty()"
              [src]="getBrandImage().get()"
              height="50px"
              width="50px"
-             class="img-fluid m-1"
+             class="m-2"
         >
       </a>
       <img *ngIf="getBrandImageRedirectUrl().isEmpty() && getBrandImage().nonEmpty()"
            [src]="getBrandImage().get()"
            height="50px"
            width="50px"
-           class="img-fluid m-1"
+           class="m-2"
       >
     </div>
     <div *ngIf="!getHyperlinkMap().isEmpty()" class="d-flex col align-self-center justify-content-end">
@@ -29,6 +29,21 @@
            [ngClass]="link.isActive() ? 'active-underline text-danger mb-0 cursor-default' : 'animated-underline text-danger mb-0 cursor-default'"
         >{{shouldCapitalise() ? link.getLabel().get().toUpperCase() : link.getLabel().get()}}
         </p>
+      </div>
+    </div>
+    <div *ngIf="getUser().nonEmpty()" class="d-flex col-auto align-items-center p-0">
+      <div class="d-flex container flex-row p-2 mx-2 animated-darken cursor-pointer" (click)="navigationService.goToProfile(getUserId())">
+        <div class="col-auto p-0">
+          <img *ngIf="getUserAvatar().nonEmpty()" [src]="getUserAvatar().get()" height="40px">
+        </div>
+        <div class="col">
+          <div class="row">
+            <small *ngIf="getUserName().nonEmpty()" class="pl-2">{{getUserName().get()}}</small>
+          </div>
+          <div class="row">
+            <small *ngIf="getUserId().nonEmpty()" class="pl-2">{{getUserId().get()}}</small>
+          </div>
+        </div>
       </div>
     </div>
   </div>

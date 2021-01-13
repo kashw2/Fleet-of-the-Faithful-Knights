@@ -42,17 +42,28 @@ export class VotePageComponent implements OnInit {
     return Set.of(
       new HyperlinkMap(Some('Home'), Some('home')),
       new HyperlinkMap(Some('Panel'), Some('voting-panel')),
-      new HyperlinkMap(Some('Profile'), Some('profile'), None,
-        Set.of(
-          new HyperlinkMap(Some('Account'), Some('account'), None),
-          new HyperlinkMap(Some('Settings'), Some('settings'), None)
-        ),
-      ),
     );
   }
 
   getStarCitizenText(): Option<string> {
     return Some('Star Citizen');
+  }
+
+  getUser(): Option<User> {
+    return Option.of(
+      new User(
+        Some('123'),
+        Some('Keanu'),
+        Some('en_US'),
+        Some('https://discordapp.com/assets/322c936a8c8be1b803cd94861bdfa868.png'),
+        Some('1h23h21kdwa'),
+        Some('#1337'),
+        Some(new Group(Some('1'), Some('Developer'), Some('#rain'))),
+        Set.of('CREATE_VOTE', 'READ_VOTE', 'DEVELOPER', 'UPDATE_VOTE', 'PASS_VOTE'),
+
+        Some(moment()),
+      ),
+    );
   }
 
   getVote(): Option<Vote> {

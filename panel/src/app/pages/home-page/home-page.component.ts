@@ -45,11 +45,21 @@ export class HomePageComponent implements OnInit {
     return Set.of(
       new HyperlinkMap(Some('Home'), Some('home'), Some(true)),
       new HyperlinkMap(Some('Panel'), Some('voting-panel')),
-      new HyperlinkMap(Some('Profile'), Some('profile'), None,
-        Set.of(
-          new HyperlinkMap(Some('Account'), Some('account'), None),
-          new HyperlinkMap(Some('Settings'), Some('settings'), None)
-        ),
+    );
+  }
+
+  getUser(): Option<User> {
+    return Option.of(
+      new User(
+        Some('123'),
+        Some('Keanu'),
+        Some('en_US'),
+        Some('https://discordapp.com/assets/322c936a8c8be1b803cd94861bdfa868.png'),
+        Some('1h23h21kdwa'),
+        Some('#1337'),
+        Some(new Group(Some('1'), Some('Developer'), Some('#rain'))),
+        Set(),
+        Some(moment()),
       ),
     );
   }

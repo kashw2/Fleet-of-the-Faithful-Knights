@@ -40,12 +40,6 @@ export class ProfilePageComponent implements OnInit {
     return Set.of(
       new HyperlinkMap(Some('Home'), Some('home')),
       new HyperlinkMap(Some('Panel'), Some('voting-panel')),
-      new HyperlinkMap(Some('Profile'), Some('profile'), Some(true),
-        Set.of(
-          new HyperlinkMap(Some('Account'), Some('account'), None),
-          new HyperlinkMap(Some('Settings'), Some('settings'), None)
-        ),
-      ),
     );
   }
 
@@ -70,14 +64,15 @@ export class ProfilePageComponent implements OnInit {
       new User(
         Some('123'),
         Some('Keanu'),
-        Some('en_AU'),
-        Some('https://edit.co.uk/uploads/2016/12/Image-1-Alternatives-to-stock-photography-Thinkstock.jpg'),
-        Some('12345'),
-        Some('#1234'),
+        Some('en_US'),
+        Some('https://discordapp.com/assets/322c936a8c8be1b803cd94861bdfa868.png'),
+        Some('1h23h21kdwa'),
+        Some('#1337'),
         Some(new Group(Some('1'), Some('Developer'), Some('#rain'))),
         Set.of('CREATE_VOTE', 'READ_VOTE', 'DEVELOPER', 'UPDATE_VOTE', 'PASS_VOTE'),
+
         Some(moment()),
-      )
+      ),
     );
   }
 
