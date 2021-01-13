@@ -16,7 +16,7 @@
     </div>
     <div class="d-flex col flex-column my-3">
       <h4 *ngIf="getCandidateUsername().nonEmpty()" class="my-0">{{getCandidateUsername().get()}}</h4>
-      <hr class="my-2 mr-5">
+      <p *ngIf="getCandidateDiscordId().nonEmpty()">{{getCandidateDiscordId().get()}}</p>
       <div class="d-flex container flex-row px-0">
         <app-coloured-text [content]="getChatText()"
                            type="small"

@@ -24,7 +24,7 @@ export class ColouredTextComponent implements OnInit {
   // @Input() underline: boolean = true;
 
   getClass(): string {
-    const style: string = this.getPosition().concat(' d-inline-flex');
+    const style: string = this.getPosition().concat(' d-inline-flex').concat(' m-0').concat(' p-0');
     if (this.isRainbowText()) {
       return style.concat(' rainbow-text');
     }

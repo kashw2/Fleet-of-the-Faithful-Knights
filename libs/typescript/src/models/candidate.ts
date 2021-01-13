@@ -1,6 +1,6 @@
 import {JsonBuilder, JsonSerializer, parseString} from '@ffk/lib-util';
 import {None, Option} from 'funfix-core';
-import {avatarKey, discordIdKey, discordUsernameKey, groupKey, idKey} from '../misc/json-keys';
+import {avatarKey, discordDiscriminatorKey, discordIdKey, discordUsernameKey, groupKey, idKey} from '../misc/json-keys';
 import {Group, GroupJsonSerializer} from './group';
 
 export class Candidate {
@@ -9,6 +9,7 @@ export class Candidate {
 		private id: Option<string> = None,
 		private discordUsername: Option<string> = None,
 		private discordId: Option<string> = None,
+		private discordDiscriminator: Option<string> = None,
 		private avatar: Option<string> = None,
 		private group: Option<Group> = None,
 	) {
@@ -16,6 +17,10 @@ export class Candidate {
 
 	public getAvatar(): Option<string> {
 		return this.avatar;
+	}
+
+	public getDiscordDiscriminator(): Option<string> {
+		return this.discordDiscriminator;
 	}
 
 	public getDiscordId(): Option<string> {
@@ -45,6 +50,7 @@ export class CandidateJsonSerializer extends JsonSerializer<Candidate> {
 			parseString(json[idKey]),
 			parseString(json[discordUsernameKey]),
 			parseString(json[discordIdKey]),
+			parseString(json[discordDiscriminatorKey]),
 			parseString(json[avatarKey]),
 			GroupJsonSerializer.instance.fromJsonImpl(json[groupKey]),
 		);
@@ -54,6 +60,7 @@ export class CandidateJsonSerializer extends JsonSerializer<Candidate> {
 		return builder.addOptional(value.getId(), idKey)
 			.addOptional(value.getDiscordUsername(), discordUsernameKey)
 			.addOptional(value.getDiscordId(), discordIdKey)
+			.addOptional(value.getDiscordDiscriminator(), discordDiscriminatorKey)
 			.addOptional(value.getAvatar(), avatarKey)
 			.addOptionalSerialized(value.getGroup(), groupKey, GroupJsonSerializer.instance)
 			.build();

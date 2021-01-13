@@ -23,15 +23,29 @@ export class VotePageComponent implements OnInit {
     return Some('home');
   }
 
-  getCandidateAvatar(): Option<string> {
+  getCandidate(): Option<Candidate> {
     return this.getVote()
-      .flatMap(v => v.getCandidate())
+      .flatMap(v => v.getCandidate());
+  }
+
+  getCandidateAvatar(): Option<string> {
+    return this.getCandidate()
       .flatMap(c => c.getAvatar());
   }
 
+  getCandidateDiscordId(): Option<string> {
+    return this.getCandidate()
+      .flatMap(c => c.getDiscordId());
+  }
+
+  getCandidateDiscriminator(): Option<string> {
+    return this.getCandidate()
+      .flatMap(c => c.getDiscordDiscriminator());
+  }
+
   getCandidateUsername(): Option<string> {
-    return this.getVote()
-      .flatMap(v => v.getCandidateUsername());
+    return this.getCandidate()
+      .flatMap(c => c.getDiscordUsername());
   }
 
   getChatText(): Option<string> {
@@ -88,6 +102,7 @@ export class VotePageComponent implements OnInit {
             Some('123'),
             Some('Bship'),
             Some('123456789'),
+            Some('#1337'),
             Some('https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'),
             Some(new Group(Some('1'), Some('Master Commander'), Some('#ff0000'))),
           ),
