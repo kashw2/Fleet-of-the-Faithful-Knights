@@ -4,6 +4,7 @@ import {HyperlinkMap} from '@ffk/lib-angular';
 import {None, Option, Some} from 'funfix-core';
 import {Candidate, Group, User, Vote} from '@ffk/lib-ts';
 import * as moment from 'moment';
+import {UserService} from '../../service/user.service';
 
 @Component({
   selector: 'app-vote-page',
@@ -12,7 +13,7 @@ import * as moment from 'moment';
 })
 export class VotePageComponent implements OnInit {
 
-  constructor() {
+  constructor(readonly userService: UserService) {
   }
 
   getBrandImage(): Option<string> {
@@ -63,23 +64,6 @@ export class VotePageComponent implements OnInit {
     return Some('Star Citizen');
   }
 
-  getUser(): Option<User> {
-    return Option.of(
-      new User(
-        Some('123'),
-        Some('Keanu'),
-        Some('en_US'),
-        Some('https://discordapp.com/assets/322c936a8c8be1b803cd94861bdfa868.png'),
-        Some('1h23h21kdwa'),
-        Some('#1337'),
-        Some(new Group(Some('1'), Some('Developer'), Some('#rain'))),
-        Set.of('CREATE_VOTE', 'READ_VOTE', 'DEVELOPER', 'UPDATE_VOTE', 'PASS_VOTE'),
-
-        Some(moment()),
-      ),
-    );
-  }
-
   getVote(): Option<Vote> {
     return Option.of(
       new Vote(
@@ -92,7 +76,7 @@ export class VotePageComponent implements OnInit {
             Some('https://edit.co.uk/uploads/2016/12/Image-1-Alternatives-to-stock-photography-Thinkstock.jpg'),
             Some('12345'),
             Some('#1234'),
-            Some(new Group(Some('1'), Some('Developer'), Some('#rain'))),
+            Some(new Group(Some('1'), Some('Developer'), Some('#RAIN'))),
             Set.of('CREATE_VOTE', 'READ_VOTE', 'DEVELOPER', 'UPDATE_VOTE', 'PASS_VOTE'),
             Some(moment()),
           ),

@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {None, Option, Some} from 'funfix-core';
+import {Option, Some} from 'funfix-core';
 import {Set} from 'immutable';
 import {HyperlinkMap} from '@ffk/lib-angular';
-import {Group, User} from '@ffk/lib-ts';
-import * as moment from 'moment';
-import {MomentUtils, OptionUtils} from '../../../../../libs/util';
+import {MomentUtils} from '../../../../../libs/util';
+import {UserService} from '../../service/user.service';
 
 @Component({
   selector: 'app-profile-page',
@@ -13,7 +12,7 @@ import {MomentUtils, OptionUtils} from '../../../../../libs/util';
 })
 export class ProfilePageComponent implements OnInit {
 
-  constructor() {
+  constructor(readonly userService: UserService) {
   }
 
   getBrandImage(): Option<string> {
@@ -25,13 +24,13 @@ export class ProfilePageComponent implements OnInit {
   }
 
   getGroupColour(): Option<string> {
-    return this.getUser()
+    return this.userService.getUser()
       .flatMap(u => u.getGroup())
       .flatMap(g => g.getColour());
   }
 
   getGroupName(): Option<string> {
-    return this.getUser()
+    return this.userService.getUser()
       .flatMap(u => u.getGroup())
       .flatMap(g => g.getLabel());
   }
@@ -44,50 +43,33 @@ export class ProfilePageComponent implements OnInit {
   }
 
   getId(): Option<string> {
-    return this.getUser()
+    return this.userService.getUser()
       .flatMap(u => u.getId());
   }
 
   getMemberSince(): Option<string> {
-    return MomentUtils.format(this.getUser()
+    return MomentUtils.format(this.userService.getUser()
       .flatMap(u => u.getMemberSince()), 'DMY');
   }
 
   getPermissions(): Set<string> {
-    return this.getUser()
+    return this.userService.getUser()
       .map(u => u.getPermissions())
       .getOrElse(Set<string>());
   }
 
-  getUser(): Option<User> {
-    return Option.of(
-      new User(
-        Some('123'),
-        Some('Keanu'),
-        Some('en_US'),
-        Some('https://discordapp.com/assets/322c936a8c8be1b803cd94861bdfa868.png'),
-        Some('1h23h21kdwa'),
-        Some('#1337'),
-        Some(new Group(Some('1'), Some('Developer'), Some('#rain'))),
-        Set.of('CREATE_VOTE', 'READ_VOTE', 'DEVELOPER', 'UPDATE_VOTE', 'PASS_VOTE'),
-
-        Some(moment()),
-      ),
-    );
-  }
-
   getUserAvatar(): Option<string> {
-    return this.getUser()
+    return this.userService.getUser()
       .flatMap(u => u.getAvatar());
   }
 
   getUserId(): Option<string> {
-    return this.getUser()
+    return this.userService.getUser()
       .flatMap(u => u.getId());
   }
 
   getUserName(): Option<string> {
-    return this.getUser()
+    return this.userService.getUser()
       .flatMap(u => u.getUsername());
   }
 

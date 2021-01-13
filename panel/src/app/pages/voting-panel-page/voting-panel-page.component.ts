@@ -5,6 +5,7 @@ import {Set} from 'immutable';
 import {HyperlinkMap} from '@ffk/lib-angular';
 import * as moment from 'moment';
 import {NavigationService} from '../../service/navigation.service';
+import {UserService} from '../../service/user.service';
 
 @Component({
   selector: 'app-voting-panel-page',
@@ -13,7 +14,10 @@ import {NavigationService} from '../../service/navigation.service';
 })
 export class VotingPanelPageComponent implements OnInit {
 
-  constructor(readonly navigationService: NavigationService) {
+  constructor(
+    readonly navigationService: NavigationService,
+    readonly userService: UserService,
+  ) {
   }
 
   getBrandImage(): Option<string> {
@@ -31,25 +35,8 @@ export class VotingPanelPageComponent implements OnInit {
     );
   }
 
-  getUser(): Option<User> {
-    return Option.of(
-      new User(
-        Some('123'),
-        Some('Keanu'),
-        Some('en_US'),
-        Some('https://discordapp.com/assets/322c936a8c8be1b803cd94861bdfa868.png'),
-        Some('1h23h21kdwa'),
-        Some('#1337'),
-        Some(new Group(Some('1'), Some('Developer'), Some('#rain'))),
-        Set.of('CREATE_VOTE', 'READ_VOTE', 'DEVELOPER', 'UPDATE_VOTE', 'PASS_VOTE'),
-
-        Some(moment()),
-      ),
-    );
-  }
-
   getUserProfile(): Option<string> {
-    return this.getUser()
+    return this.userService.getUser()
       .flatMap(u => u.getId())
       .map(id => `profile/${id}`);
   }
@@ -60,7 +47,7 @@ export class VotingPanelPageComponent implements OnInit {
         Some('123'),
         Some(new User(Some('12345'), Some('Keanu'))),
         Some(new Candidate(Some('123'), Some('Bship'), None, None, None, Some(new Group(None, Some('Master Commander'), Some('#000000'))))),
-        Some(new Group(None, Some('Developer'), Some('#rain'))),
+        Some(new Group(None, Some('Developer'), Some('#RAIN'))),
         Set(),
         Some(moment())
       ),

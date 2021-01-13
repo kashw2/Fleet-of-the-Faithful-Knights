@@ -59,7 +59,7 @@ export class ColouredTextComponent implements OnInit {
   }
 
   getStyle(): Option<string> {
-    if (this.getHex().contains('#rain')) {
+    if (this.getHex().contains('#RAIN')) {
       return None;
     }
     return this.getHex()
@@ -71,7 +71,7 @@ export class ColouredTextComponent implements OnInit {
   }
 
   isRainbowText(): boolean {
-    return this.hex.contains('#rain');
+    return this.hex.contains('#RAIN');
   }
 
   // isUnderlined(): boolean {
