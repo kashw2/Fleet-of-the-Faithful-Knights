@@ -2,7 +2,7 @@ import {None, Option} from 'funfix-core';
 import {JsonBuilder, JsonSerializer, parseString} from '@ffk/lib-util';
 import {joinKey, matchKey, spectateKey} from './json-keys';
 
-export class Secret {
+export class DiscordSecret {
 
 	constructor(
 		readonly join: Option<string> = None,
@@ -25,19 +25,19 @@ export class Secret {
 
 }
 
-export class SecretJsonSerializer extends JsonSerializer<Secret> {
+export class SecretJsonSerializer extends JsonSerializer<DiscordSecret> {
 
 	static instance: SecretJsonSerializer = new SecretJsonSerializer();
 
-	fromJson(json: any): Secret {
-		return new Secret(
+	fromJson(json: any): DiscordSecret {
+		return new DiscordSecret(
 			parseString(json[joinKey]),
 			parseString(json[spectateKey]),
 			parseString(json[matchKey]),
 		);
 	}
 
-	toJson(value: Secret, builder: JsonBuilder): Record<string, any> {
+	toJson(value: DiscordSecret, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getJoin(), joinKey)
 			.addOptional(value.getSpectate(), spectateKey)
 			.addOptional(value.getMatch(), matchKey)

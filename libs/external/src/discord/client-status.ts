@@ -2,7 +2,7 @@ import {None, Option} from 'funfix-core';
 import {JsonBuilder, JsonSerializer, parseString} from '@ffk/lib-util';
 import {desktopKey, mobileKey, webKey} from './json-keys';
 
-export class ClientStatus {
+export class DiscordClientStatus {
 
 	constructor(
 		readonly desktop: Option<string> = None,
@@ -25,19 +25,19 @@ export class ClientStatus {
 
 }
 
-export class ClientStatusJsonSerializer extends JsonSerializer<ClientStatus> {
+export class ClientStatusJsonSerializer extends JsonSerializer<DiscordClientStatus> {
 
 	static instance: ClientStatusJsonSerializer = new ClientStatusJsonSerializer();
 
-	fromJson(json: any): ClientStatus {
-		return new ClientStatus(
+	fromJson(json: any): DiscordClientStatus {
+		return new DiscordClientStatus(
 			parseString(json[desktopKey]),
 			parseString(json[mobileKey]),
 			parseString(json[webKey]),
 		);
 	}
 
-	toJson(value: ClientStatus, builder: JsonBuilder): Record<string, any> {
+	toJson(value: DiscordClientStatus, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getDesktop(), desktopKey)
 			.addOptional(value.getMobile(), mobileKey)
 			.addOptional(value.getWeb(), webKey);

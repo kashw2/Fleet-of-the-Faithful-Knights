@@ -1,12 +1,12 @@
 import {None, Option} from 'funfix-core';
 import {List, Set} from 'immutable';
 import * as moment from 'moment';
-import {Emoji, EmojiJsonSerializer} from './emoji';
-import {Role, RoleJsonSerializer} from './role';
-import {VoiceState, VoiceStateJsonSerializer} from './voice-state';
-import {GuildMember, GuildMemberJsonSerializer} from './guild-member';
-import {Channel, ChannelJsonSerializer} from './channel';
-import {Presence, PresenceJsonSerializer} from './presence';
+import {DiscordEmoji, EmojiJsonSerializer} from './emoji';
+import {DiscordRole, RoleJsonSerializer} from './role';
+import {DiscordVoiceState, VoiceStateJsonSerializer} from './voice-state';
+import {DiscordGuildMember, GuildMemberJsonSerializer} from './guild-member';
+import {DiscordChannel, ChannelJsonSerializer} from './channel';
+import {DiscordPresence, PresenceJsonSerializer} from './presence';
 import {
 	JsonBuilder,
 	JsonSerializer,
@@ -62,7 +62,7 @@ import {
 	widgetEnabledKey
 } from './json-keys';
 
-export class Guild {
+export class DiscordGuild {
 
 	constructor(
 		readonly id: Option<string> = None,
@@ -82,8 +82,8 @@ export class Guild {
 		readonly verificationLevel: Option<number> = None,
 		readonly defaultMessageNotifications: Option<number> = None,
 		readonly explicitContentFilter: Option<number> = None,
-		readonly roles: Set<Role> = Set(),
-		readonly emojis: Set<Emoji> = Set(),
+		readonly roles: Set<DiscordRole> = Set(),
+		readonly emojis: Set<DiscordEmoji> = Set(),
 		readonly features: Set<string> = Set(),
 		readonly mfaLevel: Option<number> = None,
 		readonly applicationId: Option<string> = None,
@@ -94,10 +94,10 @@ export class Guild {
 		readonly large: Option<boolean> = None,
 		readonly unavailable: Option<boolean> = None,
 		readonly memberCount: Option<number> = None,
-		readonly voiceStates: List<VoiceState> = List(),
-		readonly members: Set<GuildMember> = Set(),
-		readonly channels: Set<Channel> = Set(),
-		readonly presences: Set<Presence> = Set(),
+		readonly voiceStates: List<DiscordVoiceState> = List(),
+		readonly members: Set<DiscordGuildMember> = Set(),
+		readonly channels: Set<DiscordChannel> = Set(),
+		readonly presences: Set<DiscordPresence> = Set(),
 		readonly maxPresences: Option<number> = None,
 		readonly maxMembers: Option<number> = None,
 		readonly vanityUrlCode: Option<string> = None,
@@ -132,7 +132,7 @@ export class Guild {
 		return this.banner;
 	}
 
-	public getChannels(): Set<Channel> {
+	public getChannels(): Set<DiscordChannel> {
 		return this.channels;
 	}
 
@@ -148,7 +148,7 @@ export class Guild {
 		return this.discoverySplash;
 	}
 
-	public getEmojis(): Set<Emoji> {
+	public getEmojis(): Set<DiscordEmoji> {
 		return this.emojis;
 	}
 
@@ -196,7 +196,7 @@ export class Guild {
 		return this.memberCount;
 	}
 
-	public getMembers(): Set<GuildMember> {
+	public getMembers(): Set<DiscordGuildMember> {
 		return this.members;
 	}
 
@@ -232,7 +232,7 @@ export class Guild {
 		return this.premiumTier;
 	}
 
-	public getPresences(): Set<Presence> {
+	public getPresences(): Set<DiscordPresence> {
 		return this.presences;
 	}
 
@@ -244,7 +244,7 @@ export class Guild {
 		return this.region;
 	}
 
-	public getRoles(): Set<Role> {
+	public getRoles(): Set<DiscordRole> {
 		return this.roles;
 	}
 
@@ -276,7 +276,7 @@ export class Guild {
 		return this.verificationLevel;
 	}
 
-	public getVoiceStates(): List<VoiceState> {
+	public getVoiceStates(): List<DiscordVoiceState> {
 		return this.voiceStates;
 	}
 
@@ -290,12 +290,12 @@ export class Guild {
 
 }
 
-export class GuildJsonSerializer extends JsonSerializer<Guild> {
+export class GuildJsonSerializer extends JsonSerializer<DiscordGuild> {
 
 	static instance: GuildJsonSerializer = new GuildJsonSerializer();
 
-	fromJson(json: any): Guild {
-		return new Guild(
+	fromJson(json: any): DiscordGuild {
+		return new DiscordGuild(
 			parseString(json[idKey]),
 			parseString(json[nameKey]),
 			parseString(json[iconKey]),
@@ -343,7 +343,7 @@ export class GuildJsonSerializer extends JsonSerializer<Guild> {
 		);
 	}
 
-	toJson(value: Guild, builder: JsonBuilder): Record<string, any> {
+	toJson(value: DiscordGuild, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getId(), idKey)
 			.addOptional(value.getName(), nameKey)
 			.addOptional(value.getIcon(), iconKey)

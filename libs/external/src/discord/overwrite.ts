@@ -2,7 +2,7 @@ import {None, Option} from 'funfix-core';
 import {JsonBuilder, JsonSerializer, parseNumber, parseString} from '@ffk/lib-util';
 import {allowKey, denyKey, idKey, typeKey} from './json-keys';
 
-export class Overwrite {
+export class DiscordOverwrite {
 
 	constructor(
 		readonly id: Option<string> = None,
@@ -30,12 +30,12 @@ export class Overwrite {
 
 }
 
-export class OverwriteJsonSerializer extends JsonSerializer<Overwrite> {
+export class OverwriteJsonSerializer extends JsonSerializer<DiscordOverwrite> {
 
 	static instance: OverwriteJsonSerializer = new OverwriteJsonSerializer();
 
-	fromJson(json: any): Overwrite {
-		return new Overwrite(
+	fromJson(json: any): DiscordOverwrite {
+		return new DiscordOverwrite(
 			parseString(json[idKey]),
 			parseNumber(json[typeKey]),
 			parseString(json[allowKey]),
@@ -43,7 +43,7 @@ export class OverwriteJsonSerializer extends JsonSerializer<Overwrite> {
 		);
 	}
 
-	toJson(value: Overwrite, builder: JsonBuilder): Record<string, any> {
+	toJson(value: DiscordOverwrite, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getId(), idKey)
 			.addOptional(value.getType(), typeKey)
 			.addOptional(value.getAllow(), allowKey)

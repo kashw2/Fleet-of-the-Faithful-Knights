@@ -1,14 +1,14 @@
 import {None, Option} from 'funfix-core';
-import {User, UserJsonSerializer} from './user';
+import {DiscordUser, UserJsonSerializer} from './user';
 import {Set} from 'immutable';
 import * as moment from 'moment';
 import {JsonBuilder, JsonSerializer, parseBoolean, parseDate, parseSet, parseString} from '@ffk/lib-util';
 import {deafKey, joinedAtKey, muteKey, nickKey, pendingKey, premiumSinceKey, rolesKey, userKey} from './json-keys';
 
-export class GuildMember {
+export class DiscordGuildMember {
 
 	constructor(
-		readonly user: Option<User> = None,
+		readonly user: Option<DiscordUser> = None,
 		readonly nick: Option<string> = None,
 		readonly roles: Set<string> = Set(),
 		readonly joinedAt: Option<moment.Moment> = None,
@@ -47,18 +47,18 @@ export class GuildMember {
 		return this.roles;
 	}
 
-	public getUser(): Option<User> {
+	public getUser(): Option<DiscordUser> {
 		return this.user;
 	}
 
 }
 
-export class GuildMemberJsonSerializer extends JsonSerializer<GuildMember> {
+export class GuildMemberJsonSerializer extends JsonSerializer<DiscordGuildMember> {
 
 	static instance: GuildMemberJsonSerializer = new GuildMemberJsonSerializer();
 
-	fromJson(json: any): GuildMember {
-		return new GuildMember(
+	fromJson(json: any): DiscordGuildMember {
+		return new DiscordGuildMember(
 			UserJsonSerializer.instance.fromJsonImpl(json[userKey]),
 			parseString(json[nickKey]),
 			parseSet(json[rolesKey]),
@@ -70,7 +70,7 @@ export class GuildMemberJsonSerializer extends JsonSerializer<GuildMember> {
 		);
 	}
 
-	toJson(value: GuildMember, builder: JsonBuilder): Record<string, any> {
+	toJson(value: DiscordGuildMember, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptionalSerialized(value.getUser(), userKey, UserJsonSerializer.instance)
 			.addOptional(value.getNick(), nickKey)
 			.addIterable(value.getRoles(), rolesKey)

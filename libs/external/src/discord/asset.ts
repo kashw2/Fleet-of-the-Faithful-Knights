@@ -2,7 +2,7 @@ import {None, Option} from 'funfix-core';
 import {JsonBuilder, JsonSerializer, parseString} from '@ffk/lib-util';
 import {largeImageKey, largeTextKey, smallImageKey, smallTextKey} from './json-keys';
 
-export class Asset {
+export class DiscordAsset {
 
 	constructor(
 		readonly largeImage: Option<string> = None,
@@ -30,12 +30,12 @@ export class Asset {
 
 }
 
-export class AssetJsonSerializer extends JsonSerializer<Asset> {
+export class AssetJsonSerializer extends JsonSerializer<DiscordAsset> {
 
 	static instance: AssetJsonSerializer = new AssetJsonSerializer();
 
-	fromJson(json: any): Asset {
-		return new Asset(
+	fromJson(json: any): DiscordAsset {
+		return new DiscordAsset(
 			parseString(json[largeImageKey]),
 			parseString(json[largeTextKey]),
 			parseString(json[smallImageKey]),
@@ -43,7 +43,7 @@ export class AssetJsonSerializer extends JsonSerializer<Asset> {
 		);
 	}
 
-	toJson(value: Asset, builder: JsonBuilder): Record<string, any> {
+	toJson(value: DiscordAsset, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getLargeImage(), largeImageKey)
 			.addOptional(value.getLargeText(), largeTextKey)
 			.addOptional(value.getSmallImage(), smallImageKey)
