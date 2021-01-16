@@ -21,7 +21,7 @@
     "@ffk/lib-util": "file:libs/util",
     "@ffk/lib-ts": "file:libs/typescript",
     "@ffk/lib-angular": "file:libs/angular",
-    "@types/express": "4.17.9",
+    "@types/express": "4.17.11",
     "@types/mssql": "6.0.7",
     "@types/node": "14.14.14",
     "express": "4.17.1",
