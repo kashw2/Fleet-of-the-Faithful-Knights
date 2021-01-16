@@ -17,6 +17,7 @@ export class Vote {
 		private promotionGroup: Option<Group> = None,
 		private ballots: Set<Ballot> = Set(),
 		private created: Option<moment.Moment> = None,
+		private modified: Option<moment.Moment> = None,
 	) {
 	}
 
@@ -55,6 +56,10 @@ export class Vote {
 
 	public getId(): Option<string> {
 		return this.id;
+	}
+
+	public getModified(): Option<moment.Moment> {
+		return this.modified;
 	}
 
 	public getPromotionGroup(): Option<Group> {

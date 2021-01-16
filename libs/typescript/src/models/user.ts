@@ -11,9 +11,11 @@ import {
 	localeKey,
 	memberSinceKey,
 	permissionsKey,
+	starCitizenUserKey,
 	usernameKey
 } from '../misc/json-keys';
 import {Group, GroupJsonSerializer} from './group';
+import {StarCitizenUser, StarCitizenUserJsonSerializer} from '@ffk/lib-external';
 
 export class User {
 
@@ -27,6 +29,7 @@ export class User {
 		private group: Option<Group> = None,
 		private permissions: Set<string> = Set(), // TODO: Make this Set<Enum>
 		private memberSince: Option<moment.Moment> = None,
+		private starCitizenUser: Option<StarCitizenUser> = None,
 	) {
 	}
 
@@ -62,6 +65,10 @@ export class User {
 		return this.permissions;
 	}
 
+	public getStarCitizenUser(): Option<StarCitizenUser> {
+		return this.starCitizenUser;
+	}
+
 	public getUsername(): Option<string> {
 		return this.username;
 	}
@@ -83,6 +90,7 @@ export class UserJsonSerializer extends JsonSerializer<User> {
 			GroupJsonSerializer.instance.fromJsonImpl(json[groupKey]),
 			parseSet(json[permissionsKey]),
 			parseDate(json[memberSinceKey]),
+			StarCitizenUserJsonSerializer.instance.fromJsonImpl(json[starCitizenUserKey])
 		);
 	}
 
@@ -96,6 +104,7 @@ export class UserJsonSerializer extends JsonSerializer<User> {
 			.addOptionalSerialized(value.getGroup(), groupKey, GroupJsonSerializer.instance)
 			.addIterable(value.getPermissions(), permissionsKey)
 			.addOptionalDate(value.getMemberSince(), memberSinceKey)
+			.addOptionalSerialized(value.getStarCitizenUser(), starCitizenUserKey, StarCitizenUserJsonSerializer.instance)
 			.build();
 	}
 }

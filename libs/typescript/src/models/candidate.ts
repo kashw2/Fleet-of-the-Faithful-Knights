@@ -1,7 +1,16 @@
 import {JsonBuilder, JsonSerializer, parseString} from '@ffk/lib-util';
 import {None, Option} from 'funfix-core';
-import {avatarKey, discordDiscriminatorKey, discordIdKey, discordUsernameKey, groupKey, idKey} from '../misc/json-keys';
+import {
+	avatarKey,
+	discordDiscriminatorKey,
+	discordIdKey,
+	discordUsernameKey,
+	groupKey,
+	idKey,
+	starCitizenUserKey
+} from '../misc/json-keys';
 import {Group, GroupJsonSerializer} from './group';
+import {StarCitizenUser, StarCitizenUserJsonSerializer} from '@ffk/lib-external';
 
 export class Candidate {
 
@@ -12,6 +21,7 @@ export class Candidate {
 		private discordDiscriminator: Option<string> = None,
 		private avatar: Option<string> = None,
 		private group: Option<Group> = None,
+		private starCitizenUser: Option<StarCitizenUser> = None,
 	) {
 	}
 
@@ -39,6 +49,10 @@ export class Candidate {
 		return this.id;
 	}
 
+	public getStarCitizenUser(): Option<StarCitizenUser> {
+		return this.starCitizenUser;
+	}
+
 }
 
 export class CandidateJsonSerializer extends JsonSerializer<Candidate> {
@@ -53,6 +67,7 @@ export class CandidateJsonSerializer extends JsonSerializer<Candidate> {
 			parseString(json[discordDiscriminatorKey]),
 			parseString(json[avatarKey]),
 			GroupJsonSerializer.instance.fromJsonImpl(json[groupKey]),
+			StarCitizenUserJsonSerializer.instance.fromJsonImpl(json[starCitizenUserKey]),
 		);
 	}
 
@@ -63,6 +78,7 @@ export class CandidateJsonSerializer extends JsonSerializer<Candidate> {
 			.addOptional(value.getDiscordDiscriminator(), discordDiscriminatorKey)
 			.addOptional(value.getAvatar(), avatarKey)
 			.addOptionalSerialized(value.getGroup(), groupKey, GroupJsonSerializer.instance)
+			.addOptionalSerialized(value.getStarCitizenUser(), starCitizenUserKey, StarCitizenUserJsonSerializer.instance)
 			.build();
 	}
 

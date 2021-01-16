@@ -1,3 +1,4 @@
+// Discord
 export * from './discord/activity';
 export * from './discord/asset';
 export * from './discord/channel';
@@ -14,3 +15,7 @@ export * from './discord/secret';
 export * from './discord/timestamp';
 export * from './discord/user';
 export * from './discord/voice-state';
+// Star Citizen
+export * from './star-citizen/user';
+export * from './star-citizen/organisation';
+export * from './star-citizen/types';

@@ -1,0 +1,23 @@
+export const idKey = 'id';
+export const communityMonikerKey = 'community_moniker';
+export const usernameKey = 'username';
+export const handleKey = 'handle';
+export const enlistedKey = 'enlisted';
+export const locationKey = 'location';
+export const languageKey = 'language';
+export const websiteKey = 'website';
+export const bioKey = 'bio';
+export const organisationsKey = 'organisations';
+export const nameKey = 'name';
+export const primaryKey = 'primary';
+export const organisationRankKey = 'organisation_rank';
+export const hierarchyKey = 'hierarchy';
+export const archetypeKey = 'archetype';
+export const primaryLanguageKey = 'primary_language';
+export const primaryActivityKey = 'primary_activity';
+export const recruitingKey = 'recruiting';
+export const secondaryActivityKey = 'secondary_activity';
+export const rolePlayKey = 'role_play';
+export const commitmentKey = 'commitment';
+export const exclusiveKey = 'exclusive';
+

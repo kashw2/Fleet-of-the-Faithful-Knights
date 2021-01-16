@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {Option} from 'funfix-core';
 
@@ -7,7 +7,8 @@ import {Option} from 'funfix-core';
 })
 export class NavigationService {
 
-  constructor(private router: Router ) { }
+  constructor(private router: Router) {
+  }
 
   goToHome(): void {
     this.navigate('home');
