@@ -4,6 +4,7 @@ import {Option, Some} from 'funfix-core';
 import {Group, User} from '@ffk/lib-ts';
 import {Set} from 'immutable';
 import * as moment from 'moment';
+import {StarCitizenOrganisation, StarCitizenUser} from '@ffk/lib-external';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,35 @@ export class UserService {
         Some('#7219'),
         Some(new Group(Some('0'), Some('Developer'), Some('#RAIN'))),
         Set.of('CREATE_VOTE', 'READ_VOTE', 'VETO_VOTE', 'MODIFY_VOTE', 'DEVELOPER'),
-        Some(moment())
+        Some(moment()),
+        Some(new StarCitizenUser(
+          Some('123456'),
+          Some('ImSledged'),
+          Some('ImSledged'),
+          Some('ImSledged'),
+          Some(moment()),
+          Some('Queensland, Australia'),
+          Some('English'),
+          Some('https://github.com/kashw2/'),
+          Some('I\'m a Developer for the Fleet of the Faithful Knights'),
+          Set.of(
+            new StarCitizenOrganisation(
+              Some('FFK'),
+              Some('Fleet of the Faithful Knights'),
+              Some(true),
+              Some('Knight'),
+              Some(5),
+              Some('Organization'),
+              Some('English'),
+              Some('Social'),
+              Some(true),
+              Some('Security'),
+              Some(false),
+              Some('Regular'),
+              Some(false),
+            ),
+          ),
+        )),
       ),
     );
   }
