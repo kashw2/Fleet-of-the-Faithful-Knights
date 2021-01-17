@@ -10,7 +10,8 @@ import {
 	handleKey,
 	idKey,
 	languageKey,
-	locationKey, organisationsKey,
+	locationKey,
+	organisationsKey,
 	usernameKey,
 	websiteKey
 } from './json-keys';
@@ -19,9 +20,9 @@ export class StarCitizenUser {
 
 	constructor(
 		private id: Option<string> = None,
-		private communityMoniker: Option<string> = None,
 		private username: Option<string> = None,
 		private handle: Option<string> = None,
+		private communityMoniker: Option<string> = None,
 		private enlisted: Option<moment.Moment> = None,
 		private location: Option<string> = None,
 		private language: Option<string> = None,
@@ -64,7 +65,9 @@ export class StarCitizenUser {
 	}
 
 	public getUsername(): Option<string> {
-		return this.username;
+		return this.username
+			.orElse(this.getCommunityMoniker())
+			.orElse(this.getHandle());
 	}
 
 	public getWebsite(): Option<string> {
@@ -80,9 +83,9 @@ export class StarCitizenUserJsonSerializer extends JsonSerializer<StarCitizenUse
 	fromJson(json: any): StarCitizenUser {
 		return new StarCitizenUser(
 			parseString(json[idKey]),
-			parseString(json[communityMonikerKey]),
 			parseString(json[usernameKey]),
 			parseString(json[handleKey]),
+			parseString(json[communityMonikerKey]),
 			parseDate(json[enlistedKey]),
 			parseString(json[locationKey]),
 			parseString(json[languageKey]),
@@ -95,8 +98,8 @@ export class StarCitizenUserJsonSerializer extends JsonSerializer<StarCitizenUse
 	toJson(value: StarCitizenUser, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getId(), idKey)
 			.addOptional(value.getUsername(), usernameKey)
-			.addOptional(value.getUsername(), usernameKey)
 			.addOptional(value.getHandle(), handleKey)
+			.addOptional(value.getCommunityMoniker(), communityMonikerKey)
 			.addOptional(value.getEnlisted(), enlistedKey)
 			.addOptional(value.getLocation(), locationKey)
 			.addOptional(value.getLanguage(), languageKey)
