@@ -16,7 +16,7 @@
            class="m-2"
       >
     </div>
-    <div *ngIf="!getHyperlinkMap().isEmpty()" class="d-flex col align-self-center justify-content-end">
+    <div *ngIf="!getHyperlinkMap().isEmpty()" class="d-flex col align-self-center justify-content-start">
       <div *ngFor="let link of getHyperlinkMap()" class="mx-2">
         <a
           *ngIf="link.getHyperlink().nonEmpty() && link.getLabel().nonEmpty()"

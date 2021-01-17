@@ -18,7 +18,4 @@ export class StringUtils {
 			.join(' ');
 	}
 
-
-
-
 }
