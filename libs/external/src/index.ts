@@ -19,3 +19,4 @@ export * from './discord/voice-state';
 export * from './star-citizen/user';
 export * from './star-citizen/organisation';
 export * from './star-citizen/types';
+export * from './star-citizen/json-keys';
