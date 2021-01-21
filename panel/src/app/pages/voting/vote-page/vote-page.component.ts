@@ -4,10 +4,10 @@ import {HyperlinkMap} from '@ffk/lib-angular';
 import {None, Option, Some} from 'funfix-core';
 import {Ballot, Candidate, Group, Vote} from '@ffk/lib-ts';
 import * as moment from 'moment';
-import {UserService} from '../../service/user.service';
+import {UserService} from '../../../service/user.service';
 import {StarCitizenOrganisation, StarCitizenUser} from '@ffk/lib-external';
 import {BehaviorSubject} from 'rxjs';
-import {NavigationService} from '../../service/navigation.service';
+import {NavigationService} from '../../../service/navigation.service';
 
 @Component({
   selector: 'app-vote-page',

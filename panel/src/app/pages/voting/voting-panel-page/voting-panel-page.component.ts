@@ -4,8 +4,8 @@ import {None, Option, Some} from 'funfix-core';
 import {Set} from 'immutable';
 import {HyperlinkMap} from '@ffk/lib-angular';
 import * as moment from 'moment';
-import {NavigationService} from '../../service/navigation.service';
-import {UserService} from '../../service/user.service';
+import {NavigationService} from '../../../service/navigation.service';
+import {UserService} from '../../../service/user.service';
 
 @Component({
   selector: 'app-voting-panel-page',
