@@ -24,3 +24,4 @@ export const modifiedKey = 'modified';
 export const responseKey  = 'response';
 export const ballotsKey = 'ballots';
 export const starCitizenUserKey = 'star_citizen_user';
+export const descriptionKey = 'description';

@@ -1,6 +1,6 @@
 import {JsonBuilder, JsonSerializer, MomentUtils, parseDate, parseSetSerialized, parseString} from '@ffk/lib-util';
 import {None, Option} from 'funfix-core';
-import {ballotsKey, candidateKey, createdKey, groupKey, idKey, sponsorKey} from '../misc/json-keys';
+import {ballotsKey, candidateKey, createdKey, descriptionKey, groupKey, idKey, sponsorKey} from '../misc/json-keys';
 import {User, UserJsonSerializer} from './user';
 import {Candidate, CandidateJsonSerializer} from './candidate';
 import {Group, GroupJsonSerializer} from './group';
@@ -15,6 +15,7 @@ export class Vote {
 		private sponsor: Option<User> = None,
 		private candidate: Option<Candidate> = None,
 		private promotionGroup: Option<Group> = None,
+		private description: Option<string> = None,
 		private ballots: Set<Ballot> = Set(),
 		private created: Option<moment.Moment> = None,
 		private modified: Option<moment.Moment> = None,
@@ -48,6 +49,10 @@ export class Vote {
 
 	public getCreated(): Option<moment.Moment> {
 		return this.created;
+	}
+
+	public getDescription(): Option<string> {
+		return this.description;
 	}
 
 	public getFormattedCreatedString(format: 'DMY'): Option<string> {
@@ -102,6 +107,7 @@ export class VoteJsonSerializer extends JsonSerializer<Vote> {
 			UserJsonSerializer.instance.fromJsonImpl(json[sponsorKey]),
 			CandidateJsonSerializer.instance.fromJsonImpl(json[candidateKey]),
 			GroupJsonSerializer.instance.fromJsonImpl(json[groupKey]),
+			parseString(json[descriptionKey]),
 			parseSetSerialized(json[ballotsKey], BallotJsonSerializer.instance),
 			parseDate(json[createdKey]),
 		);
@@ -112,6 +118,7 @@ export class VoteJsonSerializer extends JsonSerializer<Vote> {
 			.addOptionalSerialized(value.getSponsor(), sponsorKey, UserJsonSerializer.instance)
 			.addOptionalSerialized(value.getCandidate(), candidateKey, CandidateJsonSerializer.instance)
 			.addOptionalSerialized(value.getPromotionGroup(), groupKey, GroupJsonSerializer.instance)
+			.addOptional(value.getDescription(), descriptionKey)
 			.addIterableSerialized(value.getBallots(), ballotsKey, BallotJsonSerializer.instance)
 			.addOptionalDate(value.getCreated(), createdKey)
 			.build();

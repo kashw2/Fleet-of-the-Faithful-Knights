@@ -48,6 +48,7 @@ export class VotingPanelPageComponent implements OnInit {
         Some(new User(Some('12345'), Some('Keanu'))),
         Some(new Candidate(Some('123'), Some('Bship'), None, None, None, Some(new Group(None, Some('Master Commander'), Some('#000000'))))),
         Some(new Group(None, Some('Developer'), Some('#RAIN'))),
+        Some('Vote description'),
         Set(),
         Some(moment())
       ),
