@@ -30,8 +30,10 @@ export class VotingPanelPageComponent implements OnInit {
 
   getHyperlinkMap(): Set<HyperlinkMap> {
     return Set.of(
-      new HyperlinkMap(Some('Home'), Some('home')),
-      new HyperlinkMap(Some('Panel'), Some('voting-panel'), Some(true)),
+      new HyperlinkMap(Some('Home'), Some('home'), Some(true)),
+      new HyperlinkMap(Some('Panel'), None, None, Set.of(
+        new HyperlinkMap(Some('Votes'), Some('voting/votes')),
+      )),
     );
   }
 

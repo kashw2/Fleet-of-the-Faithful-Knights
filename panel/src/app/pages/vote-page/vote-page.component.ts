@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Set} from 'immutable';
 import {HyperlinkMap} from '@ffk/lib-angular';
-import {Option, Some} from 'funfix-core';
+import {None, Option, Some} from 'funfix-core';
 import {Ballot, Candidate, Group, Vote} from '@ffk/lib-ts';
 import * as moment from 'moment';
 import {UserService} from '../../service/user.service';
@@ -103,8 +103,10 @@ export class VotePageComponent implements OnInit {
 
   getHyperlinkMap(): Set<HyperlinkMap> {
     return Set.of(
-      new HyperlinkMap(Some('Home'), Some('home')),
-      new HyperlinkMap(Some('Panel'), Some('voting-panel')),
+      new HyperlinkMap(Some('Home'), Some('home'), Some(true)),
+      new HyperlinkMap(Some('Panel'), None, None, Set.of(
+        new HyperlinkMap(Some('Votes'), Some('voting/votes')),
+      )),
     );
   }
 

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Option, Some} from 'funfix-core';
+import {None, Option, Some} from 'funfix-core';
 import {Set} from 'immutable';
 import {HyperlinkMap} from '@ffk/lib-angular';
 import {MomentUtils} from '../../../../../libs/util';
@@ -37,8 +37,10 @@ export class ProfilePageComponent implements OnInit {
 
   getHyperlinkMap(): Set<HyperlinkMap> {
     return Set.of(
-      new HyperlinkMap(Some('Home'), Some('home')),
-      new HyperlinkMap(Some('Panel'), Some('voting-panel')),
+      new HyperlinkMap(Some('Home'), Some('home'), Some(true)),
+      new HyperlinkMap(Some('Panel'), None, None, Set.of(
+        new HyperlinkMap(Some('Votes'), Some('voting/votes')),
+      )),
     );
   }
 

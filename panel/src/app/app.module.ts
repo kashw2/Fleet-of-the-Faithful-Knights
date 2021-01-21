@@ -4,25 +4,18 @@ import {MDBBootstrapModulesPro, MDBSpinningPreloader} from 'ng-uikit-pro-standar
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HomePageComponent} from './pages/home-page/home-page.component';
-import {HeaderComponent} from './components/header/header.component';
-import {ArticleComponent} from './components/article/article.component';
-import {ColouredTextComponent} from './components/coloured-text/coloured-text.component';
 import {VotingPanelPageComponent} from './pages/voting-panel-page/voting-panel-page.component';
 import {ProfilePageComponent} from './pages/profile-page/profile-page.component';
-import {SafeTdComponent} from './components/safe-td/safe-td.component';
 import {VotePageComponent} from './pages/vote-page/vote-page.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ComponentsModule} from './components/components.module';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		HomePageComponent,
-		HeaderComponent,
-		ArticleComponent,
-		ColouredTextComponent,
 		VotingPanelPageComponent,
 		ProfilePageComponent,
-		SafeTdComponent,
 		VotePageComponent,
 	],
 	imports: [
@@ -30,6 +23,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
 		AppRoutingModule,
 		MDBBootstrapModulesPro.forRoot(),
+    ComponentsModule,
 	],
 	providers: [MDBSpinningPreloader],
 	bootstrap: [AppComponent]

@@ -16,7 +16,7 @@ const routes: Routes = [
     component: HomePageComponent,
   },
   {
-    path: 'voting-panel',
+    path: 'voting/votes',
     component: VotingPanelPageComponent,
   },
   {
@@ -24,7 +24,7 @@ const routes: Routes = [
     component: ProfilePageComponent,
   },
   {
-    path: 'vote/:id',
+    path: 'voting/vote/:id',
     component: VotePageComponent,
   },
 	{

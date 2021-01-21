@@ -21,16 +21,11 @@ export class ColouredTextComponent implements OnInit {
 
   @Input() type: "h1" | "h2" | "h3" | "h4" | "h5" | "h6"  | "p" | "small" = "p";
 
-  // @Input() underline: boolean = true;
-
   getClass(): string {
-    const style: string = this.getPosition().concat(' d-inline-flex').concat(' m-0').concat(' p-0');
+    const style: string = this.getPosition().concat(' d-inline-flex').concat(' m-0').concat(' p-0').concat(' ' + this.getType());
     if (this.isRainbowText()) {
       return style.concat(' rainbow-text');
     }
-    // if (this.isUnderlined()) {
-    //   return style.concat(' active-underline');
-    // }
     return style;
   }
 
@@ -66,59 +61,15 @@ export class ColouredTextComponent implements OnInit {
       .map(v => `color: ${v}`);
   }
 
-  getType(): Option<"h1" | "h2" | "h3" | "h4" | "h5" | "h6"  | "p" | "small"> {
-    return Option.of(this.type);
+  getType(): "h1" | "h2" | "h3" | "h4" | "h5" | "h6"  | "p" | "small" {
+    return this.type;
   }
 
   isRainbowText(): boolean {
     return this.hex.contains('#RAIN');
   }
 
-  // isUnderlined(): boolean {
-  //   return this.underline;
-  // }
-
   ngOnInit(): void {
-  }
-
-  shouldDisplayH1(): boolean {
-    return this.getType()
-      .contains('h1');
-  }
-
-  shouldDisplayH2(): boolean {
-    return this.getType()
-      .contains('h2');
-  }
-
-  shouldDisplayH3(): boolean {
-    return this.getType()
-      .contains("h3");
-  }
-
-  shouldDisplayH4(): boolean {
-    return this.getType()
-      .contains("h4");
-  }
-
-  shouldDisplayH5(): boolean {
-    return this.getType()
-      .contains("h5");
-  }
-
-  shouldDisplayH6(): boolean {
-    return this.getType()
-      .contains("h6");
-  }
-
-  shouldDisplayP(): boolean {
-    return this.getType()
-      .contains('p');
-  }
-
-  shouldDisplaySmall(): boolean {
-    return this.getType()
-      .contains('small');
   }
 
 }

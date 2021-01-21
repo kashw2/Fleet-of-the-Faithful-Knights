@@ -17,15 +17,28 @@
       >
     </div>
     <div *ngIf="!getHyperlinkMap().isEmpty()" class="d-flex col align-self-center justify-content-start">
-      <div *ngFor="let link of getHyperlinkMap()" class="mx-2">
-        <a
-          *ngIf="link.getHyperlink().nonEmpty() && link.getLabel().nonEmpty()"
+      <div *ngFor="let link of getHyperlinkMap()" class="mx-2 dropdown-parent">
+        <a *ngIf="link.getHyperlink().nonEmpty() && link.getLabel().nonEmpty() && !link.getDropdownHyperlinks().isEmpty()"
+           [href]="link.getHyperlink().get()"
+           [ngClass]="link.isActive() ? 'active-underline text-danger' : 'animated-underline text-danger'"
+        >
+          {{shouldCapitalise() ? link.getLabel().get().toUpperCase() : link.getLabel().get()}}
+        </a>
+        <p *ngIf="link.getHyperlink().isEmpty() && link.getLabel().nonEmpty() && !link.getDropdownHyperlinks().isEmpty()"
+           [ngClass]="link.isActive() ? 'active-underline text-danger mb-0 cursor-default' : 'animated-underline text-danger mb-0 cursor-default'"
+        >{{shouldCapitalise() ? link.getLabel().get().toUpperCase() : link.getLabel().get()}}
+        </p>
+        <app-dropdown *ngIf="!link.getDropdownHyperlinks().isEmpty()"
+                      [hyperlinks]="link.getDropdownHyperlinks()"
+                      class="z-depth-2"
+        ></app-dropdown>
+        <a *ngIf="link.getHyperlink().nonEmpty() && link.getLabel().nonEmpty() && link.getDropdownHyperlinks().isEmpty()"
           [href]="link.getHyperlink().get()"
           [ngClass]="link.isActive() ? 'active-underline text-danger' : 'animated-underline text-danger'"
         >
           {{shouldCapitalise() ? link.getLabel().get().toUpperCase() : link.getLabel().get()}}
         </a>
-        <p *ngIf="link.getHyperlink().isEmpty() && link.getLabel().nonEmpty()"
+        <p *ngIf="link.getHyperlink().isEmpty() && link.getLabel().nonEmpty() && link.getDropdownHyperlinks().isEmpty()"
            [ngClass]="link.isActive() ? 'active-underline text-danger mb-0 cursor-default' : 'animated-underline text-danger mb-0 cursor-default'"
         >{{shouldCapitalise() ? link.getLabel().get().toUpperCase() : link.getLabel().get()}}
         </p>

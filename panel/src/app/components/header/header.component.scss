@@ -1,0 +1,14 @@
+app-dropdown {
+  display: none;
+  position: absolute;
+  background-color: #ffffff;
+  z-index: 99999;
+}
+
+.dropdown-parent {
+  &:hover {
+    > app-dropdown {
+      display: block !important;
+    }
+  }
+}

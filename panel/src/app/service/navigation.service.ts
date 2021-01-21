@@ -24,14 +24,14 @@ export class NavigationService {
 
   goToVote(id: Option<string>): void {
     if (id.nonEmpty()) {
-      this.navigate(`vote/${id.get()}`);
+      this.navigate(`voting/vote/${id.get()}`);
       return;
     }
     this.navigate('home');
   }
 
   goToVotingPanel(): void {
-    this.navigate('voting-panel');
+    this.navigate('voting/votes');
   }
 
   navigate(route: string): void {
