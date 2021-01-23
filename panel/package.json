@@ -29,7 +29,7 @@
     "ng-uikit-pro-standard": "git+https://oauth2:jRNULFUq6iNYr-xpD8cS@git.mdbootstrap.com/mdb/angular/ng-uikit-pro-standard.git",
     "rxjs": "6.6.0",
     "screenfull": "3.3.0",
-    "tslib": "2.0.0",
+    "tslib": "2.1.0",
     "zone.js": "0.10.2"
   },
   "devDependencies": {
