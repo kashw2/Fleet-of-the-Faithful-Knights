@@ -26,4 +26,8 @@ export abstract class JsonSerializer<A> {
 		return values.map(v => this.toJson(v, builder));
 	}
 
+	toJsonString(value: A): string {
+		return JSON.stringify(this.toJson(value, new JsonBuilder()));
+	}
+
 }
