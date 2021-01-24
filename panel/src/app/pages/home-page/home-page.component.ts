@@ -35,7 +35,7 @@ export class HomePageComponent implements OnInit {
   }
 
   getBrandImage(): Option<string> {
-    return Some('assets/images/Fleet_of_the_Faithful_Knights_Shield.png');
+    return Some('./assets/images/Fleet_of_the_Faithful_Knights_Shield.png');
   }
 
   getBrandImageRedirectUrl(): Option<string> {
@@ -47,6 +47,7 @@ export class HomePageComponent implements OnInit {
       new HyperlinkMap(Some('Home'), Some('home'), Some(true)),
       new HyperlinkMap(Some('Panel'), None, None, Set.of(
         new HyperlinkMap(Some('Votes'), Some('voting/votes')),
+        new HyperlinkMap(Some('Create'), Some('voting/create'))
       )),
     );
   }

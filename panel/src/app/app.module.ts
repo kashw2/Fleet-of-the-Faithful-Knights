@@ -9,6 +9,7 @@ import {ProfilePageComponent} from './pages/profile-page/profile-page.component'
 import {VotePageComponent} from './pages/voting/vote-page/vote-page.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ComponentsModule} from './components/components.module';
+import { CreateVoteComponent } from './pages/voting/create-vote/create-vote.component';
 
 @NgModule({
 	declarations: [
@@ -17,6 +18,7 @@ import {ComponentsModule} from './components/components.module';
 		VotingPanelPageComponent,
 		ProfilePageComponent,
 		VotePageComponent,
+		CreateVoteComponent,
 	],
 	imports: [
 		BrowserModule,
