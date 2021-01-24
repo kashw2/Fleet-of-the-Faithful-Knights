@@ -3,6 +3,7 @@ import {UserService} from '../../../service/user.service';
 import {None, Option, Some} from 'funfix-core';
 import {Set} from 'immutable';
 import {HyperlinkMap} from '@ffk/lib-angular';
+import {CandidateService} from '../../../service/candidate.service';
 
 @Component({
   selector: 'app-create-vote',
@@ -11,7 +12,10 @@ import {HyperlinkMap} from '@ffk/lib-angular';
 })
 export class CreateVoteComponent implements OnInit {
 
-  constructor(readonly userService: UserService) { }
+  constructor(
+    readonly userService: UserService,
+    readonly candidateService: CandidateService,
+  ) { }
 
   getBrandImage(): Option<string> {
     return Some('./assets/images/Fleet_of_the_Faithful_Knights_Shield.png');
