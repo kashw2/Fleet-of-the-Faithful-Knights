@@ -1,27 +1,27 @@
 import {List} from 'immutable';
-import {Activity, ActivityJsonSerializer} from './activity';
-import {ClientStatus, ClientStatusJsonSerializer} from './client-status';
+import {DiscordActivity, ActivityJsonSerializer} from './activity';
+import {DiscordClientStatus, ClientStatusJsonSerializer} from './client-status';
 import {JsonBuilder, JsonSerializer, parseListSerialized, parseString} from '@ffk/lib-util';
 import {None, Option} from 'funfix-core';
-import {User, UserJsonSerializer} from './user';
+import {DiscordUser, UserJsonSerializer} from './user';
 import {activitiesKey, clientStatusKey, guildIdKey, statusKey, userKey} from './json-keys';
 
-export class Presence {
+export class DiscordPresence {
 
 	constructor(
-		readonly user: Option<User> = None,
+		readonly user: Option<DiscordUser> = None,
 		readonly guildId: Option<string> = None,
 		readonly status: Option<string> = None,
-		readonly activities: List<Activity> = List(),
-		readonly clientStatus: Option<ClientStatus> = None,
+		readonly activities: List<DiscordActivity> = List(),
+		readonly clientStatus: Option<DiscordClientStatus> = None,
 	) {
 	}
 
-	public getActivities(): List<Activity> {
+	public getActivities(): List<DiscordActivity> {
 		return this.activities;
 	}
 
-	public getClientStatus(): Option<ClientStatus> {
+	public getClientStatus(): Option<DiscordClientStatus> {
 		return this.clientStatus;
 	}
 
@@ -33,18 +33,18 @@ export class Presence {
 		return this.status;
 	}
 
-	public getUser(): Option<User> {
+	public getUser(): Option<DiscordUser> {
 		return this.user;
 	}
 
 }
 
-export class PresenceJsonSerializer extends JsonSerializer<Presence> {
+export class PresenceJsonSerializer extends JsonSerializer<DiscordPresence> {
 
 	static instance: PresenceJsonSerializer = new PresenceJsonSerializer();
 
-	fromJson(json: any): Presence {
-		return new Presence(
+	fromJson(json: any): DiscordPresence {
+		return new DiscordPresence(
 			UserJsonSerializer.instance.fromJsonImpl(json[userKey]),
 			parseString(json[guildIdKey]),
 			parseString(json[statusKey]),
@@ -53,7 +53,7 @@ export class PresenceJsonSerializer extends JsonSerializer<Presence> {
 		);
 	}
 
-	toJson(value: Presence, builder: JsonBuilder): Record<string, any> {
+	toJson(value: DiscordPresence, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptionalSerialized(value.getUser(), userKey, UserJsonSerializer.instance)
 			.addOptional(value.getGuildId(), guildIdKey)
 			.addOptional(value.getStatus(), statusKey)

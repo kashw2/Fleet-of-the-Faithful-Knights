@@ -2,7 +2,7 @@ import {None, Option} from 'funfix-core';
 import {JsonBuilder, JsonSerializer, parseBoolean, parseString} from '@ffk/lib-util';
 import {botIdKey, integrationIdKey, premiumSubscriberKey} from './json-keys';
 
-export class RoleTag {
+export class DiscordRoleTag {
 
 	constructor(
 		readonly botId: Option<string> = None,
@@ -25,19 +25,19 @@ export class RoleTag {
 
 }
 
-export class RoleTagJsonSerializer extends JsonSerializer<RoleTag> {
+export class RoleTagJsonSerializer extends JsonSerializer<DiscordRoleTag> {
 
 	static instance: RoleTagJsonSerializer = new RoleTagJsonSerializer();
 
-	fromJson(json: any): RoleTag {
-		return new RoleTag(
+	fromJson(json: any): DiscordRoleTag {
+		return new DiscordRoleTag(
 			parseString(json[botIdKey]),
 			parseString(json[integrationIdKey]),
 			parseBoolean(json[premiumSubscriberKey]),
 		);
 	}
 
-	toJson(value: RoleTag, builder: JsonBuilder): Record<string, any> {
+	toJson(value: DiscordRoleTag, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getBotId(), botIdKey)
 			.addOptional(value.getIntegrationId(), integrationIdKey)
 			.addOptional(value.getPremiumSubscriber(), premiumSubscriberKey)

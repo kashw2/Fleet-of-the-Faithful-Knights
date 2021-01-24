@@ -1,0 +1,12 @@
+@import "../../../scss/branding";
+
+li, a, span {
+  list-style: none;
+  color: $ffk-red;
+}
+
+.border-1 {
+  border-right: 1px solid $ffk-red;
+  border-bottom: 1px solid $ffk-red;
+  border-left: 1px solid $ffk-red;
+}

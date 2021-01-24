@@ -1,6 +1,6 @@
 import {None, Option} from 'funfix-core';
 import {List} from 'immutable';
-import {RoleTag, RoleTagJsonSerializer} from './role-tag';
+import {DiscordRoleTag, RoleTagJsonSerializer} from './role-tag';
 import {JsonBuilder, JsonSerializer, parseBoolean, parseListSerialized, parseNumber, parseString} from '@ffk/lib-util';
 import {
 	colorKey,
@@ -14,7 +14,7 @@ import {
 	tagsKey
 } from './json-keys';
 
-export class Role {
+export class DiscordRole {
 
 	constructor(
 		readonly id: Option<string> = None,
@@ -25,7 +25,7 @@ export class Role {
 		readonly permissions: Option<string> = None,
 		readonly managed: Option<boolean> = None,
 		readonly mentionable: Option<boolean> = None,
-		readonly tags: List<RoleTag> = List(),
+		readonly tags: List<DiscordRoleTag> = List(),
 	) {
 	}
 
@@ -61,18 +61,18 @@ export class Role {
 		return this.position;
 	}
 
-	public getTags(): List<RoleTag> {
+	public getTags(): List<DiscordRoleTag> {
 		return this.tags;
 	}
 
 }
 
-export class RoleJsonSerializer extends JsonSerializer<Role> {
+export class RoleJsonSerializer extends JsonSerializer<DiscordRole> {
 
 	static instance: RoleJsonSerializer = new RoleJsonSerializer();
 
-	fromJson(json: any): Role {
-		return new Role(
+	fromJson(json: any): DiscordRole {
+		return new DiscordRole(
 			parseString(json[idKey]),
 			parseString(json[nameKey]),
 			parseNumber(json[colorKey]),
@@ -85,7 +85,7 @@ export class RoleJsonSerializer extends JsonSerializer<Role> {
 		);
 	}
 
-	toJson(value: Role, builder: JsonBuilder): Record<string, any> {
+	toJson(value: DiscordRole, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getId(), idKey)
 			.addOptional(value.getName(), nameKey)
 			.addOptional(value.getColor(), colorKey)

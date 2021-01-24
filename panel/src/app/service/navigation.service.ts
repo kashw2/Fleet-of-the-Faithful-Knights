@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {Option} from 'funfix-core';
 
@@ -7,7 +7,8 @@ import {Option} from 'funfix-core';
 })
 export class NavigationService {
 
-  constructor(private router: Router ) { }
+  constructor(private router: Router) {
+  }
 
   goToHome(): void {
     this.navigate('home');
@@ -23,14 +24,14 @@ export class NavigationService {
 
   goToVote(id: Option<string>): void {
     if (id.nonEmpty()) {
-      this.navigate(`vote/${id.get()}`);
+      this.navigate(`voting/vote/${id.get()}`);
       return;
     }
     this.navigate('home');
   }
 
   goToVotingPanel(): void {
-    this.navigate('voting-panel');
+    this.navigate('voting/votes');
   }
 
   navigate(route: string): void {

@@ -1,10 +1,19 @@
 import {Collection, List, Set} from 'immutable';
-import {Option, Some} from 'funfix-core';
+import {Option} from 'funfix-core';
 
 export class OptionUtils {
 
+	/**
+	 * Flatten any datatype that extends/inherits a Functor that in itself isn't a HKT
+	 * but is a derived HKT
+	 */
+	static flattenCollection<T>(collection: Collection<any, Option<T>>): Collection<any, T> {
+		return collection.filter(v => v.nonEmpty())
+			.map(v => v.get());
+	}
+
 	static toCollection<T>(items: Collection<any, Option<T>>): Collection<any, T> {
-		return items.filter(v => !v.isEmpty())
+		return items.filter(v => v.nonEmpty())
 			.map(v => v.get());
 	}
 

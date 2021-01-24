@@ -1,9 +1,10 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {HomePageComponent} from './pages/home-page/home-page.component';
-import {VotingPanelPageComponent} from './pages/voting-panel-page/voting-panel-page.component';
+import {VotingPanelPageComponent} from './pages/voting/voting-panel-page/voting-panel-page.component';
 import {ProfilePageComponent} from './pages/profile-page/profile-page.component';
-import {VotePageComponent} from './pages/vote-page/vote-page.component';
+import {VotePageComponent} from './pages/voting/vote-page/vote-page.component';
+import {CreateVoteComponent} from './pages/voting/create-vote/create-vote.component';
 
 const routes: Routes = [
 	{
@@ -16,7 +17,7 @@ const routes: Routes = [
     component: HomePageComponent,
   },
   {
-    path: 'voting-panel',
+    path: 'voting/votes',
     component: VotingPanelPageComponent,
   },
   {
@@ -24,8 +25,12 @@ const routes: Routes = [
     component: ProfilePageComponent,
   },
   {
-    path: 'vote/:id',
+    path: 'voting/vote/:id',
     component: VotePageComponent,
+  },
+  {
+    path: 'voting/create',
+    component: CreateVoteComponent,
   },
 	{
 		path: '**',

@@ -3,7 +3,7 @@ import * as moment from 'moment';
 import {JsonBuilder, JsonSerializer, parseDate} from '@ffk/lib-util';
 import {endKey, startKey} from './json-keys';
 
-export class Timestamp {
+export class DiscordTimestamp {
 
 	constructor(
 		readonly start: Option<moment.Moment> = None,
@@ -21,18 +21,18 @@ export class Timestamp {
 
 }
 
-export class TimestampJsonSerializer extends JsonSerializer<Timestamp> {
+export class TimestampJsonSerializer extends JsonSerializer<DiscordTimestamp> {
 
 	static instance: TimestampJsonSerializer = new TimestampJsonSerializer();
 
-	fromJson(json: any): Timestamp {
-		return new Timestamp(
+	fromJson(json: any): DiscordTimestamp {
+		return new DiscordTimestamp(
 			parseDate(json[startKey]),
 			parseDate(json[endKey]),
 		);
 	}
 
-	toJson(value: Timestamp, builder: JsonBuilder): Record<string, any> {
+	toJson(value: DiscordTimestamp, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptionalDate(value.getStart(), startKey)
 			.addOptionalDate(value.getEnd(), endKey)
 			.build();

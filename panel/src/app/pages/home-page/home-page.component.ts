@@ -5,6 +5,7 @@ import {List, Set} from 'immutable';
 import {Group, News, User} from '@ffk/lib-ts';
 import {CollectionUtils} from '@ffk/lib-util';
 import * as moment from 'moment';
+import {UserService} from '../../service/user.service';
 
 @Component({
   selector: 'app-home-page',
@@ -13,7 +14,7 @@ import * as moment from 'moment';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor() {
+  constructor(readonly userService: UserService) {
   }
 
   contentExtractor = (news: News) => news.getContent();
@@ -24,7 +25,7 @@ export class HomePageComponent implements OnInit {
     return CollectionUtils.optionify(List.of(
       new News(
         Some('0'),
-        Some(new User(Some('123'), Some('Keanu'), None, None, None, None, Some(new Group(None, Some('Developer'), Some('#rain'))))),
+        this.userService.getUser(),
         Set(),
         Some('Hello World'),
         Some('This is the first news piece'),
@@ -34,7 +35,7 @@ export class HomePageComponent implements OnInit {
   }
 
   getBrandImage(): Option<string> {
-    return Some('assets/images/Fleet_of_the_Faithful_Knights_Shield.png');
+    return Some('./assets/images/Fleet_of_the_Faithful_Knights_Shield.png');
   }
 
   getBrandImageRedirectUrl(): Option<string> {
@@ -44,13 +45,10 @@ export class HomePageComponent implements OnInit {
   getHyperlinkMap(): Set<HyperlinkMap> {
     return Set.of(
       new HyperlinkMap(Some('Home'), Some('home'), Some(true)),
-      new HyperlinkMap(Some('Panel'), Some('voting-panel')),
-      new HyperlinkMap(Some('Profile'), Some('profile'), None,
-        Set.of(
-          new HyperlinkMap(Some('Account'), Some('account'), None),
-          new HyperlinkMap(Some('Settings'), Some('settings'), None)
-        ),
-      ),
+      new HyperlinkMap(Some('Panel'), None, None, Set.of(
+        new HyperlinkMap(Some('Votes'), Some('voting/votes')),
+        new HyperlinkMap(Some('Create'), Some('voting/create'))
+      )),
     );
   }
 

@@ -15,7 +15,7 @@ import {
 	verifiedKey
 } from './json-keys';
 
-export class User {
+export class DiscordUser {
 
 	constructor(
 		readonly id: Option<string> = None,
@@ -83,12 +83,12 @@ export class User {
 
 }
 
-export class UserJsonSerializer extends JsonSerializer<User> {
+export class UserJsonSerializer extends JsonSerializer<DiscordUser> {
 
 	static instance: UserJsonSerializer = new UserJsonSerializer();
 
-	fromJson(json: any): User {
-		return new User(
+	fromJson(json: any): DiscordUser {
+		return new DiscordUser(
 			parseString(json[idKey]),
 			parseString(json[usernameKey]),
 			parseString(json[discriminatorKey]),
@@ -104,7 +104,7 @@ export class UserJsonSerializer extends JsonSerializer<User> {
 		);
 	}
 
-	toJson(value: User, builder: JsonBuilder): Record<string, any> {
+	toJson(value: DiscordUser, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getId(), idKey)
 			.addOptional(value.getUsername(), usernameKey)
 			.addOptional(value.getDiscriminator(), discriminatorKey)

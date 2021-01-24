@@ -1,18 +1,4 @@
-<h1 *ngIf="shouldDisplayH1() && getContent().nonEmpty() && getHyperlink().isEmpty()" [ngClass]="getClass()" [style]="getStyle().getOrElse('')">{{getContent().get()}}</h1>
-<h2 *ngIf="shouldDisplayH2() && getContent().nonEmpty() && getHyperlink().isEmpty()" [ngClass]="getClass()" [style]="getStyle().getOrElse('')">{{getContent().get()}}</h2>
-<h3 *ngIf="shouldDisplayH3() && getContent().nonEmpty() && getHyperlink().isEmpty()" [ngClass]="getClass()" [style]="getStyle().getOrElse('')">{{getContent().get()}}</h3>
-<h4 *ngIf="shouldDisplayH4() && getContent().nonEmpty() && getHyperlink().isEmpty()" [ngClass]="getClass()" [style]="getStyle().getOrElse('')">{{getContent().get()}}</h4>
-<h5 *ngIf="shouldDisplayH5() && getContent().nonEmpty() && getHyperlink().isEmpty()" [ngClass]="getClass()" [style]="getStyle().getOrElse('')">{{getContent().get()}}</h5>
-<h6 *ngIf="shouldDisplayH6() && getContent().nonEmpty() && getHyperlink().isEmpty()" [ngClass]="getClass()" [style]="getStyle().getOrElse('')">{{getContent().get()}}</h6>
-<p *ngIf="shouldDisplayP() && getContent().nonEmpty() && getHyperlink().isEmpty()" [ngClass]="getClass()" [style]="getStyle().getOrElse('')">{{getContent().get()}}</p>
-<small *ngIf="shouldDisplaySmall() && getContent().nonEmpty() && getHyperlink().isEmpty()" [ngClass]="getClass()" [style]="getStyle().getOrElse('')">{{getContent().get()}}</small>
+<span *ngIf="getHyperlink().isEmpty()" [ngClass]="getClass()" [style]="getStyle().getOrElse('')"><ng-content></ng-content> {{getContent().get()}}</span>
 <a *ngIf="getHyperlink().nonEmpty()" [href]="getHyperlink().get()">
-  <h1 *ngIf="shouldDisplayH1() && getContent().nonEmpty()" [ngClass]="getClass()" [style]="getStyle().getOrElse('')">{{getContent().get()}}</h1>
-  <h2 *ngIf="shouldDisplayH2() && getContent().nonEmpty()" [ngClass]="getClass()" [style]="getStyle().getOrElse('')">{{getContent().get()}}</h2>
-  <h3 *ngIf="shouldDisplayH3() && getContent().nonEmpty()" [ngClass]="getClass()" [style]="getStyle().getOrElse('')">{{getContent().get()}}</h3>
-  <h4 *ngIf="shouldDisplayH4() && getContent().nonEmpty()" [ngClass]="getClass()" [style]="getStyle().getOrElse('')">{{getContent().get()}}</h4>
-  <h5 *ngIf="shouldDisplayH5() && getContent().nonEmpty()" [ngClass]="getClass()" [style]="getStyle().getOrElse('')">{{getContent().get()}}</h5>
-  <h6 *ngIf="shouldDisplayH6() && getContent().nonEmpty()" [ngClass]="getClass()" [style]="getStyle().getOrElse('')">{{getContent().get()}}</h6>
-  <p *ngIf="shouldDisplayP() && getContent().nonEmpty()" [ngClass]="getClass()" [style]="getStyle().getOrElse('')">{{getContent().get()}}</p>
-  <small *ngIf="shouldDisplaySmall() && getContent().nonEmpty()" [ngClass]="getClass()" [style]="getStyle().getOrElse('')">{{getContent().get()}}</small>
+  <span [ngClass]="getClass()" [style]="getStyle().getOrElse('')"><ng-content></ng-content> {{getContent().get()}}</span>
 </a>

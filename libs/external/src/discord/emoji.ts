@@ -1,16 +1,16 @@
 import {None, Option} from 'funfix-core';
 import {Set} from 'immutable';
-import {User, UserJsonSerializer} from './user';
+import {DiscordUser, UserJsonSerializer} from './user';
 import {JsonBuilder, JsonSerializer, parseBoolean, parseSet, parseString} from '@ffk/lib-util';
 import {animatedKey, availableKey, idKey, managedKey, nameKey, requireColonsKey, rolesKey, userKey} from './json-keys';
 
-export class Emoji {
+export class DiscordEmoji {
 
 	constructor(
 		readonly id: Option<string> = None,
 		readonly name: Option<string> = None,
 		readonly roles: Set<string> = Set(),
-		readonly user: Option<User> = None,
+		readonly user: Option<DiscordUser> = None,
 		readonly requireColons: Option<boolean> = None,
 		readonly managed: Option<boolean> = None,
 		readonly animated: Option<boolean> = None,
@@ -46,18 +46,18 @@ export class Emoji {
 		return this.roles;
 	}
 
-	public getUser(): Option<User> {
+	public getUser(): Option<DiscordUser> {
 		return this.user;
 	}
 
 }
 
-export class EmojiJsonSerializer extends JsonSerializer<Emoji> {
+export class EmojiJsonSerializer extends JsonSerializer<DiscordEmoji> {
 
 	static instance: EmojiJsonSerializer = new EmojiJsonSerializer();
 
-	fromJson(json: any): Emoji {
-		return new Emoji(
+	fromJson(json: any): DiscordEmoji {
+		return new DiscordEmoji(
 			parseString(json[idKey]),
 			parseString(json[nameKey]),
 			parseSet(json[rolesKey]),
@@ -69,7 +69,7 @@ export class EmojiJsonSerializer extends JsonSerializer<Emoji> {
 		);
 	}
 
-	toJson(value: Emoji, builder: JsonBuilder): Record<string, any> {
+	toJson(value: DiscordEmoji, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getId(), idKey)
 			.addOptional(value.getName(), nameKey)
 			.addIterable(value.getRoles(), rolesKey)

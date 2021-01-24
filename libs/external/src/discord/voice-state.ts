@@ -1,5 +1,5 @@
 import {None, Option} from 'funfix-core';
-import {GuildMember, GuildMemberJsonSerializer} from './guild-member';
+import {DiscordGuildMember, GuildMemberJsonSerializer} from './guild-member';
 import {JsonBuilder, JsonSerializer, parseBoolean, parseString} from '@ffk/lib-util';
 import {
 	channelIdKey,
@@ -16,13 +16,13 @@ import {
 	userIdKey
 } from './json-keys';
 
-export class VoiceState {
+export class DiscordVoiceState {
 
 	constructor(
 		readonly guildId: Option<string> = None,
 		readonly channelId: Option<string> = None,
 		readonly userId: Option<string> = None,
-		readonly member: Option<GuildMember> = None,
+		readonly member: Option<DiscordGuildMember> = None,
 		readonly sessionId: Option<string> = None,
 		readonly deaf: Option<boolean> = None,
 		readonly mute: Option<boolean> = None,
@@ -46,7 +46,7 @@ export class VoiceState {
 		return this.guildId;
 	}
 
-	public getMember(): Option<GuildMember> {
+	public getMember(): Option<DiscordGuildMember> {
 		return this.member;
 	}
 
@@ -84,12 +84,12 @@ export class VoiceState {
 
 }
 
-export class VoiceStateJsonSerializer extends JsonSerializer<VoiceState> {
+export class VoiceStateJsonSerializer extends JsonSerializer<DiscordVoiceState> {
 
 	static instance: VoiceStateJsonSerializer = new VoiceStateJsonSerializer();
 
-	fromJson(json: any): VoiceState {
-		return new VoiceState(
+	fromJson(json: any): DiscordVoiceState {
+		return new DiscordVoiceState(
 			parseString(json[guildIdKey]),
 			parseString(json[channelIdKey]),
 			parseString(json[userIdKey]),
@@ -105,7 +105,7 @@ export class VoiceStateJsonSerializer extends JsonSerializer<VoiceState> {
 		);
 	}
 
-	toJson(value: VoiceState, builder: JsonBuilder): Record<string, any> {
+	toJson(value: DiscordVoiceState, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getGuildId(), guildIdKey)
 			.addOptional(value.getChannelId(), channelIdKey)
 			.addOptional(value.getUserId(), userIdKey)

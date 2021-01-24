@@ -1,0 +1,54 @@
+<div class="d-flex container-fluid flex-column flex-grow-1 h-100">
+  <div class="d-flex row">
+    <div class="col p-0">
+      <app-header [brandImageRedirectUrl]="getBrandImageRedirectUrl()"
+                  [brandImage]="getBrandImage()"
+                  [hyperlinkMap]="getHyperlinkMap()"
+                  [user]="userService.getUser()"
+      ></app-header>
+    </div>
+  </div>
+  <div class="d-flex row flex-row flex-grow-1">
+    <div *ngIf="getCandidateAvatar().nonEmpty()"
+         id="profile-image"
+         [style]="'background-image: url(' + getCandidateAvatar().get() + ')'"
+         class="d-md-flex d-sm-none col-md flex-column m-3 px-0">
+    </div>
+    <div *ngIf="!shouldShowVoteView()" class="d-flex col flex-column m-3 px-0">
+      <h2 *ngIf="getCandidateUsername().nonEmpty()">{{getCandidateUsername().get()}} <span
+        *ngIf="getCandidateStarCitizenUsername().nonEmpty()">({{getCandidateStarCitizenUsername().get()}})</span></h2>
+      <small *ngIf="getCandidateStarCitizenBio().nonEmpty()" class="mr-5">{{getCandidateStarCitizenBio().get()}}</small>
+      <hr class="mx-5">
+      <small *ngIf="getVoteDescription().nonEmpty()">{{getVoteDescription().get()}} <span *ngIf="getVoteSponsorUsername().nonEmpty()">- {{getVoteSponsorUsername().get()}}</span></small>
+      <hr class="mx-5">
+      <div class="d-flex justify-content-center h-100">
+        <mdb-icon fas size="lg" icon="arrow-down" class="align-self-end cursor-pointer" (click)="showVoteView.next(true)"></mdb-icon>
+      </div>
+    </div>
+    <div *ngIf="shouldShowVoteView()" class="d-flex col flex-column m-3 px-0">
+      <div class="d-flex container-fluid justify-content-end">
+        <button mdbBtn class="btn btn-danger btn-sm">Deny</button>
+        <button mdbBtn class="btn btn-success btn-sm">Approve</button>
+      </div>
+      <table class="w-100 z-depth-2 mt-2 p-3 rounded">
+        <tr>
+          <td class="small d-table-cell py-2 px-3">Username</td>
+          <td class="small d-table-cell py-2 px-3">Response</td>
+          <td class="small d-table-cell py-2 px-3">Created</td>
+          <td class="small d-table-cell py-2 px-3">Modified</td>
+        </tr>
+        <tr *ngFor="let ballot of getBallots()">
+          <app-safe-td [content]="ballot.getVoterUsername()"
+                       [hyperlink]="getUserProfile(ballot.getVoterId())"
+                       class="d-table-cell px-3"></app-safe-td>
+          <app-safe-td [content]="ballot.getResponse()" class="d-table-cell px-3"></app-safe-td>
+          <app-safe-td [content]="ballot.getCreatedFormatted('DMY')" class="d-table-cell px-3"></app-safe-td>
+          <app-safe-td [content]="ballot.getModifiedFormatted('DMY')" class="d-table-cell px-3"></app-safe-td>
+        </tr>
+      </table>
+      <div class="d-flex justify-content-center h-100">
+        <mdb-icon fas size="lg" icon="arrow-down" class="align-self-end cursor-pointer" (click)="showVoteView.next(false)"></mdb-icon>
+      </div>
+    </div>
+  </div>
+</div>

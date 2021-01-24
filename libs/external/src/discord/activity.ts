@@ -10,8 +10,8 @@ import {
 import {None, Option} from 'funfix-core';
 import {List} from 'immutable';
 import * as moment from 'moment';
-import {Asset, AssetJsonSerializer} from './asset';
-import {Emoji, EmojiJsonSerializer} from './emoji';
+import {DiscordAsset, AssetJsonSerializer} from './asset';
+import {DiscordEmoji, EmojiJsonSerializer} from './emoji';
 import {
 	applicationIdKey,
 	assetsKey,
@@ -28,25 +28,25 @@ import {
 	typeKey,
 	urlKey
 } from './json-keys';
-import {Party, PartyJsonSerializer} from './party';
-import {Secret, SecretJsonSerializer} from './secret';
-import {Timestamp, TimestampJsonSerializer} from './timestamp';
+import {DiscordParty, PartyJsonSerializer} from './party';
+import {DiscordSecret, SecretJsonSerializer} from './secret';
+import {DiscordTimestamp, TimestampJsonSerializer} from './timestamp';
 
-export class Activity {
+export class DiscordActivity {
 
 	constructor(
 		readonly name: Option<string> = None,
 		readonly type: Option<number> = None,
 		readonly url: Option<string> = None,
 		readonly createdAt: Option<moment.Moment> = None,
-		readonly timestamps: List<Timestamp> = List(),
+		readonly timestamps: List<DiscordTimestamp> = List(),
 		readonly applicationId: Option<string> = None,
 		readonly details: Option<string> = None,
 		readonly state: Option<string> = None,
-		readonly emoji: Option<Emoji> = None,
-		readonly party: Option<Party> = None,
-		readonly assets: Option<Asset> = None,
-		readonly secrets: Option<Secret> = None,
+		readonly emoji: Option<DiscordEmoji> = None,
+		readonly party: Option<DiscordParty> = None,
+		readonly assets: Option<DiscordAsset> = None,
+		readonly secrets: Option<DiscordSecret> = None,
 		readonly instance: Option<boolean> = None,
 		readonly flags: Option<number> = None,
 	) {
@@ -56,7 +56,7 @@ export class Activity {
 		return this.applicationId;
 	}
 
-	public getAssets(): Option<Asset> {
+	public getAssets(): Option<DiscordAsset> {
 		return this.assets;
 	}
 
@@ -68,7 +68,7 @@ export class Activity {
 		return this.details;
 	}
 
-	public getEmoji(): Option<Emoji> {
+	public getEmoji(): Option<DiscordEmoji> {
 		return this.emoji;
 	}
 
@@ -84,11 +84,11 @@ export class Activity {
 		return this.name;
 	}
 
-	public getParty(): Option<Party> {
+	public getParty(): Option<DiscordParty> {
 		return this.party;
 	}
 
-	public getSecret(): Option<Secret> {
+	public getSecret(): Option<DiscordSecret> {
 		return this.secrets;
 	}
 
@@ -96,7 +96,7 @@ export class Activity {
 		return this.state;
 	}
 
-	public getTimestamps(): List<Timestamp> {
+	public getTimestamps(): List<DiscordTimestamp> {
 		return this.timestamps;
 	}
 
@@ -110,12 +110,12 @@ export class Activity {
 
 }
 
-export class ActivityJsonSerializer extends JsonSerializer<Activity> {
+export class ActivityJsonSerializer extends JsonSerializer<DiscordActivity> {
 
 	static instance: ActivityJsonSerializer = new ActivityJsonSerializer();
 
-	fromJson(json: any): Activity {
-		return new Activity(
+	fromJson(json: any): DiscordActivity {
+		return new DiscordActivity(
 			parseString(json[nameKey]),
 			parseNumber(json[typeKey]),
 			parseString(json[urlKey]),
@@ -133,7 +133,7 @@ export class ActivityJsonSerializer extends JsonSerializer<Activity> {
 		);
 	}
 
-	toJson(value: Activity, builder: JsonBuilder): Record<string, any> {
+	toJson(value: DiscordActivity, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getName(), nameKey)
 			.addOptional(value.getType(), typeKey)
 			.addOptional(value.getUrl(), urlKey)

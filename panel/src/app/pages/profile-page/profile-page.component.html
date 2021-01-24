@@ -4,6 +4,7 @@
       <app-header [brandImageRedirectUrl]="getBrandImageRedirectUrl()"
                   [brandImage]="getBrandImage()"
                   [hyperlinkMap]="getHyperlinkMap()"
+                  [user]="userService.getUser()"
       ></app-header>
     </div>
   </div>
@@ -13,18 +14,16 @@
         <img [src]="getUserAvatar().get()" height="250px" width="250px">
       </div>
     </div>
-    <div class="d-flex col flex-column my-3 pl-0">
-      <h4 *ngIf="getUserName().nonEmpty()" class="my-0">{{getUserName().get()}}</h4>
-      <hr class="my-2 mr-5">
-      <small *ngIf="getId().nonEmpty()">{{getId().get()}}</small>
+    <div class="d-flex col flex-column my-2 pl-0">
+      <h4 *ngIf="getUserName().nonEmpty()" class="my-1">{{getUserName().get()}}</h4>
+      <p *ngIf="getId().nonEmpty()" class="my-1">{{getId().get()}}</p>
       <app-coloured-text [content]="getGroupName()"
                          [hex]="getGroupColour()"
-                         type="small"
-                         position="Start"
-      ></app-coloured-text>
-      <small *ngIf="getMemberSince().nonEmpty()">Member Since: {{getMemberSince().get()}}</small>
-      <hr class="my-2 mr-5">
-      <div class="d-flex container flex-row flex-wrap px-0 my-1 tag-bg">
+                         type="p"
+                         position="Start">
+      </app-coloured-text>
+      <p *ngIf="getMemberSince().nonEmpty()" class="my-1">Member Since: {{getMemberSince().get()}}</p>
+      <div class="d-flex container flex-row flex-wrap px-0 mx-0 my-1 tag-bg justify-content-start w-50">
         <div *ngFor="let permission of getPermissions()" class="d-flex col-auto tag justify-content-center align-content-center z-depth-1">
           <small>{{permission}}</small>
         </div>

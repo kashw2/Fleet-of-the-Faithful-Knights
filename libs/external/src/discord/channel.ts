@@ -1,7 +1,7 @@
 import {None, Option} from 'funfix-core';
-import {Overwrite, OverwriteJsonSerializer} from './overwrite';
+import {DiscordOverwrite, OverwriteJsonSerializer} from './overwrite';
 import {Set} from 'immutable';
-import {User, UserJsonSerializer} from './user';
+import {DiscordUser, UserJsonSerializer} from './user';
 import * as moment from 'moment';
 import {
 	JsonBuilder,
@@ -33,14 +33,14 @@ import {
 	userLimitKey
 } from './json-keys';
 
-export class Channel {
+export class DiscordChannel {
 
 	constructor(
 		readonly id: Option<string> = None,
 		readonly type: Option<number> = None,
 		readonly guildId: Option<string> = None,
 		readonly position: Option<number> = None,
-		readonly permissionOverwrites: Set<Overwrite> = Set(),
+		readonly permissionOverwrites: Set<DiscordOverwrite> = Set(),
 		readonly name: Option<string> = None,
 		readonly topic: Option<string> = None,
 		readonly nsfw: Option<boolean> = None,
@@ -48,7 +48,7 @@ export class Channel {
 		readonly bitrate: Option<number> = None,
 		readonly userLimit: Option<number> = None,
 		readonly rateLimitPerUser: Option<number> = None,
-		readonly recipients: Set<User> = Set(),
+		readonly recipients: Set<DiscordUser> = Set(),
 		readonly icon: Option<string> = None,
 		readonly ownerId: Option<string> = None,
 		readonly applicationId: Option<string> = None,
@@ -101,7 +101,7 @@ export class Channel {
 		return this.parentId;
 	}
 
-	public getPermissionOverwrites(): Set<Overwrite> {
+	public getPermissionOverwrites(): Set<DiscordOverwrite> {
 		return this.permissionOverwrites;
 	}
 
@@ -113,7 +113,7 @@ export class Channel {
 		return this.rateLimitPerUser;
 	}
 
-	public getRecipients(): Set<User> {
+	public getRecipients(): Set<DiscordUser> {
 		return this.recipients;
 	}
 
@@ -131,12 +131,12 @@ export class Channel {
 
 }
 
-export class ChannelJsonSerializer extends JsonSerializer<Channel> {
+export class ChannelJsonSerializer extends JsonSerializer<DiscordChannel> {
 
 	static instance: ChannelJsonSerializer = new ChannelJsonSerializer();
 
-	fromJson(json: any): Channel {
-		return new Channel(
+	fromJson(json: any): DiscordChannel {
+		return new DiscordChannel(
 			parseString(json[idKey]),
 			parseNumber(json[typeKey]),
 			parseString(json[guildIdKey]),
@@ -158,7 +158,7 @@ export class ChannelJsonSerializer extends JsonSerializer<Channel> {
 		);
 	}
 
-	toJson(value: Channel, builder: JsonBuilder): Record<string, any> {
+	toJson(value: DiscordChannel, builder: JsonBuilder): Record<string, any> {
 		return builder.addOptional(value.getId(), idKey)
 			.addOptional(value.getType(), typeKey)
 			.addOptional(value.getGuildId(), guildIdKey)
