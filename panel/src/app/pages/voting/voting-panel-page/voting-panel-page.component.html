@@ -18,9 +18,9 @@
           <td class="small">Promotion Group</td>
           <td class="small">Date</td>
         </tr>
-        <tr *ngFor="let vote of getVotes()" class="cursor-pointer">
+        <tr *ngFor="let vote of voteService.getVotes()" class="cursor-pointer">
           <app-safe-td [content]="vote.getCandidateUsername()" (click)="navigationService.goToVote(vote.getId())"></app-safe-td>
-          <app-safe-td [content]="vote.getSponsorUsername()" [hyperlink]="getUserProfile()" class="d-table-cell"></app-safe-td>
+          <app-safe-td [content]="vote.getSponsorUsername()" [hyperlink]="getSponsorProfile(vote.getSponsorId())" class="d-table-cell"></app-safe-td>
           <app-safe-td [content]="vote.getCandidateGroupName()"
                        [colour]="vote.getCandidateGroupColour()"
                        (click)="navigationService.goToVote(vote.getId())">

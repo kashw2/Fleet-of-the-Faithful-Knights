@@ -1,6 +1,15 @@
 import {JsonBuilder, JsonSerializer, MomentUtils, parseDate, parseSetSerialized, parseString} from '@ffk/lib-util';
 import {None, Option} from 'funfix-core';
-import {ballotsKey, candidateKey, createdKey, descriptionKey, groupKey, idKey, sponsorKey} from '../misc/json-keys';
+import {
+	ballotsKey,
+	candidateKey,
+	createdKey,
+	descriptionKey,
+	groupKey,
+	idKey, modifiedKey,
+	sponsorKey,
+	starCitizenUrlKey
+} from '../misc/json-keys';
 import {User, UserJsonSerializer} from './user';
 import {Candidate, CandidateJsonSerializer} from './candidate';
 import {Group, GroupJsonSerializer} from './group';
@@ -17,6 +26,7 @@ export class Vote {
 		private promotionGroup: Option<Group> = None,
 		private description: Option<string> = None,
 		private ballots: Set<Ballot> = Set(),
+		private starCitizenUrl: Option<string> = None,
 		private created: Option<moment.Moment> = None,
 		private modified: Option<moment.Moment> = None,
 	) {
@@ -95,6 +105,10 @@ export class Vote {
 			.flatMap(s => s.getUsername());
 	}
 
+	public getStarCitizenUrl(): Option<string> {
+		return this.starCitizenUrl;
+	}
+
 }
 
 export class VoteJsonSerializer extends JsonSerializer<Vote> {
@@ -109,7 +123,9 @@ export class VoteJsonSerializer extends JsonSerializer<Vote> {
 			GroupJsonSerializer.instance.fromJsonImpl(json[groupKey]),
 			parseString(json[descriptionKey]),
 			parseSetSerialized(json[ballotsKey], BallotJsonSerializer.instance),
+			parseString(json[starCitizenUrlKey]),
 			parseDate(json[createdKey]),
+			parseDate(json[modifiedKey]),
 		);
 	}
 
@@ -120,7 +136,9 @@ export class VoteJsonSerializer extends JsonSerializer<Vote> {
 			.addOptionalSerialized(value.getPromotionGroup(), groupKey, GroupJsonSerializer.instance)
 			.addOptional(value.getDescription(), descriptionKey)
 			.addIterableSerialized(value.getBallots(), ballotsKey, BallotJsonSerializer.instance)
+			.addOptional(value.getStarCitizenUrl(), starCitizenUrlKey)
 			.addOptionalDate(value.getCreated(), createdKey)
+			.addOptional(value.getModified(), modifiedKey)
 			.build();
 	}
 

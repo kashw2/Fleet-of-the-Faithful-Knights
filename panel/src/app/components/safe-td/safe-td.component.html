@@ -1,4 +1,4 @@
-<a *ngIf="getHyperlink().nonEmpty()" [href]="getHyperlink().get()">
+<a *ngIf="getHyperlink().nonEmpty()" (click)="navigationService.navigate(getHyperlink().get())">
   <td *ngIf="getContent().nonEmpty() && getColour().isEmpty()"
       [ngClass]="shouldBeSmall() ? 'small' : ''">{{getContent().get()}}</td>
   <td *ngIf="getContent().isEmpty() && getColour().isEmpty()" [ngClass]="shouldBeSmall() ? 'small' : ''"></td>

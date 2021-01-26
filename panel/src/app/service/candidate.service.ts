@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {Candidate, Group} from '@ffk/lib-ts';
 import {Set} from 'immutable';
-import {Some} from 'funfix-core';
+import {None, Option, Some} from 'funfix-core';
 import {StarCitizenOrganisation, StarCitizenUser} from '@ffk/lib-external';
 import * as moment from 'moment';
 import {OptionUtils} from '@ffk/lib-util';
@@ -12,7 +12,15 @@ import {OptionUtils} from '@ffk/lib-util';
 })
 export class CandidateService {
 
+  constructor() {
+  }
+
   candidates: BehaviorSubject<Set<Candidate>> = new BehaviorSubject<Set<Candidate>>(Set<Candidate>());
+
+  // Not a fan of this method tbh
+  getCandidateByIndex(index: number): Option<Candidate> {
+    return Option.of(this.getCandidates().toList().get(index, null));
+  }
 
   getCandidateNames(): Set<string> {
     return OptionUtils.flattenCollection(this.getCandidates()
@@ -61,8 +69,5 @@ export class CandidateService {
         )),
       )
     );
-  }
-
-  constructor() {
   }
 }
