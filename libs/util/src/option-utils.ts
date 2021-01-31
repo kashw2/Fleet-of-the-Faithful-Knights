@@ -1,5 +1,5 @@
 import {Collection, List, Set} from 'immutable';
-import {Option} from 'funfix-core';
+import {Either, Left, Option, Right} from 'funfix-core';
 
 export class OptionUtils {
 
@@ -10,6 +10,13 @@ export class OptionUtils {
 	static flattenCollection<T>(collection: Collection<any, Option<T>>): Collection<any, T> {
 		return collection.filter(v => v.nonEmpty())
 			.map(v => v.get());
+	}
+
+	static liftEither<T>(opt: Option<T>, left: string): Either<string, T> {
+		if (opt.nonEmpty()) {
+			return Right(opt.get());
+		}
+		return Left(left);
 	}
 
 	static toCollection<T>(items: Collection<any, Option<T>>): Collection<any, T> {
