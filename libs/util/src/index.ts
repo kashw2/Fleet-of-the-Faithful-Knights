@@ -5,3 +5,5 @@ export * from './string-utils';
 export * from './collection-utils';
 export * from './option-utils';
 export * from './moment-utils';
+export * from './crud/crud';
+export * from './crud/crud-localstorage';

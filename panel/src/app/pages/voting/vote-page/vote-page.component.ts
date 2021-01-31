@@ -8,6 +8,7 @@ import {UserService} from '../../../service/user.service';
 import {StarCitizenOrganisation, StarCitizenUser} from '@ffk/lib-external';
 import {BehaviorSubject} from 'rxjs';
 import {NavigationService} from '../../../service/navigation.service';
+import {CandidateService} from '../../../service/candidate.service';
 
 @Component({
   selector: 'app-vote-page',
@@ -19,6 +20,7 @@ export class VotePageComponent implements OnInit {
   constructor(
     readonly userService: UserService,
     readonly navigationService: NavigationService,
+    private candidateService: CandidateService,
   ) {
   }
 
@@ -124,46 +126,7 @@ export class VotePageComponent implements OnInit {
       new Vote(
         Some('1'),
         this.userService.getUser(),
-        Some(
-          new Candidate(
-            Some('123'),
-            Some('Bship'),
-            Some('123456789'),
-            Some('#1337'),
-            Some('https://dto9r5vaiz7bu.cloudfront.net/bj7w80a5h2mic/source.png'),
-            Some(new Group(Some('1'), Some('Master Commander'), Some('#ff0000'))),
-            Some(new StarCitizenUser(
-              Some('123456'),
-              Some('Bship'),
-              Some('Bship'),
-              Some('Bship'),
-              Some(moment()),
-              Some('Colorado'),
-              Some('English'),
-              Some('faithfulknights.com'),
-              Some('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus ducimus molestiae porro quas. Autem delectus dicta, dolores doloribus et hic in incidunt possimus provident quos similique sunt veniam veritatis voluptatum. Alias aliquid animi corporis deserunt distinctio enim hic ipsa laborum, minus mollitia nulla omnis quas quasi\n' +
-                '  quidem, sed sequi similique, suscipit totam vitae voluptate! A aliquid aspernatur blanditiis delectus dolor. Accusantium ad aliquid architecto culpa dolores ea earum eos esse eum facilis harum in inventore ipsa iure laborum\n' +
-                '  natus quae quasi, quos recusandae rem rerum unde ut voluptatem! Officia, officiis.'),
-              Set.of(
-                new StarCitizenOrganisation(
-                  Some('FFK'),
-                  Some('Fleet of the Faithful Knights'),
-                  Some(true),
-                  Some('Master Commander'),
-                  Some(6),
-                  Some('Organization'),
-                  Some('English'),
-                  Some('Social'),
-                  Some(true),
-                  Some('Security'),
-                  Some(false),
-                  Some('Regular'),
-                  Some(false),
-                ),
-              ),
-            )),
-          ),
-        ),
+        Some(this.candidateService.getCandidates().first()),
         Some(new Group(Some('2'), Some('Developer'), Some('#ff00ff'))),
         Some('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus ducimus molestiae porro quas. Autem delectus dicta, dolores doloribus et hic in incidunt possimus provident quos similique sunt veniam veritatis voluptatum. Alias aliquid animi corporis deserunt distinctio enim hic ipsa laborum, minus mollitia nulla omnis quas quasi\n' +
           '  quidem, sed sequi similique, suscipit totam vitae voluptate! A aliquid aspernatur blanditiis delectus dolor. Accusantium ad aliquid architecto culpa dolores ea earum eos esse eum facilis harum in inventore ipsa iure laborum\n' +

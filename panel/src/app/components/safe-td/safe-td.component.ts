@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {None, Option} from 'funfix-core';
+import {NavigationService} from '../../service/navigation.service';
 
 @Component({
   selector: 'app-safe-td',
@@ -8,7 +9,7 @@ import {None, Option} from 'funfix-core';
 })
 export class SafeTdComponent implements OnInit {
 
-  constructor() {
+  constructor(readonly navigationService: NavigationService) {
   }
 
   @Input() colour: Option<string> = None;

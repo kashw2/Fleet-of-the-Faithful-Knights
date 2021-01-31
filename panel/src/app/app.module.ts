@@ -10,6 +10,9 @@ import {VotePageComponent} from './pages/voting/vote-page/vote-page.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ComponentsModule} from './components/components.module';
 import { CreateVoteComponent } from './pages/voting/create-vote/create-vote.component';
+import {VoteService} from './service/vote.service';
+import {CandidateService} from './service/candidate.service';
+import {UserService} from './service/user.service';
 
 @NgModule({
 	declarations: [
@@ -27,7 +30,7 @@ import { CreateVoteComponent } from './pages/voting/create-vote/create-vote.comp
 		MDBBootstrapModulesPro.forRoot(),
     ComponentsModule,
 	],
-	providers: [MDBSpinningPreloader],
+	providers: [MDBSpinningPreloader, CandidateService, UserService, VoteService],
 	bootstrap: [AppComponent]
 })
 export class AppModule {

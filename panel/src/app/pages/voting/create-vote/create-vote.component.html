@@ -16,8 +16,11 @@
         <div class="d-flex container flex-column h-100 w-75 py-2 justify-content-center overflow-hidden">
           <h6 class="my-2">Candidate</h6>
           <div class="md-form my-1">
-            <input mdbInput #candidateUsername id="candidate-username" class="form-control" type="text">
-            <label for="candidate-username">Username</label>
+            <mdb-select-2 #candidateUsername label="Username">
+              <mdb-select-option *ngFor="let candidateName of candidateService.getCandidateNames(); let i = index"
+                                 (click)="updateCandidate(candidateService.getCandidateByIndex(i))">{{candidateName}}
+              </mdb-select-option>
+            </mdb-select-2>
           </div>
           <div class="md-form my-1">
             <input mdbInput #promotionGroup id="promotion-group" class="form-control" type="text">
@@ -29,10 +32,12 @@
           </div>
           <h6 class="my-2">Star Citizen</h6>
           <div class="md-form my-1">
-            <input mdbInput id="handle" class="form-control" type="text">
-            <label for="handle">Handle</label>
+            <input mdbInput #starCitizenUrl id="profile-url" class="form-control" type="text">
+            <label for="profile-url">Profile Url</label>
           </div>
-          <button mdbBtn mdbWavesEffect class="btn-success my-auto">Create</button>
+          <button mdbBtn mdbWavesEffect class="btn-success my-auto"
+                  (click)="writeVote(promotionGroup.value, description.value, starCitizenUrl.value)">Create
+          </button>
         </div>
       </div>
     </div>

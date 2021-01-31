@@ -6,6 +6,7 @@ import {HyperlinkMap} from '@ffk/lib-angular';
 import * as moment from 'moment';
 import {NavigationService} from '../../../service/navigation.service';
 import {UserService} from '../../../service/user.service';
+import {VoteService} from '../../../service/vote.service';
 
 @Component({
   selector: 'app-voting-panel-page',
@@ -17,6 +18,7 @@ export class VotingPanelPageComponent implements OnInit {
   constructor(
     readonly navigationService: NavigationService,
     readonly userService: UserService,
+    readonly voteService: VoteService,
   ) {
   }
 
@@ -38,24 +40,8 @@ export class VotingPanelPageComponent implements OnInit {
     );
   }
 
-  getUserProfile(): Option<string> {
-    return this.userService.getUser()
-      .flatMap(u => u.getId())
-      .map(id => `profile/${id}`);
-  }
-
-  getVotes(): Set<Vote> {
-    return Set.of(
-      new Vote(
-        Some('123'),
-        Some(new User(Some('12345'), Some('Keanu'))),
-        Some(new Candidate(Some('123'), Some('Bship'), None, None, None, Some(new Group(None, Some('Master Commander'), Some('#000000'))))),
-        Some(new Group(None, Some('Developer'), Some('#RAIN'))),
-        Some('Vote description'),
-        Set(),
-        Some(moment())
-      ),
-    );
+  getSponsorProfile(sponsorId: Option<string>): Option<string> {
+    return sponsorId.map(id => `profile/${id}`);
   }
 
   ngOnInit(): void {
