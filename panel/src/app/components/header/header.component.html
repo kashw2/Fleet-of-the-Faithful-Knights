@@ -18,8 +18,7 @@
       <div *ngFor="let link of getHyperlinkMap()" class="mx-2 dropdown-parent">
         <a *ngIf="link.getHyperlink().nonEmpty() && link.getLabel().nonEmpty() && !link.getDropdownHyperlinks().isEmpty()"
            (click)="navigationService.navigate(link.getHyperlink().get())"
-           [ngClass]="link.isActive() ? 'active-underline text-danger' : 'animated-underline text-danger'"
-        >
+           [ngClass]="link.isActive() ? 'active-underline text-danger' : 'animated-underline text-danger'">
           {{shouldCapitalise() ? link.getLabel().get().toUpperCase() : link.getLabel().get()}}
         </a>
         <p *ngIf="link.getHyperlink().isEmpty() && link.getLabel().nonEmpty() && !link.getDropdownHyperlinks().isEmpty()"
