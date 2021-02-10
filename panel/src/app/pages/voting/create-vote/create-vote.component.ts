@@ -9,6 +9,8 @@ import {Candidate, Group, Vote} from '@ffk/lib-ts';
 import {BehaviorSubject} from 'rxjs';
 import * as moment from 'moment';
 import {StarCitizenOrganisation, StarCitizenUser} from '../../../../../../libs/external';
+import {NavigationService} from '../../../service/navigation.service';
+import {OptionUtils} from '../../../../../../libs/util';
 
 @Component({
   selector: 'app-create-vote',
@@ -21,6 +23,7 @@ export class CreateVoteComponent implements OnInit {
     readonly userService: UserService,
     readonly candidateService: CandidateService,
     private voteService: VoteService,
+    private navigationService: NavigationService,
   ) {
   }
 
@@ -37,6 +40,24 @@ export class CreateVoteComponent implements OnInit {
 
   getBrandImageRedirectUrl(): Option<string> {
     return Some('home');
+  }
+
+  getGroups(): Set<Group> {
+    return Set.of(
+      new Group(Some('0'), Some('Sergeant'), Some('#206694'), Some(1)),
+      new Group(Some('1'), Some('Sergeant First Class'), Some('#206694'), Some(2)),
+      new Group(Some('3'), Some('Knight'), Some('#e67e22'), Some(3)),
+      new Group(Some('4'), Some('Knight Lieutenant'), Some('#ce7100'), Some(4)),
+      new Group(Some('5'), Some('Knight Commander'), Some('#ce7100'), Some(5)),
+      new Group(Some('6'), Some('Master Commander'), Some('#9b0000'), Some(6)),
+      new Group(Some('7'), Some('Grand Master'), Some('#8a0303'), Some(7)),
+    );
+  }
+
+  getHierarchicallyOrderedGroupNames(): Set<string> {
+    return OptionUtils.flattenSet(this.getGroups()
+      .sort((current, previous) => current.isHigher(previous) ? 1 : -1)
+      .map(v => v.getLabel()));
   }
 
   getHyperlinkMap(): Set<HyperlinkMap> {
@@ -73,6 +94,7 @@ export class CreateVoteComponent implements OnInit {
       Some(moment()),
     );
     this.voteService.votes.next(this.voteService.getVotes().add(vote));
+    this.navigationService.goToVote(vote.getId());
   }
 
 }

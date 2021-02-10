@@ -16,15 +16,18 @@
         <div class="d-flex container flex-column h-100 w-75 py-2 justify-content-center overflow-hidden">
           <h6 class="my-2">Candidate</h6>
           <div class="md-form my-1">
-            <mdb-select-2 #candidateUsername label="Username">
+            <mdb-select-2 placeholder="Username">
               <mdb-select-option *ngFor="let candidateName of candidateService.getCandidateNames(); let i = index"
                                  (click)="updateCandidate(candidateService.getCandidateByIndex(i))">{{candidateName}}
               </mdb-select-option>
             </mdb-select-2>
           </div>
           <div class="md-form my-1">
-            <input mdbInput #promotionGroup id="promotion-group" class="form-control" type="text">
-            <label for="promotion-group">Promotion Group</label>
+            <mdb-select-2 #promotionGroup placeholder="Group">
+              <mdb-select-option *ngFor="let group of getHierarchicallyOrderedGroupNames()">
+                {{group}}
+              </mdb-select-option>
+            </mdb-select-2>
           </div>
           <div class="md-form my-1">
             <textarea mdbInput #description id="description" class="md-textarea w-100"></textarea>
