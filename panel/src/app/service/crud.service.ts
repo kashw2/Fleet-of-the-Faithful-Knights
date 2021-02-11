@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Crud, CrudLocalStorage} from '@ffk/lib-util';
+import {CrudLocalStorage} from '@ffk/lib-util';
 
 @Injectable({
   providedIn: 'root'

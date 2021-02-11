@@ -1,6 +1,6 @@
 import {None, Option} from 'funfix-core';
-import {JsonBuilder, JsonSerializer, parseString} from '@ffk/lib-util';
-import {colourKey, idKey, labelKey} from '../misc/json-keys';
+import {JsonBuilder, JsonSerializer, OptionUtils, parseNumber, parseString} from '@ffk/lib-util';
+import {colourKey, hierarchyKey, idKey, labelKey} from '../misc/json-keys';
 
 export class Group {
 
@@ -8,11 +8,16 @@ export class Group {
 		private id: Option<string> = None,
 		private label: Option<string> = None,
 		private colour: Option<string> = None,
+		private hierarchy: Option<number> = None,
 	) {
 	}
 
 	public getColour(): Option<string> {
 		return this.colour;
+	}
+
+	public getHierarchy(): Option<number> {
+		return this.hierarchy;
 	}
 
 	public getId(): Option<string> {
@@ -21,6 +26,18 @@ export class Group {
 
 	public getLabel(): Option<string> {
 		return this.label;
+	}
+
+	public isHigher(group: Group): boolean {
+		return OptionUtils.exists2(this.getHierarchy(), group.getHierarchy(), (cGhid: number, oGhid: number) => {
+			return cGhid > oGhid;
+		});
+	}
+
+	public isLower(group: Group): boolean {
+		return OptionUtils.exists2(this.getHierarchy(), group.getHierarchy(), (cGhid: number, oGhid: number) => {
+			return cGhid < oGhid;
+		});
 	}
 
 }
@@ -34,6 +51,7 @@ export class GroupJsonSerializer extends JsonSerializer<Group> {
 			parseString(json[idKey]),
 			parseString(json[labelKey]),
 			parseString(json[colourKey]),
+			parseNumber(json[hierarchyKey]),
 		);
 	}
 
@@ -41,6 +59,7 @@ export class GroupJsonSerializer extends JsonSerializer<Group> {
 		return builder.addOptional(value.getId(), idKey)
 			.addOptional(value.getLabel(), labelKey)
 			.addOptional(value.getColour(), colourKey)
+			.addOptional(value.getHierarchy(), hierarchyKey)
 			.build();
 	}
 

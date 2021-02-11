@@ -19,16 +19,16 @@
           <td class="small">Date</td>
         </tr>
         <tr *ngFor="let vote of voteService.getVotes()" class="cursor-pointer">
-          <app-safe-td [content]="vote.getCandidateUsername()" (click)="navigationService.goToVote(vote.getId())"></app-safe-td>
+          <app-safe-td [content]="vote.getCandidateUsername()" (click)="navigationService.goToVote(vote.getId()); this.voteService.setCurrentVoteId(vote.getId())"></app-safe-td>
           <app-safe-td [content]="vote.getSponsorUsername()" [hyperlink]="getSponsorProfile(vote.getSponsorId())" class="d-table-cell"></app-safe-td>
           <app-safe-td [content]="vote.getCandidateGroupName()"
                        [colour]="vote.getCandidateGroupColour()"
-                       (click)="navigationService.goToVote(vote.getId())">
+                       (click)="navigationService.goToVote(vote.getId()); this.voteService.setCurrentVoteId(vote.getId())">
           </app-safe-td>
           <app-safe-td [content]="vote.getPromotionGroupName()"
                        [colour]="vote.getPromotionGroupColour()"
                        class="d-table-cell"
-                       (click)="navigationService.goToVote(vote.getId())">
+                       (click)="navigationService.goToVote(vote.getId()); this.voteService.setCurrentVoteId(vote.getId())">
           </app-safe-td>
           <app-safe-td [content]="vote.getFormattedCreatedString('DMY')" (click)="navigationService.goToVote(vote.getId())"></app-safe-td>
         </tr>

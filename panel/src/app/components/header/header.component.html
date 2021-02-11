@@ -6,22 +6,19 @@
              [src]="getBrandImage().get()"
              height="50px"
              width="50px"
-             class="m-2"
-        >
+             class="m-2">
       </a>
       <img *ngIf="getBrandImageRedirectUrl().isEmpty() && getBrandImage().nonEmpty()"
            [src]="getBrandImage().get()"
            height="50px"
            width="50px"
-           class="m-2"
-      >
+           class="m-2">
     </div>
     <div *ngIf="!getHyperlinkMap().isEmpty()" class="d-flex col align-self-center justify-content-start">
       <div *ngFor="let link of getHyperlinkMap()" class="mx-2 dropdown-parent">
         <a *ngIf="link.getHyperlink().nonEmpty() && link.getLabel().nonEmpty() && !link.getDropdownHyperlinks().isEmpty()"
-           (click)="link.getHyperlink().get()"
-           [ngClass]="link.isActive() ? 'active-underline text-danger' : 'animated-underline text-danger'"
-        >
+           (click)="navigationService.navigate(link.getHyperlink().get())"
+           [ngClass]="link.isActive() ? 'active-underline text-danger' : 'animated-underline text-danger'">
           {{shouldCapitalise() ? link.getLabel().get().toUpperCase() : link.getLabel().get()}}
         </a>
         <p *ngIf="link.getHyperlink().isEmpty() && link.getLabel().nonEmpty() && !link.getDropdownHyperlinks().isEmpty()"
@@ -33,7 +30,7 @@
                       class="z-depth-2"
         ></app-dropdown>
         <a *ngIf="link.getHyperlink().nonEmpty() && link.getLabel().nonEmpty() && link.getDropdownHyperlinks().isEmpty()"
-          (click)="link.getHyperlink().get()"
+          (click)="navigationService.navigate(link.getHyperlink().get())"
           [ngClass]="link.isActive() ? 'active-underline text-danger' : 'animated-underline text-danger'"
         >
           {{shouldCapitalise() ? link.getLabel().get().toUpperCase() : link.getLabel().get()}}

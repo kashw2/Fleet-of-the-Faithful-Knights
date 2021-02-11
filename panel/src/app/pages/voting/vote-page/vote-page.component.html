@@ -27,8 +27,8 @@
     </div>
     <div *ngIf="shouldShowVoteView()" class="d-flex col flex-column m-3 px-0">
       <div class="d-flex container-fluid justify-content-end">
-        <button mdbBtn class="btn btn-danger btn-sm">Deny</button>
-        <button mdbBtn class="btn btn-success btn-sm">Approve</button>
+        <button mdbBtn class="btn btn-danger btn-sm" (click)="deny()">Deny</button>
+        <button mdbBtn class="btn btn-success btn-sm" (click)="approve()">Approve</button>
       </div>
       <table class="w-100 z-depth-2 mt-2 p-3 rounded">
         <tr>
