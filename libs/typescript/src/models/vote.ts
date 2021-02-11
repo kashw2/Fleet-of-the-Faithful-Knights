@@ -109,6 +109,20 @@ export class Vote {
 		return this.starCitizenUrl;
 	}
 
+	public withBallot(ballot: Ballot): Vote {
+		return new Vote(
+			this.getId(),
+			this.getSponsor(),
+			this.getCandidate(),
+			this.getPromotionGroup(),
+			this.getDescription(),
+			this.getBallots().add(ballot),
+			this.getStarCitizenUrl(),
+			this.getCreated(),
+			this.getModified(),
+		);
+	}
+
 }
 
 export class VoteJsonSerializer extends JsonSerializer<Vote> {

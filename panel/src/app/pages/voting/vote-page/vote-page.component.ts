@@ -9,6 +9,8 @@ import {StarCitizenOrganisation, StarCitizenUser} from '@ffk/lib-external';
 import {BehaviorSubject} from 'rxjs';
 import {NavigationService} from '../../../service/navigation.service';
 import {CandidateService} from '../../../service/candidate.service';
+import {VoteService} from '../../../service/vote.service';
+import {OptionUtils} from '../../../../../../libs/util';
 
 @Component({
   selector: 'app-vote-page',
@@ -21,10 +23,29 @@ export class VotePageComponent implements OnInit {
     readonly userService: UserService,
     readonly navigationService: NavigationService,
     private candidateService: CandidateService,
+    private voteService: VoteService,
   ) {
   }
 
   showVoteView: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+  approve(): void {
+    // TODO: Clean this when i can be bothered
+    const newBallot = new Ballot(None, this.userService.getUser(), None, Some('Y'))
+    const vid = this.voteService.getCurrentVoteId();
+    const vote = this.voteService.getVotes().find(v => v.getId().contains(vid.get()));
+    const withBallot = vote.withBallot(newBallot);
+    this.voteService.votes.next(this.voteService.getVotes().remove(vote).add(withBallot))
+  }
+
+  deny(): void {
+    // TODO: Clean this when i can be bothered
+    const newBallot = new Ballot(None, this.userService.getUser(), None, Some('N'))
+    const vid = this.voteService.getCurrentVoteId();
+    const vote = this.voteService.getVotes().find(v => v.getId().contains(vid.get()));
+    const withBallot = vote.withBallot(newBallot);
+    this.voteService.votes.next(this.voteService.getVotes().remove(vote).add(withBallot))
+  }
 
   getBallots(): Set<Ballot> {
     return this.getVote()
@@ -77,11 +98,6 @@ export class VotePageComponent implements OnInit {
       .flatMap(g => g.getLabel());
   }
 
-  getCandidateId(): Option<string> {
-    return this.getCandidate()
-      .flatMap(c => c.getId());
-  }
-
   getCandidateStarCitizenBio(): Option<string> {
     return this.getCandidate()
       .flatMap(c => c.getStarCitizenUser())
@@ -122,27 +138,10 @@ export class VotePageComponent implements OnInit {
   }
 
   getVote(): Option<Vote> {
-    return Option.of(
-      new Vote(
-        Some('1'),
-        this.userService.getUser(),
-        Some(this.candidateService.getCandidates().first()),
-        Some(new Group(Some('2'), Some('Developer'), Some('#ff00ff'))),
-        Some('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus ducimus molestiae porro quas. Autem delectus dicta, dolores doloribus et hic in incidunt possimus provident quos similique sunt veniam veritatis voluptatum. Alias aliquid animi corporis deserunt distinctio enim hic ipsa laborum, minus mollitia nulla omnis quas quasi\n' +
-          '  quidem, sed sequi similique, suscipit totam vitae voluptate! A aliquid aspernatur blanditiis delectus dolor. Accusantium ad aliquid architecto culpa dolores ea earum eos esse eum facilis harum in inventore ipsa iure laborum\n' +
-          '  natus quae quasi, quos recusandae rem rerum unde ut voluptatem! Officia, officiis.'),
-        Set.of(
-          new Ballot(
-            Some('1'),
-            this.userService.getUser(),
-            Some('Y'),
-            Some('I approve of this vote as this dude is a good fit'),
-            Some(moment()),
-            Some(moment()),
-          ),
-        ),
-      ),
-    );
+    return this.voteService
+      .getVotes()
+      .map(v => Option.of(v))
+      .find(v => OptionUtils.exists2(v, this.voteService.getCurrentVoteId(), (x, vid) => x.getId().contains(vid)));
   }
 
   getVoteDescription(): Option<string> {
