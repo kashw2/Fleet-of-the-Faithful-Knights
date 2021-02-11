@@ -30,21 +30,17 @@ export class VotePageComponent implements OnInit {
   showVoteView: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   approve(): void {
-    // TODO: Clean this when i can be bothered
-    const newBallot = new Ballot(None, this.userService.getUser(), None, Some('Y'))
-    const vid = this.voteService.getCurrentVoteId();
-    const vote = this.voteService.getVotes().find(v => v.getId().contains(vid.get()));
-    const withBallot = vote.withBallot(newBallot);
-    this.voteService.votes.next(this.voteService.getVotes().remove(vote).add(withBallot))
+    this.getVote()
+      .map(v => v.withBallot(new Ballot(None, this.userService.getUser(), None, Some('Y'))))
+      .map(v => {console.log(v); return v})
+      .map(v => this.voteService.votes.next(this.voteService.getVotes().remove(this.getVote().get()).add(v)));
   }
 
   deny(): void {
-    // TODO: Clean this when i can be bothered
-    const newBallot = new Ballot(None, this.userService.getUser(), None, Some('N'))
-    const vid = this.voteService.getCurrentVoteId();
-    const vote = this.voteService.getVotes().find(v => v.getId().contains(vid.get()));
-    const withBallot = vote.withBallot(newBallot);
-    this.voteService.votes.next(this.voteService.getVotes().remove(vote).add(withBallot))
+    this.getVote()
+      .map(v => v.withBallot(new Ballot(None, this.userService.getUser(), None, Some('N'))))
+      .map(v => {console.log(v); return v})
+      .map(v => this.voteService.votes.next(this.voteService.getVotes().remove(this.getVote().get()).add(v)));
   }
 
   getBallots(): Set<Ballot> {
