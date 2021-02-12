@@ -37,8 +37,8 @@
   "dependencies": {
     "@angular-devkit/build-angular": "0.1102.0",
     "@angular-devkit/build-ng-packagr": "0.1002.0",
-    "@angular/compiler": "11.1.2",
-    "@angular/compiler-cli": "11.1.2",
+    "@angular/compiler": "11.2.0",
+    "@angular/compiler-cli": "11.2.0",
     "ng-packagr": "11.2.1",
     "tslib": "2.0.0"
   },
