@@ -5,13 +5,14 @@ import {VotingPanelPageComponent} from './pages/voting/voting-panel-page/voting-
 import {ProfilePageComponent} from './pages/profile-page/profile-page.component';
 import {VotePageComponent} from './pages/voting/vote-page/vote-page.component';
 import {CreateVoteComponent} from './pages/voting/create-vote/create-vote.component';
+import {VoteGuard} from './guards/vote.guard';
 
 const routes: Routes = [
-	{
-		path: '',
-		pathMatch: 'full',
-		component: HomePageComponent
-	},
+  {
+    path: '',
+    pathMatch: 'full',
+    component: HomePageComponent
+  },
   {
     path: 'home',
     component: HomePageComponent,
@@ -27,20 +28,21 @@ const routes: Routes = [
   {
     path: 'voting/vote/:id',
     component: VotePageComponent,
+    canActivate: [VoteGuard],
   },
   {
     path: 'voting/create',
     component: CreateVoteComponent,
   },
-	{
-		path: '**',
-		component: HomePageComponent,
-	}
+  {
+    path: '**',
+    component: HomePageComponent,
+  }
 ];
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes)],
-	exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {
 }
