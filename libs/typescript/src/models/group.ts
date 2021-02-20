@@ -34,9 +34,21 @@ export class Group {
 		});
 	}
 
+	public isHigherOrEqual(group: Group): boolean {
+		return OptionUtils.exists2(this.getHierarchy(), group.getHierarchy(), (cGhid: number, oGhid: number) => {
+			return cGhid >= oGhid;
+		});
+	}
+
 	public isLower(group: Group): boolean {
 		return OptionUtils.exists2(this.getHierarchy(), group.getHierarchy(), (cGhid: number, oGhid: number) => {
 			return cGhid < oGhid;
+		});
+	}
+
+	public isLowerOrEqual(group: Group): boolean {
+		return OptionUtils.exists2(this.getHierarchy(), group.getHierarchy(), (cGhid: number, oGhid: number) => {
+			return cGhid <= oGhid;
 		});
 	}
 

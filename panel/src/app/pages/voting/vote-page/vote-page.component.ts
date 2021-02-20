@@ -2,15 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {Set} from 'immutable';
 import {HyperlinkMap} from '@ffk/lib-angular';
 import {None, Option, Some} from 'funfix-core';
-import {Ballot, Candidate, Group, Vote} from '@ffk/lib-ts';
-import * as moment from 'moment';
+import {Ballot, Candidate, Vote} from '@ffk/lib-ts';
 import {UserService} from '../../../service/user.service';
-import {StarCitizenOrganisation, StarCitizenUser} from '@ffk/lib-external';
 import {BehaviorSubject} from 'rxjs';
 import {NavigationService} from '../../../service/navigation.service';
 import {CandidateService} from '../../../service/candidate.service';
 import {VoteService} from '../../../service/vote.service';
-import {OptionUtils} from '../../../../../../libs/util';
+import {OptionUtils} from '@ffk/lib-util';
 
 @Component({
   selector: 'app-vote-page',
@@ -31,16 +29,28 @@ export class VotePageComponent implements OnInit {
 
   approve(): void {
     this.getVote()
+      .filter(_ => this.canVote())
       .map(v => v.withBallot(new Ballot(None, this.userService.getUser(), None, Some('Y'))))
-      .map(v => {console.log(v); return v})
       .map(v => this.voteService.votes.next(this.voteService.getVotes().remove(this.getVote().get()).add(v)));
+  }
+
+  canVote(): boolean {
+    return this.getVote()
+      .filter(v => v.getBallots().every(b => b.getVoter().equals(this.userService.getUser())))
+      .exists(v => OptionUtils.exists2(v.getPromotionGroup(), this.userService.getUser().flatMap(u => u.getGroup()), (vg, ug) => vg.isLower(ug)));
   }
 
   deny(): void {
     this.getVote()
+      .filter(_ => this.canVote())
       .map(v => v.withBallot(new Ballot(None, this.userService.getUser(), None, Some('N'))))
-      .map(v => {console.log(v); return v})
       .map(v => this.voteService.votes.next(this.voteService.getVotes().remove(this.getVote().get()).add(v)));
+  }
+
+  getBallotCount(): number {
+    return this.getVote()
+      .map(v => v.getBallots().size)
+      .getOrElse(0);
   }
 
   getBallots(): Set<Ballot> {

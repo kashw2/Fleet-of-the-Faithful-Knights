@@ -30,7 +30,7 @@ export class VoteService {
         Some('1'),
         this.userService.getUser(),
         Some(this.candidateService.getCandidates().first()),
-        Some(new Group(Some('2'), Some('Developer'), Some('#RAIN'))),
+        Some(new Group(Some('2'), Some('Developer'), Some('#RAIN'), Some(10))),
         Some('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus ducimus molestiae porro quas. Autem delectus dicta, dolores doloribus et hic in incidunt possimus provident quos similique sunt veniam veritatis voluptatum. Alias aliquid animi corporis deserunt distinctio enim hic ipsa laborum, minus mollitia nulla omnis quas quasi\n' +
           '  quidem, sed sequi similique, suscipit totam vitae voluptate! A aliquid aspernatur blanditiis delectus dolor. Accusantium ad aliquid architecto culpa dolores ea earum eos esse eum facilis harum in inventore ipsa iure laborum\n' +
           '  natus quae quasi, quos recusandae rem rerum unde ut voluptatem! Officia, officiis.'),

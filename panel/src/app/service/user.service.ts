@@ -24,7 +24,7 @@ export class UserService {
         Some('https://www.sardiniauniqueproperties.com/wp-content/uploads/2015/10/square-profile-pic-2.jpg'),
         Some('178140794555727872'),
         Some('#7219'),
-        Some(new Group(Some('0'), Some('Developer'), Some('#RAIN'))),
+        Some(new Group(Some('0'), Some('Developer'), Some('#RAIN'), Some(11))),
         Set.of('CREATE_VOTE', 'READ_VOTE', 'VETO_VOTE', 'MODIFY_VOTE', 'DEVELOPER'),
         Some(moment()),
         Some(new StarCitizenUser(
