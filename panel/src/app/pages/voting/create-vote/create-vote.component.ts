@@ -8,9 +8,8 @@ import {VoteService} from '../../../service/vote.service';
 import {Candidate, Group, Vote} from '@ffk/lib-ts';
 import {BehaviorSubject} from 'rxjs';
 import * as moment from 'moment';
-import {StarCitizenOrganisation, StarCitizenUser} from '../../../../../../libs/external';
 import {NavigationService} from '../../../service/navigation.service';
-import {OptionUtils} from '../../../../../../libs/util';
+import {OptionUtils} from '@ffk/lib-util';
 
 @Component({
   selector: 'app-create-vote',

@@ -109,6 +109,31 @@ export class Vote {
 		return this.starCitizenUrl;
 	}
 
+	public isKnight(): boolean {
+		return this.getPromotionGroupName()
+			.contains('Knight')
+	}
+
+	public isKnightCommander(): boolean {
+		return this.getPromotionGroupName()
+			.contains('Knight Commander');
+	}
+
+	public isKnightLieutenant(): boolean {
+		return this.getPromotionGroupName()
+			.contains('Knight Lieutenant');
+	}
+
+	public isSergeant(): boolean {
+		return this.getPromotionGroupName()
+			.contains('Sergeant');
+	}
+
+	public isSergeantFirstClass(): boolean {
+		return this.getPromotionGroupName()
+			.contains('Sergeant First Class');
+	}
+
 	public withBallot(ballot: Ballot): Vote {
 		return new Vote(
 			this.getId(),
