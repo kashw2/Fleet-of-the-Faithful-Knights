@@ -15,7 +15,7 @@ jobs:
           node-version: "12"
       
       - name: "install lerna"
-        run: "sudo npm install lerna"
+        run: "sudo npm install -g lerna"
           
       - name: "npm install"
         run: "npm install"
