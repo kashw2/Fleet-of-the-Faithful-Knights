@@ -15,7 +15,7 @@ jobs:
           node-version: "12"
       
       - name: "install lerna"
-        run: "sudo npm install -g lerna"
+        run: "sudo npm install -g lerna @angular/cli"
           
       - name: "npm install"
         run: "npm install"
