@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "libs/angular"
+      - "./package.json"
     branches:
       - "master"
       
