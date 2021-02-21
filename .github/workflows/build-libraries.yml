@@ -18,7 +18,7 @@ jobs:
         run: "sudo npm install -g lerna"
           
       - name: "npm install"
-        run: "npm install --package-lock-only"
+        run: "npm install"
         
       - name: "lerna bootstrap"
         run: "lerna bootstrap --ci"
