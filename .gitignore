@@ -3,6 +3,8 @@
 
 /panel/src/environments/
 
+/dist
+
 *.heapsnapshot
 *.log
 

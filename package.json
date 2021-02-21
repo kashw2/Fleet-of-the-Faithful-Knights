@@ -4,7 +4,12 @@
   "description": "FFK Monorepo",
   "scripts": {
     "build": "echo \"$(tput setaf 2)Running Build Script$(tput srg0)\"",
-    "build-dev": "echo \"$(tput setaf 2)Running Development Build Script$(tput srg0)\""
+    "build-dev": "echo \"$(tput setaf 2)Running Development Build Script$(tput srg0)\"",
+    "build-lib": "echo \"$(tput setaf 2)Running Library Build Script$(tput srg0)\" && npm run build-util && npm run build-external && npm run build-external && npm run build-ts && npm run build-angular",
+    "build-util": "lerna run build --scope=@kashw2/lib-util",
+    "build-external": "lerna run build --scope=@kashw2/lib-external",
+    "build-ts": "lerna run build --scope=@kashw2/lib-ts",
+    "build-angular": "lerna run build --scope=@kashw2/lib-angular"
   },
   "repository": {
     "type": "git",
@@ -21,6 +26,7 @@
     "@ffk/lib-util": "file:libs/util",
     "@ffk/lib-ts": "file:libs/typescript",
     "@ffk/lib-angular": "file:libs/angular",
+    "lerna": "3.22.1",
     "@types/express": "4.17.11",
     "@types/mssql": "6.0.7",
     "@types/node": "14.14.31",
