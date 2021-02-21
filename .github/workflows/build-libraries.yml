@@ -1,4 +1,4 @@
-name: "Build Lib-Angular"
+name: "Build Libraries"
 
 on:
   pull_request:
@@ -22,6 +22,15 @@ jobs:
         
       - name: "lerna bootstrap"
         run: "lerna bootstrap"
+        
+      - name: "build lib-util"
+        run: "lerna run build --scope=@kashw2/lib-util"
+        
+      - name: "build lib-external"
+        run: "lerna run build --scope=@kashw2/lib-external"
+        
+      - name: "build lib-ts"
+        run: "lerna run build --scope=@kashw2/lib-ts"
         
       - name: "build"
         run: "lerna run build --scope=@kashw2/lib-angular"
