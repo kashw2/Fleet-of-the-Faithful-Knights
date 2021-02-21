@@ -1,0 +1,26 @@
+name: "Build Lib-Angular"
+
+on:
+  pull_request:
+    branches:
+      - "master"
+      
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "setup node"
+        uses: "actions/checkout@v2"
+        with:
+          node-version: "12"
+          
+      - name: "npm install"
+        run: "npm install"
+        
+      - name: "lerna bootstrap"
+        run: "lerna bootstrap"
+        
+      - name: "build"
+        run: "lerna run build --scope=@kashw2/lib-angular"
+      
+      
