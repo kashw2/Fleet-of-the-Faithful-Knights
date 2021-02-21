@@ -21,7 +21,7 @@ jobs:
         run: "npm install --package-lock-only"
         
       - name: "lerna bootstrap"
-        run: "lerna bootstrap"
+        run: "lerna bootstrap --ci"
         
       - name: "build lib-util"
         run: "lerna run build --scope=@kashw2/lib-util"
@@ -32,7 +32,7 @@ jobs:
       - name: "build lib-ts"
         run: "lerna run build --scope=@kashw2/lib-ts"
         
-      - name: "build"
+      - name: "build lib-angular"
         run: "lerna run build --scope=@kashw2/lib-angular"
       
       
