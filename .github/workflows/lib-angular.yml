@@ -2,9 +2,6 @@ name: "Build Lib-Angular"
 
 on:
   pull_request:
-    paths:
-      - "libs/angular"
-      - "./"
     branches:
       - "master"
       
