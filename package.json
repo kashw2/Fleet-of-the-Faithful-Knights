@@ -36,7 +36,7 @@
     "moment": "2.29.1",
     "mssql": "6.3.1",
     "ng-uikit-pro-standard": "git+https://oauth2:jRNULFUq6iNYr-xpD8cS@git.mdbootstrap.com/mdb/angular/ng-uikit-pro-standard.git",
-    "rxjs": "6.6.3",
+    "rxjs": "6.6.6",
     "screenfull": "5.1.0",
     "ts-node": "8.10.2",
     "tslib": "2.1.0",
