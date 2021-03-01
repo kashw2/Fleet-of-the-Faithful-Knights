@@ -21,7 +21,7 @@
     "@angular/platform-browser-dynamic": "11.2.2",
     "@angular/router": "11.2.2",
     "@fortawesome/fontawesome-free": "5.15.2",
-    "@types/chart.js": "2.9.30",
+    "@types/chart.js": "2.9.31",
     "animate.css": "4.1.1",
     "chart.js": "2.9.4",
     "easy-pie-chart": "2.1.7",
