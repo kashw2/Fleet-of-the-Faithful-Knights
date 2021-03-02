@@ -4,7 +4,11 @@
   "description": "Fleet of the Faithful Knights API",
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve --stats-error-details true --config ./webpack/webpack.config.ts"
+    "build": "webpack --config ./webpack/webpack.config.ts",
+    "build-dev":  "webpack --config ./webpack/webpack.dev.config.ts",
+    "build-watch": "webpack serve --stats-error-details true --config ./webpack/webpack.config.ts",
+    "start-watch": "npm run build-dev && npm run start",
+    "start": "nodemon ./dist/api.js"
   },
   "repository": {
     "type": "git",
