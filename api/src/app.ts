@@ -16,9 +16,11 @@ const router = express.Router();
 // TODO: When we have DNS setup, specify correct origins
 app.use(cors());
 
-router.get('/', (req: Request, res: Response) => res.send('Welcome to the Fleet of the Faithful Knights API Server'));
+app.use('/', router);
 
-const port = 8080;
+router.get('/', (req: Request, res: Response) => res.json({response: 'Welcome to the Fleet of the Faithful Knights API Server'}));
+
+const port = 3000;
 
 app.listen(port, () => {
     console.info(`App Started on port ${port}`);
