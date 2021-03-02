@@ -1,9 +1,6 @@
-/.idea/
-*node_modules
-
-/panel/src/environments/
-
-/dist
+**/.idea
+**/node_modules
+**/dist
 
 *.heapsnapshot
 *.log
