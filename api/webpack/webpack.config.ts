@@ -3,6 +3,14 @@ module.exports = {
     mode: "production",
     devtool: "source-map",
     target: "node",
+    externals: [
+        {
+            'express': {
+                commonjs: 'express',
+                commonjs2: 'express'
+            }
+        }
+    ],
     module: {
         rules: [
             {
