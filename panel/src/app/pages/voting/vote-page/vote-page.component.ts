@@ -144,10 +144,9 @@ export class VotePageComponent implements OnInit {
   }
 
   getVote(): Option<Vote> {
-    return this.voteService
+    return Option.of(this.voteService
       .getVotes()
-      .map(v => Option.of(v))
-      .find(v => OptionUtils.exists2(v, this.voteService.getCurrentVoteId(), (x, vid) => x.getId().contains(vid)));
+      .find(v => v.getId().equals(this.voteService.getCurrentVoteId())));
   }
 
   getVoteDescription(): Option<string> {
