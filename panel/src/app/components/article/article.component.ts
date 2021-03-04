@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {None, Option} from 'funfix-core';
 import {News, User} from '@ffk/lib-ts';
 import * as moment from 'moment';
-import {MomentUtils} from '../../../../../libs/util';
+import {MomentUtils} from '@ffk/lib-util';
 
 @Component({
   selector: 'app-article',
