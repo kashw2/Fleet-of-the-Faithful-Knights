@@ -20,6 +20,9 @@ jobs:
       - name: "npm install"
         run: "npm install"
 
+      - name: "lerna bootstrap"
+        run: "lerna exec npm i"
+
       - name: "build lib-util"
         run: "lerna run build --scope=@kashw2/lib-util"
 
@@ -31,9 +34,6 @@ jobs:
 
       - name: "build lib-angular"
         run: "lerna run build --scope=@kashw2/lib-angular"
-
-      - name: "lerna bootstrap"
-        run: "lerna exec npm i --scope=@ffk/panel"
 
       - name: "build panel"
         run: "lerna run build --scope=@ffk/panel"
