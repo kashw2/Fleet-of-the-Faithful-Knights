@@ -1,0 +1,27 @@
+name: "Build API"
+
+on:
+  pull_request:
+    branches:
+      - "master"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "setup node"
+        uses: "actions/checkout@v2"
+        with:
+          node-version: "12"
+
+      - name: "install globals"
+        run: "sudo npm install -g lerna"
+
+      - name: "npm install"
+        run: "npm install"
+
+      - name: "lerna bootstrap"
+        run: "lerna exec npm i --scope=@ffk/api"
+
+      - name: "build api"
+        run: "lerna run build --scope=@ffk/api"
