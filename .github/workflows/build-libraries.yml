@@ -32,5 +32,8 @@ jobs:
       - name: "build lib-ts"
         run: "lerna run build --scope=@kashw2/lib-ts"
 
+      - name: "build lib-server"
+        run: "lerna run build --scope=@kashw2/lib-ts"
+
       - name: "build lib-angular"
         run: "lerna run build --scope=@kashw2/lib-angular"
