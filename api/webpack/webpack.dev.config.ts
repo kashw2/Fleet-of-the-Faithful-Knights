@@ -3,6 +3,7 @@ module.exports = {
     mode: "development",
     devtool: "source-map",
     target: "node",
+    watch: true,
     externals: [
         {
             'express': {
