@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights#readme",
   "devDependencies": {
-    "webpack": "5.26.0",
+    "webpack": "5.26.2",
     "webpack-cli": "4.5.0"
   }
 }
