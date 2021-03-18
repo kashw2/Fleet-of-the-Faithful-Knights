@@ -23,17 +23,5 @@ jobs:
       - name: "lerna bootstrap"
         run: "lerna exec npm i"
 
-      - name: "build lib-util"
-        run: "lerna run build --scope=@kashw2/lib-util"
-
-      - name: "build lib-external"
-        run: "lerna run build --scope=@kashw2/lib-external"
-
-      - name: "build lib-ts"
-        run: "lerna run build --scope=@kashw2/lib-ts"
-
-      - name: "build lib-server"
-        run: "lerna run build --scope=@kashw2/lib-ts"
-
-      - name: "build lib-angular"
-        run: "lerna run build --scope=@kashw2/lib-angular"
+      - name: "build"
+        run: "lerna run build --scope=@kashw2/lib-util --scope=@kashw2/lib-external --scope=@kashw2/lib-ts --scope=@kashw2/lib-server --scope=@kashw2/lib-angular"
