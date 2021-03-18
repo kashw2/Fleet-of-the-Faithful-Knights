@@ -7,3 +7,5 @@ export * from './option-utils';
 export * from './moment-utils';
 export * from './crud/crud';
 export * from './crud/crud-localstorage';
+export * from './api-utils';
+export * from './either-utils';

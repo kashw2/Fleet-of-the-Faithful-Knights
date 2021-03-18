@@ -6,9 +6,9 @@
   "scripts": {
     "build": "webpack --config ./webpack/webpack.config.ts",
     "build-dev":  "webpack --config ./webpack/webpack.dev.config.ts",
-    "build-watch": "webpack serve --stats-error-details true --config ./webpack/webpack.config.ts",
-    "start-watch": "npm run build-dev && npm run start",
-    "start": "nodemon ./dist/api.js"
+    "build-watch": "webpack --stats-error-details true --config ./webpack/webpack.dev.config.ts",
+    "start-watch": "concurrently \"npm run build-watch\" \" npm run start\"",
+    "start": "nodemon --inspect ./dist/api.js"
   },
   "repository": {
     "type": "git",

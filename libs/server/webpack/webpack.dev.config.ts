@@ -1,17 +1,8 @@
 module.exports = {
-    entry: "./src/app.ts",
+    entry: "./src/index.ts",
     mode: "development",
     devtool: "source-map",
     target: "node",
-    watch: true,
-    externals: [
-        {
-            'express': {
-                commonjs: 'express',
-                commonjs2: 'express'
-            }
-        }
-    ],
     module: {
         rules: [
             {
@@ -24,7 +15,7 @@ module.exports = {
     output: {
         globalObject: "typeof self !== 'undefined' ? self : this", // See https://github.com/webpack/webpack/issues/6522
         libraryTarget: "umd",
-        filename: 'api.js'
+        filename: 'lib-server.js'
     },
     resolve: {
         extensions: [".ts", ".js"],
