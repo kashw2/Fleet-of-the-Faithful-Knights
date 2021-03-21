@@ -24,6 +24,7 @@
   "dependencies": {
     "@ffk/lib-angular": "file:libs/angular",
     "@ffk/lib-external": "file:libs/external",
+    "@ffk/lib-server": "file:libs/server",
     "@ffk/lib-ts": "file:libs/typescript",
     "@ffk/lib-util": "file:libs/util",
     "@types/cors": "2.8.10",
