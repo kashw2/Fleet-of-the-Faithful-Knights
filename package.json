@@ -32,7 +32,7 @@
     "@types/express": "4.17.11",
     "@types/mssql": "6.0.7",
     "@types/node": "14.14.35",
-    "@types/passport": "^1.0.6",
+    "@types/passport": "1.0.6",
     "cors": "2.8.5",
     "express": "4.17.1",
     "funfix-core": "7.0.1",
