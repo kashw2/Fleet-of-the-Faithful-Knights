@@ -2,13 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {Set} from 'immutable';
 import {HyperlinkMap} from '@ffk/lib-angular';
 import {None, Option, Some} from 'funfix-core';
-import {Ballot, Candidate, Vote} from '@ffk/lib-ts';
+import {Ballot, Candidate, Vote} from '@kashw2/lib-ts';
 import {UserService} from '../../../service/user.service';
 import {BehaviorSubject} from 'rxjs';
 import {NavigationService} from '../../../service/navigation.service';
 import {CandidateService} from '../../../service/candidate.service';
 import {VoteService} from '../../../service/vote.service';
-import {OptionUtils} from '@ffk/lib-util';
+import {OptionUtils} from '@kashw2/lib-util';
 
 @Component({
   selector: 'app-vote-page',

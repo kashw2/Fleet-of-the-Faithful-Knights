@@ -1,5 +1,5 @@
 import {None, Option} from 'funfix-core';
-import {JsonBuilder, JsonSerializer, OptionUtils, parseNumber, parseString} from '@ffk/lib-util';
+import {JsonBuilder, JsonSerializer, OptionUtils, parseNumber, parseString} from '@kashw2/lib-util';
 import {colourKey, hierarchyKey, idKey, labelKey} from '../misc/json-keys';
 
 export class Group {

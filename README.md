@@ -1,5 +1,11 @@
 # Fleet of the Faithful Knights
 
+[![api.faithfulknights.com](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-api.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-api.yml)
+
+[![panel.faithfulknights.com](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-panel.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-panel.yml)
+
+[![Libraries](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-libraries.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-libraries.yml)
+
 Fleet of the Faithful Knights (FFK) is a Star Citizen organisation that seeks to be a beacon of light in a dark universe.
 
 This is the monorepo for the current codebase that is used within the administrative reigns of the org. As of now this consists of a working read and write API, Voting Panel, Onboarding service and in the future will also consist of a Discord Bot.

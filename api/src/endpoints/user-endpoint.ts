@@ -1,7 +1,7 @@
-import {CrudEndpoint} from "@ffk/lib-server";
-import {User} from "@ffk/lib-ts";
+import {CrudEndpoint} from "@kashw2/lib-server";
+import {User} from "@kashw2/lib-ts";
 import {Request, Response} from "express";
-import {ApiUtils} from "@ffk/lib-util";
+import {ApiUtils} from "@kashw2/lib-util";
 import {Either} from "funfix-core";
 
 export class UserEndpoint extends CrudEndpoint {

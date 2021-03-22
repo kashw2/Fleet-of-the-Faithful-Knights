@@ -11,7 +11,7 @@ import {
 	parseNumber,
 	parseSetSerialized,
 	parseString
-} from '@ffk/lib-util';
+} from '@kashw2/lib-util';
 import {
 	applicationIdKey,
 	bitrateKey,

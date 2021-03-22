@@ -1,6 +1,6 @@
 import {None, Option} from 'funfix-core';
 import {DiscordGuildMember, GuildMemberJsonSerializer} from './guild-member';
-import {JsonBuilder, JsonSerializer, parseBoolean, parseString} from '@ffk/lib-util';
+import {JsonBuilder, JsonSerializer, parseBoolean, parseString} from '@kashw2/lib-util';
 import {
 	channelIdKey,
 	deafKey,

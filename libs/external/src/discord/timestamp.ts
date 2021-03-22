@@ -1,6 +1,6 @@
 import {None, Option} from 'funfix-core';
 import * as moment from 'moment';
-import {JsonBuilder, JsonSerializer, parseDate} from '@ffk/lib-util';
+import {JsonBuilder, JsonSerializer, parseDate} from '@kashw2/lib-util';
 import {endKey, startKey} from './json-keys';
 
 export class DiscordTimestamp {

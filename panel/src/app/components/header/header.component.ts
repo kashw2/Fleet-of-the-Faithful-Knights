@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {HyperlinkMap} from '@ffk/lib-angular';
 import {Set} from 'immutable';
 import {None, Option} from 'funfix-core';
-import {User} from '@ffk/lib-ts';
+import {User} from '@kashw2/lib-ts';
 import {NavigationService} from '../../service/navigation.service';
 
 @Component({

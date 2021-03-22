@@ -2,7 +2,7 @@ import {None, Option} from 'funfix-core';
 import {DiscordUser, UserJsonSerializer} from './user';
 import {Set} from 'immutable';
 import * as moment from 'moment';
-import {JsonBuilder, JsonSerializer, parseBoolean, parseDate, parseSet, parseString} from '@ffk/lib-util';
+import {JsonBuilder, JsonSerializer, parseBoolean, parseDate, parseSet, parseString} from '@kashw2/lib-util';
 import {deafKey, joinedAtKey, muteKey, nickKey, pendingKey, premiumSinceKey, rolesKey, userKey} from './json-keys';
 
 export class DiscordGuildMember {

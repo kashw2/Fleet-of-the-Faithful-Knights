@@ -6,7 +6,7 @@ import {
 	parseListSerialized,
 	parseNumber,
 	parseString
-} from '@ffk/lib-util';
+} from '@kashw2/lib-util';
 import {None, Option} from 'funfix-core';
 import {List} from 'immutable';
 import * as moment from 'moment';

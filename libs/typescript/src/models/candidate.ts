@@ -1,4 +1,4 @@
-import {JsonBuilder, JsonSerializer, parseString} from '@ffk/lib-util';
+import {JsonBuilder, JsonSerializer, parseString} from '@kashw2/lib-util';
 import {None, Option} from 'funfix-core';
 import {
 	avatarKey,
@@ -10,7 +10,7 @@ import {
 	starCitizenUserKey
 } from '../misc/json-keys';
 import {Group, GroupJsonSerializer} from './group';
-import {StarCitizenUser, StarCitizenUserJsonSerializer} from '@ffk/lib-external';
+import {StarCitizenUser, StarCitizenUserJsonSerializer} from '@kashw2/lib-external';
 
 export class Candidate {
 

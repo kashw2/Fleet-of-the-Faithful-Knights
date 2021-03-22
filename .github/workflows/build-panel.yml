@@ -1,39 +1,40 @@
-name: "Build Panel"
+name: Build Panel
 
 on:
+  workflow_dispatch:
   pull_request:
+    paths:
+      - package.json
+      - panel/**
     branches:
-      - "master"
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: "setup node"
-        uses: "actions/checkout@v2"
+      - name: setup node
+        uses: actions/checkout@v2
         with:
-          node-version: "12"
+          node-version: 12
 
-      - name: "install globals"
-        run: "sudo npm install -g lerna @angular/cli"
+      - name: npm auth
+        run: |
+          npm config set @kashw2:registry https://npm.pkg.github.com/
+          npm config set //npm.pkg.github.com/:_authToken=${{ secrets.NPM_PACKAGE_TOKEN }}
+          npm config set registry https://registry.npmjs.org/
 
-      - name: "npm install"
-        run: "npm install"
+      - name: install globals
+        run: sudo npm install -g lerna @angular/cli
 
-      - name: "lerna bootstrap"
-        run: "lerna exec npm i"
+      - name: npm install
+        run: npm install
 
-      - name: "build lib-util"
-        run: "lerna run build --scope=@kashw2/lib-util"
+      - name: lerna bootstrap
+        run: lerna exec npm i
 
-      - name: "build lib-external"
-        run: "lerna run build --scope=@kashw2/lib-external"
+      - name: build lib-angular
+        run: lerna run build --scope=@kashw2/lib-angular
 
-      - name: "build lib-ts"
-        run: "lerna run build --scope=@kashw2/lib-ts"
-
-      - name: "build lib-angular"
-        run: "lerna run build --scope=@kashw2/lib-angular"
-
-      - name: "build panel"
-        run: "lerna run build --scope=@ffk/panel"
+      - name: build panel
+        run: lerna run build --scope=@ffk/panel

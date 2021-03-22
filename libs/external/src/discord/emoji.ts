@@ -1,7 +1,7 @@
 import {None, Option} from 'funfix-core';
 import {Set} from 'immutable';
 import {DiscordUser, UserJsonSerializer} from './user';
-import {JsonBuilder, JsonSerializer, parseBoolean, parseSet, parseString} from '@ffk/lib-util';
+import {JsonBuilder, JsonSerializer, parseBoolean, parseSet, parseString} from '@kashw2/lib-util';
 import {animatedKey, availableKey, idKey, managedKey, nameKey, requireColonsKey, rolesKey, userKey} from './json-keys';
 
 export class DiscordEmoji {

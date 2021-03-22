@@ -1,5 +1,5 @@
 import {None, Option} from 'funfix-core';
-import {JsonBuilder, JsonSerializer, parseBoolean, parseNumber, parseString} from '@ffk/lib-util';
+import {JsonBuilder, JsonSerializer, parseBoolean, parseNumber, parseString} from '@kashw2/lib-util';
 import {
 	botKey,
 	discriminatorKey,

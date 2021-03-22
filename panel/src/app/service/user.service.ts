@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {Option, Some} from 'funfix-core';
-import {Group, User} from '@ffk/lib-ts';
+import {Group, User} from '@kashw2/lib-ts';
 import {Set} from 'immutable';
 import * as moment from 'moment';
-import {StarCitizenOrganisation, StarCitizenUser} from '@ffk/lib-external';
+import {StarCitizenOrganisation, StarCitizenUser} from '@kashw2/lib-external';
 
 @Injectable({
   providedIn: 'root'
