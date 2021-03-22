@@ -5,11 +5,11 @@ import {Set} from 'immutable';
 import {HyperlinkMap} from '@ffk/lib-angular';
 import {CandidateService} from '../../../service/candidate.service';
 import {VoteService} from '../../../service/vote.service';
-import {Candidate, Group, Vote} from '@ffk/lib-ts';
+import {Candidate, Group, Vote} from '@kashw2/lib-ts';
 import {BehaviorSubject} from 'rxjs';
 import * as moment from 'moment';
 import {NavigationService} from '../../../service/navigation.service';
-import {OptionUtils} from '@ffk/lib-util';
+import {OptionUtils} from '@kashw2/lib-util';
 
 @Component({
   selector: 'app-create-vote',

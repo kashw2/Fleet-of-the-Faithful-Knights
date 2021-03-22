@@ -1,7 +1,7 @@
 import {List} from 'immutable';
 import {DiscordActivity, ActivityJsonSerializer} from './activity';
 import {DiscordClientStatus, ClientStatusJsonSerializer} from './client-status';
-import {JsonBuilder, JsonSerializer, parseListSerialized, parseString} from '@ffk/lib-util';
+import {JsonBuilder, JsonSerializer, parseListSerialized, parseString} from '@kashw2/lib-util';
 import {None, Option} from 'funfix-core';
 import {DiscordUser, UserJsonSerializer} from './user';
 import {activitiesKey, clientStatusKey, guildIdKey, statusKey, userKey} from './json-keys';

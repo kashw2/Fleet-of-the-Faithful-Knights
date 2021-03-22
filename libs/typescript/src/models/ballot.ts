@@ -1,4 +1,4 @@
-import {JsonBuilder, JsonSerializer, MomentUtils, parseDate, parseString} from '@ffk/lib-util';
+import {JsonBuilder, JsonSerializer, MomentUtils, parseDate, parseString} from '@kashw2/lib-util';
 import {None, Option, Some} from 'funfix-core';
 import {User, UserJsonSerializer} from './user';
 import * as moment from 'moment';

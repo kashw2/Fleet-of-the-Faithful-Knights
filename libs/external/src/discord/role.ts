@@ -1,7 +1,7 @@
 import {None, Option} from 'funfix-core';
 import {List} from 'immutable';
 import {DiscordRoleTag, RoleTagJsonSerializer} from './role-tag';
-import {JsonBuilder, JsonSerializer, parseBoolean, parseListSerialized, parseNumber, parseString} from '@ffk/lib-util';
+import {JsonBuilder, JsonSerializer, parseBoolean, parseListSerialized, parseNumber, parseString} from '@kashw2/lib-util';
 import {
 	colorKey,
 	hoistKey,

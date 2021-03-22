@@ -4,7 +4,7 @@ import {
 	StarCitizenOrganisationArchetype,
 	StarCitizenOrganisationCommitment
 } from './types';
-import {JsonBuilder, JsonSerializer, parseBoolean, parseNumber, parseString} from '@ffk/lib-util';
+import {JsonBuilder, JsonSerializer, parseBoolean, parseNumber, parseString} from '@kashw2/lib-util';
 import {
 	archetypeKey, commitmentKey, exclusiveKey,
 	hierarchyKey,

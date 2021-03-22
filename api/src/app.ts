@@ -3,7 +3,7 @@ import {Endpoints} from "./endpoints/endpoints";
 import cors from "cors";
 import passport from "passport"
 import {HeaderAPIKeyStrategy} from "passport-headerapikey";
-import {User} from "@ffk/lib-ts";
+import {User} from "@kashw2/lib-ts";
 
 const app = express();
 const router = express.Router();

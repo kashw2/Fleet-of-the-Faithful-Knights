@@ -1,6 +1,6 @@
 import {None, Option} from 'funfix-core';
 import {List} from 'immutable';
-import {JsonBuilder, JsonSerializer, parseList, parseString} from '@ffk/lib-util';
+import {JsonBuilder, JsonSerializer, parseList, parseString} from '@kashw2/lib-util';
 import {idKey, sizeKey} from './json-keys';
 
 export class DiscordParty {

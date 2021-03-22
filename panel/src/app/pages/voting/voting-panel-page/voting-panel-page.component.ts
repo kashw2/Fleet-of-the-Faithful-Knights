@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Candidate, Group, User, Vote} from '@ffk/lib-ts';
+import {Candidate, Group, User, Vote} from '@kashw2/lib-ts';
 import {None, Option, Some} from 'funfix-core';
 import {Set} from 'immutable';
 import {HyperlinkMap} from '@ffk/lib-angular';

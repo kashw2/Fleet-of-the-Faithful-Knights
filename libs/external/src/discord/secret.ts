@@ -1,5 +1,5 @@
 import {None, Option} from 'funfix-core';
-import {JsonBuilder, JsonSerializer, parseString} from '@ffk/lib-util';
+import {JsonBuilder, JsonSerializer, parseString} from '@kashw2/lib-util';
 import {joinKey, matchKey, spectateKey} from './json-keys';
 
 export class DiscordSecret {

@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
-import {User, UserJsonSerializer} from "@ffk/lib-ts";
+import {User, UserJsonSerializer} from "@kashw2/lib-ts";
 import {Either} from "funfix-core";
-import {EitherUtils} from "@ffk/lib-util";
+import {EitherUtils} from "@kashw2/lib-util";
 
 export abstract class ApiEndpoint {
 

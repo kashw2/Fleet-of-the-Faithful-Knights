@@ -15,7 +15,7 @@ import {
 	parseSet,
 	parseSetSerialized,
 	parseString
-} from '@ffk/lib-util';
+} from '@kashw2/lib-util';
 import {
 	afkChannelIdKey,
 	afkTimeoutKey, applicationIdKey,

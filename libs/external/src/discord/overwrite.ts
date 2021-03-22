@@ -1,5 +1,5 @@
 import {None, Option} from 'funfix-core';
-import {JsonBuilder, JsonSerializer, parseNumber, parseString} from '@ffk/lib-util';
+import {JsonBuilder, JsonSerializer, parseNumber, parseString} from '@kashw2/lib-util';
 import {allowKey, denyKey, idKey, typeKey} from './json-keys';
 
 export class DiscordOverwrite {

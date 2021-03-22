@@ -1,7 +1,7 @@
 import {ApiEndpoint} from "./api-endpoint";
 import {Request, Response, Router} from "express";
-import {User} from "@ffk/lib-ts";
-import {ApiUtils} from "@ffk/lib-util";
+import {User} from "@kashw2/lib-ts";
+import {ApiUtils} from "@kashw2/lib-util";
 import {Either, Left} from "funfix-core";
 
 export abstract class CrudEndpoint extends ApiEndpoint {

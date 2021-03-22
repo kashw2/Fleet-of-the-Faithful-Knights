@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {Ballot, Candidate, Group, User, Vote} from '@ffk/lib-ts';
+import {Ballot, Candidate, Group, User, Vote} from '@kashw2/lib-ts';
 import {Set} from 'immutable';
 import {None, Option, Some} from 'funfix-core';
 import * as moment from 'moment';

@@ -1,6 +1,6 @@
 import {Set} from 'immutable';
 import * as moment from 'moment';
-import {JsonBuilder, JsonSerializer, parseDate, parseSet, parseString} from '@ffk/lib-util';
+import {JsonBuilder, JsonSerializer, parseDate, parseSet, parseString} from '@kashw2/lib-util';
 import {None, Option} from 'funfix-core';
 import {
 	avatarKey,
@@ -15,7 +15,7 @@ import {
 	usernameKey
 } from '../misc/json-keys';
 import {Group, GroupJsonSerializer} from './group';
-import {StarCitizenUser, StarCitizenUserJsonSerializer} from '@ffk/lib-external';
+import {StarCitizenUser, StarCitizenUserJsonSerializer} from '@kashw2/lib-external';
 
 export class User {
 

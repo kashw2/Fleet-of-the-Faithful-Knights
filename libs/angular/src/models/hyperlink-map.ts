@@ -1,6 +1,6 @@
 import {None, Option, Some} from 'funfix-core';
 import {Set} from 'immutable';
-import {StringUtils} from '@ffk/lib-util';
+import {StringUtils} from '@kashw2/lib-util';
 
 export class HyperlinkMap {
 

@@ -1,4 +1,4 @@
-import {JsonBuilder, JsonSerializer, MomentUtils, parseDate, parseSetSerialized, parseString} from '@ffk/lib-util';
+import {JsonBuilder, JsonSerializer, MomentUtils, parseDate, parseSetSerialized, parseString} from '@kashw2/lib-util';
 import {None, Option} from 'funfix-core';
 import {
 	ballotsKey,
