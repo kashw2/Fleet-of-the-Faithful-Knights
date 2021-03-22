@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {None, Option, Some} from 'funfix-core';
 import {HyperlinkMap} from '@ffk/lib-angular';
 import {List, Set} from 'immutable';
-import {Group, News, User} from '@kashw2/lib-ts';
+import {News} from '@kashw2/lib-ts';
 import {CollectionUtils} from '@kashw2/lib-util';
 import * as moment from 'moment';
 import {UserService} from '../../service/user.service';
