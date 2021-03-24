@@ -1,17 +1,12 @@
 # Fleet of the Faithful Knights
 
 [![api.faithfulknights.com](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-api.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-api.yml)
-
 [![panel.faithfulknights.com](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-panel.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-panel.yml)
 
 [![TypeScript Library](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-lib-ts.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-lib-ts.yml)
-
 [![Utility Library](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-lib-util.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-lib-util.yml)
-
 [![Server Library](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-lib-server.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-lib-server.yml)
-
 [![Externals Library](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-lib-external.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-lib-external.yml)
-
 [![Angular Library](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-lib-angular.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-lib-angular.yml)
 
 Fleet of the Faithful Knights (FFK) is a Star Citizen organisation that seeks to be a beacon of light in a dark universe.
