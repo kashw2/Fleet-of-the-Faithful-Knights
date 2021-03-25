@@ -42,7 +42,7 @@
     "@angular-devkit/build-ng-packagr": "0.1002.0",
     "@angular/compiler": "11.2.7",
     "@angular/compiler-cli": "11.2.7",
-    "@types/estree": "0.0.46",
+    "@types/estree": "0.0.47",
     "ng-packagr": "11.2.4"
   }
 }
