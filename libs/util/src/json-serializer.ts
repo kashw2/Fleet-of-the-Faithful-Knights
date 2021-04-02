@@ -20,10 +20,18 @@ export abstract class JsonSerializer<A> {
 			.map(v => this.fromJson(v));
 	}
 
+	fromJsonString(json: string): A {
+		return this.fromJson(JSON.parse(json));
+	}
+
 	abstract toJson(value: A, builder: JsonBuilder): Record<string, any>;
 
 	public toJsonArray(values: Collection<any, A>, builder: JsonBuilder): Collection<any, Record<string, any>> {
 		return values.map(v => this.toJson(v, builder));
+	}
+
+	public toJsonImpl(value: A): any {
+		return this.toJson(value, new JsonBuilder());
 	}
 
 	toJsonString(value: A): string {
