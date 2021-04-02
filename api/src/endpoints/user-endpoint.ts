@@ -23,6 +23,7 @@ export class UserEndpoint extends CrudEndpoint {
             case 'POST':
                 return true;
             case 'GET':
+                res.send(req.user);
                 return true;
             case 'PUT':
                 return true;
