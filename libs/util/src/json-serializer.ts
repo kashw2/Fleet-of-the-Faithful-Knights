@@ -15,7 +15,7 @@ export abstract class JsonSerializer<A> {
 
 	public fromJsonImpl(json: any): Option<A> {
 		return Option.of(json)
-			.filter(v => typeof v !== 'object')
+			.filter(v => typeof v === 'object')
 			.filter(v => v !== {})
 			.map(v => this.fromJson(v));
 	}
