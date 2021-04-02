@@ -29,4 +29,8 @@ export class ApiUtils {
         res.sendStatus(505);
     }
 
+    static sendError(res: Response, error: string): void {
+        res.json({error});
+    }
+
 }
