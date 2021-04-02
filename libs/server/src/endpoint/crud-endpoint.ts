@@ -10,11 +10,11 @@ export abstract class CrudEndpoint extends ApiEndpoint {
         super(endpoint);
     }
 
-    create(req: Request): Either<string, void> {
+    create(req: Request): Either<string, any> {
         return Left(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`);
     }
 
-    delete(req: Request): Either<string, void> {
+    delete(req: Request): Either<string, any> {
         return Left(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`);
     }
 
@@ -37,7 +37,7 @@ export abstract class CrudEndpoint extends ApiEndpoint {
         });
     }
 
-    read(req: Request): Either<string, void> {
+    read(req: Request): Either<string, any> {
         return Left(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`);
     }
 
@@ -46,16 +46,20 @@ export abstract class CrudEndpoint extends ApiEndpoint {
             try {
                 switch (this.getHTTPMethod(req)) {
                     case 'POST':
-                        this.create(req);
+                        this.create(req)
+                            .fold((error) => ApiUtils.sendError(res, error), (v) => res.send(v));
                         break;
                     case 'GET':
-                        this.read(req);
+                        this.read(req)
+                            .fold((error) => ApiUtils.sendError(res, error), (v) => res.send(v));
                         break;
                     case 'PUT':
-                        this.update(req);
+                        this.update(req)
+                            .fold((error) => ApiUtils.sendError(res, error), (v) => res.send(v));
                         break;
                     case 'DELETE':
-                        this.delete(req);
+                        this.delete(req)
+                            .fold((error) => ApiUtils.sendError(res, error), (v) => res.send(v));
                         break;
                     default:
                         return ApiUtils.send505(res);
@@ -68,7 +72,7 @@ export abstract class CrudEndpoint extends ApiEndpoint {
         }
     }
 
-    update(req: Request): Either<string, void> {
+    update(req: Request): Either<string, any> {
         return Left(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`);
     }
 
