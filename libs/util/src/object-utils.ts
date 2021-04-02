@@ -16,6 +16,9 @@ export function getJsonFromRecordSet(rs: any): Either<string, IRecordSet<any>> {
     if (!rs || rs === "{}" || rs === []) {
         return Left("Database returned empty resultset");
     }
+    if (typeof rs[0][''] === "string") {
+        return Right(JSON.parse(rs[0]['']));
+    }
     return Right(rs[0]);
 }
 
