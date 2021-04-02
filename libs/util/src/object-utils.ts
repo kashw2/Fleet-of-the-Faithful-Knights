@@ -20,23 +20,26 @@ export function getJsonFromRecordSet(rs: any): Either<string, IRecordSet<any>> {
 }
 
 export function parseString(s: unknown): Option<string> {
-    switch (typeof s) {
-        case 'bigint':
-            return Option.of(s)
-                .filter(v => isNaN(Number(v)) && isFinite(Number(v)))
-                .map(v => v.toString());
-        case 'number':
-            return Option.of(s)
-                .filter(v => isNaN(v) && isFinite(v))
-                .map(v => v.toString());
-        case 'boolean':
-            return Option.of(s)
-                .map(v => `${v}`);
-        case 'string':
-            return Option.of(s);
-        default:
-            return None;
-    }
+    return Option.of(s)
+        .flatMap(v => {
+            switch (typeof v) {
+                case 'bigint':
+                    return Option.of(v)
+                        .filter(x => isNaN(Number(x)) && isFinite(Number(x)))
+                        .map(x => x.toString());
+                case 'number':
+                    return Option.of(v)
+                        .filter(x => !isNaN(x) && isFinite(x))
+                        .map(x => x.toString());
+                case 'boolean':
+                    return Option.of(v)
+                        .map(x => `${x}`);
+                case 'string':
+                    return Option.of(v);
+                default:
+                    return None;
+            }
+        });
 }
 
 function parseIterableSerialized<T>(i: unknown, serializer: JsonSerializer<T>): ReadonlyArray<T> {
@@ -50,7 +53,7 @@ function parseIterable(i: unknown): ReadonlyArray<any> {
     return Option.of(i)
         .filter(v => v instanceof Array)
         .map(v => v as ReadonlyArray<any>)
-        .get();
+        .getOrElse([]);
 }
 
 export function parseListSerialized<A>(i: unknown, serializer: JsonSerializer<A>): List<A> {
