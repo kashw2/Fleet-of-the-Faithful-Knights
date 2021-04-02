@@ -17,7 +17,7 @@ export abstract class ApiEndpoint {
     }
 
     getUser(req: Request): Either<string, User> {
-        return EitherUtils.toEither(UserJsonSerializer.instance.fromJsonImpl(req.user), "Unable to serialize User");
+        return EitherUtils.liftEither(UserJsonSerializer.instance.fromJson(req.user), "Unable to serialize User");
     }
 
     abstract hasPermission(req: Request, res: Response, user: User): boolean;
