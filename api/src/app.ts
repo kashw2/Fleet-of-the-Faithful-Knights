@@ -1,43 +1,60 @@
-import express, {Request, Response} from "express";
-import {Endpoints} from "./endpoints/endpoints";
-import cors from "cors";
-import passport from "passport"
-import {HeaderAPIKeyStrategy} from "passport-headerapikey";
-import {User} from "@kashw2/lib-ts";
+import express, {NextFunction, Request, Response} from "express";
+import {Database} from "./db/database";
+import {AllEndpoints} from "./endpoints/all-endpoints";
+import bodyParser from "body-parser";
+import {UserJsonSerializer} from "@kashw2/lib-ts";
+import {Option} from "funfix-core";
 
 const app = express();
 const router = express.Router();
 
+app.use("/", router);
+
+const db = new Database();
+
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+
+router.use((req: Request, res: Response, next: NextFunction) => {
+    const discordId = Option.of(req.header('Discord-Id'));
+    discordId.map(id => {
+        db.procedures.read.readUserByDiscordId(id)
+            .then(u => {
+                u.isLeft() ? req.user = undefined : req.user = UserJsonSerializer.instance.toJsonImpl(u.get())
+                next();
+            })
+            .catch(e => {
+                req.user = undefined
+                next();
+            });
+    });
+})
+
 /**
- * We want to be initialising the routes with the same Router, as such we create an immutable variable for it
+ * We want to be initialising the endpoints with the same Router, as such we create an immutable variable for it
  * and we just pass it around to all endpoints for usage this way we aren't creating multiple instances of endpoints
  * each with their own router.
  */
 
-const fleetOfTheFaithfulKnightsStrategy = new HeaderAPIKeyStrategy(
-    {header: 'X-Api-Key', prefix: ''},
-    false,
-    ((apiKey, done, req) => {
-        // TODO: Implement a DB call to get the user yada yada yada
-        return done(null, new User());
-    })
-)
-
-passport.use(fleetOfTheFaithfulKnightsStrategy);
-app.use(passport.initialize());
-
-/**
- * Allow Cors across all origins
- */
 // TODO: When we have DNS setup, specify correct origins
-app.use(cors());
-app.use('/', router);
+app.use((req: Request, res: Response, next: NextFunction) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', '*');
+    if (req.method.includes('OPTIONS')) {
+        res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE');
+        return res.status(200).json({});
+    }
+    next();
+});
 
-router.get('/', (req: Request, res: Response) => res.json({response: 'Welcome to the Fleet of the Faithful Knights API Server'}));
+app.use((req: Request, res: Response, next: NextFunction) => {
+    if (!db.isReady()) {
+        res.json({error: 'API Server Starting'});
+    }
+    next();
+});
 
-// Mount Routes
-Endpoints.mountEndpoints(router);
+// Initialise all the endpoints
+AllEndpoints.initialiseEndpoints(router);
 
-const port = 3000;
-
-app.listen(port, () => console.info(`App Started on port ${port}`))
+app.listen(3000, () => console.log(`Listening on port 3000`));
