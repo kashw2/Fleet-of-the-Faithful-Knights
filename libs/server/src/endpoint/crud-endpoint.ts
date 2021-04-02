@@ -21,19 +21,19 @@ export abstract class CrudEndpoint extends ApiEndpoint {
     mount(router: Router): void {
         router.post(this.getEndpoint(), (req: Request, res: Response) => {
             this.getUser(req)
-                .fold((error) => ApiUtils.send401(res), (user) => this.runImpl(req, res, user))
+                .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user))
         });
         router.get(this.getEndpoint(), (req: Request, res: Response) => {
             this.getUser(req)
-                .fold((error) => ApiUtils.send401(res), (user) => this.runImpl(req, res, user))
+                .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user))
         });
         router.put(this.getEndpoint(), (req: Request, res: Response) => {
             this.getUser(req)
-                .fold((error) => ApiUtils.send401(res), (user) => this.runImpl(req, res, user))
+                .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user))
         });
         router.delete(this.getEndpoint(), (req: Request, res: Response) => {
             this.getUser(req)
-                .fold((error) => ApiUtils.send401(res), (user) => this.runImpl(req, res, user))
+                .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user))
         });
     }
 
@@ -61,8 +61,9 @@ export abstract class CrudEndpoint extends ApiEndpoint {
                         return ApiUtils.send505(res);
                 }
             } catch (error) {
-                ApiUtils.send500(res);
+                return ApiUtils.send500(res);
             }
+        } else {
             return ApiUtils.send401(res);
         }
     }
