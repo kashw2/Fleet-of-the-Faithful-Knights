@@ -20,19 +20,19 @@ export abstract class CrudEndpoint extends ApiEndpoint {
 
     mount(router: Router): void {
         router.post(this.getEndpoint(), (req: Request, res: Response) => {
-            this.getUser(req)
+            this.getRequestUser(req)
                 .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user))
         });
         router.get(this.getEndpoint(), (req: Request, res: Response) => {
-            this.getUser(req)
+            this.getRequestUser(req)
                 .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user))
         });
         router.put(this.getEndpoint(), (req: Request, res: Response) => {
-            this.getUser(req)
+            this.getRequestUser(req)
                 .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user))
         });
         router.delete(this.getEndpoint(), (req: Request, res: Response) => {
-            this.getUser(req)
+            this.getRequestUser(req)
                 .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user))
         });
     }

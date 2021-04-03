@@ -16,7 +16,7 @@ export abstract class ApiEndpoint {
         return req.method;
     }
 
-    getUser(req: Request): Either<string, User> {
+    getRequestUser(req: Request): Either<string, User> {
         return EitherUtils.liftEither(UserJsonSerializer.instance.fromJson(req.user), "Unable to serialize User");
     }
 
