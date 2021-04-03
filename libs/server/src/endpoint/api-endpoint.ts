@@ -20,6 +20,13 @@ export abstract class ApiEndpoint {
         return EitherUtils.liftEither(UserJsonSerializer.instance.fromJson(req.user), "Unable to serialize User");
     }
 
+    getRequestUsername(req: Request): string {
+        return this.getRequestUser(req)
+            .toOption()
+            .flatMap(u => u.getUsername())
+            .getOrElse('System');
+    }
+
     abstract hasPermission(req: Request, res: Response, user: User): boolean;
 
 }
