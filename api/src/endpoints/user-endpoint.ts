@@ -2,7 +2,7 @@ import {CrudEndpoint} from "@kashw2/lib-server";
 import {User} from "@kashw2/lib-ts";
 import {Request, Response} from "express";
 import {ApiUtils} from "@kashw2/lib-util";
-import {Either, Left, Right} from "funfix-core";
+import {Either, Right} from "funfix-core";
 
 export class UserEndpoint extends CrudEndpoint {
 
@@ -21,7 +21,7 @@ export class UserEndpoint extends CrudEndpoint {
     hasPermission(req: Request, res: Response, user: User): boolean {
         switch (this.getHTTPMethod(req)) {
             case 'POST':
-    return true;
+                return true;
             case 'GET':
                 return true;
             case 'PUT':
