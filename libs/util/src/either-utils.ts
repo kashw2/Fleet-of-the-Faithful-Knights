@@ -1,9 +1,17 @@
 import {Either, Left, Option, Right} from "funfix-core";
+import {Promise} from "mssql";
 
 export class EitherUtils {
 
     static liftEither<A>(value: A, left: string): Either<string, A> {
         return Option.of(value).nonEmpty() ? Right(value) : Left(left);
+    }
+
+    static sequence<A>(ep: Either<any, Promise<Either<any, A>>>): Promise<Either<any, A>> {
+        if (ep.isLeft()) {
+            return Promise.resolve(Left(ep.value));
+        }
+        return ep.get()
     }
 
     static toEither<A>(value: Option<A>, left: string): Either<string, A> {
