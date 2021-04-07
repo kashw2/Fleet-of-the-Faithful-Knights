@@ -1,21 +1,27 @@
 import {CrudEndpoint} from "@kashw2/lib-server";
-import {User} from "@kashw2/lib-ts";
+import {User, UserJsonSerializer} from "@kashw2/lib-ts";
 import {Request, Response} from "express";
-import {ApiUtils} from "@kashw2/lib-util";
+import {ApiUtils, EitherUtils} from "@kashw2/lib-util";
 import {Either, Right} from "funfix-core";
+import {Database} from "../db/database";
 
 export class UserEndpoint extends CrudEndpoint {
 
-    constructor() {
+    constructor(private db: Database) {
         super('/user');
     }
 
-    create(req: Request): Either<string, any> {
-        return super.create(req);
+    async create(req: Request): Promise<Either<string, any>> {
+        return EitherUtils.sequence(this.getUser(req)
+            .map(u => this.db.procedures.insert.insertUser(u)(this.getRequestUsername(req))))
     }
 
-    delete(req: Request): Either<string, any> {
+    async delete(req: Request): Promise<Either<string, any>> {
         return super.delete(req);
+    }
+
+    private getUser(req: Request): Either<string, User> {
+        return ApiUtils.parseBodyParamSerialized(req, 'user', UserJsonSerializer.instance);
     }
 
     hasPermission(req: Request, res: Response, user: User): boolean {
@@ -34,11 +40,11 @@ export class UserEndpoint extends CrudEndpoint {
         }
     }
 
-    read(req: Request): Either<string, any> {
+    async read(req: Request): Promise<Either<string, any>> {
         return Right(req.user);
     }
 
-    update(req: Request): Either<string, any> {
+    async update(req: Request): Promise<Either<string, any>> {
         return super.update(req);
     }
 

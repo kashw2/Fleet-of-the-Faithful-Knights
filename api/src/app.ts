@@ -12,8 +12,8 @@ app.use("/", router);
 
 const db = new Database();
 
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+router.use(bodyParser.urlencoded({extended: false}));
+router.use(bodyParser.json());
 
 router.use((req: Request, res: Response, next: NextFunction) => {
     const discordId = Option.of(req.header('Discord-Id'));
@@ -55,6 +55,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 // Initialise all the endpoints
-AllEndpoints.initialiseEndpoints(router);
+AllEndpoints.initialiseEndpoints(router, db);
 
 app.listen(3000, () => console.log(`Listening on port 3000`));
