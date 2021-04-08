@@ -21,7 +21,7 @@
     "@angular/platform-browser-dynamic": "11.2.8",
     "@angular/router": "11.2.8",
     "@fortawesome/fontawesome-free": "5.15.3",
-    "@types/chart.js": "2.9.31",
+    "@types/chart.js": "2.9.32",
     "animate.css": "4.1.1",
     "ng-uikit-pro-standard": "git+https://oauth2:jRNULFUq6iNYr-xpD8cS@git.mdbootstrap.com/mdb/angular/ng-uikit-pro-standard.git",
     "chart.js": "2.9.4",
