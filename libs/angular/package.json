@@ -40,8 +40,8 @@
   "dependencies": {
     "@angular-devkit/build-angular": "0.1102.7",
     "@angular-devkit/build-ng-packagr": "0.1002.0",
-    "@angular/compiler": "11.2.8",
-    "@angular/compiler-cli": "11.2.8",
+    "@angular/compiler": "11.2.9",
+    "@angular/compiler-cli": "11.2.9",
     "@types/estree": "0.0.47",
     "ng-packagr": "11.2.4"
   }
