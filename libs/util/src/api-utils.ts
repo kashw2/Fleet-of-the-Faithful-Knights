@@ -14,11 +14,15 @@ export class ApiUtils {
     }
 
     static parseStringHeaderParam(req: Request, key: string): Either<string, string> {
-        return EitherUtils.liftEither(req.rawHeaders[key], `Unable to parse param ${key}`);
+        return EitherUtils.liftEither(req.rawHeaders[key], `Unable to parse header ${key}`);
+    }
+
+    static parseStringQueryParam(req: Request, key: string): Either<string, string> {
+        return EitherUtils.liftEither(req.query[key] as string, `Unable to parse query param ${key}`);
     }
 
     static parseUrlStringParam(req: Request, key: string): Either<string, string> {
-        return EitherUtils.liftEither(req.params[key], `Unable to parse param ${key}`);
+        return EitherUtils.liftEither(req.params[key], `Unable to parse url param ${key}`);
     }
 
     static send401(res: Response): void {
