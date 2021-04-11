@@ -1,5 +1,4 @@
 import {Either, Left, Option, Right} from "funfix-core";
-import {Promise} from "mssql";
 
 export class EitherUtils {
 
