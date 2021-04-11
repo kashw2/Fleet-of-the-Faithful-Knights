@@ -9,6 +9,10 @@ export class ApiUtils {
         return EitherUtils.liftEither(serializer.fromJson(req.body[key]), `Unable to parse body param ${key}`);
     }
 
+    static parseBooleanQueryParam(req: Request, key: string): Either<string, any> {
+        return EitherUtils.liftEither(req.query[key], `Unable to parse query param ${key}`);
+    }
+
     static parseStringHeaderParam(req: Request, key: string): Either<string, string> {
         return EitherUtils.liftEither(req.rawHeaders[key], `Unable to parse param ${key}`);
     }
