@@ -5,7 +5,7 @@ import {List} from "immutable";
 
 export class DbInsert {
 
-    constructor(readonly requests: DbRequest) {
+    constructor(private requests: DbRequest) {
     }
 
     insertUser(user: User): (username: string) => Promise<Either<string, User>> {
