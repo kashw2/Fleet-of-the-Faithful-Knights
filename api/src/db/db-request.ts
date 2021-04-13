@@ -3,7 +3,6 @@ import {List, Set} from "immutable";
 import {ConnectionPool, IRecordSet} from "mssql";
 import {getJsonFromRecordSet, JsonSerializer} from "@kashw2/lib-util";
 import {Database} from "./database";
-import {UserJsonSerializer} from "@kashw2/lib-ts";
 
 export class DbRequest {
 

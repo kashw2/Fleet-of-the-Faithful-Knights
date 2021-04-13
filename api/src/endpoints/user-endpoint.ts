@@ -12,8 +12,9 @@ export class UserEndpoint extends CrudEndpoint {
     }
 
     async create(req: Request): Promise<Either<string, any>> {
-        return EitherUtils.sequence(this.getUser(req)
+        return EitherUtils.sequence(this.validate(req)
             .map(u => this.db.procedures.insert.insertUser(u)(this.getRequestUsername(req))))
+            .then(v => v.map(u => UserJsonSerializer.instance.toJsonImpl(u)));
     }
 
     async delete(req: Request): Promise<Either<string, any>> {
@@ -51,7 +52,7 @@ export class UserEndpoint extends CrudEndpoint {
         // TODO: I don't like this, i think some utility functions could make it look better
         // Maybe in the future we should parse the serializer into the method that sends the result or something like that.
         return EitherUtils.sequence(this.getUserId(req)
-                .map(uid => this.db.procedures.read.readUserByDiscordId(uid)))
+            .map(uid => this.db.procedures.read.readUserByDiscordId(uid)))
             .then(v => v.map(u => UserJsonSerializer.instance.toJsonImpl(u)))
     }
 
@@ -61,7 +62,19 @@ export class UserEndpoint extends CrudEndpoint {
     }
 
     async update(req: Request): Promise<Either<string, any>> {
-        return super.update(req);
+        return EitherUtils.sequence(this.validate(req)
+            .map(u => this.db.procedures.update.updateUser(u)(this.getRequestUsername(req))))
+            .then(v => v.map(u => UserJsonSerializer.instance.toJsonImpl(u)));
+    }
+
+    validate(req: Request): Either<string, User> {
+        switch (this.getHTTPMethod(req)) {
+            case 'PUT':
+                return this.getUser(req)
+                    .filterOrElse(u => u.getId().nonEmpty(), () => 'User must have an Id');
+            default:
+                return this.getUser(req);
+        }
     }
 
 }
