@@ -10,34 +10,50 @@ export abstract class CrudEndpoint extends ApiEndpoint {
         super(endpoint);
     }
 
-   async create(req: Request): Promise<Either<string, any>> {
+    /**
+     * Provides functionality for Creation of data
+     */
+    async create(req: Request): Promise<Either<string, any>> {
         return Promise.resolve(Left(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`));
     }
 
-   async delete(req: Request): Promise<Either<string, any>> {
+    /**
+     * Provides functionality for Deletion of data
+     */
+    async delete(req: Request): Promise<Either<string, any>> {
         return Promise.resolve(Left(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`));
     }
 
+    /**
+     * Mounts all the methods for Crud to be achievable
+     */
     mount(router: Router): void {
+        // C - Create
         router.post(this.getEndpoint(), (req: Request, res: Response) => {
             this.getRequestUser(req)
                 .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user))
         });
+        // R - Read
         router.get(this.getEndpoint(), (req: Request, res: Response) => {
             this.getRequestUser(req)
                 .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user))
         });
+        // U - Update
         router.put(this.getEndpoint(), (req: Request, res: Response) => {
             this.getRequestUser(req)
                 .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user))
         });
+        // D - Delete
         router.delete(this.getEndpoint(), (req: Request, res: Response) => {
             this.getRequestUser(req)
                 .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user))
         });
     }
 
-   async read(req: Request): Promise<Either<string, any>> {
+    /**
+     * Provides functionality for Reading/Retrieval of data
+     */
+    async read(req: Request): Promise<Either<string, any>> {
         return Promise.resolve(Left(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`));
     }
 
@@ -72,7 +88,10 @@ export abstract class CrudEndpoint extends ApiEndpoint {
         }
     }
 
-   async update(req: Request): Promise<Either<string, any>> {
+    /**
+     * Provides functionality for Updating of data
+     */
+    async update(req: Request): Promise<Either<string, any>> {
         return Promise.resolve(Left(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`));
     }
 
