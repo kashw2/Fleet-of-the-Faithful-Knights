@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights#readme",
   "dependencies": {
-    "ts-loader": "8.1.0",
+    "ts-loader": "9.0.0",
     "typescript": "4.2.2",
     "webpack": "5.33.2"
   },
