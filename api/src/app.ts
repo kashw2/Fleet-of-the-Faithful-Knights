@@ -48,7 +48,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use((req: Request, res: Response, next: NextFunction) => {
-    if (!db.isReady()) {
+    if (!db.cache.isReady()) {
         res.json({error: 'API Server Starting'});
     }
     next();
