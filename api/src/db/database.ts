@@ -53,8 +53,4 @@ export class Database {
         return new ConnectionPool(this.dbConfig);
     }
 
-    isReady(): boolean {
-        return this.cache.ready;
-    }
-
 }

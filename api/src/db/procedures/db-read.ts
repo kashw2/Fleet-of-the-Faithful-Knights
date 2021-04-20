@@ -12,4 +12,8 @@ export class DbRead {
         return this.requests.sendRequestSerialized('ssp_json_GetUser', List.of(`@DiscordId = '${discordId}'`), UserJsonSerializer.instance)
     }
 
+    readUsers(): Promise<Either<string, List<User>>> {
+        return this.requests.sendRequestListSerialized('ssp_json_GetUsers', List(), UserJsonSerializer.instance);
+    }
+
 }

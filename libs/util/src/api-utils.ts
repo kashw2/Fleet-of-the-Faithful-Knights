@@ -42,4 +42,8 @@ export class ApiUtils {
         res.json({error});
     }
 
+    static sendSerializedResponse<A>(res: Response, data: A, serializer: JsonSerializer<A>): void {
+        res.send(serializer.toJsonImpl(data));
+    }
+
 }
