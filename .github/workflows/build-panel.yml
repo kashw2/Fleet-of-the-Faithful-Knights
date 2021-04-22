@@ -33,8 +33,5 @@ jobs:
       - name: lerna bootstrap
         run: lerna exec npm i
 
-      - name: build lib-angular
-        run: lerna run build --scope=@kashw2/lib-angular
-
       - name: build panel
         run: lerna run build --scope=@ffk/panel
