@@ -8,6 +8,9 @@
     "build": "webpack --config webpack/webpack.config.ts",
     "build-dev": "webpack --config webpack/webpack.dev.config.ts"
   },
+  "files": [
+    "dist"
+  ],
   "repository": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights.git",
   "author": "Keanu Ashwell",
   "license": "ISC",
