@@ -52,9 +52,9 @@ export class UserEndpoint extends CrudEndpoint {
         }
         // TODO: I don't like this, i think some utility functions could make it look better
         // Maybe in the future we should parse the serializer into the method that sends the result or something like that.
-        return EitherUtils.sequence(this.getUserId(req)
-            .map(uid => this.db.procedures.read.readUserByDiscordId(uid)))
-            .then(v => v.map(u => UserJsonSerializer.instance.toJsonImpl(u)))
+        return Promise.resolve(this.getUserId(req)
+            .flatMap(uid => this.db.cache.users.getByDiscordId(uid))
+            .map(v => UserJsonSerializer.instance.toJsonImpl(v)));
     }
 
     private shouldReadCurrentUser(req: Request): boolean {
