@@ -4,18 +4,6 @@
   "description": "Fleet of the Faithful Knights Angular Componentry, Services, Data Models",
   "main": "./dist/bundles/kashw2-lib-angular.umd.min.js",
   "typings": "./dist/kashw2-lib-angular.d.ts",
-  "sideEffects": false,
-  "nyc": {
-    "exclude": [
-      "src/**/*.test.ts"
-    ],
-    "reporter": [
-      "text-summary",
-      "html"
-    ],
-    "instrument": false,
-    "sourceMap": false
-  },
   "scripts": {
     "build": "ng build"
   },
@@ -34,7 +22,6 @@
     "Component"
   ],
   "author": "Keanu Ashwell",
-  "private": true,
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights/issues"
