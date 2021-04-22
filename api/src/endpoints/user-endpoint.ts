@@ -19,7 +19,8 @@ export class UserEndpoint extends CrudEndpoint {
 
     async delete(req: Request): Promise<Either<string, any>> {
         return EitherUtils.sequence(this.getUserId(req)
-            .map(uid => this.db.procedures.delete.deleteUser(uid)));
+            .map(uid => this.db.procedures.delete.deleteUser(uid)))
+            .then(v => v.map(u => UserJsonSerializer.instance.toJsonImpl(u)));
     }
 
     private getUser(req: Request): Either<string, User> {
