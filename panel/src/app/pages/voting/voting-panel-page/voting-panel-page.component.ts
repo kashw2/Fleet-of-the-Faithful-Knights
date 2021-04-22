@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Candidate, Group, User, Vote} from '@kashw2/lib-ts';
 import {None, Option, Some} from 'funfix-core';
 import {Set} from 'immutable';
-import {HyperlinkMap} from '@ffk/lib-angular';
-import * as moment from 'moment';
+import {HyperlinkMap} from '@kashw2/lib-angular';
 import {NavigationService} from '../../../service/navigation.service';
 import {UserService} from '../../../service/user.service';
 import {VoteService} from '../../../service/vote.service';
