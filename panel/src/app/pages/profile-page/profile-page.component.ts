@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {None, Option, Some} from 'funfix-core';
 import {Set} from 'immutable';
-import {HyperlinkMap} from '@ffk/lib-angular';
+import {HyperlinkMap} from '@kashw2/lib-angular';
 import {MomentUtils} from '@kashw2/lib-util';
 import {UserService} from '../../service/user.service';
 

@@ -10,7 +10,7 @@ on:
       - master
 
 jobs:
-  build:
+  build-panel:
     runs-on: ubuntu-latest
     steps:
       - name: setup node
@@ -25,16 +25,12 @@ jobs:
           npm config set registry https://registry.npmjs.org/
 
       - name: install globals
-        run: sudo npm install -g lerna @angular/cli
+        run: sudo npm install -g lerna @angular/cli &> /dev/null
 
       - name: npm install
-        run: npm install
-
-      - name: lerna bootstrap
-        run: lerna exec npm i
-
-      - name: build lib-angular
-        run: lerna run build --scope=@kashw2/lib-angular
+        run: |
+          npm install
+          lerna exec npm install --scope=@ffk/panel
 
       - name: build panel
         run: lerna run build --scope=@ffk/panel

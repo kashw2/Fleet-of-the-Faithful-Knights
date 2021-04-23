@@ -2,6 +2,7 @@ import {DbProcedures} from "./procedures/db-procedures";
 import {List} from "immutable";
 import {User} from "@kashw2/lib-ts";
 import {BehaviorSubject} from "rxjs";
+import {UserCache} from "./caches/user-cache";
 
 export class DbCache {
 
@@ -11,21 +12,21 @@ export class DbCache {
 
     ready: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-    users: List<User> = List();
+    users: UserCache = new UserCache(List());
 
     cache(): void {
         console.log('Starting Cache');
         Promise.all([
             this.cacheUsers(),
-        ]).then(v => {
+        ]).then(_ => {
             console.log('Cache Complete');
             this.ready.next(true)
         })
     }
 
-    cacheUsers(): Promise<List<User>> {
-        return this.procedures.read.readUsers()
-            .then(u => this.users = u.getOrElse(List<User>()));
+    async cacheUsers(): Promise<void> {
+        this.procedures.read.readUsers()
+            .then(u => this.users = new UserCache(u.getOrElse(List<User>())));
     }
 
     isReady(): boolean {

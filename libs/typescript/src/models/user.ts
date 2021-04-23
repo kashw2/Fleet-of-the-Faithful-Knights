@@ -27,7 +27,7 @@ export class User {
         private discordId: Option<string> = None,
         private discordDiscriminator: Option<string> = None,
         private group: Option<Group> = None,
-        private permissions: Set<string> = Set(), // TODO: Make this Set<Enum>
+        private permissions: Set<string> = Set(), // TODO: Make this Set<Enum> or something
         private memberSince: Option<moment.Moment> = None,
         private starCitizenUser: Option<StarCitizenUser> = None,
     ) {

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {HyperlinkMap} from '@ffk/lib-angular';
+import {HyperlinkMap} from '@kashw2/lib-angular';
 import {Set} from 'immutable';
 import {None, Option} from 'funfix-core';
 import {User} from '@kashw2/lib-ts';

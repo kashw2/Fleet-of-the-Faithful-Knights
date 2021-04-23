@@ -10,7 +10,7 @@ on:
       - master
 
 jobs:
-  build:
+  build-api:
     runs-on: ubuntu-latest
     steps:
       - name: setup node
@@ -28,10 +28,9 @@ jobs:
         run: sudo npm install -g lerna
 
       - name: npm install
-        run: npm install
-
-      - name: lerna bootstrap
-        run: lerna exec npm i
+        run: |
+          npm install
+          lerna exec npm install --scope=@ffk/api
 
       - name: build api
         run: lerna run build --scope=@ffk/api

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {HyperlinkMap} from '@ffk/lib-angular';
+import {HyperlinkMap} from '@kashw2/lib-angular';
 import {Set} from 'immutable';
 import {NavigationService} from '../../service/navigation.service';
 
@@ -10,7 +10,7 @@ import {NavigationService} from '../../service/navigation.service';
 })
 export class DropdownComponent implements OnInit {
 
-  constructor(private navigationService: NavigationService) { }
+  constructor(readonly navigationService: NavigationService) { }
 
   @Input() hyperlinks: Set<HyperlinkMap> = Set();
 
