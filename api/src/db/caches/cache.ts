@@ -9,6 +9,11 @@ export class Cache<A> {
         return this.values;
     }
 
+    size(): number {
+        return this.getValues()
+            .size;
+    }
+
     update(list: List<A>): List<A> {
         return this.values = this.values.clear().concat(list);
     }
