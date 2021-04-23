@@ -10,7 +10,7 @@ on:
       - master
 
 jobs:
-  build:
+  build-lib-ts:
     runs-on: ubuntu-latest
     steps:
       - name: setup node
