@@ -6,7 +6,6 @@ import {Either, Option} from "funfix-core";
 
 export class UserCache extends Cache<User> {
 
-    // TODO: Make this a Map so we can get by user id, user name etc
     constructor(private users: List<User> = List()) {
         super(users);
     }
@@ -23,7 +22,7 @@ export class UserCache extends Cache<User> {
         return EitherUtils.toEither(Option.of(this.byDiscordId.get(userId)), `User with id ${userId} does not exist`);
     }
 
-    getUsers(): List<User> {
+    protected getUsers(): List<User> {
         return this.users;
     }
 

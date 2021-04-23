@@ -7,7 +7,7 @@ on:
       - package.json
       - libs/angular/**
     branches:
-      - master
+      - main
 
 jobs:
   build-lib-angular:

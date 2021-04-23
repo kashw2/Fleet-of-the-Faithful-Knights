@@ -7,7 +7,7 @@ on:
       - package.json
       - libs/typescript/**
     branches:
-      - master
+      - main
 
 jobs:
   build-lib-ts:

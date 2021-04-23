@@ -7,7 +7,7 @@ on:
       - package.json
       - api/**
     branches:
-      - master
+      - main
 
 jobs:
   build-api:

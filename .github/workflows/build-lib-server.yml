@@ -7,7 +7,7 @@ on:
       - package.json
       - libs/server/**
     branches:
-      - master
+      - main
 
 jobs:
   build-lib-server:

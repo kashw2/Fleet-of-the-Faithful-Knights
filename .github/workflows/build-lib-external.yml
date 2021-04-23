@@ -7,7 +7,7 @@ on:
       - package.json
       - libs/external/**
     branches:
-      - master
+      - main
 
 jobs:
   build-lib-external:

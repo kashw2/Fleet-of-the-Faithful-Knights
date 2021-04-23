@@ -1,6 +1,6 @@
 import {config, ConnectionPool} from "mssql";
 import {from, of} from "rxjs";
-import {flatMap, map} from "rxjs/operators";
+import {flatMap, map, tap} from "rxjs/operators";
 import {DbCache} from "./db-cache";
 import {DbRequest} from "./db-request";
 import {DbProcedures} from "./procedures/db-procedures";
@@ -11,10 +11,11 @@ export class Database {
         // Stack / Sequential ordering matters
         this.requests = new DbRequest(this);
         this.procedures = new DbProcedures(this.requests);
-        this.cache = new DbCache(this.procedures);
     }
 
+    // @ts-ignore
     cache: DbCache;
+
     dbConfig: config = {
         user: process.env.FFK_DATABASE_USERNAME,
         password: process.env.FFK_DATABASE_PASSWORD,
@@ -46,6 +47,7 @@ export class Database {
                 }
                 return x;
             }))
+            .pipe(tap(_ => this.cache = new DbCache(this.procedures)))
             .toPromise();
     }
 
