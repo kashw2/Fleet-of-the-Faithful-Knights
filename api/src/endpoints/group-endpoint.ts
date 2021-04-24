@@ -20,7 +20,7 @@ export class GroupEndpoint extends CrudEndpoint {
     }
 
     private getGroupId(req: Request): Either<string, string> {
-        return ApiUtils.parseUrlStringParam(req, 'group_id');
+        return ApiUtils.parseStringQueryParam(req, 'group_id');
     }
 
     hasPermission(req: Request, res: Response, user: User): boolean {
