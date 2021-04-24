@@ -8,7 +8,7 @@ export class GroupCache extends Cache<Group> {
         super(groups);
     }
 
-    protected getGroups(): List<Group> {
+    getGroups(): List<Group> {
         return this.groups;
     }
 
