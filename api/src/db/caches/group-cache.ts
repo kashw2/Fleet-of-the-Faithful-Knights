@@ -1,6 +1,8 @@
 import {Cache} from "./cache";
 import {Group} from "@kashw2/lib-ts";
-import {List} from "immutable";
+import {List, Map} from "immutable";
+import {CollectionUtils, EitherUtils} from "@kashw2/lib-util";
+import {Either, Option} from "funfix-core";
 
 export class GroupCache extends Cache<Group> {
 
@@ -8,8 +10,14 @@ export class GroupCache extends Cache<Group> {
         super(groups);
     }
 
-    protected getGroups(): List<Group> {
+    byId: Map<string, Group> = CollectionUtils.buildKeyedMap(this.getGroups(), (g) => g.getId());
+
+    getGroups(): List<Group> {
         return this.groups;
+    }
+
+    getGroupsById(groupId: string): Either<string, Group> {
+        return EitherUtils.toEither(Option.of(this.byId.get(groupId)), `Group with id ${groupId} does not exist`);
     }
 
 }

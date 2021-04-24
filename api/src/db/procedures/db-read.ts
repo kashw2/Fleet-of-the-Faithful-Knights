@@ -9,7 +9,7 @@ export class DbRead {
     }
 
     readGroups(): Promise<Either<string, List<Group>>> {
-        return this.requests.sendRequestListSerialized('ssp_json_GetUsers', List(), GroupJsonSerializer.instance);
+        return this.requests.sendRequestListSerialized('ssp_json_GetGroups', List(), GroupJsonSerializer.instance)
     }
 
     readUserByDiscordId(discordId: string): Promise<Either<string, User>> {
