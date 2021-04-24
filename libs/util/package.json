@@ -1,6 +1,6 @@
 {
   "name": "@kashw2/lib-util",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Fleet of the Faithful Knights Utility Library",
   "main": "./dist/lib-util.js",
   "typings": "./dist/src/index.d.ts",
