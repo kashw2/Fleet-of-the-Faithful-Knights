@@ -32,7 +32,8 @@ export class GroupEndpoint extends CrudEndpoint {
             return Promise.resolve(EitherUtils.liftEither(GroupJsonSerializer.instance.toJsonArrayImpl(this.db.cache.groups.getGroups()), "Groups cache is empty"))
         }
         return Promise.resolve(this.getGroupId(req)
-            .map(gid => this.db.cache.groups.getGroupsById(gid)));
+            .flatMap(gid => this.db.cache.groups.getGroupsById(gid)))
+            .then(v => v.map(x => GroupJsonSerializer.instance.toJsonImpl(x)));
     }
 
     update(req: Request): Promise<Either<string, any>> {
