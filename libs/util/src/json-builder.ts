@@ -13,7 +13,7 @@ export class JsonBuilder {
 	}
 
 	public addIterable<A extends Collection<any, B>, B>(value: A, key: string): JsonBuilder {
-		value.forEach(v => this.jsonObject[key] += v);
+		value.map(v => this.jsonObject[key] += v);
 		return this;
 	}
 

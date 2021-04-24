@@ -16,17 +16,17 @@ export class OptionUtils {
 	 */
 	static flattenCollection<T>(collection: Collection<any, Option<T>>): Collection<any, T> {
 		return collection.filter(v => v.nonEmpty())
-			.map(v => v.get());
+			.map(v => v.get())
 	}
 
-	static flattenList<T>(list: List<Option<T>>): List<T> {
-		return list.filter(v => v.nonEmpty())
-			.map(v => v.get());
+	static flattenList<T>(...list: Option<T>[]): List<T> {
+		return this.flattenCollection(List.of(...list))
+			.toList();
 	}
 
-	static flattenSet<T>(set: Set<Option<T>>): Set<T> {
-		return set.filter(v => v.nonEmpty())
-			.map(v => v.get());
+	static flattenSet<T>(...set: Option<T>[]): Set<T> {
+		return this.flattenCollection(Set<Option<T>>(set))
+			.toSet();
 	}
 
 	static liftEither<T>(opt: Option<T>, left: string): Either<string, T> {
