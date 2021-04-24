@@ -8,8 +8,8 @@ export abstract class JsonSerializer<A> {
     abstract fromJson(json: any): A;
 
     public fromJsonArray(obj: object[] | undefined): List<A> {
-        return OptionUtils.flattenList(Option.of(obj))
-            .flatMap(o => OptionUtils.flattenList(...o.map(x => this.fromJsonImpl(x))));
+        return OptionUtils.toList(Option.of(obj))
+            .flatMap(o => OptionUtils.toList(...o.map(x => this.fromJsonImpl(x))));
 
     }
 
