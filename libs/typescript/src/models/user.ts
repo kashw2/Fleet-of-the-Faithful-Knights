@@ -1,6 +1,6 @@
 import {Set} from 'immutable';
 import * as moment from 'moment';
-import {JsonBuilder, JsonSerializer, parseDate, parseSet, parseString} from '@kashw2/lib-util';
+import {JsonBuilder, JsonSerializer, parseDate, parseString} from '@kashw2/lib-util';
 import {None, Option} from 'funfix-core';
 import {
     avatarKey,
@@ -16,6 +16,7 @@ import {
 } from '../misc/json-keys';
 import {Group, GroupJsonSerializer} from './group';
 import {StarCitizenUser, StarCitizenUserJsonSerializer} from '@kashw2/lib-external';
+import {Permission, PermissionJsonSerializer} from "./permission";
 
 export class User {
 
@@ -27,7 +28,7 @@ export class User {
         private discordId: Option<string> = None,
         private discordDiscriminator: Option<string> = None,
         private group: Option<Group> = None,
-        private permissions: Set<string> = Set(), // TODO: Make this Set<Enum> or something
+        private permissions: Set<Permission> = Set(),
         private memberSince: Option<moment.Moment> = None,
         private starCitizenUser: Option<StarCitizenUser> = None,
     ) {
@@ -61,7 +62,7 @@ export class User {
         return this.memberSince;
     }
 
-    public getPermissions(): Set<string> {
+    public getPermissions(): Set<Permission> {
         return this.permissions;
     }
 
@@ -88,7 +89,7 @@ export class UserJsonSerializer extends JsonSerializer<User> {
             parseString(json[discordIdKey]),
             parseString(json[discordDiscriminatorKey]),
             GroupJsonSerializer.instance.fromJsonImpl(json[groupKey]),
-            parseSet(json[permissionsKey]),
+            PermissionJsonSerializer.instance.fromJsonArray(json[permissionsKey]).toSet(),
             parseDate(json[memberSinceKey]),
             StarCitizenUserJsonSerializer.instance.fromJsonImpl(json[starCitizenUserKey]),
         );
@@ -102,7 +103,7 @@ export class UserJsonSerializer extends JsonSerializer<User> {
             .addOptional(value.getDiscordId(), discordIdKey)
             .addOptional(value.getDiscordDiscriminator(), discordDiscriminatorKey)
             .addOptionalSerialized(value.getGroup(), groupKey, GroupJsonSerializer.instance)
-            .addIterable(value.getPermissions(), permissionsKey)
+            .addIterableSerialized(value.getPermissions(), permissionsKey, PermissionJsonSerializer.instance)
             .addOptionalDate(value.getMemberSince(), memberSinceKey)
             .addOptionalSerialized(value.getStarCitizenUser(), starCitizenUserKey, StarCitizenUserJsonSerializer.instance)
             .build();

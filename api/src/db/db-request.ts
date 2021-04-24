@@ -49,7 +49,7 @@ export class DbRequest {
         if (result.isLeft()) {
             return Left(result.value);
         }
-        return result.map(x => serializer.fromJsonArray(x));
+        return result.map(x => serializer.fromJsonArray(x.toArray()));
     }
 
     async sendRequestSerialized<A>(

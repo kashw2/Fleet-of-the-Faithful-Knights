@@ -4,6 +4,7 @@ import {Set} from 'immutable';
 import {HyperlinkMap} from '@kashw2/lib-angular';
 import {MomentUtils} from '@kashw2/lib-util';
 import {UserService} from '../../service/user.service';
+import {Permission} from "@kashw2/lib-ts";
 
 @Component({
   selector: 'app-profile-page',
@@ -55,10 +56,10 @@ export class ProfilePageComponent implements OnInit {
       .flatMap(u => u.getMemberSince()), 'DMY');
   }
 
-  getPermissions(): Set<string> {
+  getPermissions(): Set<Permission> {
     return this.userService.getUser()
       .map(u => u.getPermissions())
-      .getOrElse(Set<string>());
+      .getOrElse(Set<Permission>());
   }
 
   getUserAvatar(): Option<string> {

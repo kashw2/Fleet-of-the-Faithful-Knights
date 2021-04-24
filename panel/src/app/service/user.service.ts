@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {Option, Some} from 'funfix-core';
-import {Group, User} from '@kashw2/lib-ts';
+import {Group, Permission, User} from '@kashw2/lib-ts';
 import {Set} from 'immutable';
 import * as moment from 'moment';
 import {StarCitizenOrganisation, StarCitizenUser} from '@kashw2/lib-external';
@@ -25,7 +25,12 @@ export class UserService {
         Some('178140794555727872'),
         Some('#7219'),
         Some(new Group(Some('0'), Some('Developer'), Some('#RAIN'), Some(11))),
-        Set.of('CREATE_VOTE', 'READ_VOTE', 'VETO_VOTE', 'MODIFY_VOTE', 'DEVELOPER'),
+        Set.of(
+          new Permission(
+            Some('1'),
+            Some('CREATE_GROUP'),
+          )
+        ),
         Some(moment()),
         Some(new StarCitizenUser(
           Some('123456'),

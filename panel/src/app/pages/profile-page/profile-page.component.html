@@ -25,7 +25,7 @@
       <p *ngIf="getMemberSince().nonEmpty()" class="my-1">Member Since: {{getMemberSince().get()}}</p>
       <div class="d-flex container flex-row flex-wrap px-0 mx-0 my-1 tag-bg justify-content-start w-50">
         <div *ngFor="let permission of getPermissions()" class="d-flex col-auto tag justify-content-center align-content-center z-depth-1">
-          <small>{{permission}}</small>
+          <small *ngIf="permission.getLabel().nonEmpty()">{{permission.getLabel().get()}}</small>
         </div>
       </div>
     </div>
