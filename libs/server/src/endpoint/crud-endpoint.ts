@@ -81,9 +81,11 @@ export abstract class CrudEndpoint extends ApiEndpoint {
                         return ApiUtils.send505(res);
                 }
             } catch (error) {
+                console.error(error);
                 return ApiUtils.send500(res);
             }
         } else {
+            console.log(`${this.getRequestUsername(req)} is not authorized to access ${this.getEndpoint()}`);
             return ApiUtils.send401(res);
         }
     }
