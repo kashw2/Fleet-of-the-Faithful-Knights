@@ -32,7 +32,18 @@ export class GroupEndpoint extends CrudEndpoint {
     }
 
     hasPermission(req: Request, res: Response, user: User): boolean {
-        return true;
+        switch (this.getHTTPMethod(req)) {
+            case 'POST':
+                return true;
+            case 'GET':
+                return true;
+            case 'PUT':
+                return true;
+            case 'DELETE':
+                return true;
+            default:
+                return false;
+        }
     }
 
     read(req: Request): Promise<Either<string, any>> {
