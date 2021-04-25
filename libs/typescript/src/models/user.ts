@@ -1,6 +1,6 @@
 import {Set} from 'immutable';
 import * as moment from 'moment';
-import {JsonBuilder, JsonSerializer, parseDate, parseString} from '@kashw2/lib-util';
+import {JsonBuilder, JsonSerializer, OptionUtils, parseDate, parseString} from '@kashw2/lib-util';
 import {None, Option} from 'funfix-core';
 import {
     avatarKey,
@@ -62,6 +62,11 @@ export class User {
         return this.memberSince;
     }
 
+    public getPermissionIds(): Set<string> {
+        return OptionUtils.flattenSet(this.getPermissions()
+            .map(p => p.getId()));
+    }
+
     public getPermissions(): Set<Permission> {
         return this.permissions;
     }
@@ -72,6 +77,14 @@ export class User {
 
     public getUsername(): Option<string> {
         return this.username;
+    }
+
+    public hasAllPermissions(...permissionIds: string[]): boolean {
+        return permissionIds.every(pid => this.getPermissionIds().contains(pid));
+    }
+
+    public hasOneOfPermissions(...permissionIds: string[]): boolean {
+        return permissionIds.some(pid => this.getPermissionIds().contains(pid));
     }
 
 }
