@@ -1,6 +1,6 @@
 import {CrudEndpoint} from "@kashw2/lib-server";
 import {Database} from "../db/database";
-import {GroupJsonSerializer, User} from "@kashw2/lib-ts";
+import {GroupJsonSerializer, User, UserJsonSerializer} from "@kashw2/lib-ts";
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {ApiUtils, EitherUtils} from "@kashw2/lib-util";
@@ -16,7 +16,9 @@ export class GroupEndpoint extends CrudEndpoint {
     }
 
     delete(req: Request): Promise<Either<string, any>> {
-        return super.delete(req);
+        return EitherUtils.sequence(this.getGroupId(req)
+            .map(gid => this.db.procedures.delete.deleteGroup(gid)))
+            .then(v => v.map(u => GroupJsonSerializer.instance.toJsonImpl(u)));
     }
 
     private getGroupId(req: Request): Either<string, string> {
