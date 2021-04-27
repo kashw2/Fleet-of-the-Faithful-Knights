@@ -1,17 +1,18 @@
 **/.idea
 **/node_modules
 **/dist
-**/terraform/*
-!*.tf
+**/terraform/.terraform/
 
 *.heapsnapshot
 *.log
 
 *.js
 *.js.map
-
 *.d.ts
 *.d.ts.map
+**/terraform.tfstate
+**/.terraform.lock.hcl
+**/terraform.tfstate.backup
 
 .npmrc
 
