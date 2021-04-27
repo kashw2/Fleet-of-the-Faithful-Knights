@@ -4,20 +4,11 @@ module.exports = {
     devtool: "source-map",
     target: "node",
     watch: true,
-    externals: [
-        {
-            'express': {
-                commonjs: 'express',
-                commonjs2: 'express'
-            }
-        }
-    ],
     module: {
         rules: [
             {
                 test: /\.tsx?$/,
-                use: "ts-loader",
-                exclude: /node_modules/,
+                use: "ts-loader"
             },
         ],
     },

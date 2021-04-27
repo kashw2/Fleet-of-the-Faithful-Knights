@@ -3,20 +3,11 @@ module.exports = {
     mode: "production",
     devtool: "source-map",
     target: "node",
-    externals: [
-        {
-            'express': {
-                commonjs: 'express',
-                commonjs2: 'express'
-            }
-        }
-    ],
     module: {
         rules: [
             {
                 test: /\.tsx?$/,
-                use: "ts-loader",
-                exclude: /node_modules/,
+                use: "ts-loader"
             },
         ],
     },
