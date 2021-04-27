@@ -52,3 +52,4 @@ FFK_DATABASE_USERNAME       | The database login username.
 FFK_DATABASE_PASSWORD       | The database login password.
 FFK_DATABASE_NAME           | The name of the database.
 FFK_DATABASE_SERVER         | The ip or dns that the database is stored on.
+FFK_DATABASE_PORT           | The port used to connect via UDP or TCP.
