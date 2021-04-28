@@ -39,3 +39,25 @@ resource "google_cloud_run_service" "api" {
   }
 
 }
+
+resource "google_cloud_run_service" "panel" {
+  location = var.region
+  name = "panel"
+
+  template {
+    spec {
+      containers {
+        image = "gcr.io/the-sandbox-311907/panel:latest"
+        ports {
+          container_port = 80
+        }
+      }
+    }
+  }
+
+  traffic {
+    percent = 100
+    latest_revision = true
+  }
+
+}
