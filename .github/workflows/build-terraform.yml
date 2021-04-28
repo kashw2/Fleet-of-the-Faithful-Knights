@@ -5,6 +5,7 @@ defaults:
     working-directory: terraform
 
 on:
+  workflow_dispatch:
   pull_request:
     paths:
       - terraform/**
