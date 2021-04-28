@@ -8,6 +8,11 @@ on:
       - panel/**
     branches:
       - main
+  push:
+    paths:
+      - panel/**
+    branches:
+      - main
 
 jobs:
   build-panel:
