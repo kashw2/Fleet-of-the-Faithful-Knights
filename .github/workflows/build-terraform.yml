@@ -1,0 +1,55 @@
+name: Terraform
+
+defaults:
+  run:
+    working-directory: terraform
+
+on:
+  pull_request:
+    paths:
+      - terraform/**
+    branches:
+      - main
+  push:
+    paths:
+      - terraform/**
+    branches:
+      - main
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hashicorp/setup-terraform@v1
+
+      - name: format
+        run: terraform fmt -recursive
+
+      - name: init
+        run: terraform init
+
+      - name: validate
+        run: terraform validate
+
+      - name: plan
+        run: terraform plan -refresh=false
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hashicorp/setup-terraform@v1
+
+      - name: format
+        run: terraform fmt -recursive
+
+      - name: init
+        run: terraform init
+
+      - name: validate
+        run: terraform validate
+
+      - name: apply
+        run: |
+        terraform destroy
+        terraform apply -auto-approve -refresh=false
