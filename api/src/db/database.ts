@@ -22,7 +22,7 @@ export class Database {
         database: process.env.FFK_DATABASE_NAME,
         server: process.env.FFK_DATABASE_SERVER || 'localhost',
         // @ts-ignore
-        port: process.env.FFK_DATABASE_PORT || 1433,
+        port: +process.env.FFK_DATABASE_PORT || 1433,
         connectionTimeout: 300000,
         requestTimeout: 300000,
         options: {
