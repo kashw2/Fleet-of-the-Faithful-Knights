@@ -13,7 +13,7 @@ jobs:
   build-lib-external:
     runs-on: ubuntu-latest
     steps:
-      - name: setup node
+      - name: checkout
         uses: actions/checkout@v2
         with:
           node-version: 12
