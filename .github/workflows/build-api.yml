@@ -16,6 +16,7 @@ on:
 
 jobs:
   build-api:
+    if: github.event_name != 'push'
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -40,6 +41,7 @@ jobs:
       - name: build api
         run: lerna run build --scope=@ffk/api
   deploy-api:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - name: checkout
