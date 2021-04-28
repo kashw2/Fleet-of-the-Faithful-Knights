@@ -1,5 +1,7 @@
 # Fleet of the Faithful Knights
 
+[![Terraform](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-terraform.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-terraform.yml)
+
 [![api.faithfulknights.com](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-api.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-api.yml)
 [![panel.faithfulknights.com](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-panel.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-panel.yml)
 
