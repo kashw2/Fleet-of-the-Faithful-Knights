@@ -51,5 +51,5 @@ jobs:
 
       - name: apply
         run: |
-        terraform destroy
-        terraform apply -auto-approve -refresh=false
+          terraform destroy
+          terraform apply -auto-approve -refresh=false
