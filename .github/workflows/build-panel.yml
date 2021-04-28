@@ -8,12 +8,18 @@ on:
       - panel/**
     branches:
       - main
+  push:
+    paths:
+      - panel/**
+    branches:
+      - main
 
 jobs:
   build-panel:
+    if: github.event_name != 'push'
     runs-on: ubuntu-latest
     steps:
-      - name: setup node
+      - name: checkout
         uses: actions/checkout@v2
         with:
           node-version: 12
@@ -34,3 +40,42 @@ jobs:
 
       - name: build panel
         run: lerna run build --scope=@ffk/panel
+  deploy-panel:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          node-version: 12
+
+      - name: npm auth
+        run: |
+          npm config set @kashw2:registry https://npm.pkg.github.com/
+          npm config set //npm.pkg.github.com/:_authToken=${{ secrets.NPM_PACKAGE_TOKEN }}
+          npm config set registry https://registry.npmjs.org/
+
+      - name: install globals
+        run: sudo npm install -g lerna @angular/cli &> /dev/null
+
+      - name: npm install
+        run: |
+          npm install
+          lerna exec npm install --scope=@ffk/panel
+
+      - name: build panel
+        run: lerna run build --scope=@ffk/panel
+
+      - name: deploy
+        uses: docker/login-action@v1
+        with:
+          registry: gcr.io
+          username: _json_key
+          password: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+      - run: |
+          docker build -t gcr.io/the-sandbox-311907/panel:${{ github.sha }} -t gcr.io/the-sandbox-311907/panel:latest -f Dockerfile .
+          docker push gcr.io/the-sandbox-311907/panel:${{ github.sha }}
+          docker push gcr.io/the-sandbox-311907/panel:latest
+        working-directory: panel
+
