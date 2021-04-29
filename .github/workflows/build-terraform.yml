@@ -34,10 +34,9 @@ jobs:
       - uses: hashicorp/setup-terraform@v1
 
       - name: setup gcp
-        run: google-github-actions/setup-gcloud@master
+        uses: google-github-actions/setup-gcloud@master
         with:
           project_id: the-sandbox-311907
-          service_account_email: terraform@the-sandbox-311907.iam.gserviceaccount.com
           service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
           export_default_credentials: true
 
