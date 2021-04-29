@@ -10,7 +10,7 @@ env:
   TF_VAR_FFK_DATABASE_NAME: ${{ secrets.TF_VAR_FFK_DATABASE_NAME }}
   TF_VAR_FFK_DATABASE_SERVER: ${{ secrets.TF_VAR_FFK_DATABASE_SERVER }}
   TF_VAR_FFK_DATABASE_PORT: ${{ secrets.TF_VAR_FFK_DATABASE_PORT }}
-  GCP_SERVICE_ACCOUNT_KEY: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+  TF_VAR_GCP_SERVICE_ACCOUNT_KEY: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
 on:
   workflow_dispatch:
@@ -43,7 +43,7 @@ jobs:
         run: terraform validate
 
       - name: plan
-        run: terraform plan -refresh=true
+        run: terraform plan -refresh=false
   apply:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
