@@ -4,6 +4,14 @@ defaults:
   run:
     working-directory: terraform
 
+env:
+  TF_VAR_FFK_DATABASE_USERNAME: ${{ secrets.TF_VAR_FFK_DATABASE_USERNAME }}
+  TF_VAR_FFK_DATABASE_PASSWORD: ${{ secrets.TF_VAR_FFK_DATABASE_PASSWORD }}
+  TF_VAR_FFK_DATABASE_NAME: ${{ secrets.TF_VAR_FFK_DATABASE_NAME }}
+  TF_VAR_FFK_DATABASE_SERVER: ${{ secrets.TF_VAR_FFK_DATABASE_SERVER }}
+  TF_VAR_FFK_DATABASE_PORT: ${{ secrets.TF_VAR_FFK_DATABASE_PORT }}
+  TF_VAR_GCP_SERVICE_ACCOUNT_KEY: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+
 on:
   workflow_dispatch:
   pull_request:
@@ -19,10 +27,19 @@ on:
 
 jobs:
   plan:
+    if: github.event_name != 'push'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: hashicorp/setup-terraform@v1
+
+      - name: setup gcp
+        run: google-github-actions/setup-gcloud@master
+        with:
+          project_id: the-sandbox-311907
+          service_account_email: terraform@the-sandbox-311907.iam.gserviceaccount.com
+          service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+          export_default_credentials: true
 
       - name: format
         run: terraform fmt -recursive
@@ -36,10 +53,19 @@ jobs:
       - name: plan
         run: terraform plan -refresh=false
   apply:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: hashicorp/setup-terraform@v1
+
+      - name: setup gcp
+        run: google-github-actions/setup-gcloud@master
+        with:
+          project_id: the-sandbox-311907
+          service_account_email: terraform@the-sandbox-311907.iam.gserviceaccount.com
+          service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+          export_default_credentials: true
 
       - name: format
         run: terraform fmt -recursive
