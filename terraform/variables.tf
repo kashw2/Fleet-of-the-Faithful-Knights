@@ -27,3 +27,7 @@ variable "FFK_DATABASE_PASSWORD" {
 variable "FFK_DATABASE_PORT" {
   type = number
 }
+
+variable "GCP_SERVICE_ACCOUNT_KEY" {
+  type = string
+}

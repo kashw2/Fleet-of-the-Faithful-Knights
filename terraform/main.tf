@@ -1,6 +1,7 @@
 provider "google" {
   project = var.project
   region = var.region
+  access_token = var.GCP_SERVICE_ACCOUNT_KEY
 }
 
 module "cloud_run" {
