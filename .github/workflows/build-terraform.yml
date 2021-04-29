@@ -27,6 +27,7 @@ on:
 
 jobs:
   plan:
+    if: github.event_name != 'push'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -44,6 +45,7 @@ jobs:
       - name: plan
         run: terraform plan -refresh=true
   apply:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
