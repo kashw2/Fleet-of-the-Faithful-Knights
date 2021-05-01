@@ -61,3 +61,11 @@ TF_VAR_FFK_DATABASE_PASSWORD    | Duplicate of above but made usable by Terrafor
 TF_VAR_FFK_DATABASE_NAME        | Duplicate of above but made usable by Terraform
 TF_VAR_FFK_DATABASE_SERVER      | Duplicate of above but made usable by Terraform
 TF_VAR_FFK_DATABASE_PORT        | Duplicate of above but made usable by Terraform
+
+#### Debugging Workflows:
+
+Debugging workflows can be a bit tedious if you don't know how to do it. Thankfully there are many open sourced tools
+out there that facilitate easy testing of workflows/GitHub Actions with miniscule differences to what is seen when you actually
+create a pull request with your code or have it pushed.
+
+My personal favourite is https://github.com/nektos/act
