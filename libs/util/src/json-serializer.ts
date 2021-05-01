@@ -1,7 +1,7 @@
 import {JsonBuilder} from './json-builder';
 import {Option} from "funfix-core";
 import {OptionUtils} from "./option-utils";
-import {Collection, List} from "immutable";
+import {List} from "immutable";
 
 export abstract class JsonSerializer<A> {
 
@@ -18,8 +18,9 @@ export abstract class JsonSerializer<A> {
             .map(v => this.fromJson(v));
     }
 
-    public fromJsonString(json: string): A {
-        return this.fromJson(JSON.parse(json));
+    public fromJsonString(json: string): Option<A> {
+        return Option.of(json)
+            .map(v => this.fromJson(JSON.parse(v)));
     }
 
     abstract toJson(value: A, builder: JsonBuilder): object;

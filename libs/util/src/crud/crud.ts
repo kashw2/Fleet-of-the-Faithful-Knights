@@ -25,7 +25,7 @@ export abstract class Crud {
 
 	public readSerialized<T>(key: string, serializer: JsonSerializer<T>): Option<T> {
 		return this.read(key)
-			.map(v => serializer.fromJsonString(v));
+			.flatMap(v => serializer.fromJsonString(v));
 	}
 
 	public abstract update(key: string, value: string): void;
