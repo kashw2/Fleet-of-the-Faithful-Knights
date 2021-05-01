@@ -39,7 +39,7 @@
     "express": "4.17.1",
     "funfix-core": "7.0.1",
     "immutable": "4.0.0-rc.12",
-    "lerna": "3.22.1",
+    "lerna": "4.0.0",
     "moment": "2.29.1",
     "mssql": "6.3.1",
     "rxjs": "6.6.6",
