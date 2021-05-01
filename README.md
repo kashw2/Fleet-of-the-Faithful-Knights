@@ -23,15 +23,15 @@ I want to say that most of this stuff will just be plug and play but who knows, 
 
 #### Dependencies:
 
-Name                      | Version
-------------------------- | -------
-TypeScript                | 4.0.x
-Concurrently              | 5.3.0
-Nodemon                   | 2.0.6
-Node                      | 12.x.x
-Lerna                     | 3.22.1
-Webpack                   | 5.10.1
-Terraform                 | 0.15.0
+Name                                                 | Version
+---------------------------------------------------- | -------
+TypeScript                                           | 4.0.x
+Concurrently                                         | 5.3.0
+Nodemon                                              | 2.0.6
+Node                                                 | 12.x.x
+Lerna                                                | 3.22.1
+Webpack                                              | 5.10.1
+[Terraform](https://www.terraform.io/downloads.html) | 0.15.0
 
 This ensures that you will be able to compile, build, run and deploy all projects in the repo.
 
@@ -64,8 +64,8 @@ TF_VAR_FFK_DATABASE_PORT        | Duplicate of above but made usable by Terrafor
 
 #### Debugging Workflows:
 
-Debugging workflows can be a bit tedious if you don't know how to do it. Thankfully there are many open sourced tools
-out there that facilitate easy testing of workflows/GitHub Actions with miniscule differences to what is seen when you actually
-create a pull request with your code or have it pushed.
+Debugging workflows can be a bit tedious if you don't know how to do it. Thankfully there are many open sourced tools out there that
+facilitate easy testing of workflows/GitHub Actions with miniscule differences to what is seen when you actually create a pull request with
+your code or have it pushed.
 
 My personal favourite is https://github.com/nektos/act
