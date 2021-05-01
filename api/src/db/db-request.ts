@@ -1,4 +1,4 @@
-import {Either, Left, Option} from "funfix-core";
+import {Either, Left, Option, Right} from "funfix-core";
 import {List, Set} from "immutable";
 import {ConnectionPool, IRecordSet} from "mssql";
 import {getJsonFromRecordSet, JsonSerializer} from "@kashw2/lib-util";
@@ -36,7 +36,7 @@ export class DbRequest {
             .query(`${procedure} ${params.join(", ").trim()}`);
         if (Option.of(result.recordset[0]).isEmpty()) {
             console.error(`Error running: ${procedure} ${params.join(",").trim()}`);
-            return Left(`Error running: ${procedure} ${params.join(",").trim()}`);
+            return Right(List());
         }
         return getJsonFromRecordSet(result.recordset)
             .map((x: IRecordSet<any>) => List(x));
@@ -70,8 +70,9 @@ export class DbRequest {
         const connection = await this.connection;
         const result = await connection.request()
             .query(`${procedure} ${params.join(", ").trim()}`);
-        if (!result.recordsets) {
-            return Left(`Error running: ${procedure}`);
+        if (result.recordsets.length < 1 || Option.of(result.recordset[0]).isEmpty()) {
+            console.error(`Error running: ${procedure} ${params.join(",").trim()}`);
+            return Right(Set());
         }
         return getJsonFromRecordSet(result.recordset)
             .map((x: IRecordSet<any>) => Set(x));
