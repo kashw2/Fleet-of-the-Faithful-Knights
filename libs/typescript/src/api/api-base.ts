@@ -6,13 +6,13 @@ export class ApiBase {
     constructor(private uri: string) {
     }
 
-    private getFullUrl(endpoint: string): string {
+    public getFullUrl(endpoint: string): string {
         return this.getUri().endsWith('/')
             ? this.getUri().concat(endpoint)
             : `${this.getUri()}/${endpoint}`;
     }
 
-    getHeaders(): object {
+    protected getHeaders(): object {
         return {};
     }
 
