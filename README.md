@@ -32,10 +32,11 @@ Node                                                 | 12.x.x
 Lerna                                                | 3.22.1
 Webpack                                              | 5.10.1
 [Terraform](https://www.terraform.io/downloads.html) | 0.15.0
+Docker                                               | 20.10.6
 
 This ensures that you will be able to compile, build, run and deploy all projects in the repo.
 
-Here's a one line install. Do note that it is a global install.
+Here's a one line install for all node packages. Do note that it is a global install.
 
 ```npm i typescript concurrently nodemon node lerna webpack -g```
 
