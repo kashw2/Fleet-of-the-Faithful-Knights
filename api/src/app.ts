@@ -28,7 +28,9 @@ router.use((req: Request, res: Response, next: NextFunction) => {
                 next();
             });
     });
-    next();
+    if (discordId.isEmpty()) {
+        next();
+    }
 })
 
 /**
