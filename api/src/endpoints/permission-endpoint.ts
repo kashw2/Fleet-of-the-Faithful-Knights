@@ -1,5 +1,5 @@
 import {CrudEndpoint} from "@kashw2/lib-server";
-import {PermissionJsonSerializer, User} from "@kashw2/lib-ts";
+import {Permission, PermissionJsonSerializer, User} from "@kashw2/lib-ts";
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {ApiUtils, EitherUtils} from "@kashw2/lib-util";
@@ -9,6 +9,22 @@ export class PermissionsEndpoint extends CrudEndpoint {
 
     constructor(private db: Database) {
         super('/permission');
+    }
+
+    create(req: Request): Promise<Either<string, any>> {
+        return EitherUtils.sequence(this.getPermission(req)
+            .map(p => this.db.procedures.insert.insertPermission(p)(this.getRequestUsername(req))))
+            .then(v => v.map(u => PermissionJsonSerializer.instance.toJsonImpl(u)));
+    }
+
+    delete(req: Request): Promise<Either<string, any>> {
+        return EitherUtils.sequence(this.getPermissionId(req)
+            .map(pid => this.db.procedures.delete.deletePermission(pid)))
+            .then(v => v.map(x => PermissionJsonSerializer.instance.toJsonImpl(x)));
+    }
+
+    private getPermission(req: Request): Either<string, Permission> {
+        return ApiUtils.parseBodyParamSerialized(req, 'permission', PermissionJsonSerializer.instance);
     }
 
     private getPermissionId(req: Request): Either<string, string> {
@@ -36,6 +52,12 @@ export class PermissionsEndpoint extends CrudEndpoint {
         }
         return Promise.resolve(this.getPermissionId(req)
             .flatMap(pid => this.db.cache.permissions.getByPermissionId(pid)))
+            .then(v => v.map(x => PermissionJsonSerializer.instance.toJsonImpl(x)));
+    }
+
+    update(req: Request): Promise<Either<string, any>> {
+        return EitherUtils.sequence(this.getPermission(req)
+            .map(p => this.db.procedures.update.updatePermission(p)(this.getRequestUsername(req))))
             .then(v => v.map(x => PermissionJsonSerializer.instance.toJsonImpl(x)));
     }
 
