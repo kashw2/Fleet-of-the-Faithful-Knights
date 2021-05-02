@@ -75,15 +75,18 @@ export function parseSet(i: unknown): Set<any> {
     return Set(parseIterable(i));
 }
 
-export function parseDate(d: unknown): Option<moment.Moment> {
-    switch (typeof d) {
-        case 'number':
-        case 'string':
-            return Option.of(d)
-                .map(v => moment(v));
-        default:
-            return None;
-    }
+export function parseDate(v: unknown): Option<moment.Moment> {
+    return Option.of(v)
+        .flatMap(d => {
+            switch (typeof d) {
+                case 'number':
+                case 'string':
+                    return Option.of(d)
+                        .map(x => moment(x));
+                default:
+                    return None;
+            }
+        })
 }
 
 export function parseBoolean(v: unknown): Option<boolean> {
