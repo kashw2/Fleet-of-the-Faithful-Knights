@@ -11,6 +11,12 @@ export class PermissionsEndpoint extends CrudEndpoint {
         super('/permission');
     }
 
+    create(req: Request): Promise<Either<string, any>> {
+        return EitherUtils.sequence(this.getPermission(req)
+            .map(p => this.db.procedures.insert.insertPermission(p)(this.getRequestUsername(req))))
+            .then(v => v.map(u => PermissionJsonSerializer.instance.toJsonImpl(u)));
+    }
+
     delete(req: Request): Promise<Either<string, any>> {
         return EitherUtils.sequence(this.getPermissionId(req)
             .map(pid => this.db.procedures.delete.deletePermission(pid)))
