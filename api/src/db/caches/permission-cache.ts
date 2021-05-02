@@ -16,7 +16,7 @@ export class PermissionCache extends Cache<Permission> {
         return EitherUtils.toEither(Option.of(this.byId.get(permissionId)), `Permission with id ${permissionId} does not exist`);
     }
 
-    protected getPermissions(): List<Permission> {
+    getPermissions(): List<Permission> {
         return this.permissions;
     }
 
