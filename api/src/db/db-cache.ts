@@ -1,9 +1,10 @@
 import {DbProcedures} from "./procedures/db-procedures";
 import {List} from "immutable";
-import {Group, User} from "@kashw2/lib-ts";
+import {Group, Permission, User} from "@kashw2/lib-ts";
 import {BehaviorSubject} from "rxjs";
 import {UserCache} from "./caches/user-cache";
 import {GroupCache} from "./caches/group-cache";
+import {PermissionCache} from "./caches/permission-cache";
 
 export class DbCache {
 
@@ -12,6 +13,8 @@ export class DbCache {
     }
 
     groups: GroupCache = new GroupCache(List());
+
+    permissions: PermissionCache = new PermissionCache(List());
 
     ready: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
@@ -22,6 +25,7 @@ export class DbCache {
         Promise.all([
             this.cacheUsers(),
             this.cacheGroups(),
+            this.cachePermissions(),
         ]).then(_ => {
             console.info('Cache Complete');
             this.ready.next(true)
@@ -33,6 +37,14 @@ export class DbCache {
             .then(g => {
                 this.groups = new GroupCache(g.getOrElse(List<Group>()));
                 console.info(`Loaded ${this.groups.size()} Groups`);
+            })
+    }
+
+    async cachePermissions(): Promise<void> {
+        this.procedures.read.readPermissions()
+            .then(p => {
+                this.permissions = new PermissionCache(p.getOrElse(List<Permission>()));
+                console.log(`Loaded ${this.permissions.size()} Permissions`);
             })
     }
 

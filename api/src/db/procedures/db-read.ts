@@ -1,6 +1,6 @@
 import {DbRequest} from "../db-request";
 import {Either} from "funfix-core";
-import {Group, GroupJsonSerializer, User, UserJsonSerializer} from "@kashw2/lib-ts";
+import {Group, GroupJsonSerializer, Permission, PermissionJsonSerializer, User, UserJsonSerializer} from "@kashw2/lib-ts";
 import {List} from "immutable";
 
 export class DbRead {
@@ -10,6 +10,10 @@ export class DbRead {
 
     readGroups(): Promise<Either<string, List<Group>>> {
         return this.requests.sendRequestListSerialized('ssp_json_GetGroups', List(), GroupJsonSerializer.instance)
+    }
+
+    readPermissions(): Promise<Either<string, List<Permission>>> {
+        return this.requests.sendRequestListSerialized('ssp_json_GetPermissions', List(), PermissionJsonSerializer.instance);
     }
 
     readUserByDiscordId(discordId: string): Promise<Either<string, User>> {
