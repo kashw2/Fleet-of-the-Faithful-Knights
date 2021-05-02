@@ -106,20 +106,23 @@ export function parseBoolean(v: unknown): Option<boolean> {
         });
 }
 
-export function parseNumber(n: unknown): Option<number> {
-    switch (typeof n) {
-        case 'string':
-            return Option.of(n)
-                .filter(v => !isNaN(+v))
-                .map(v => +v);
-        case 'number':
-            return Option.of(n)
-                .filter(v => !isNaN(v));
-        case 'bigint':
-            return Option.of(Number(n));
-        case 'boolean':
-            return Option.of(n).contains(true) ? Some(1) : Some(0);
-        default:
-            return None;
-    }
+export function parseNumber(v: unknown): Option<number> {
+    return Option.of(v)
+        .flatMap(n => {
+            switch (typeof n) {
+                case 'string':
+                    return Option.of(n)
+                        .filter(x => !isNaN(+x))
+                        .map(x => +x);
+                case 'number':
+                    return Option.of(n)
+                        .filter(x => !isNaN(x));
+                case 'bigint':
+                    return Option.of(Number(n));
+                case 'boolean':
+                    return Option.of(n).contains(true) ? Some(1) : Some(0);
+                default:
+                    return None;
+            }
+        });
 }
