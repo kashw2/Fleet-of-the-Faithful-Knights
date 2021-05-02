@@ -1,4 +1,4 @@
-name: Build Panel
+name: Panel
 
 on:
   workflow_dispatch:

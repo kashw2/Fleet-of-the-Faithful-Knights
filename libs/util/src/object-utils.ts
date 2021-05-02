@@ -13,7 +13,7 @@ import {IRecordSet} from "mssql";
  *
  */
 export function getJsonFromRecordSet(rs: any): Either<string, IRecordSet<any>> {
-    if (!rs || rs === "{}" || rs === []) {
+    if (!rs || rs === "{}" || rs === [] || rs[0]['']) {
         return Left("Database returned empty resultset");
     }
     if (typeof rs[0][''] === "string") {
@@ -75,48 +75,57 @@ export function parseSet(i: unknown): Set<any> {
     return Set(parseIterable(i));
 }
 
-export function parseDate(d: unknown): Option<moment.Moment> {
-    switch (typeof d) {
-        case 'number':
-        case 'string':
-            return Option.of(d)
-                .map(v => moment(v));
-        default:
-            return None;
-    }
+export function parseDate(v: unknown): Option<moment.Moment> {
+    return Option.of(v)
+        .flatMap(d => {
+            switch (typeof d) {
+                case 'number':
+                case 'string':
+                    return Option.of(d)
+                        .map(x => moment(x));
+                default:
+                    return None;
+            }
+        })
 }
 
-export function parseBoolean(b: unknown): Option<boolean> {
-    switch (typeof b) {
-        case 'number':
-            return Option.of(b).contains(1) ? Some(true) : Some(false);
-        case 'bigint':
-            return Option.of(Number(b)).contains(1) ? Some(true) : Some(false);
-        case 'string':
-            return Option.of(b).exists(v => v === 'true' || v === 'false')
-                ? Option.of(b).contains('true') ? Some(true) : Some(false)
-                : None;
-        case 'boolean':
-            return Option.of(b).contains(true) ? Some(true) : Some(false);
-        default:
-            return None;
-    }
+export function parseBoolean(v: unknown): Option<boolean> {
+    return Option.of(v)
+        .flatMap(b => {
+            switch (typeof b) {
+                case 'number':
+                    return Option.of(b).contains(1) ? Option.of(true) : Option.of(false);
+                case 'bigint':
+                    return Option.of(Number(b)).contains(1) ? Some(true) : Some(false);
+                case 'string':
+                    return Option.of(b).exists(x => x === 'true' || x === 'false')
+                        ? Option.of(b).contains('true') ? Some(true) : Some(false)
+                        : None;
+                case 'boolean':
+                    return Option.of(b).contains(true) ? Some(true) : Some(false);
+                default:
+                    return None;
+            }
+        });
 }
 
-export function parseNumber(n: unknown): Option<number> {
-    switch (typeof n) {
-        case 'string':
-            return Option.of(n)
-                .filter(v => !isNaN(+v))
-                .map(v => +v);
-        case 'number':
-            return Option.of(n)
-                .filter(v => !isNaN(v));
-        case 'bigint':
-            return Option.of(Number(n));
-        case 'boolean':
-            return Option.of(n).contains(true) ? Some(1) : Some(0);
-        default:
-            return None;
-    }
+export function parseNumber(v: unknown): Option<number> {
+    return Option.of(v)
+        .flatMap(n => {
+            switch (typeof n) {
+                case 'string':
+                    return Option.of(n)
+                        .filter(x => !isNaN(+x))
+                        .map(x => +x);
+                case 'number':
+                    return Option.of(n)
+                        .filter(x => !isNaN(x));
+                case 'bigint':
+                    return Option.of(Number(n));
+                case 'boolean':
+                    return Option.of(n).contains(true) ? Some(1) : Some(0);
+                default:
+                    return None;
+            }
+        });
 }
