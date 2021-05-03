@@ -25,7 +25,7 @@
   "dependencies": {
     "@kashw2/lib-angular": "1.0.0",
     "@kashw2/lib-external": "1.1.0",
-    "@kashw2/lib-server": "1.2.2",
+    "@kashw2/lib-server": "1.2.3",
     "@kashw2/lib-ts": "2.1.0",
     "@kashw2/lib-util": "2.1.0",
     "@types/cors": "2.8.10",
