@@ -13,7 +13,7 @@ export class UserEndpoint extends CrudEndpoint {
 
     async create(req: Request): Promise<Either<string, any>> {
         return EitherUtils.sequence(this.validate(req)
-            .map(u => this.db.procedures.insert.insertUser(u)(this.getRequestUsername(req))))
+            .map(u => this.db.procedures.insert.insertUser(u)(this.getModifiedBy(req))))
             .then(v => v.map(u => UserJsonSerializer.instance.toJsonImpl(u)));
     }
 
@@ -64,7 +64,7 @@ export class UserEndpoint extends CrudEndpoint {
 
     async update(req: Request): Promise<Either<string, any>> {
         return EitherUtils.sequence(this.validate(req)
-            .map(u => this.db.procedures.update.updateUser(u)(this.getRequestUsername(req))))
+            .map(u => this.db.procedures.update.updateUser(u)(this.getModifiedBy(req))))
             .then(v => v.map(u => UserJsonSerializer.instance.toJsonImpl(u)));
     }
 
