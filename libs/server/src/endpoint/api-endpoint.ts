@@ -12,8 +12,19 @@ export abstract class ApiEndpoint {
         return this.endpoint;
     }
 
+    getEndpointName(): string {
+        return this.getEndpoint()
+            .startsWith('/')
+            ? this.getEndpoint().substr(1, this.getEndpoint().length).replace('-', ' ')
+            : this.getEndpoint().replace('-', ' ')
+    }
+
     getHTTPMethod(req: Request): string {
         return req.method;
+    }
+
+    getModifiedBy(req: Request): string {
+        return `${this.getRequestUsername(req)} - ${this.getEndpointName()}`;
     }
 
     getRequestUser(req: Request): Either<string, User> {
