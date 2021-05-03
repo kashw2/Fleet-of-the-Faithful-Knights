@@ -68,7 +68,7 @@ export class UserEndpoint extends CrudEndpoint {
             .then(v => v.map(u => UserJsonSerializer.instance.toJsonImpl(u)));
     }
 
-    validate(req: Request): Either<string, User> {
+    private validate(req: Request): Either<string, User> {
         switch (this.getHTTPMethod(req)) {
             case 'PUT':
                 return this.getUser(req)

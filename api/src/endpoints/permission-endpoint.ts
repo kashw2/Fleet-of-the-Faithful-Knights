@@ -61,7 +61,7 @@ export class PermissionsEndpoint extends CrudEndpoint {
             .then(v => v.map(x => PermissionJsonSerializer.instance.toJsonImpl(x)));
     }
 
-    validate(req: Request): Either<string, Permission> {
+    private validate(req: Request): Either<string, Permission> {
         switch (this.getHTTPMethod(req)) {
             case 'POST':
                 return this.getPermission(req)

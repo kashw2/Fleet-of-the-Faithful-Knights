@@ -61,7 +61,7 @@ export class GroupEndpoint extends CrudEndpoint {
             .then(v => v.map(x => GroupJsonSerializer.instance.toJsonImpl(x)));
     }
 
-    validate(req: Request): Either<string, Group> {
+    private validate(req: Request): Either<string, Group> {
         switch (this.getHTTPMethod(req)) {
             case 'POST':
                 return this.getGroup(req)
