@@ -12,7 +12,7 @@ export class PermissionsEndpoint extends CrudEndpoint {
     }
 
     create(req: Request): Promise<Either<string, any>> {
-        return EitherUtils.sequence(this.getPermission(req)
+        return EitherUtils.sequence(this.validate(req)
             .map(p => this.db.procedures.insert.insertPermission(p)(this.getModifiedBy(req))))
             .then(v => v.map(u => PermissionJsonSerializer.instance.toJsonImpl(u)));
     }
@@ -56,9 +56,22 @@ export class PermissionsEndpoint extends CrudEndpoint {
     }
 
     update(req: Request): Promise<Either<string, any>> {
-        return EitherUtils.sequence(this.getPermission(req)
+        return EitherUtils.sequence(this.validate(req)
             .map(p => this.db.procedures.update.updatePermission(p)(this.getModifiedBy(req))))
             .then(v => v.map(x => PermissionJsonSerializer.instance.toJsonImpl(x)));
+    }
+
+    validate(req: Request): Either<string, Permission> {
+        switch (this.getHTTPMethod(req)) {
+            case 'POST':
+                return this.getPermission(req)
+                    .filterOrElse(p => p.getLabel().nonEmpty(), () => 'Permission must have a label');
+            case 'PUT':
+                return this.getPermission(req)
+                    .filterOrElse(u => u.getId().nonEmpty(), () => 'Permission must have an Id');
+            default:
+                return this.getPermission(req);
+        }
     }
 
 }
