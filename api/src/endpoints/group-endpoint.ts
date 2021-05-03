@@ -61,4 +61,17 @@ export class GroupEndpoint extends CrudEndpoint {
             .then(v => v.map(x => GroupJsonSerializer.instance.toJsonImpl(x)));
     }
 
+    validate(req: Request): Either<string, Group> {
+        switch (this.getHTTPMethod(req)) {
+            case 'POST':
+                return this.getGroup(req)
+                    .filterOrElse(g => g.getLabel().nonEmpty(), () => 'Group must have a label');
+            case 'PUT':
+                return this.getGroup(req)
+                    .filterOrElse(g => g.getId().nonEmpty(), () => 'Group must have an Id');
+            default:
+                return this.getGroup(req);
+        }
+    }
+
 }

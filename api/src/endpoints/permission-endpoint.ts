@@ -68,7 +68,7 @@ export class PermissionsEndpoint extends CrudEndpoint {
                     .filterOrElse(p => p.getLabel().nonEmpty(), () => 'Permission must have a label');
             case 'PUT':
                 return this.getPermission(req)
-                    .filterOrElse(u => u.getId().nonEmpty(), () => 'Permission must have an Id');
+                    .filterOrElse(p => p.getId().nonEmpty(), () => 'Permission must have an Id');
             default:
                 return this.getPermission(req);
         }
