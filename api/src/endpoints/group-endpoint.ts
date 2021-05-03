@@ -13,7 +13,7 @@ export class GroupEndpoint extends CrudEndpoint {
 
     create(req: Request): Promise<Either<string, any>> {
         return EitherUtils.sequence(this.getGroup(req)
-            .map(g => this.db.procedures.insert.insertGroup(g)(this.getRequestUsername(req))))
+            .map(g => this.db.procedures.insert.insertGroup(g)(this.getModifiedBy(req))))
             .then(v => v.map(u => GroupJsonSerializer.instance.toJsonImpl(u)));
     }
 
@@ -57,8 +57,21 @@ export class GroupEndpoint extends CrudEndpoint {
 
     update(req: Request): Promise<Either<string, any>> {
         return EitherUtils.sequence(this.getGroup(req)
-            .map(g => this.db.procedures.update.updateGroup(g)(this.getRequestUsername(req))))
+            .map(g => this.db.procedures.update.updateGroup(g)(this.getModifiedBy(req))))
             .then(v => v.map(x => GroupJsonSerializer.instance.toJsonImpl(x)));
+    }
+
+    private validate(req: Request): Either<string, Group> {
+        switch (this.getHTTPMethod(req)) {
+            case 'POST':
+                return this.getGroup(req)
+                    .filterOrElse(g => g.getLabel().nonEmpty(), () => 'Group must have a label');
+            case 'PUT':
+                return this.getGroup(req)
+                    .filterOrElse(g => g.getId().nonEmpty(), () => 'Group must have an Id');
+            default:
+                return this.getGroup(req);
+        }
     }
 
 }
