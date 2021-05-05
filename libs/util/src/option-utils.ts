@@ -1,5 +1,5 @@
 import {Collection, List, Set} from 'immutable';
-import {Either, Left, Option, Right} from 'funfix-core';
+import {Either, Left, None, Option, Right} from 'funfix-core';
 
 export class OptionUtils {
 
@@ -34,6 +34,13 @@ export class OptionUtils {
             return Right(opt.get());
         }
         return Left(left);
+    }
+
+    static sequence<A>(op: Option<Promise<Option<A>>>): Promise<Option<A>> {
+        if (op.isEmpty()) {
+            return Promise.resolve(None);
+        }
+        return op.get()
     }
 
     static toList<T>(...items: Option<T>[]): List<T> {
