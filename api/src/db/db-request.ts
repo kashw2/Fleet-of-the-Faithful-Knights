@@ -35,7 +35,6 @@ export class DbRequest {
         const result = await connection.request()
             .query(`${procedure} ${params.join(", ").trim()}`);
         if (Option.of(result.recordset[0]).isEmpty()) {
-            console.error(`Error running: ${procedure} ${params.join(",").trim()}`);
             return Right(List());
         }
         return getJsonFromRecordSet(result.recordset)
