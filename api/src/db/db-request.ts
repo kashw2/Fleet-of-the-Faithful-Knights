@@ -27,7 +27,7 @@ export class DbRequest {
         return getJsonFromRecordSet(result.recordset);
     }
 
-    async sendRequestList<A>(
+    async sendRequestList(
         procedure: string,
         params: List<string>,
     ): Promise<Either<string, List<any>>> {
