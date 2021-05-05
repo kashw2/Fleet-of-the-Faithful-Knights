@@ -20,6 +20,10 @@ export class DbRead {
         return this.requests.sendRequestSerialized('ssp_json_GetUser', List.of(`@DiscordId = '${discordId}'`), UserJsonSerializer.instance)
     }
 
+    readUserPermissionMappings(userId: string): Promise<Either<string, List<string>>> {
+        return this.requests.sendRequestList('ssp_json_GetUserPermissionMappings', List.of(`@UserId = ${userId}`))
+    }
+
     readUsers(): Promise<Either<string, List<User>>> {
         return this.requests.sendRequestListSerialized('ssp_json_GetUsers', List(), UserJsonSerializer.instance);
     }
