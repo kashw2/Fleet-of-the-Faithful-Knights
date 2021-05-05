@@ -12,7 +12,7 @@ export class GroupEndpoint extends CrudEndpoint {
     }
 
     create(req: Request): Promise<Either<string, any>> {
-        return EitherUtils.sequence(this.getGroup(req)
+        return EitherUtils.sequence(this.validate(req)
             .map(g => this.db.procedures.insert.insertGroup(g)(this.getModifiedBy(req))))
             .then(v => v.map(u => GroupJsonSerializer.instance.toJsonImpl(u)));
     }
@@ -56,7 +56,7 @@ export class GroupEndpoint extends CrudEndpoint {
     }
 
     update(req: Request): Promise<Either<string, any>> {
-        return EitherUtils.sequence(this.getGroup(req)
+        return EitherUtils.sequence(this.validate(req)
             .map(g => this.db.procedures.update.updateGroup(g)(this.getModifiedBy(req))))
             .then(v => v.map(x => GroupJsonSerializer.instance.toJsonImpl(x)));
     }
