@@ -6,7 +6,7 @@ import {JsonSerializer} from "./json-serializer";
 export class ApiUtils {
 
     static parseBodyParamSerialized<A>(req: Request, key: string, serializer: JsonSerializer<A>): Either<string, A> {
-        return EitherUtils.liftEither(serializer.fromJson(req.body[key]), `Unable to parse body param ${key}`);
+        return EitherUtils.toEither(serializer.fromJsonImpl(req.body[key]), `Unable to parse body param ${key}`);
     }
 
     static parseBooleanQueryParam(req: Request, key: string): Either<string, boolean> {
