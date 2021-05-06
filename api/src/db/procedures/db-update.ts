@@ -35,9 +35,9 @@ export class DbUpdate {
         }
     }
 
-    updateUserPermissionMapping(mappingId: string): (modifiedBy: string) => Promise<Either<string, UserPermissionMapping>> {
+    updateUserPermissionMapping(mapping: UserPermissionMapping): (modifiedBy: string) => Promise<Either<string, UserPermissionMapping>> {
         return (modifiedBy: string) => {
-            return this.request.sendRequestSerialized('ssp_json_UpdateUserPermissionMapping', List.of(`@MappingId = ${mappingId}`), UserPermissionMappingJsonSerializer.instance);
+            return this.request.sendRequestSerialized('ssp_json_UpdateUserPermissionMapping', List.of(`@Json = '${UserPermissionMappingJsonSerializer.instance.toJsonString(mapping)}'`, `@ModifiedBy = '${modifiedBy}'`), UserPermissionMappingJsonSerializer.instance)
         }
     }
 

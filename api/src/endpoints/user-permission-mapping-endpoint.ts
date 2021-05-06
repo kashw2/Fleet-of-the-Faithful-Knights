@@ -47,7 +47,9 @@ export class UserPermissionMappingEndpoint extends CrudEndpoint {
     }
 
     update(req: Request): Promise<Either<string, any>> {
-        return Promise.resolve(Right(''))
+        return EitherUtils.sequence(this.validate(req)
+            .map(upm => this.db.procedures.update.updateUserPermissionMapping(upm)(this.getModifiedBy(req))))
+            .then(v => v.map(x => UserPermissionMappingJsonSerializer.instance.toJsonImpl(x)));
     }
 
     private validate(req: Request): Either<string, UserPermissionMapping> {
