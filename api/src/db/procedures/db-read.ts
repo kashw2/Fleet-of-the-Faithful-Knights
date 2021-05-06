@@ -1,6 +1,14 @@
 import {DbRequest} from "../db-request";
 import {Either} from "funfix-core";
-import {Group, GroupJsonSerializer, Permission, PermissionJsonSerializer, User, UserJsonSerializer} from "@kashw2/lib-ts";
+import {
+    Group,
+    GroupJsonSerializer,
+    Permission,
+    PermissionJsonSerializer,
+    User,
+    UserJsonSerializer,
+    UserPermissionMapping, UserPermissionMappingJsonSerializer
+} from "@kashw2/lib-ts";
 import {List} from "immutable";
 
 export class DbRead {
@@ -9,7 +17,7 @@ export class DbRead {
     }
 
     readGroups(): Promise<Either<string, List<Group>>> {
-        return this.requests.sendRequestListSerialized('ssp_json_GetGroups', List(), GroupJsonSerializer.instance)
+        return this.requests.sendRequestListSerialized('ssp_json_GetGroups', List(), GroupJsonSerializer.instance);
     }
 
     readPermissions(): Promise<Either<string, List<Permission>>> {
@@ -17,7 +25,11 @@ export class DbRead {
     }
 
     readUserByDiscordId(discordId: string): Promise<Either<string, User>> {
-        return this.requests.sendRequestSerialized('ssp_json_GetUser', List.of(`@DiscordId = '${discordId}'`), UserJsonSerializer.instance)
+        return this.requests.sendRequestSerialized('ssp_json_GetUser', List.of(`@DiscordId = '${discordId}'`), UserJsonSerializer.instance);
+    }
+
+    readUserPermissionMappings(userId: string): Promise<Either<string, List<UserPermissionMapping>>> {
+        return this.requests.sendRequestListSerialized('ssp_json_GetUserPermissionMappings', List.of(`@UserId = ${userId}`), UserPermissionMappingJsonSerializer.instance);
     }
 
     readUsers(): Promise<Either<string, List<User>>> {

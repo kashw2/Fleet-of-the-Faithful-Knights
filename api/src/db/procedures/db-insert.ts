@@ -1,5 +1,14 @@
 import {DbRequest} from "../db-request";
-import {Group, GroupJsonSerializer, Permission, PermissionJsonSerializer, User, UserJsonSerializer} from "@kashw2/lib-ts";
+import {
+    Group,
+    GroupJsonSerializer,
+    Permission,
+    PermissionJsonSerializer,
+    User,
+    UserJsonSerializer,
+    UserPermissionMapping,
+    UserPermissionMappingJsonSerializer
+} from "@kashw2/lib-ts";
 import {Either} from "funfix-core";
 import {List} from "immutable";
 
@@ -23,6 +32,12 @@ export class DbInsert {
     insertUser(user: User): (modifiedBy: string) => Promise<Either<string, User>> {
         return (modifiedBy: string): Promise<Either<string, User>> => {
             return this.requests.sendRequestSerialized('ssp_json_InsertUser', List.of(`@Json = '${UserJsonSerializer.instance.toJsonString(user)}'`, `@ModifiedBy = '${modifiedBy}'`), UserJsonSerializer.instance)
+        }
+    }
+
+    insertUserPermissionMapping(userPermissionMapping: UserPermissionMapping): (modifiedBy: string) => Promise<Either<string, UserPermissionMapping>> {
+        return (modifiedBy: string): Promise<Either<string, UserPermissionMapping>> => {
+            return this.requests.sendRequestSerialized('ssp_json_InsertUserPermissionMapping', List.of(`@Json = '${UserPermissionMappingJsonSerializer.instance.toJsonString(userPermissionMapping)}'`, `@ModifiedBy = '${modifiedBy}'`), UserPermissionMappingJsonSerializer.instance)
         }
     }
 

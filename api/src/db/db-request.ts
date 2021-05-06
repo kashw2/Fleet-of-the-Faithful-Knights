@@ -1,7 +1,7 @@
 import {Either, Left, Option, Right} from "funfix-core";
 import {List, Set} from "immutable";
 import {ConnectionPool, IRecordSet} from "mssql";
-import {getJsonFromRecordSet, JsonSerializer} from "@kashw2/lib-util";
+import {EitherUtils, getJsonFromRecordSet, JsonSerializer} from "@kashw2/lib-util";
 import {Database} from "./database";
 
 export class DbRequest {
@@ -17,6 +17,7 @@ export class DbRequest {
         params: List<string>,
     ): Promise<Either<string, IRecordSet<any>>> {
         const connection = await this.connection;
+        console.debug(`EXEC ${procedure} ${params.join(",").trim()}`)
         const result = await connection.request()
             .query(`${procedure} ${params.join(",").trim()}`);
         // recordsets always exists whereas recordset only exists if a dataset is returned
@@ -27,7 +28,7 @@ export class DbRequest {
         return getJsonFromRecordSet(result.recordset);
     }
 
-    async sendRequestList<A>(
+    async sendRequestList(
         procedure: string,
         params: List<string>,
     ): Promise<Either<string, List<any>>> {
@@ -59,7 +60,7 @@ export class DbRequest {
         serializer: JsonSerializer<A>,
     ): Promise<Either<string, A>> {
         const response = await this.sendRequest(procedure, params);
-        return response.map(x => serializer.fromJson(x));
+        return response.flatMap(x => EitherUtils.toEither(serializer.fromJsonImpl(x), 'Error serializing response from Database'));
     }
 
     async sendRequestSet<A>(
