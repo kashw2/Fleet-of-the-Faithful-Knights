@@ -9,3 +9,4 @@ export * from './models/vote';
 export * from './models/candidate';
 export * from './models/ballot';
 export * from './models/permission';
+export * from './models/user-permission-mapping';

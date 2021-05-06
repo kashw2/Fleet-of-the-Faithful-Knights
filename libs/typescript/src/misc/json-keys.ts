@@ -28,3 +28,4 @@ export const descriptionKey = 'description';
 export const starCitizenUrlKey = 'star_citizen_url';
 export const hierarchyKey = 'hierarchy';
 export const permissionIdKey = 'permission_id';
+export const userIdKey = 'user_id';
