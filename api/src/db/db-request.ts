@@ -17,6 +17,7 @@ export class DbRequest {
         params: List<string>,
     ): Promise<Either<string, IRecordSet<any>>> {
         const connection = await this.connection;
+        console.debug(`EXEC ${procedure} ${params.join(",").trim()}`)
         const result = await connection.request()
             .query(`${procedure} ${params.join(",").trim()}`);
         // recordsets always exists whereas recordset only exists if a dataset is returned
