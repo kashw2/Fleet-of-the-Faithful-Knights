@@ -1,7 +1,7 @@
 import {CrudEndpoint} from "@kashw2/lib-server";
 import {Database} from "../db/database";
 import {Request, Response} from "express";
-import {User, UserPermissionMapping, UserPermissionMappingJsonSerializer} from "@kashw2/lib-ts";
+import {GroupJsonSerializer, User, UserPermissionMapping, UserPermissionMappingJsonSerializer} from "@kashw2/lib-ts";
 import {Either} from "funfix-core";
 import {ApiUtils, EitherUtils, OptionUtils} from "@kashw2/lib-util";
 
@@ -9,6 +9,12 @@ export class UserPermissionMappingEndpoint extends CrudEndpoint {
 
     constructor(private db: Database) {
         super('/user/:id/permission/mapping');
+    }
+
+    delete(req: Request): Promise<Either<string, any>> {
+        return EitherUtils.sequence(this.getMappingId(req)
+            .map(mid => this.db.procedures.delete.deleteUserPermissionMapping(mid)))
+            .then(v => v.map(u => UserPermissionMappingJsonSerializer.instance.toJsonImpl(u)));
     }
 
     private getMapping(req: Request): Either<string, UserPermissionMapping> {
