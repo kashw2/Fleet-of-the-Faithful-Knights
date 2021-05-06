@@ -1,7 +1,7 @@
 import {Either, Left, Option, Right} from "funfix-core";
 import {List, Set} from "immutable";
 import {ConnectionPool, IRecordSet} from "mssql";
-import {getJsonFromRecordSet, JsonSerializer} from "@kashw2/lib-util";
+import {EitherUtils, getJsonFromRecordSet, JsonSerializer} from "@kashw2/lib-util";
 import {Database} from "./database";
 
 export class DbRequest {
@@ -60,7 +60,7 @@ export class DbRequest {
         serializer: JsonSerializer<A>,
     ): Promise<Either<string, A>> {
         const response = await this.sendRequest(procedure, params);
-        return response.map(x => serializer.fromJson(x));
+        return response.flatMap(x => EitherUtils.toEither(serializer.fromJsonImpl(x), 'Error serializing response from Database'));
     }
 
     async sendRequestSet<A>(
