@@ -2,7 +2,7 @@ import {CrudEndpoint} from "@kashw2/lib-server";
 import {Database} from "../db/database";
 import {Request, Response} from "express";
 import {User, UserPermissionMapping, UserPermissionMappingJsonSerializer} from "@kashw2/lib-ts";
-import {Either, Right} from "funfix-core";
+import {Either} from "funfix-core";
 import {ApiUtils, EitherUtils, OptionUtils} from "@kashw2/lib-util";
 
 export class UserPermissionMappingEndpoint extends CrudEndpoint {
@@ -48,6 +48,22 @@ export class UserPermissionMappingEndpoint extends CrudEndpoint {
 
     update(req: Request): Promise<Either<string, any>> {
         return Promise.resolve(Right(''))
+    }
+
+    private validate(req: Request): Either<string, UserPermissionMapping> {
+        switch (this.getHTTPMethod(req)) {
+            case 'POST':
+                return this.getMapping(req)
+                    .filterOrElse(upm => upm.getUserId().nonEmpty(), () => 'Mapping must have a user id')
+                    .filterOrElse(upm => upm.getPermissionId().nonEmpty(), () => 'Mapping must have a permission id')
+            case 'PUT':
+                return this.getMapping(req)
+                    .filterOrElse(upm => upm.getId().nonEmpty(), () => 'Mapping must have an id')
+                    .filterOrElse(upm => upm.getUserId().nonEmpty(), () => 'Mapping must have a user id')
+                    .filterOrElse(upm => upm.getPermissionId().nonEmpty(), () => 'Mapping must have a permission id')
+            default:
+                return this.getMapping(req);
+        }
     }
 
 }
