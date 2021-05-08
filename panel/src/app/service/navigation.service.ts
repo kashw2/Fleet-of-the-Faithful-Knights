@@ -11,27 +11,25 @@ export class NavigationService {
   }
 
   goToHome(): void {
-    this.navigate('home');
+    return this.navigate('home');
   }
 
   goToProfile(id: Option<string>): void {
     if (id.nonEmpty()) {
-      this.navigate(`profile/${id.get()}`);
-      return;
+      return this.navigate(`profile/${id.get()}`);
     }
-    this.navigate('home');
+    return this.navigate('home');
   }
 
   goToVote(id: Option<string>): void {
     if (id.nonEmpty()) {
-      this.navigate(`voting/vote/${id.get()}`);
-      return;
+      return this.navigate(`voting/vote/${id.get()}`);
     }
-    this.navigate('home');
+    return this.navigate('home');
   }
 
   goToVotingPanel(): void {
-    this.navigate('voting/votes');
+    return this.navigate('voting/votes');
   }
 
   navigate(route: string): void {
