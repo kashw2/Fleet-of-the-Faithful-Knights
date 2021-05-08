@@ -11,6 +11,11 @@ html, body {
   flex-direction: column;
   width: 60px;
   background: #FFFFFF;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.35);
   transition: width ease-in-out 500ms;
+  z-index: 1;
+}
+
+#page-content {
+  background-color: #F8F8F8;
 }
