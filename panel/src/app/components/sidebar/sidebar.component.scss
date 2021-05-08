@@ -1,20 +1,20 @@
 .nav-action {
-  background-color: #f2f2f2;
   width: 40px;
-  height: 37.23px;
+  height: 40px;
 
   &:hover {
-    background-color: #e7e7e7;
+    background-color: var(--ffk-grey) !important;
   }
 
   .icon {
-    color: #C4C4C4;
+    color: var(--ffk-icon);
   }
 }
 
 #nav-profile {
   transform: initial;
+  transition: 150ms ease-in-out;
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.1);
   }
 }

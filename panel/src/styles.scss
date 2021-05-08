@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import "app/scss/branding";
 @import "app/scss/cursors";
 
 html, body {
@@ -10,7 +11,6 @@ html, body {
   display: flex;
   flex-direction: column;
   width: 60px;
-  background: #FFFFFF;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.35);
   transition: width ease-in-out 500ms;
   z-index: 1;

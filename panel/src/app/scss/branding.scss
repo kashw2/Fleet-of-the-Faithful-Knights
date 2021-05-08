@@ -1,0 +1,38 @@
+:root {
+  --ffk-white: #ffffff;
+  --ffk-light-grey: #f2f2f2;
+  --ffk-grey: #e7e7e7;
+  --ffk-icon: #C4C4C4;
+}
+
+.ffk-white {
+  color: var(--ffk-white) !important;
+}
+
+.ffk-white-bg {
+  background-color: var(--ffk-white) !important;
+}
+
+.ffk-light-grey {
+  color: var(--ffk-light-grey) !important;
+}
+
+.ffk-light-grey-bg {
+  background-color: var(--ffk-light-grey) !important;
+}
+
+.ffk-grey {
+  color: var(--ffk-grey) !important;
+}
+
+.ffk-grey-bg {
+  background-color: var(--ffk-grey) !important;
+}
+
+.ffk-icon {
+  color: var(--ffk-icon) !important;
+}
+
+.ffk-icon-bg {
+  background-color: var(--ffk-icon) !important;
+}
