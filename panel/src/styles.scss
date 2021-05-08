@@ -1,51 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "scss/branding";
-@import "scss/animations";
-@import "scss/cursors";
+@import "app/scss/cursors";
 
 html, body {
   height: 100% !important;
 }
 
-.active-underline {
-  &:after {
-    display: block;
-    position: relative;
-    content: '';
-    top: 0px;
-    height: 2px;
-    width: 100%;
-    background-color: #ff3547 !important;
-  }
-}
-
-.tag {
-
-  width: auto;
-  height: auto;
-
-  background-color: #ffffff;
-
-  margin: 4px !important;
-
-  border: 0.5px solid #ff0000;
-
-  border-radius: 30px !important;
-
-  > small {
-
-    padding-top: 5px !important;
-    padding-right: 1px !important;
-    padding-bottom: 5px !important;
-    padding-left: 1px !important;
-
-    font-size: 0.5rem !important;
-
-  }
-
-}
-
-.difference {
-  mix-blend-mode: difference !important;
+#sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 60px;
+  background: #FFFFFF;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+  transition: width ease-in-out 500ms;
 }

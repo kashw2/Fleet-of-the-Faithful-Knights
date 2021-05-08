@@ -1,55 +1,11 @@
-<div class="d-flex container-fluid flex-column flex-grow-1 h-100">
-  <div class="d-flex row">
-    <div class="col p-0">
-      <app-header [brandImageRedirectUrl]="getBrandImageRedirectUrl()"
-                  [brandImage]="getBrandImage()"
-                  [hyperlinkMap]="getHyperlinkMap()"
-                  [user]="userService.getUser()"
-      ></app-header>
-    </div>
-  </div>
-  <div class="d-flex row flex-grow-1">
-    <div class="d-flex col-8 col-lg flex-column my-3">
-      <h1 class="font-weight-bold m-0">Fleet of the Faithful Knights</h1>
-      <p>Many centuries ago, during the Middle Ages, the Holy Order of Knights committed themselves to the safe passage
-        of pilgrims to the Holy Land. They dedicated their lives, fortunes, and sacred honor to this cause. They were
-        Holy Military Orders that, through force, brought peace and security to the land.</p>
-      <p>Eventually, the Holy Orders were disbanded. Many of the leaders were executed; others were tortured. Their
-        fortunes were confiscated, and all seemed lost to the Holy Orders. And for 1,500 years their remnants remained
-        in the shadows.</p>
-      <p>Now today, in the new frontier, a new threat challenges all of mankind. The threat of the Vanduul, of Pirates,
-        and thieves abound. The Holy Order of Knights has re-emerged to face this threat head-on, without fear or
-        hesitation. The Fleet of the Faithful Knights is a beacon of light in a dark universe. They stand tall with
-        Honor and Bravery. The Faithful Knights provide protection, security, and stability to a Universe with so little
-        in it.</p>
-      <p>Make no mistake, the Fleet of the Faithful Knights will NEVER shy away from battle. If you are Honorable, you
-        will welcome us. If you are also Brave, then you will wish to join us. And, if you are an enemy of the pure, the
-        righteous, and the kind, then YOU WILL FEAR US.</p>
-    </div>
-    <div class="d-flex col-4 flex-column">
-      <div class="d-flex container flex-column flex-grow-1 z-depth-1 my-3 p-0">
-        <div class="row">
-          <div class="col-auto">
-            <small class="text-danger m-2">News</small>
-          </div>
-        </div>
-        <app-article *ngFor="let article of getArticles()"
-                     [news]="article"
-                     [contentExtractor]="contentExtractor"
-                     [dateExtractor]="dateExtractor"
-                     [titleExtractor]="titleExtractor"
-                     [userExtractor]="userExtractor"
-        ></app-article>
-      </div>
-      <div class="d-flex container flex-column flex-grow-1 z-depth-1 my-3 p-0">
-        <div class="row">
-          <div class="col-auto">
-            <small class="text-danger m-2">Discord</small>
-          </div>
-        </div>
-        <div class="row flex-grow-1"></div>
+<div class="d-flex container-fluid flex-column h-100">
+  <div class="row flex-grow-1">
+    <app-sidebar id="sidebar" class="p-0 align-items-center">
+    </app-sidebar>
+    <div class="col">
+      <div class="row">
+        <div class="container-fluid"></div>
       </div>
     </div>
   </div>
 </div>
-
