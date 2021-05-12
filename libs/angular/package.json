@@ -33,6 +33,6 @@
     "@angular/compiler": "11.2.13",
     "@angular/compiler-cli": "11.2.13",
     "@types/estree": "0.0.47",
-    "ng-packagr": "11.2.4"
+    "ng-packagr": "12.0.0"
   }
 }
