@@ -41,7 +41,7 @@
     "immutable": "4.0.0-rc.12",
     "lerna": "4.0.0",
     "moment": "2.29.1",
-    "mssql": "7.0.0",
+    "mssql": "7.1.0",
     "rxjs": "6.6.7",
     "screenfull": "5.1.0",
     "ts-node": "9.1.1",
