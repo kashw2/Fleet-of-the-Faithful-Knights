@@ -1,9 +1,0 @@
-<ul class="d-flex flex-column pl-0 my-0 border-1">
-  <li *ngFor="let hyperlink of getHyperlinks()" class="align-self-center mx-5 my-1">
-    <a *ngIf="hyperlink.getHyperlink().nonEmpty() && hyperlink.getLabel().nonEmpty()"
-       (click)="navigationService.navigate(hyperlink.getHyperlink().get())"
-       class="animated-underline">{{hyperlink.getLabel().get()}}</a>
-    <span
-      *ngIf="hyperlink.getHyperlink().isEmpty() && hyperlink.getLabel().nonEmpty()" class="animated-underline">{{hyperlink.getLabel().get()}}</span>
-  </li>
-</ul>

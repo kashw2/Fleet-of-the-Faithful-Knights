@@ -1,4 +1,0 @@
-<span *ngIf="getHyperlink().isEmpty()" [ngClass]="getClass()" [style]="getStyle().getOrElse('')"><ng-content></ng-content> {{getContent().get()}}</span>
-<a *ngIf="getHyperlink().nonEmpty()" (click)="navigationService.navigate(getHyperlink().get())">
-  <span [ngClass]="getClass()" [style]="getStyle().getOrElse('')"><ng-content></ng-content> {{getContent().get()}}</span>
-</a>
