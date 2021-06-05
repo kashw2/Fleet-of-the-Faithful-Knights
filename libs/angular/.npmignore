@@ -1,0 +1,5 @@
+**/src
+**/.idea
+**/.github
+yarn.lock
+package-lock.json

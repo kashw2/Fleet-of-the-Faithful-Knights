@@ -1,6 +1,6 @@
 {
   "name": "@kashw2/lib-angular",
-  "version": "1.0.0",
+  "version": "12.0.3",
   "description": "Fleet of the Faithful Knights Angular Componentry, Services, Data Models",
   "main": "./dist/bundles/kashw2-lib-angular.umd.min.js",
   "typings": "./dist/kashw2-lib-angular.d.ts",
@@ -30,9 +30,12 @@
   "dependencies": {
     "@angular-devkit/build-angular": "0.1102.14",
     "@angular-devkit/build-ng-packagr": "0.1002.0",
-    "@angular/compiler": "11.2.14",
-    "@angular/compiler-cli": "11.2.14",
+    "@angular/compiler": "12.0.3",
+    "@angular/compiler-cli": "12.0.3",
     "@types/estree": "0.0.48",
     "ng-packagr": "12.0.3"
+  },
+  "devDependencies": {
+    "typescript": "4.2.4"
   }
 }
