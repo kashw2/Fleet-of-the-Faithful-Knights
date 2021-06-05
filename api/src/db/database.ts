@@ -1,9 +1,10 @@
 import {config, ConnectionPool} from "mssql";
 import {from, of} from "rxjs";
-import {flatMap, map, tap} from "rxjs/operators";
+import {mergeMap, map, tap} from "rxjs/operators";
 import {DbCache} from "./db-cache";
 import {DbRequest} from "./db-request";
 import {DbProcedures} from "./procedures/db-procedures";
+import {firstValueFrom} from "rxjs";
 
 export class Database {
 
@@ -27,6 +28,7 @@ export class Database {
         requestTimeout: 300000,
         options: {
             enableArithAbort: true,
+            trustServerCertificate: true,
         },
         parseJSON: true,
     };
@@ -36,8 +38,8 @@ export class Database {
     requests: DbRequest;
 
     getConnection(): Promise<ConnectionPool> {
-        return of(this.getConnectionPool())
-            .pipe(flatMap(x => from(x.connect())))
+        return firstValueFrom(of(this.getConnectionPool())
+            .pipe(mergeMap(x => from(x.connect())))
             .pipe(map(x => {
                 if (x.connecting) {
                     console.log(`Attempting to connect to ${this.dbConfig.database}`);
@@ -50,7 +52,7 @@ export class Database {
                 return x;
             }))
             .pipe(tap(_ => this.cache = new DbCache(this.procedures)))
-            .toPromise();
+        );
     }
 
     private getConnectionPool(): ConnectionPool {
