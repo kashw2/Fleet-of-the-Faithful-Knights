@@ -33,7 +33,7 @@
     "@angular/compiler": "12.0.3",
     "@angular/compiler-cli": "12.0.3",
     "@types/estree": "0.0.48",
-    "ng-packagr": "12.0.4"
+    "ng-packagr": "12.0.5"
   },
   "devDependencies": {
     "typescript": "4.2.4"
