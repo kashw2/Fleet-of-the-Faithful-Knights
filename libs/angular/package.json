@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights#readme",
   "dependencies": {
-    "@angular-devkit/build-angular": "12.0.3",
+    "@angular-devkit/build-angular": "12.0.4",
     "@angular-devkit/build-ng-packagr": "0.1002.0",
     "@angular/compiler": "12.0.4",
     "@angular/compiler-cli": "12.0.4",
