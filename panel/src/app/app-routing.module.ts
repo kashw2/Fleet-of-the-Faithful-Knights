@@ -1,21 +1,21 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
-import {HomePageComponent} from './pages/home-page/home-page.component';
+import {HomeComponent} from "./pages/home/home.component";
 
 @NgModule({
   imports: [RouterModule.forRoot([
     {
       path: '',
       pathMatch: 'full',
-      component: HomePageComponent
+      component: HomeComponent
     },
     {
       path: 'home',
-      component: HomePageComponent,
+      component: HomeComponent,
     },
     {
       path: '**',
-      component: HomePageComponent,
+      component: HomeComponent,
     }
   ])],
   exports: [RouterModule]
