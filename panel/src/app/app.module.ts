@@ -7,11 +7,15 @@ import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ComponentsModule} from "./components/components.module";
 import {HomeComponent} from './pages/home/home.component';
+import { VoteComponent } from './pages/vote/vote.component';
+import { ContainedTextualSelectComponent } from './components/contained-textual-select/contained-textual-select.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    VoteComponent,
+    ContainedTextualSelectComponent,
   ],
   imports: [
     BrowserModule,

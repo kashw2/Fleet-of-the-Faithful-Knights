@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {HomeComponent} from "./pages/home/home.component";
+import {VoteComponent} from "./pages/vote/vote.component";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -12,6 +13,10 @@ import {HomeComponent} from "./pages/home/home.component";
     {
       path: 'home',
       component: HomeComponent,
+    },
+    {
+      path: 'votes',
+      component: VoteComponent,
     },
     {
       path: '**',
