@@ -28,6 +28,7 @@ export class VoteComponent implements OnInit {
 
   getGroupLabels(): List<Option<string>> {
     return List.of(
+      Some('Developer'),
       Some("Grand Master"),
       Some("Master Commander"),
       Some("Lieutenant Master Commander"),
