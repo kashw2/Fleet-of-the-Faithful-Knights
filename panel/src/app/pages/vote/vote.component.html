@@ -21,7 +21,24 @@
             </div>
             <div class="d-flex col">
               <div class="container-fluid ffk-content-bg flex-grow-1 rounded shadow">
-
+                <table mdbTable small="true" hover="true" class="c-default">
+                  <thead>
+                  <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Candidate</th>
+                    <th scope="col">Sponsor</th>
+                    <th scope="col">Promotion</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr mdbTableCol *ngFor="let vote of voteService.getVotes(); let idx = index">
+                    <th scope="row">{{idx + 1}}</th>
+                    <td *ngIf="vote.getCandidateUsername().nonEmpty()">{{vote.getCandidateUsername().get()}}</td>
+                    <td *ngIf="vote.getSponsorUsername().nonEmpty()">{{vote.getSponsorUsername().get()}}</td>
+                    <td *ngIf="vote.getPromotionGroupName().nonEmpty()">{{vote.getPromotionGroupName().get()}}</td>
+                  </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>

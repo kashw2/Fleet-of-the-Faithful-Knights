@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {List} from "immutable";
 import {Option, Some} from "funfix-core";
+import {VoteService} from "../../service/vote.service";
 
 @Component({
   selector: 'app-vote',
@@ -9,7 +10,7 @@ import {Option, Some} from "funfix-core";
 })
 export class VoteComponent implements OnInit {
 
-  constructor() {
+  constructor(readonly voteService: VoteService) {
   }
 
   getGroupLabels(): List<Option<string>> {
