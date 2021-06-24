@@ -49,9 +49,10 @@
     "zone.js": "0.11.4"
   },
   "devDependencies": {
+    "browserify-zlib": "0.2.0",
     "os-browserify": "0.3.0",
-    "tty-browserify": "0.0.1",
-    "browserify-zlib": "0.2.0"
+    "stream-browserify": "3.0.0",
+    "tty-browserify": "0.0.1"
   },
   "workspaces": [
     "./",

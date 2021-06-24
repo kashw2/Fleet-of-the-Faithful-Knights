@@ -15,13 +15,31 @@
               <div class="d-flex flex-column container-fluid ffk-content-bg flex-grow-1 rounded shadow p-0">
                 <app-contained-textual-select *ngFor="let label of getGroupLabels()"
                                               [label]="label"
-                                              class="flex-grow-1">
+                                              class="flex-grow-1"
+                                              (click)="setSelectedGroup(label)">
                 </app-contained-textual-select>
               </div>
             </div>
             <div class="d-flex col">
               <div class="container-fluid ffk-content-bg flex-grow-1 rounded shadow">
-
+                <table *ngIf="getSelectedGroup().nonEmpty()" mdbTable small="true" hover="true">
+                  <thead>
+                  <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Candidate</th>
+                    <th scope="col">Sponsor</th>
+                    <th scope="col">Promotion</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr mdbTableCol *ngFor="let vote of getFilteredVotes(); let idx = index">
+                    <th scope="row">{{idx + 1}}</th>
+                    <td *ngIf="vote.getCandidateUsername().nonEmpty()">{{vote.getCandidateUsername().get()}}</td>
+                    <td *ngIf="vote.getSponsorUsername().nonEmpty()">{{vote.getSponsorUsername().get()}}</td>
+                    <td *ngIf="vote.getPromotionGroupName().nonEmpty()">{{vote.getPromotionGroupName().get()}}</td>
+                  </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
