@@ -17,13 +17,16 @@
     "module": "es2020",
     "paths": {
       "os": [
-        "./node_modules/os-browserify"
+        "../node_modules/os-browserify"
       ],
       "tty": [
-        "./node_modules/tty-browserify"
+        "../node_modules/tty-browserify"
       ],
       "zlib": [
-        "./node_modules/browserify-zlib"
+        "../node_modules/browserify-zlib"
+      ],
+      "stream": [
+        "../node_modules/stream-browserify"
       ]
     },
     "lib": [
