@@ -1,47 +1,121 @@
 :root {
-  --ffk-white: #ffffff;
-  --ffk-light-grey: #f2f2f2;
-  --ffk-grey: #e7e7e7;
+  --ffk-white: #FFFFFF;
+  --ffk-black: #000000;
+  --ffk-content: #F9F9F9;
+  --ffk-content-shade: #EFEFEF;
   --ffk-icon: #C4C4C4;
-  --ffk-content: #F8F8F8;
-}
-
-.ffk-content {
-  color: var(--ffk-content) !important;
-}
-
-.ffk-content-bg {
-  background-color: var(--ffk-content) !important;
+  --ffk-icon-shade: #E7E7E7;
+  --ffk-text: #BDBDBD;
 }
 
 .ffk-white {
-  color: var(--ffk-white) !important;
+  &-fg {
+    color: var(--ffk-white) !important;
+  }
+
+  &-bg {
+    background-color: var(--ffk-white) !important;
+  }
+
+  &.hover {
+    &:hover {
+      background-color: var(--ffk-white) !important;
+    }
+  }
 }
 
-.ffk-white-bg {
-  background-color: var(--ffk-white) !important;
+.ffk-black {
+  &-fg {
+    color: var(--ffk-black) !important;
+  }
+
+  &-bg {
+    background-color: var(--ffk-black) !important;
+  }
+
+  &.hover {
+    &:hover {
+      background-color: var(--ffk-black) !important;
+    }
+  }
 }
 
-.ffk-light-grey {
-  color: var(--ffk-light-grey) !important;
+.ffk-content {
+  &-fg {
+    color: var(--ffk-content) !important;
+  }
+
+  &-bg {
+    background-color: var(--ffk-content) !important;
+  }
+
+  &.hover {
+    &:hover {
+      background-color: var(--ffk-content) !important;
+    }
+  }
 }
 
-.ffk-light-grey-bg {
-  background-color: var(--ffk-light-grey) !important;
-}
+.ffk-content-shade {
+  &-fg {
+    color: var(--ffk-content-shade) !important;
+  }
 
-.ffk-grey {
-  color: var(--ffk-grey) !important;
-}
+  &-bg {
+    background-color: var(--ffk-content-shade) !important;
+  }
 
-.ffk-grey-bg {
-  background-color: var(--ffk-grey) !important;
+  &.hover {
+    &:hover {
+      background-color: var(--ffk-content-shade) !important;
+    }
+  }
 }
 
 .ffk-icon {
-  color: var(--ffk-icon) !important;
+  &-fg {
+    color: var(--ffk-icon) !important;
+  }
+
+  &-bg {
+    background-color: var(--ffk-icon) !important;
+  }
+
+  &.hover {
+    &:hover {
+      background-color: var(--ffk-icon) !important;
+    }
+  }
 }
 
-.ffk-icon-bg {
-  background-color: var(--ffk-icon) !important;
+.ffk-icon-shade {
+  &-fg {
+    color: var(--ffk-icon-shade) !important;
+  }
+
+  &-bg {
+    background-color: var(--ffk-icon-shade) !important;
+  }
+
+  &.hover {
+    &:hover {
+      background-color: var(--ffk-icon-shade) !important;
+    }
+  }
+}
+
+.ffk-text {
+  &-fg {
+    color: var(--ffk-text) !important;
+  }
+
+  &-bg {
+    background-color: var(--ffk-text) !important;
+  }
+
+  &.hover {
+    &:hover {
+      background-color: var(--ffk-text) !important;
+    }
+  }
 }

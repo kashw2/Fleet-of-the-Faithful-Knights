@@ -3,15 +3,19 @@ import {NgModule} from '@angular/core';
 import {MDBBootstrapModulesPro, MDBSpinningPreloader} from 'ng-uikit-pro-standard';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {HomePageComponent} from './pages/home-page/home-page.component';
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ComponentsModule} from "./components/components.module";
+import {HomeComponent} from './pages/home/home.component';
+import { VoteComponent } from './pages/vote/vote.component';
+import { ContainedTextualSelectComponent } from './components/contained-textual-select/contained-textual-select.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomePageComponent,
+    HomeComponent,
+    VoteComponent,
+    ContainedTextualSelectComponent,
   ],
   imports: [
     BrowserModule,

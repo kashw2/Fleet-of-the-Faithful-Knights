@@ -12,6 +12,10 @@ export class NavigationService {
     return this.navigate('home');
   }
 
+  votes(): void {
+    return this.navigate('votes');
+  }
+
   navigate(route: string): void {
     if (!this.router.url.includes(route)) {
       console.log('Navigating to', route);
