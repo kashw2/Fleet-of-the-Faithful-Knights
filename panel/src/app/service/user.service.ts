@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
-import {Option, Some} from 'funfix-core';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {None, Option, Some} from 'funfix-core';
 import {Group, Permission, User} from '@kashw2/lib-ts';
 import {Set} from 'immutable';
 import * as moment from 'moment';
@@ -13,7 +13,15 @@ export class UserService {
 
   constructor() { }
 
-  user: BehaviorSubject<Option<User>> = new BehaviorSubject<Option<User>>(this.getUser());
+  private user: BehaviorSubject<Option<User>> = new BehaviorSubject<Option<User>>(this.getUser());
+
+  asObs(): Observable<Option<User>> {
+    return this.user;
+  }
+
+  clear(): void {
+    return this.user.next(None);
+  }
 
   getUser(): Option<User> {
     return Option.of(
@@ -62,6 +70,14 @@ export class UserService {
         )),
       ),
     );
+  }
+
+  setUser(user: Option<User>): Option<User> {
+    if (user.isEmpty()) {
+      return this.getUser();
+    }
+    this.user.next(user);
+    return user;
   }
 
 }

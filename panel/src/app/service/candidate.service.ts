@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {Candidate, Group} from '@kashw2/lib-ts';
 import {List, Set} from 'immutable';
 import {None, Option, Some} from 'funfix-core';
@@ -16,6 +16,14 @@ export class CandidateService {
   }
 
   private candidates: BehaviorSubject<List<Candidate>> = new BehaviorSubject<List<Candidate>>(List<Candidate>());
+
+  asObs(): Observable<List<Candidate>> {
+    return this.candidates;
+  }
+
+  clear(): void {
+    return this.candidates.next(List());
+  }
 
   getCandidates(): List<Candidate> {
     return List.of(
@@ -58,5 +66,13 @@ export class CandidateService {
         )),
       )
     );
+  }
+
+  setCandidates(candidates: List<Candidate>): List<Candidate> {
+    if (candidates.isEmpty()) {
+      return this.getCandidates();
+    }
+    this.candidates.next(candidates);
+    return candidates;
   }
 }

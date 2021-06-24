@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
 import {List, Set} from "immutable";
-import {Ballot, Candidate, Group, User, Vote} from "@kashw2/lib-ts";
-import {None, Some} from "funfix-core";
+import {Ballot, Candidate, Group, Vote} from "@kashw2/lib-ts";
+import {Some} from "funfix-core";
 import {CandidateService} from "./candidate.service";
 import {UserService} from "./user.service";
 import * as moment from 'moment';
@@ -15,7 +15,7 @@ export class VoteService {
   constructor(
     private candidateService: CandidateService,
     private userService: UserService,
-    ) {
+  ) {
   }
 
   private votes: BehaviorSubject<List<Vote>> = new BehaviorSubject(this.getDefaultVotes());
@@ -25,7 +25,7 @@ export class VoteService {
   }
 
   clear(): void {
-    this.votes.next(List());
+    return this.votes.next(List());
   }
 
   private getDefaultVotes(): List<Vote> {
