@@ -11,7 +11,8 @@ import {StarCitizenOrganisation, StarCitizenUser} from '@kashw2/lib-external';
 })
 export class UserService {
 
-  constructor() { }
+  constructor() {
+  }
 
   private user: BehaviorSubject<Option<User>> = new BehaviorSubject<Option<User>>(this.getUser());
 
@@ -32,7 +33,13 @@ export class UserService {
         Some('https://www.sardiniauniqueproperties.com/wp-content/uploads/2015/10/square-profile-pic-2.jpg'),
         Some('178140794555727872'),
         Some('#7219'),
-        Some(new Group(Some('0'), Some('Developer'), Some('#RAIN'), Some(11))),
+        Some(new Group(
+          Some('0'),
+          Some('Developer'),
+          Some('#RAIN'),
+          Some(12)
+          ),
+        ),
         Set.of(
           new Permission(
             Some('1'),
@@ -73,7 +80,7 @@ export class UserService {
   }
 
   setUser(user: Option<User>): Option<User> {
-    if (user.isEmpty()) {
+    if (user.isEmpty() || this.getUser().equals(user)) {
       return this.getUser();
     }
     this.user.next(user);

@@ -60,12 +60,12 @@ export class VoteService {
       .getValue();
   }
 
-  setCandidates(candidates: List<Vote>): List<Vote> {
-    if (candidates.isEmpty()) {
+  setVotes(votes: List<Vote>): List<Vote> {
+    if (votes.isEmpty() || this.getVotes().equals(votes)) {
       return this.getVotes();
     }
-    this.votes.next(candidates);
-    return candidates;
+    this.votes.next(votes);
+    return votes;
   }
 
 }
