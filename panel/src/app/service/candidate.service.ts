@@ -69,7 +69,7 @@ export class CandidateService {
   }
 
   setCandidates(candidates: List<Candidate>): List<Candidate> {
-    if (candidates.isEmpty()) {
+    if (candidates.isEmpty() || this.getCandidates().equals(candidates)) {
       return this.getCandidates();
     }
     this.candidates.next(candidates);
