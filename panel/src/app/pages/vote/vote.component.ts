@@ -26,22 +26,93 @@ export class VoteComponent implements OnInit {
       .filter(v => v.getPromotionGroupName().equals(this.getSelectedGroup()));
   }
 
-  getGroupLabels(): List<Option<string>> {
+  getGroups(): List<Group> {
     return List.of(
-      Some('Developer'),
-      Some("Grand Master"),
-      Some("Master Commander"),
-      Some("Lieutenant Master Commander"),
-      Some("Knight Commander"),
-      Some("Knight Major"),
-      Some("Knight Captain"),
-      Some("Knight Lieutenant"),
-      Some("Knight"),
-      Some("Master Sergeant"),
-      Some("First Sergeant"),
-      Some("Staff Sergeant"),
-      Some("Sergeant"),
-    );
+      new Group(
+        Some('0'),
+        Some('Developer'),
+        Some('#000000'),
+        Some(12)
+      ),
+      new Group(
+        Some('1'),
+        Some('Grand Master'),
+        Some('#000000'),
+        Some(11)
+      ),
+      new Group(
+        Some('0'),
+        Some('Master Commander'),
+        Some('#000000'),
+        Some(10)
+      ),
+      new Group(
+        Some('0'),
+        Some('Lieutenant Master Commander'),
+        Some('#000000'),
+        Some(9)
+      ),
+      new Group(
+        Some('0'),
+        Some('Knight Commander'),
+        Some('#000000'),
+        Some(8)
+      ),
+      new Group(
+        Some('0'),
+        Some('Knight Major'),
+        Some('#000000'),
+        Some(7)
+      ),
+      new Group(
+        Some('0'),
+        Some('Knight Captain'),
+        Some('#000000'),
+        Some(6)
+      ),
+      new Group(
+        Some('0'),
+        Some('Knight Lieutenant'),
+        Some('#000000'),
+        Some(5)
+      ),
+      new Group(
+        Some('0'),
+        Some('Knight'),
+        Some('#000000'),
+        Some(4)
+      ),
+      new Group(
+        Some('0'),
+        Some('Master Sergeant'),
+        Some('#000000'),
+        Some(3)
+      ),
+      new Group(
+        Some('0'),
+        Some('First Sergeant'),
+        Some('#000000'),
+        Some(2)
+      ),
+      new Group(
+        Some('0'),
+        Some('Staff Sergeant'),
+        Some('#000000'),
+        Some(1)
+      ),
+      new Group(
+        Some('0'),
+        Some('Sergeant'),
+        Some('#000000'),
+        Some(0)
+      )
+    )
+  }
+
+  getHierarchicalGroupLabels(): List<Option<string>> {
+    return this.getGroups()
+      .filter(g => this.getUserGroup().exists(uG => uG.isHigherOrEqual(g)))
+      .map(g => g.getLabel());
   }
 
   getSelectedGroup(): Option<string> {
