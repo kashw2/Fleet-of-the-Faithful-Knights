@@ -16,20 +16,16 @@
                 <div class="d-flex container-fluid justify-content-end px-0">
                   <button mdbBtn
                           type="button"
-                          color="red"
-                          size="sm"
-                          class="mt-0 mr-0 waves-light"
-                          mdbWavesEffect>Veto</button>
-                  <button mdbBtn
-                          type="button"
                           color="dark-green"
                           size="sm"
                           class="mt-0 mr-0 waves-light"
-                          mdbWavesEffect>Create</button>
+                          mdbWavesEffect
+                          (click)="navigationService.createVote()">Create
+                  </button>
                 </div>
               </div>
               <div class="row flex-grow-1">
-                <div class="d-flex flex-column container-fluid ffk-content-bg flex-grow-1 rounded shadow mb-2">
+                <div class="d-flex flex-column container-fluid ffk-content-bg flex-grow-1 rounded shadow mb-2 px-0">
                   <app-contained-textual-select *ngFor="let label of getHierarchicalGroupLabels()"
                                                 [label]="label"
                                                 class="flex-grow-1"
@@ -51,10 +47,10 @@
                   </thead>
                   <tbody *ngIf="getSelectedGroup().nonEmpty()">
                   <tr mdbTableCol *ngFor="let vote of getFilteredVotes()">
-                    <th *ngIf="vote.getId().nonEmpty()" scope="row">{{vote.getId().get()}}</th>
-                    <td *ngIf="vote.getCandidateUsername().nonEmpty()">{{vote.getCandidateUsername().get()}}</td>
-                    <td *ngIf="vote.getSponsorUsername().nonEmpty()">{{vote.getSponsorUsername().get()}}</td>
-                    <td *ngIf="vote.getPromotionGroupName().nonEmpty()">{{vote.getPromotionGroupName().get()}}</td>
+                    <th scope="row">{{vote.getId().getOrElse('')}}</th>
+                    <td>{{vote.getCandidateUsername().getOrElse('')}}</td>
+                    <td>{{vote.getSponsorUsername().getOrElse('')}}</td>
+                    <td>{{vote.getPromotionGroupName().getOrElse('')}}</td>
                   </tr>
                   </tbody>
                 </table>

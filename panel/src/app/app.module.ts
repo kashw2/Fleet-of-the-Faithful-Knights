@@ -9,6 +9,7 @@ import {ComponentsModule} from "./components/components.module";
 import {HomeComponent} from './pages/home/home.component';
 import { VoteComponent } from './pages/vote/vote.component';
 import { ContainedTextualSelectComponent } from './components/contained-textual-select/contained-textual-select.component';
+import { CreateVoteComponent } from './pages/create-vote/create-vote.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { ContainedTextualSelectComponent } from './components/contained-textual-
     HomeComponent,
     VoteComponent,
     ContainedTextualSelectComponent,
+    CreateVoteComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,67 @@
+<div class="d-flex container-fluid flex-column h-100">
+  <div class="row flex-grow-1">
+    <app-sidebar id="sidebar" class="p-0 ffk-white-bg align-items-center">
+    </app-sidebar>
+    <div class="d-flex col flex-grow-1 flex-column">
+      <div class="row flex-grow-1">
+        <div class="d-flex container-fluid flex-column">
+          <div class="row">
+            <div class="col-3">
+              <h2 class="font-weight-bold mt-2">Create Vote</h2>
+            </div>
+          </div>
+          <div class="row flex-grow-1">
+            <div class="d-flex col justify-content-center align-items-center">
+              <div class="d-flex container-fluid flex-column ffk-content-bg w-50 h-50 rounded shadow overflow-hidden">
+                <div class="row flex-grow-1">
+                  <div class="d-flex col flex-column align-content-between">
+                    <div class="md-form my-auto">
+                      <mdb-select-2 placeholder="Candidate">
+                        <mdb-select-option
+                          *ngFor="let candidate of getSelectableCandidateNames(); let idx = index"
+                          (selectionChange)="setSelectedCandidate(candidateService.getCandidate(idx + 1))">
+                          {{candidate}}
+                        </mdb-select-option>
+                      </mdb-select-2>
+                    </div>
+                    <div class="md-form my-auto">
+                      <mdb-select-2 placeholder="Group">
+                        <mdb-select-option
+                          *ngFor="let group of getAvailableGroupLabels(); let idx = index"
+                          (selectionChange)="setSelectedGroup(getGroup(idx + 1))">
+                          {{group}}
+                        </mdb-select-option>
+                      </mdb-select-2>
+                    </div>
+                    <div class="md-form my-auto">
+                      <input #starCitizenUrl mdbInput type="text" id="starcitizenurl" class="form-control">
+                      <label for="starcitizenurl" class="">Star Citizen Url</label>
+                    </div>
+                    <div class="md-form my-auto">
+                      <textarea #description type="text" id="description" class="md-textarea form-control" mdbInput></textarea>
+                      <label for="description">Description</label>
+                    </div>
+                  </div>
+                  <div class="d-flex col flex-column">
+                    <img [src]="getCandidateProfileImage().getOrElse('./assets/images/discord.jpg')"
+                         class="align-self-center"
+                         width="100%"
+                         height="300px">
+                    <button mdbBtn
+                            type="button"
+                            color="dark-green"
+                            size="sm"
+                            class="waves-light"
+                            mdbWavesEffect
+                            (click)="createVote(description.value, starCitizenUrl.value)">Create
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

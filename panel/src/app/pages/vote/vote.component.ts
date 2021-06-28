@@ -5,6 +5,7 @@ import {VoteService} from "../../service/vote.service";
 import {BehaviorSubject} from "rxjs";
 import {Group, Vote} from "@kashw2/lib-ts";
 import {UserService} from "../../service/user.service";
+import {NavigationService} from "../../service/navigation.service";
 
 @Component({
   selector: 'app-vote',
@@ -16,6 +17,7 @@ export class VoteComponent implements OnInit {
   constructor(
     readonly voteService: VoteService,
     private userService: UserService,
+    readonly navigationService: NavigationService,
   ) {
   }
 
@@ -29,73 +31,73 @@ export class VoteComponent implements OnInit {
   getGroups(): List<Group> {
     return List.of(
       new Group(
-        Some('0'),
+        Some('12'),
         Some('Developer'),
         Some('#000000'),
         Some(12)
       ),
       new Group(
-        Some('1'),
+        Some('11'),
         Some('Grand Master'),
         Some('#000000'),
         Some(11)
       ),
       new Group(
-        Some('0'),
+        Some('10'),
         Some('Master Commander'),
         Some('#000000'),
         Some(10)
       ),
       new Group(
-        Some('0'),
+        Some('9'),
         Some('Lieutenant Master Commander'),
         Some('#000000'),
         Some(9)
       ),
       new Group(
-        Some('0'),
+        Some('8'),
         Some('Knight Commander'),
         Some('#000000'),
         Some(8)
       ),
       new Group(
-        Some('0'),
+        Some('7'),
         Some('Knight Major'),
         Some('#000000'),
         Some(7)
       ),
       new Group(
-        Some('0'),
+        Some('6'),
         Some('Knight Captain'),
         Some('#000000'),
         Some(6)
       ),
       new Group(
-        Some('0'),
+        Some('5'),
         Some('Knight Lieutenant'),
         Some('#000000'),
         Some(5)
       ),
       new Group(
-        Some('0'),
+        Some('4'),
         Some('Knight'),
         Some('#000000'),
         Some(4)
       ),
       new Group(
-        Some('0'),
+        Some('3'),
         Some('Master Sergeant'),
         Some('#000000'),
         Some(3)
       ),
       new Group(
-        Some('0'),
+        Some('2'),
         Some('First Sergeant'),
         Some('#000000'),
         Some(2)
       ),
       new Group(
-        Some('0'),
+        Some('1'),
         Some('Staff Sergeant'),
         Some('#000000'),
         Some(1)

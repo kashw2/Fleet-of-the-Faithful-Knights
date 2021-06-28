@@ -8,12 +8,12 @@ export class NavigationService {
 
   constructor(private router: Router) { }
 
-  home(): void {
-    return this.navigate('home');
+  createVote(): void {
+    return this.navigate('vote/create');
   }
 
-  votes(): void {
-    return this.navigate('votes');
+  home(): void {
+    return this.navigate('home');
   }
 
   navigate(route: string): void {
@@ -26,6 +26,10 @@ export class NavigationService {
     }
     console.info(`Navigation request rejected ${this.router.url} = /${route}`);
     return;
+  }
+
+  votes(): void {
+    return this.navigate('votes');
   }
 
 }
