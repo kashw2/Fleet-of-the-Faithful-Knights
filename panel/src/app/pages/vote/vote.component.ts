@@ -5,6 +5,7 @@ import {VoteService} from "../../service/vote.service";
 import {BehaviorSubject} from "rxjs";
 import {Group, Vote} from "@kashw2/lib-ts";
 import {UserService} from "../../service/user.service";
+import {NavigationService} from "../../service/navigation.service";
 
 @Component({
   selector: 'app-vote',
@@ -16,6 +17,7 @@ export class VoteComponent implements OnInit {
   constructor(
     readonly voteService: VoteService,
     private userService: UserService,
+    readonly navigationService: NavigationService,
   ) {
   }
 
