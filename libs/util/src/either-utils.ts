@@ -18,4 +18,11 @@ export class EitherUtils {
             .getOrElse(Left(left));
     }
 
+    static leftMap<A, B, C>(e: Either<B, A>, f: (b: B) => C): Either<C, A> {
+        if (e.isLeft()) {
+            return Left(f(e.value));
+        }
+        return Right(e.get());
+    }
+
 }
