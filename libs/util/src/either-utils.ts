@@ -25,4 +25,12 @@ export class EitherUtils {
         return Right(e.get());
     }
 
+    static leftTap<A, B>(e: Either<B, A>, f: (b: B) => void): Either<B, A> {
+        if (e.isLeft()) {
+            f(e.value);
+        }
+        return e;
+    }
+
+
 }
