@@ -8,6 +8,7 @@ import {UserService} from "../../service/user.service";
 import {BehaviorSubject} from "rxjs";
 import * as moment from "moment";
 import {VoteService} from "../../service/vote.service";
+import {GroupService} from "../../service/group.service";
 
 @Component({
   selector: 'app-create-vote',
@@ -20,7 +21,8 @@ export class CreateVoteComponent implements OnInit {
   constructor(
     readonly candidateService: CandidateService,
     private voteService: VoteService,
-    private userService: UserService
+    private userService: UserService,
+    readonly groupService: GroupService,
   ) {
   }
 
@@ -61,90 +63,7 @@ export class CreateVoteComponent implements OnInit {
   }
 
   getGroup(index: number): Option<Group> {
-    return Option.of(this.getGroups().get(index));
-  }
-
-  getGroups(): List<Group> {
-    return List.of(
-      new Group(
-        Some('12'),
-        Some('Developer'),
-        Some('#000000'),
-        Some(12)
-      ),
-      new Group(
-        Some('11'),
-        Some('Grand Master'),
-        Some('#000000'),
-        Some(11)
-      ),
-      new Group(
-        Some('10'),
-        Some('Master Commander'),
-        Some('#000000'),
-        Some(10)
-      ),
-      new Group(
-        Some('9'),
-        Some('Lieutenant Master Commander'),
-        Some('#000000'),
-        Some(9)
-      ),
-      new Group(
-        Some('8'),
-        Some('Knight Commander'),
-        Some('#000000'),
-        Some(8)
-      ),
-      new Group(
-        Some('7'),
-        Some('Knight Major'),
-        Some('#000000'),
-        Some(7)
-      ),
-      new Group(
-        Some('6'),
-        Some('Knight Captain'),
-        Some('#000000'),
-        Some(6)
-      ),
-      new Group(
-        Some('5'),
-        Some('Knight Lieutenant'),
-        Some('#000000'),
-        Some(5)
-      ),
-      new Group(
-        Some('4'),
-        Some('Knight'),
-        Some('#000000'),
-        Some(4)
-      ),
-      new Group(
-        Some('3'),
-        Some('Master Sergeant'),
-        Some('#000000'),
-        Some(3)
-      ),
-      new Group(
-        Some('2'),
-        Some('First Sergeant'),
-        Some('#000000'),
-        Some(2)
-      ),
-      new Group(
-        Some('1'),
-        Some('Staff Sergeant'),
-        Some('#000000'),
-        Some(1)
-      ),
-      new Group(
-        Some('0'),
-        Some('Sergeant'),
-        Some('#000000'),
-        Some(0)
-      )
-    )
+    return Option.of(this.groupService.getGroups().get(index));
   }
 
   getSelectableCandidateNames(): List<string> {
