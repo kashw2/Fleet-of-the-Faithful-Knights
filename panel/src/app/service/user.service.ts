@@ -5,16 +5,17 @@ import {Group, Permission, User} from '@kashw2/lib-ts';
 import {Set} from 'immutable';
 import * as moment from 'moment';
 import {StarCitizenOrganisation, StarCitizenUser} from '@kashw2/lib-external';
+import {ToastService} from "./toast.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor() {
+  constructor(private toastService: ToastService) {
   }
 
-  private user: BehaviorSubject<Option<User>> = new BehaviorSubject<Option<User>>(this.getUser());
+  private user: BehaviorSubject<Option<User>> = new BehaviorSubject<Option<User>>(this.getDefaultUser());
 
   asObs(): Observable<Option<User>> {
     return this.user;
@@ -24,7 +25,7 @@ export class UserService {
     return this.user.next(None);
   }
 
-  getUser(): Option<User> {
+  private getDefaultUser(): Option<User> {
     return Option.of(
       new User(
         Some('95edfb05-7808-44c5-992a-aba763a7203f'),
@@ -77,6 +78,18 @@ export class UserService {
         )),
       ),
     );
+  }
+
+  getUser(): Option<User> {
+    if (this.user.getValue().isEmpty()) {
+      this.toastService.show(
+        'Not Logged In',
+        "Error",
+      );
+      return None;
+    }
+    this.toastService.show('Logged In', "Success");
+    return this.user.getValue();
   }
 
   setUser(user: Option<User>): Option<User> {
