@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CandidateService} from "../../service/candidate.service";
 import {List, Set} from "immutable";
 import {OptionUtils} from "@kashw2/lib-util";
@@ -14,7 +14,6 @@ import {GroupService} from "../../service/group.service";
   selector: 'app-create-vote',
   templateUrl: './create-vote.component.html',
   styleUrls: ['./create-vote.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateVoteComponent implements OnInit {
 
@@ -46,9 +45,11 @@ export class CreateVoteComponent implements OnInit {
   }
 
   getAvailableGroupLabels(): List<string> {
-    return OptionUtils.flattenList(this.getGroups()
+    return OptionUtils.flattenList(this.groupService.getGroups()
+      .filterNot(g => g.getLabel().contains('Default'))
       .filter(g => this.getUserGroup().exists(uG => g.isLower(uG)))
-      .map(g => g.getLabel()));
+      .map(g => g.getLabel()))
+      .reverse();
   }
 
   getCandidateNames(): List<string> {

@@ -7,9 +7,10 @@ import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ComponentsModule} from "./components/components.module";
 import {HomeComponent} from './pages/home/home.component';
-import { VoteComponent } from './pages/vote/vote.component';
-import { ContainedTextualSelectComponent } from './components/contained-textual-select/contained-textual-select.component';
-import { CreateVoteComponent } from './pages/create-vote/create-vote.component';
+import {VoteComponent} from './pages/vote/vote.component';
+import {ContainedTextualSelectComponent} from './components/contained-textual-select/contained-textual-select.component';
+import {CreateVoteComponent} from './pages/create-vote/create-vote.component';
+import {environment} from "../environments/environment";
 
 @NgModule({
   declarations: [
@@ -27,7 +28,11 @@ import { CreateVoteComponent } from './pages/create-vote/create-vote.component';
     ToastrModule.forRoot(),
     ComponentsModule,
   ],
-  providers: [MDBSpinningPreloader],
+  providers: [
+    MDBSpinningPreloader,
+    {provide: 'ffkApiServer', useValue: environment.FFK_API_SERVER},
+    {provide: 'ffkDiscordId', useValue: environment.FFK_DISCORD_ID}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

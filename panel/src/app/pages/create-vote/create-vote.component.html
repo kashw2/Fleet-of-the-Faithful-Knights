@@ -16,19 +16,19 @@
                 <div class="row flex-grow-1">
                   <div class="d-flex col flex-column align-content-between">
                     <div class="md-form my-auto">
-                      <mdb-select-2 placeholder="Candidate">
+                      <mdb-select-2 [disabled]="getSelectableCandidateNames().isEmpty()" placeholder="Candidate">
                         <mdb-select-option
                           *ngFor="let candidate of getSelectableCandidateNames(); let idx = index"
-                          (selectionChange)="setSelectedCandidate(candidateService.getCandidate(idx + 1))">
+                          (selectionChange)="setSelectedCandidate(candidateService.getCandidate(idx))">
                           {{candidate}}
                         </mdb-select-option>
                       </mdb-select-2>
                     </div>
                     <div class="md-form my-auto">
-                      <mdb-select-2 placeholder="Group">
+                      <mdb-select-2 [disabled]="getAvailableGroupLabels().isEmpty()" placeholder="Group">
                         <mdb-select-option
                           *ngFor="let group of getAvailableGroupLabels(); let idx = index"
-                          (selectionChange)="setSelectedGroup(getGroup(idx + 1))">
+                          (selectionChange)="setSelectedGroup(getGroup(getAvailableGroupLabels().size - idx))">
                           {{group}}
                         </mdb-select-option>
                       </mdb-select-2>
