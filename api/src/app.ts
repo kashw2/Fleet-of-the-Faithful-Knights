@@ -51,7 +51,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use((req: Request, res: Response, next: NextFunction) => {
-    if (!db.cache.isReady()) {
+    if (!db.cache?.isReady()) {
         res.json({error: 'API Server Starting'});
     } else {
         res.json({message: 'Welcome to the Fleet of the Faithful Knights API Server'});
