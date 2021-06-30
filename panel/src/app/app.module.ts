@@ -24,7 +24,7 @@ import { CreateVoteComponent } from './pages/create-vote/create-vote.component';
     BrowserAnimationsModule,
     AppRoutingModule,
     MDBBootstrapModulesPro.forRoot(),
-    ToastrModule,
+    ToastrModule.forRoot(),
     ComponentsModule,
   ],
   providers: [MDBSpinningPreloader],
