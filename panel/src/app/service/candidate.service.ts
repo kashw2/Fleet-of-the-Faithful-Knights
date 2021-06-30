@@ -2,27 +2,28 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Candidate, Group} from '@kashw2/lib-ts';
 import {List, Set} from 'immutable';
-import {None, Option, Some} from 'funfix-core';
+import {Either, None, Option, Right, Some} from 'funfix-core';
 import {StarCitizenOrganisation, StarCitizenUser} from '@kashw2/lib-external';
 import * as moment from 'moment';
 import {OptionUtils} from '@kashw2/lib-util';
+import {ToastService} from "./toast.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CandidateService {
 
-  constructor() {
+  constructor(private toastService: ToastService) {
   }
 
-  private candidates: BehaviorSubject<List<Candidate>> = new BehaviorSubject<List<Candidate>>(List<Candidate>());
+  private candidates: BehaviorSubject<Either<string, List<Candidate>>> = new BehaviorSubject<Either<string, List<Candidate>>>(this.getDefaultCandidates());
 
-  asObs(): Observable<List<Candidate>> {
+  asObs(): Observable<Either<string, List<Candidate>>> {
     return this.candidates;
   }
 
   clear(): void {
-    return this.candidates.next(List());
+    return this.candidates.next(Right(List()));
   }
 
   getCandidate(index: number): Option<Candidate> {
@@ -30,7 +31,14 @@ export class CandidateService {
   }
 
   getCandidates(): List<Candidate> {
-    return List.of(
+    return this.toastService.showAndRecoverList(
+      this.candidates.getValue(),
+      'Loaded Candidates',
+    );
+  }
+
+  getDefaultCandidates(): Either<string, List<Candidate>> {
+    return Right(List.of(
       new Candidate(
         Some('59722485-a88d-45be-b26c-89f5ce51675b'),
         Some('Bship'),
@@ -107,14 +115,14 @@ export class CandidateService {
           ),
         )),
       )
-    );
+    ));
   }
 
   setCandidates(candidates: List<Candidate>): List<Candidate> {
     if (candidates.isEmpty() || this.getCandidates().equals(candidates)) {
       return this.getCandidates();
     }
-    this.candidates.next(candidates);
+    this.candidates.next(Right(candidates));
     return candidates;
   }
 }

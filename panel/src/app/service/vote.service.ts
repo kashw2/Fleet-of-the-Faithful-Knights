@@ -2,10 +2,11 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
 import {List, Set} from "immutable";
 import {Ballot, Candidate, Group, Vote} from "@kashw2/lib-ts";
-import {Some} from "funfix-core";
+import {Either, Right, Some} from "funfix-core";
 import {CandidateService} from "./candidate.service";
 import {UserService} from "./user.service";
 import * as moment from 'moment';
+import {ToastService} from "./toast.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,21 +16,22 @@ export class VoteService {
   constructor(
     private candidateService: CandidateService,
     private userService: UserService,
+    private toastService: ToastService,
   ) {
   }
 
-  private votes: BehaviorSubject<List<Vote>> = new BehaviorSubject(this.getDefaultVotes());
+  private votes: BehaviorSubject<Either<string, List<Vote>>> = new BehaviorSubject(this.getDefaultVotes());
 
-  asObs(): Observable<List<Vote>> {
+  asObs(): Observable<Either<string, List<Vote>>> {
     return this.votes;
   }
 
   clear(): void {
-    return this.votes.next(List());
+    return this.votes.next(Right(List()));
   }
 
-  private getDefaultVotes(): List<Vote> {
-    return List.of(
+  private getDefaultVotes(): Either<string, List<Vote>> {
+    return Right(List.of(
       new Vote(
         Some('1'),
         this.userService.getUser(),
@@ -52,19 +54,21 @@ export class VoteService {
         Some(moment()),
         Some(moment()),
       ),
-    );
+    ));
   }
 
   getVotes(): List<Vote> {
-    return this.votes
-      .getValue();
+    return this.toastService.showAndRecoverList(
+      this.votes.getValue(),
+      'Loaded Votes',
+    );
   }
 
   setVotes(votes: List<Vote>): List<Vote> {
     if (votes.isEmpty() || this.getVotes().equals(votes)) {
       return this.getVotes();
     }
-    this.votes.next(votes);
+    this.votes.next(Right(votes));
     return votes;
   }
 
