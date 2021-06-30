@@ -24,7 +24,7 @@ export class CrudApiBase extends SerializedApiBase {
         headers: object = this.getHeaders(),
     ): Promise<Either<string, A>> {
         return this.sendRequestSerialized(
-            this.getFullUrl(this.getEndpoint()),
+            this.getEndpoint(),
             "POST",
             serializer,
             body,
@@ -38,7 +38,7 @@ export class CrudApiBase extends SerializedApiBase {
         headers: object = this.getHeaders(),
     ): Promise<Either<string, List<A>>> {
         return this.sendRequestListSerialized(
-            this.getFullUrl(this.getEndpoint()),
+            this.getEndpoint(),
             "POST",
             serializer,
             body,
@@ -52,7 +52,7 @@ export class CrudApiBase extends SerializedApiBase {
         headers: object = this.getHeaders(),
     ): Promise<Either<string, A>> {
         return this.sendRequestSerialized(
-            this.getFullUrl(this.getEndpoint()),
+            this.getEndpoint(),
             "DELETE",
             serializer,
             body,
@@ -66,7 +66,7 @@ export class CrudApiBase extends SerializedApiBase {
         headers: object = this.getHeaders(),
     ): Promise<Either<string, List<A>>> {
         return this.sendRequestListSerialized(
-            this.getFullUrl(this.getEndpoint()),
+            this.getEndpoint(),
             "DELETE",
             serializer,
             body,
@@ -80,7 +80,7 @@ export class CrudApiBase extends SerializedApiBase {
         headers: object = this.getHeaders(),
     ): Promise<Either<string, A>> {
         return this.sendRequestSerialized(
-            this.getFullUrl(this.getEndpoint()),
+            this.getEndpoint(),
             "GET",
             serializer,
             body,
@@ -94,7 +94,7 @@ export class CrudApiBase extends SerializedApiBase {
         headers: object = this.getHeaders(),
     ): Promise<Either<string, List<A>>> {
         return this.sendRequestListSerialized(
-            this.getFullUrl(this.getEndpoint()),
+            this.getEndpoint(),
             "GET",
             serializer,
             body,
@@ -108,7 +108,7 @@ export class CrudApiBase extends SerializedApiBase {
         headers: object = this.getHeaders(),
     ): Promise<Either<string, A>> {
         return this.sendRequestSerialized(
-            this.getFullUrl(this.getEndpoint()),
+            this.getEndpoint(),
             "PUT",
             serializer,
             body,
@@ -122,7 +122,7 @@ export class CrudApiBase extends SerializedApiBase {
         headers: object = this.getHeaders(),
     ): Promise<Either<string, List<A>>> {
         return this.sendRequestListSerialized(
-            this.getFullUrl(this.getEndpoint()),
+            this.getEndpoint(),
             "PUT",
             serializer,
             body,

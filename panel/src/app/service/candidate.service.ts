@@ -2,10 +2,9 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Candidate, Group} from '@kashw2/lib-ts';
 import {List, Set} from 'immutable';
-import {Either, None, Option, Right, Some} from 'funfix-core';
+import {Either, Option, Right, Some} from 'funfix-core';
 import {StarCitizenOrganisation, StarCitizenUser} from '@kashw2/lib-external';
 import * as moment from 'moment';
-import {OptionUtils} from '@kashw2/lib-util';
 import {ToastService} from "./toast.service";
 
 @Injectable({
@@ -31,10 +30,8 @@ export class CandidateService {
   }
 
   getCandidates(): List<Candidate> {
-    return this.toastService.showAndRecoverList(
-      this.candidates.getValue(),
-      'Loaded Candidates',
-    );
+    return this.candidates.getValue()
+      .getOrElse(List());
   }
 
   getDefaultCandidates(): Either<string, List<Candidate>> {
@@ -125,4 +122,5 @@ export class CandidateService {
     this.candidates.next(Right(candidates));
     return candidates;
   }
+
 }

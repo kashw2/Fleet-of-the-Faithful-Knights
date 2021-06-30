@@ -15,6 +15,23 @@ const db = new Database();
 router.use(bodyParser.urlencoded({extended: false}));
 router.use(bodyParser.json());
 
+/**
+ * We want to be initialising the endpoints with the same Router, as such we create an immutable variable for it
+ * and we just pass it around to all endpoints for usage this way we aren't creating multiple instances of endpoints
+ * each with their own router.
+ */
+
+// TODO: When we have DNS setup, specify correct origins
+router.use((req: Request, res: Response, next: NextFunction) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', '*');
+    if (req.method.includes('OPTIONS')) {
+        res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE');
+        return res.status(200).json({});
+    }
+    next();
+});
+
 router.use((req: Request, res: Response, next: NextFunction) => {
     const discordId = Option.of(req.header('Discord-Id'));
     discordId.map(id => {
@@ -32,23 +49,6 @@ router.use((req: Request, res: Response, next: NextFunction) => {
         next();
     }
 })
-
-/**
- * We want to be initialising the endpoints with the same Router, as such we create an immutable variable for it
- * and we just pass it around to all endpoints for usage this way we aren't creating multiple instances of endpoints
- * each with their own router.
- */
-
-// TODO: When we have DNS setup, specify correct origins
-app.use((req: Request, res: Response, next: NextFunction) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', '*');
-    if (req.method.includes('OPTIONS')) {
-        res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE');
-        return res.status(200).json({});
-    }
-    next();
-});
 
 app.use((req: Request, res: Response, next: NextFunction) => {
     if (!db.cache?.isReady()) {
