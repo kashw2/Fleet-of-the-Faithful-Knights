@@ -7,7 +7,7 @@ import {
     PermissionJsonSerializer,
     User,
     UserJsonSerializer,
-    UserPermissionMapping, UserPermissionMappingJsonSerializer
+    UserPermissionMapping, UserPermissionMappingJsonSerializer, Vote, VoteJsonSerializer
 } from "@kashw2/lib-ts";
 import {List} from "immutable";
 
@@ -34,6 +34,10 @@ export class DbRead {
 
     readUsers(): Promise<Either<string, List<User>>> {
         return this.requests.sendRequestListSerialized('ssp_json_GetUsers', List(), UserJsonSerializer.instance);
+    }
+
+    readVotes(): Promise<Either<string, List<Vote>>> {
+        return this.requests.sendRequestListSerialized('ssp_json_GetVotes', List(), VoteJsonSerializer.instance);
     }
 
 }
