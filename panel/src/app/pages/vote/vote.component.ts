@@ -1,12 +1,13 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {List} from "immutable";
-import {None, Option, Some} from "funfix-core";
+import {None, Option} from "funfix-core";
 import {VoteService} from "../../service/vote.service";
 import {BehaviorSubject} from "rxjs";
-import {Group, Vote} from "@kashw2/lib-ts";
+import {Group, Vote, VoteJsonSerializer} from "@kashw2/lib-ts";
 import {UserService} from "../../service/user.service";
 import {NavigationService} from "../../service/navigation.service";
 import {GroupService} from "../../service/group.service";
+import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
   selector: 'app-vote',
@@ -24,6 +25,10 @@ export class VoteComponent implements OnInit {
   }
 
   selectedGroup: BehaviorSubject<Option<string>> = new BehaviorSubject<Option<string>>(None);
+
+  getDisplayedColumns(): string[] {
+    return ['id', 'candidate', 'sponsor', 'group'];
+  }
 
   getFilteredVotes(): List<Vote> {
     return this.voteService.getVotes()
@@ -47,6 +52,10 @@ export class VoteComponent implements OnInit {
     return this.userService
       .getUser()
       .flatMap(u => u.getGroup());
+  }
+
+  getVotesForTable(): MatTableDataSource<object> {
+    return new MatTableDataSource<object>(this.getFilteredVotes().map(v => VoteJsonSerializer.instance.toJsonImpl(v)).toArray())
   }
 
   ngOnInit(): void {

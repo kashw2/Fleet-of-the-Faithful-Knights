@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {CrudApiBase, Group, GroupJsonSerializer, User, UserJsonSerializer} from "@kashw2/lib-ts";
+import {CrudApiBase, Group, GroupJsonSerializer, User, UserJsonSerializer, Vote, VoteJsonSerializer} from "@kashw2/lib-ts";
 import {Either} from "funfix-core";
 import {List} from "immutable";
 
@@ -15,6 +15,7 @@ export class FfkApiService {
   }
 
   permission: CrudApiBase = new CrudApiBase(this.apiServer, 'permission');
+  votes: CrudApiBase = new CrudApiBase(this.apiServer, 'votes');
 
   getDiscordId(): string {
     return this.discordId;
@@ -39,6 +40,15 @@ export class FfkApiService {
           'Access-Control-Allow-Origin': '*'
         }
       )
+  }
+
+  getVotes(): Promise<Either<string, List<Vote>>> {
+    return this.votes
+      .sendReadRequestList(
+        VoteJsonSerializer.instance,
+        {},
+        {'Discord-Id': this.getDiscordId()}
+      );
   }
 
   group: (gid?: number) => CrudApiBase = (gid?: number) => new CrudApiBase(this.apiServer, gid ? `group?group_id=${gid}` : 'group');
