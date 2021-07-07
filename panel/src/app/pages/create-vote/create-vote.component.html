@@ -15,44 +15,43 @@
               <div class="d-flex container-fluid flex-column ffk-content-bg w-50 h-50 rounded shadow overflow-hidden">
                 <div class="row flex-grow-1">
                   <div class="d-flex col flex-column align-content-between">
-                    <div class="md-form my-auto">
-                      <mdb-select-2 [disabled]="getSelectableCandidateNames().isEmpty()" placeholder="Candidate">
-                        <mdb-select-option
-                          *ngFor="let candidate of getSelectableCandidateNames(); let idx = index"
-                          (selectionChange)="setSelectedCandidate(candidateService.getCandidate(idx))">
+                    <mat-form-field class="my-auto">
+                      <mat-label>Candidate</mat-label>
+                      <mat-select [disabled]="getSelectableCandidateNames().isEmpty()">
+                        <mat-option *ngFor="let candidate of getSelectableCandidateNames(); let idx = index"
+                                    [value]="candidate"
+                                    (onSelectionChange)="setSelectedCandidate(candidateService.getCandidate(idx))">
                           {{candidate}}
-                        </mdb-select-option>
-                      </mdb-select-2>
-                    </div>
-                    <div class="md-form my-auto">
-                      <mdb-select-2 [disabled]="getAvailableGroupLabels().isEmpty()" placeholder="Group">
-                        <mdb-select-option
-                          *ngFor="let group of getAvailableGroupLabels(); let idx = index"
-                          (selectionChange)="setSelectedGroup(getGroup(getAvailableGroupLabels().size - idx))">
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="my-auto">
+                      <mat-label>Group</mat-label>
+                      <mat-select [disabled]="getAvailableGroupLabels().isEmpty()">
+                        <mat-option *ngFor="let group of getAvailableGroupLabels(); let idx = index"
+                                    [value]="group"
+                                    (onSelectionChange)="setSelectedGroup(getGroup(getAvailableGroupLabels().size - idx))">
                           {{group}}
-                        </mdb-select-option>
-                      </mdb-select-2>
-                    </div>
-                    <div class="md-form my-auto">
-                      <input #starCitizenUrl mdbInput type="text" id="starcitizenurl" class="form-control">
-                      <label for="starcitizenurl" class="">Star Citizen Url</label>
-                    </div>
-                    <div class="md-form my-auto">
-                      <textarea #description type="text" id="description" class="md-textarea form-control" mdbInput></textarea>
-                      <label for="description">Description</label>
-                    </div>
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="my-auto">
+                      <mat-label>Star Citizen Url</mat-label>
+                      <input #starCitizenUrl matInput placeholder="Star Citizen Url">
+                    </mat-form-field>
+                    <mat-form-field class="my-auto">
+                      <mat-label>Description</mat-label>
+                      <textarea #description matInput placeholder="Description"></textarea>
+                    </mat-form-field>
                   </div>
                   <div class="d-flex col flex-column">
                     <img [src]="getCandidateProfileImage().getOrElse('./assets/images/discord.jpg')"
-                         class="align-self-center"
+                         class="align-self-center my-auto"
                          width="100%"
                          height="300px">
-                    <button mdbBtn
+                    <button mat-button
                             type="button"
-                            color="dark-green"
-                            size="sm"
-                            class="waves-light"
-                            mdbWavesEffect
+                            class="my-auto"
                             (click)="createVote(description.value, starCitizenUrl.value)">Create
                     </button>
                   </div>

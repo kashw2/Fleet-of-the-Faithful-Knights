@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {SidebarComponent} from "./sidebar/sidebar.component";
-import {TooltipModule} from "ng-uikit-pro-standard";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatIconModule} from "@angular/material/icon";
 
 
 
@@ -14,7 +15,8 @@ import {TooltipModule} from "ng-uikit-pro-standard";
   ],
   imports: [
     CommonModule,
-    TooltipModule
+    MatTooltipModule,
+    MatIconModule,
   ]
 })
 export class ComponentsModule { }

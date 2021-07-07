@@ -1,61 +1,57 @@
 <div class="d-flex container-fluid flex-column h-100">
   <div class="row flex-grow-1">
-    <app-sidebar id="sidebar" class="p-0 align-items-center">
-    </app-sidebar>
-    <div class="d-flex col flex-grow-1 flex-column">
+    <app-sidebar id="sidebar"></app-sidebar>
+    <div class="d-flex col flex-column">
+      <div class="row">
+        <div class="col-auto">
+          <h2>Votes</h2>
+        </div>
+      </div>
       <div class="row flex-grow-1">
-        <div class="d-flex container-fluid flex-column">
-          <div class="row">
-            <div class="col-3">
-              <h2 class="font-weight-bold mt-2">Votes</h2>
+        <div class="col-4">
+          <div class="d-flex container-fluid flex-column h-100">
+            <div class="row">
+              <div class="d-flex col justify-content-end">
+                <button mat-button (click)="navigationService.createVote()">Create</button>
+              </div>
+            </div>
+            <div class="row flex-grow-1 my-2">
+              <div class="col">
+                <div class="d-flex container-fluid flex-column h-100 ffk-content-bg">
+                  <div class="row flex-grow-1">
+                    <div class="d-flex col flex-column align-items-center justify-content-between">
+                      <ng-container *ngFor="let label of getHierarchicalGroupLabels(); let idx = index">
+                        <h2 *ngIf="label.nonEmpty()" class="ffk-text-fg my-auto c-pointer" (click)="setSelectedGroup(label)">{{label.get()}}</h2>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="row flex-grow-1">
-            <div class="d-flex col-4 flex-column ml-3">
-              <div class="row">
-                <div class="d-flex container-fluid justify-content-end px-0">
-                  <button mdbBtn
-                          type="button"
-                          color="dark-green"
-                          size="sm"
-                          class="mt-0 mr-0 waves-light"
-                          mdbWavesEffect
-                          (click)="navigationService.createVote()">Create
-                  </button>
-                </div>
-              </div>
-              <div class="row flex-grow-1">
-                <div class="d-flex flex-column container-fluid ffk-content-bg flex-grow-1 rounded shadow mb-2 px-0">
-                  <app-contained-textual-select *ngFor="let label of getHierarchicalGroupLabels()"
-                                                [label]="label"
-                                                class="flex-grow-1"
-                                                (click)="setSelectedGroup(label)">
-                  </app-contained-textual-select>
-                </div>
-              </div>
-            </div>
-            <div class="d-flex col">
-              <div class="d-flex flex-column container-fluid ffk-content-bg flex-grow-1 rounded shadow mb-2">
-                <table mdbTable small="true" hover="true">
-                  <thead>
-                  <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Candidate</th>
-                    <th scope="col">Sponsor</th>
-                    <th scope="col">Promotion</th>
-                  </tr>
-                  </thead>
-                  <tbody *ngIf="getSelectedGroup().nonEmpty()">
-                  <tr mdbTableCol *ngFor="let vote of getFilteredVotes()">
-                    <th scope="row">{{vote.getId().getOrElse('')}}</th>
-                    <td>{{vote.getCandidateUsername().getOrElse('')}}</td>
-                    <td>{{vote.getSponsorUsername().getOrElse('')}}</td>
-                    <td>{{vote.getPromotionGroupName().getOrElse('')}}</td>
-                  </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+        </div>
+        <div class="col">
+          <div class="d-flex container-fluid flex-column h-100 ffk-content-bg px-0">
+            <table mat-table [dataSource]="getVotesForTable()">
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>Id</th>
+                <td mat-cell *matCellDef="let vote">{{vote.id}}</td>
+              </ng-container>
+              <ng-container matColumnDef="candidate">
+                <th mat-header-cell *matHeaderCellDef>Candidate</th>
+                <td mat-cell *matCellDef="let vote">{{vote.candidate.discord_username}}</td>
+              </ng-container>
+              <ng-container matColumnDef="sponsor">
+                <th mat-header-cell *matHeaderCellDef>Sponsor</th>
+                <td mat-cell *matCellDef="let vote">{{vote.sponsor.username}}</td>
+              </ng-container>
+              <ng-container matColumnDef="group">
+                <th mat-header-cell *matHeaderCellDef>Group</th>
+                <td mat-cell *matCellDef="let vote">{{vote.group.label}}</td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
+              <tr mat-row *matRowDef="let row; columns: getDisplayedColumns();"></tr>
+            </table>
           </div>
         </div>
       </div>
