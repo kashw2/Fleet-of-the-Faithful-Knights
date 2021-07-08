@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {List} from "immutable";
 import {None, Option} from "funfix-core";
-import {VoteService} from "../../service/vote.service";
 import {BehaviorSubject} from "rxjs";
 import {Group, Vote, VoteJsonSerializer} from "@kashw2/lib-ts";
-import {UserService} from "../../service/user.service";
 import {NavigationService} from "../../service/navigation.service";
 import {GroupService} from "../../service/group.service";
 import {MatTableDataSource} from "@angular/material/table";
+import {UserService} from "../../service/user.service";
+import {VoteService} from "../../service/vote.service";
 
 @Component({
   selector: 'app-vote',
