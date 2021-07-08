@@ -1,5 +1,5 @@
 import {Cache} from "./cache";
-import {User, Vote} from "@kashw2/lib-ts";
+import {Vote} from "@kashw2/lib-ts";
 import {List, Map} from "immutable";
 import {CollectionUtils, EitherUtils} from "@kashw2/lib-util";
 import {Either, Option} from "funfix-core";

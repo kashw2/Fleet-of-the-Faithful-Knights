@@ -7,7 +7,7 @@ import {
     PermissionJsonSerializer,
     User,
     UserJsonSerializer,
-    UserPermissionMapping, UserPermissionMappingJsonSerializer
+    UserPermissionMapping, UserPermissionMappingJsonSerializer, Vote, VoteJsonSerializer
 } from "@kashw2/lib-ts";
 import {List} from "immutable";
 
@@ -30,6 +30,10 @@ export class DbDelete {
 
     deleteUserPermissionMapping(mappingId: string): Promise<Either<string, UserPermissionMapping>> {
         return this.requests.sendRequestSerialized('ssp_json_DeleteUserPermissionMapping', List.of(`@MappingId = ${mappingId}`), UserPermissionMappingJsonSerializer.instance);
+    }
+
+    deleteVote(voteId: string): Promise<Either<string, Vote>> {
+        return this.requests.sendRequestSerialized('ssp_json_DeleteVote', List.of(`@VoteId = ${voteId}`), VoteJsonSerializer.instance);
     }
 
 }

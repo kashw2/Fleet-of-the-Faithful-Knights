@@ -7,7 +7,10 @@ import {
     PermissionJsonSerializer,
     User,
     UserJsonSerializer,
-    UserPermissionMapping, UserPermissionMappingJsonSerializer, Vote, VoteJsonSerializer
+    UserPermissionMapping,
+    UserPermissionMappingJsonSerializer,
+    Vote,
+    VoteJsonSerializer
 } from "@kashw2/lib-ts";
 import {List} from "immutable";
 
