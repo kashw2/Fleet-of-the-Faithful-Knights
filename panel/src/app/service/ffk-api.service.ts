@@ -15,7 +15,7 @@ export class FfkApiService {
   }
 
   permission: CrudApiBase = new CrudApiBase(this.apiServer, 'permission');
-  votes: CrudApiBase = new CrudApiBase(this.apiServer, 'votes');
+  vote: CrudApiBase = new CrudApiBase(this.apiServer, 'vote');
 
   getDiscordId(): string {
     return this.discordId;
@@ -43,7 +43,7 @@ export class FfkApiService {
   }
 
   getVotes(): Promise<Either<string, List<Vote>>> {
-    return this.votes
+    return this.vote
       .sendReadRequestList(
         VoteJsonSerializer.instance,
         {},
