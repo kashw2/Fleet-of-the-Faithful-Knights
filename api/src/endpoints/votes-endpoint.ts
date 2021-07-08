@@ -24,6 +24,11 @@ export class VotesEndpoint extends CrudEndpoint {
     }
 
     read(req: Request): Promise<Either<string, any>> {
+        if (this.getVoteId(req).isRight()) {
+            return Promise.resolve(this.getVoteId(req)
+                .flatMap(vid => this.db.cache.votes.getByVoteId(vid)))
+                .then(v => v.map(x => VoteJsonSerializer.instance.toJsonImpl(x)));
+        }
         return Promise.resolve(EitherUtils.liftEither(VoteJsonSerializer.instance.toJsonArray(this.db.cache.votes.getVotes().toArray()), "Groups cache is empty"))
     }
 
