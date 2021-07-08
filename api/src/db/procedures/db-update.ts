@@ -7,7 +7,7 @@ import {
     User,
     UserJsonSerializer,
     UserPermissionMapping,
-    UserPermissionMappingJsonSerializer
+    UserPermissionMappingJsonSerializer, Vote, VoteJsonSerializer
 } from "@kashw2/lib-ts";
 import {Either} from "funfix-core";
 import {List} from "immutable";
@@ -37,7 +37,13 @@ export class DbUpdate {
 
     updateUserPermissionMapping(mapping: UserPermissionMapping): (modifiedBy: string) => Promise<Either<string, UserPermissionMapping>> {
         return (modifiedBy: string) => {
-            return this.request.sendRequestSerialized('ssp_json_UpdateUserPermissionMapping', List.of(`@Json = '${UserPermissionMappingJsonSerializer.instance.toJsonString(mapping)}'`, `@ModifiedBy = '${modifiedBy}'`), UserPermissionMappingJsonSerializer.instance)
+            return this.request.sendRequestSerialized('ssp_json_UpdateUserPermissionMapping', List.of(`@Json = '${UserPermissionMappingJsonSerializer.instance.toJsonString(mapping)}'`, `@ModifiedBy = '${modifiedBy}'`), UserPermissionMappingJsonSerializer.instance);
+        }
+    }
+
+    updateVote(vote: Vote): (modifiedBy: string) => Promise<Either<string, Vote>> {
+        return (modifiedBy: string) => {
+            return this.request.sendRequestSerialized('ssp_json_UpdateVote', List.of(`@Json = '${VoteJsonSerializer.instance.toJsonString(vote)}'`, `@ModifiedBy = '${modifiedBy}'`), VoteJsonSerializer.instance);
         }
     }
 
