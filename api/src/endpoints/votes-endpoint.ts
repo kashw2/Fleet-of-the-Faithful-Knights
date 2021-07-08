@@ -1,6 +1,6 @@
 import {CrudEndpoint} from "@kashw2/lib-server";
 import {Database} from "../db/database";
-import {User, Vote, VoteJsonSerializer} from "@kashw2/lib-ts";
+import {User, UserJsonSerializer, Vote, VoteJsonSerializer} from "@kashw2/lib-ts";
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {ApiUtils, EitherUtils} from "@kashw2/lib-util";
@@ -12,8 +12,9 @@ export class VotesEndpoint extends CrudEndpoint {
     }
 
     delete(req: Request): Promise<Either<string, any>> {
-        return Promise.resolve(this.getVoteId(req)
-            .map(vid => this.db.procedures.delete.deleteVote(vid)));
+        return EitherUtils.sequence(this.getVoteId(req)
+            .map(vid => this.db.procedures.delete.deleteVote(vid)))
+            .then(v => v.map(x => VoteJsonSerializer.instance.toJsonImpl(x)));
     }
 
     update(req: Request): Promise<Either<string, any>> {
@@ -40,7 +41,10 @@ export class VotesEndpoint extends CrudEndpoint {
     }
 
     create(req: Request): Promise<Either<string, any>> {
-        return super.create(req);
+        return EitherUtils.sequence(this.validate(req)
+            .flatMap(v => this.validate(req))
+            .map(v => this.db.procedures.insert.insertVote(v)(this.getModifiedBy(req))))
+            .then(v => v.map(u => VoteJsonSerializer.instance.toJsonImpl(u)));
     }
 
     private validate(req: Request): Either<string, Vote> {
@@ -50,6 +54,11 @@ export class VotesEndpoint extends CrudEndpoint {
                     .filterOrElse(v => v.getId().nonEmpty(), () => 'Vote must have an Id')
                     .filterOrElse(v => v.getCandidate().flatMap(c => c.getId()).nonEmpty(), () => 'Candidate must have an Id')
                     .filterOrElse(v => v.getSponsorId().nonEmpty(), () => 'Sponsor must have an Id')
+            case 'POST':
+                return this.getVote(req)
+                    .filterOrElse(v => v.getCandidate().flatMap(c => c.getId()).nonEmpty(), () => 'Candidate must have an Id')
+                    .filterOrElse(v => v.getSponsorId().nonEmpty(), () => 'Sponsor must have an Id')
+
             default:
                 return this.getVote(req);
         }
