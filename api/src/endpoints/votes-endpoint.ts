@@ -12,7 +12,8 @@ export class VotesEndpoint extends CrudEndpoint {
     }
 
     delete(req: Request): Promise<Either<string, any>> {
-        return super.delete(req);
+        return Promise.resolve(this.getVoteId(req)
+            .map(vid => this.db.procedures.delete.deleteVote(vid)));
     }
 
     update(req: Request): Promise<Either<string, any>> {
