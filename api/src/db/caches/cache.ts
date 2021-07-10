@@ -31,4 +31,15 @@ export class Cache<A> {
         return this.values;
     }
 
+    /**
+     * Allows for addition of a single element into the cache in O(n) + O(1) time.
+     *
+     * Inserts a value into the List by iterating over the values in the list until it gets to the last and makes the next value
+     * the input param to the method.
+     */
+    add(value: A): List<A> {
+        this.values = this.values.insert(this.size + 1, value);
+        return this.values;
+    }
+
 }
