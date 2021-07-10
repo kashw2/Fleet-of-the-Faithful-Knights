@@ -7,7 +7,9 @@ import {
     User,
     UserJsonSerializer,
     UserPermissionMapping,
-    UserPermissionMappingJsonSerializer, Vote, VoteJsonSerializer
+    UserPermissionMappingJsonSerializer,
+    Vote,
+    VoteJsonSerializer
 } from "@kashw2/lib-ts";
 import {Either} from "funfix-core";
 import {List} from "immutable";
@@ -41,8 +43,7 @@ export class DbInsert {
         }
     }
 
-    insertVote(vote: Vote): (modifiedBy:string) => Promise<Either<string, Vote>> {
-        console.log(VoteJsonSerializer.instance.toJsonString(vote))
+    insertVote(vote: Vote): (modifiedBy: string) => Promise<Either<string, Vote>> {
         return (modifiedBy: string): Promise<Either<string, Vote>> => {
             return this.requests.sendRequestSerialized('ssp_json_InsertVote', List.of(`@Json = '${VoteJsonSerializer.instance.toJsonString(vote)}'`, `@ModifiedBy = '${modifiedBy}'`), VoteJsonSerializer.instance);
         }

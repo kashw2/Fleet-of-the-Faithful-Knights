@@ -85,6 +85,24 @@ export class ToastService {
     });
   }
 
+  /**
+   * Allows error display based off of Left unit however is non pure and returns Promise<void>
+   */
+  showSequencePromise<A>(
+    input: Promise<Either<string, A>>,
+    success: string = '',
+    lType: 'Error' | 'Warning' = 'Error',
+    rType: 'Success' | 'Info' = 'Info',
+    title: Promise<string> = input.then(v => v.isRight() ? rType : lType),
+  ): Promise<void> {
+    return input.then(i => {
+      if (i.isRight()) {
+        this.show(success, rType);
+      }
+      EitherUtils.leftTap(i, v => this.show(v, lType))
+    })
+  }
+
   private showSuccess(message: string, title: string = 'Success!', timeout: number = 1750): void {
     this.toastrService.success(message, title, {
       timeOut: timeout,
