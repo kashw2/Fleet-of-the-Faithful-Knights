@@ -5,6 +5,12 @@ import {JsonSerializer} from "@kashw2/lib-util";
 
 export class CrudApiBase extends SerializedApiBase {
 
+    /**
+     * The way this class is constructed would mean that any endpoint with query params would lose functionality that those query params
+     * provide. This is of course unless there is some sort of Builder used to make the query param apart of the formed endpoint that is
+     * parse into the constructor as part of the uri. That'd be kinda nasty though.
+     */
+
     constructor(uri: string, private endpoint: string) {
         super(uri);
     }

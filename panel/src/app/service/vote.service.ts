@@ -24,6 +24,11 @@ export class VoteService {
 
   private votes: BehaviorSubject<List<Vote>> = new BehaviorSubject(List());
 
+  addVote(vote: Vote): List<Vote> {
+    this.votes.next(this.getVotes().insert(this.getVotes().size + 1, vote))
+    return this.getVotes();
+  }
+
   asObs(): Observable<List<Vote>> {
     return this.votes;
   }
@@ -42,6 +47,12 @@ export class VoteService {
     }
     this.votes.next(votes);
     return votes;
+  }
+
+  writeVote(vote: Vote): Vote {
+    this.ffkApiService.writeVote(vote);
+    this.addVote(vote);
+    return vote;
   }
 
 }
