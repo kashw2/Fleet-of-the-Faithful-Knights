@@ -13,7 +13,10 @@ export class PermissionsEndpoint extends CrudEndpoint {
 
     create(req: Request): Promise<Either<string, any>> {
         return EitherUtils.sequence(this.validate(req)
-            .map(p => this.db.procedures.insert.insertPermission(p)(this.getModifiedBy(req))))
+            .map(p => {
+                this.db.cache.permissions.add(p);
+                return this.db.procedures.insert.insertPermission(p)(this.getModifiedBy(req))
+            }))
             .then(v => v.map(u => PermissionJsonSerializer.instance.toJsonImpl(u)));
     }
 

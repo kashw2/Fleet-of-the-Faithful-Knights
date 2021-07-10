@@ -43,7 +43,10 @@ export class VotesEndpoint extends CrudEndpoint {
     create(req: Request): Promise<Either<string, any>> {
         return EitherUtils.sequence(this.validate(req)
             .flatMap(v => this.validate(req))
-            .map(v => this.db.procedures.insert.insertVote(v)(this.getModifiedBy(req))))
+            .map(v => {
+                this.db.cache.votes.add(v);
+                return this.db.procedures.insert.insertVote(v)(this.getModifiedBy(req))
+            }))
             .then(v => v.map(u => VoteJsonSerializer.instance.toJsonImpl(u)));
     }
 
