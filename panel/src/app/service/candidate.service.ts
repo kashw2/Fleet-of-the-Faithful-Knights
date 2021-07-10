@@ -37,7 +37,7 @@ export class CandidateService {
   getDefaultCandidates(): Either<string, List<Candidate>> {
     return Right(List.of(
       new Candidate(
-        Some('59722485-a88d-45be-b26c-89f5ce51675b'),
+        Some('1'),
         Some('Bship'),
         Some('280932387716726786'),
         Some('#5578'),
