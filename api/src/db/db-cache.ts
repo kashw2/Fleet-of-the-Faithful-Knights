@@ -36,14 +36,6 @@ export class DbCache {
         })
     }
 
-    async cacheVotes(): Promise<void> {
-        this.procedures.read.readVotes()
-            .then(v => {
-                this.votes = new VoteCache(v.getOrElse(List<Vote>()));
-                console.log(`Loaded ${this.votes.size} Votes`);
-            })
-    }
-
     async cacheGroups(): Promise<void> {
         this.procedures.read.readGroups()
             .then(g => {
@@ -66,6 +58,14 @@ export class DbCache {
                 this.users = new UserCache(u.getOrElse(List<User>()));
                 console.info(`Loaded ${this.users.size} Users`);
             });
+    }
+
+    async cacheVotes(): Promise<void> {
+        this.procedures.read.readVotes()
+            .then(v => {
+                this.votes = new VoteCache(v.getOrElse(List<Vote>()));
+                console.log(`Loaded ${this.votes.size} Votes`);
+            })
     }
 
     isReady(): boolean {

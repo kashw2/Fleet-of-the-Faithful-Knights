@@ -11,16 +11,20 @@ export class VotesEndpoint extends CrudEndpoint {
         super('/vote');
     }
 
+    create(req: Request): Promise<Either<string, any>> {
+        return EitherUtils.sequence(this.validate(req)
+            .flatMap(v => this.validate(req))
+            .map(v => {
+                this.db.cache.votes.add(v);
+                return this.db.procedures.insert.insertVote(v)(this.getModifiedBy(req))
+            }))
+            .then(v => v.map(u => VoteJsonSerializer.instance.toJsonImpl(u)));
+    }
+
     delete(req: Request): Promise<Either<string, any>> {
         return EitherUtils.sequence(this.getVoteId(req)
             .map(vid => this.db.procedures.delete.deleteVote(vid)))
             .then(v => v.map(x => VoteJsonSerializer.instance.toJsonImpl(x)));
-    }
-
-    update(req: Request): Promise<Either<string, any>> {
-        return Promise.resolve(this.getVote(req)
-            .flatMap(v => this.validate(req))
-            .map(v => this.db.procedures.update.updateVote(v)(this.getRequestUsername(req))))
     }
 
     private getVote(req: Request): Either<string, Vote> {
@@ -29,6 +33,21 @@ export class VotesEndpoint extends CrudEndpoint {
 
     private getVoteId(req: Request): Either<string, string> {
         return ApiUtils.parseStringQueryParam(req, 'vote_id');
+    }
+
+    hasPermission(req: Request, res: Response, user: User): boolean {
+        switch (this.getHTTPMethod(req)) {
+            case 'POST':
+                return true;
+            case 'GET':
+                return true;
+            case 'PUT':
+                return true;
+            case 'DELETE':
+                return true;
+            default:
+                return false;
+        }
     }
 
     read(req: Request): Promise<Either<string, any>> {
@@ -40,14 +59,10 @@ export class VotesEndpoint extends CrudEndpoint {
             .then(v => v.map(x => VoteJsonSerializer.instance.toJsonImpl(x)));
     }
 
-    create(req: Request): Promise<Either<string, any>> {
-        return EitherUtils.sequence(this.validate(req)
+    update(req: Request): Promise<Either<string, any>> {
+        return Promise.resolve(this.getVote(req)
             .flatMap(v => this.validate(req))
-            .map(v => {
-                this.db.cache.votes.add(v);
-                return this.db.procedures.insert.insertVote(v)(this.getModifiedBy(req))
-            }))
-            .then(v => v.map(u => VoteJsonSerializer.instance.toJsonImpl(u)));
+            .map(v => this.db.procedures.update.updateVote(v)(this.getRequestUsername(req))))
     }
 
     private validate(req: Request): Either<string, Vote> {
@@ -64,21 +79,6 @@ export class VotesEndpoint extends CrudEndpoint {
 
             default:
                 return this.getVote(req);
-        }
-    }
-
-    hasPermission(req: Request, res: Response, user: User): boolean {
-        switch (this.getHTTPMethod(req)) {
-            case 'POST':
-                return true;
-            case 'GET':
-                return true;
-            case 'PUT':
-                return true;
-            case 'DELETE':
-                return true;
-            default:
-                return false;
         }
     }
 

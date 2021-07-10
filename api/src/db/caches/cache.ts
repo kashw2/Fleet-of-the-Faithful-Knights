@@ -5,19 +5,17 @@ export class Cache<A> {
     constructor(private values: List<A> = List<A>()) {
     }
 
-    private getValues(): List<A> {
-        return this.values;
-    }
-
     size: number = this.getValues().size;
 
     /**
-     * Allows for updating the values inside of the Cache.
-     * This method does not perform a transformation internally, instead it is assumed that the input has already
-     * has a transformation applied to it, this is to keep this method as quick and unopinionated as possible
+     * Allows for addition of a single element into the cache in O(n) + O(1) time.
+     *
+     * Inserts a value into the List by iterating over the values in the list until it gets to the last and makes the next value
+     * the input param to the method.
      */
-    update(list: List<A>): List<A> {
-        return this.values = this.values.clear().concat(list);
+    add(value: A): List<A> {
+        this.values = this.values.insert(this.size + 1, value);
+        return this.values;
     }
 
     /**
@@ -33,15 +31,17 @@ export class Cache<A> {
         return this.values;
     }
 
-    /**
-     * Allows for addition of a single element into the cache in O(n) + O(1) time.
-     *
-     * Inserts a value into the List by iterating over the values in the list until it gets to the last and makes the next value
-     * the input param to the method.
-     */
-    add(value: A): List<A> {
-        this.values = this.values.insert(this.size + 1, value);
+    private getValues(): List<A> {
         return this.values;
+    }
+
+    /**
+     * Allows for updating the values inside of the Cache.
+     * This method does not perform a transformation internally, instead it is assumed that the input has already
+     * has a transformation applied to it, this is to keep this method as quick and unopinionated as possible
+     */
+    update(list: List<A>): List<A> {
+        return this.values = this.values.clear().concat(list);
     }
 
 }
