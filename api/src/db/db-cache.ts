@@ -40,7 +40,7 @@ export class DbCache {
         this.procedures.read.readVotes()
             .then(v => {
                 this.votes = new VoteCache(v.getOrElse(List<Vote>()));
-                console.log(`Loaded ${this.votes.size()} Votes`);
+                console.log(`Loaded ${this.votes.size} Votes`);
             })
     }
 
@@ -48,7 +48,7 @@ export class DbCache {
         this.procedures.read.readGroups()
             .then(g => {
                 this.groups = new GroupCache(g.getOrElse(List<Group>()));
-                console.info(`Loaded ${this.groups.size()} Groups`);
+                console.info(`Loaded ${this.groups.size} Groups`);
             })
     }
 
@@ -56,7 +56,7 @@ export class DbCache {
         this.procedures.read.readPermissions()
             .then(p => {
                 this.permissions = new PermissionCache(p.getOrElse(List<Permission>()));
-                console.log(`Loaded ${this.permissions.size()} Permissions`);
+                console.log(`Loaded ${this.permissions.size} Permissions`);
             })
     }
 
@@ -64,7 +64,7 @@ export class DbCache {
         this.procedures.read.readUsers()
             .then(u => {
                 this.users = new UserCache(u.getOrElse(List<User>()));
-                console.info(`Loaded ${this.users.size()} Users`);
+                console.info(`Loaded ${this.users.size} Users`);
             });
     }
 

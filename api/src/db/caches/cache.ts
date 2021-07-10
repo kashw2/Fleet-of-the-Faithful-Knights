@@ -9,11 +9,13 @@ export class Cache<A> {
         return this.values;
     }
 
-    size(): number {
-        return this.getValues()
-            .size;
-    }
+    size: number = this.getValues().size;
 
+    /**
+     * Allows for updating the values inside of the Cache.
+     * This method does not perform a transformation internally, instead it is assumed that the input has already
+     * has a transformation applied to it, this is to keep this method as quick and unopinionated as possible
+     */
     update(list: List<A>): List<A> {
         return this.values = this.values.clear().concat(list);
     }
