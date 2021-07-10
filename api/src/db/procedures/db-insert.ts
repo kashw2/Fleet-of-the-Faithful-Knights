@@ -42,7 +42,6 @@ export class DbInsert {
     }
 
     insertVote(vote: Vote): (modifiedBy:string) => Promise<Either<string, Vote>> {
-        console.log(VoteJsonSerializer.instance.toJsonString(vote))
         return (modifiedBy: string): Promise<Either<string, Vote>> => {
             return this.requests.sendRequestSerialized('ssp_json_InsertVote', List.of(`@Json = '${VoteJsonSerializer.instance.toJsonString(vote)}'`, `@ModifiedBy = '${modifiedBy}'`), VoteJsonSerializer.instance);
         }
