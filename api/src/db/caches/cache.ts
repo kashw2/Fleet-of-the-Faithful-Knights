@@ -18,7 +18,9 @@ export class Cache<A> {
      * the input param to the method.
      */
     add(value: A): List<A> {
+        console.time('Cache (Add)');
         this.values = this.values.insert(this.size + 1, value);
+        console.timeEnd('Cache (Add)');
         return this.values;
     }
 
@@ -31,7 +33,9 @@ export class Cache<A> {
      * O(n) + O(1) due to the fact that in a LinkedList you need to Access an element before you can insert
      */
     concat(values: List<A>): List<A> {
+        console.time('Cache (Concat)');
         this.values = this.values.concat(values);
+        console.timeEnd('Cache (Concat)');
         return this.values;
     }
 
@@ -45,7 +49,10 @@ export class Cache<A> {
      * has a transformation applied to it, this is to keep this method as quick and unopinionated as possible
      */
     update(list: List<A>): List<A> {
-        return this.values = this.values.clear().concat(list);
+        console.time('Cache (Update)');
+        this.values = this.values.clear().concat(list);
+        console.timeEnd('Cache (Update)');
+        return this.values;
     }
 
 }
