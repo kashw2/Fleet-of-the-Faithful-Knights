@@ -7,6 +7,10 @@ export class Cache<A> {
 
     size: number = this.getValues().size;
 
+    static apply<A>(values: List<A> = List<A>()): Cache<A> {
+        return new Cache<A>(values);
+    }
+
     /**
      * Allows for addition of a single element into the cache in O(n) + O(1) time.
      *
