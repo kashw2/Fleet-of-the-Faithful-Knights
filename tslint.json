@@ -29,6 +29,7 @@
     "no-for-in-array": false,
     "forin": false,
     "quotemark": false,
+    "semicolon": true,
     "object-literal-sort-keys": false
   },
   "rulesDirectory": []
