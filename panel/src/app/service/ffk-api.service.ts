@@ -37,7 +37,6 @@ export class FfkApiService {
         {},
         {
           'Discord-Id': this.getDiscordId(),
-          'Access-Control-Allow-Origin': '*'
         }
       )
   }
@@ -54,5 +53,18 @@ export class FfkApiService {
   group: (gid?: number) => CrudApiBase = (gid?: number) => new CrudApiBase(this.apiServer, gid ? `group?group_id=${gid}` : 'group');
   user: (uid: string) => CrudApiBase = (uid: string) => new CrudApiBase(this.apiServer, uid ? `user?user_id=${uid}` : 'user');
   userPermissionMapping: (uid: string) => CrudApiBase = (uid: string) => new CrudApiBase(this.apiServer, `user/${uid}/permission/mapping`);
+
+  writeVote(vote: Vote): Promise<Either<string, Vote>> {
+    return this.vote
+      .sendCreateRequest(
+        VoteJsonSerializer.instance,
+        {
+          vote: VoteJsonSerializer.instance.toJsonImpl(vote)
+        },
+        {
+          'Discord-Id': this.getDiscordId(),
+        }
+      )
+  }
 
 }

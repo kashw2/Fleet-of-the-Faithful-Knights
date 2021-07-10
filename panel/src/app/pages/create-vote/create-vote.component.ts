@@ -40,8 +40,7 @@ export class CreateVoteComponent implements OnInit {
       Some(moment()),
       Some(moment()),
     )
-    this.voteService.setVotes(this.voteService.getVotes().push(vote));
-    return Option.of(vote);
+    return Option.of(this.voteService.writeVote(vote));
   }
 
   getAvailableGroupLabels(): List<string> {
