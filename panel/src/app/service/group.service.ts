@@ -15,7 +15,7 @@ export class GroupService {
     private toastService: ToastService,
   ) {
     this.ffkApiService.getGroups()
-      .then(g => this.setGroups(this.toastService.showAndRecoverList(g, 'Loaded Groups')));
+      .then(g => this.setGroups(this.toastService.showAndRecoverList(g, `Loaded ${g.getOrElse(List()).size} Groups`)));
   }
 
   private groups: BehaviorSubject<List<Group>> = new BehaviorSubject<List<Group>>(List());

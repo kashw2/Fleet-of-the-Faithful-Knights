@@ -3,6 +3,7 @@ import {CrudApiBase, Group, GroupJsonSerializer, User, UserJsonSerializer, Vote,
 import {Either} from "funfix-core";
 import {List} from "immutable";
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -38,7 +39,7 @@ export class FfkApiService {
         {
           'Discord-Id': this.getDiscordId(),
         }
-      )
+      );
   }
 
   getVotes(): Promise<Either<string, List<Vote>>> {
@@ -64,7 +65,7 @@ export class FfkApiService {
         {
           'Discord-Id': this.getDiscordId(),
         }
-      )
+      );
   }
 
 }
