@@ -28,7 +28,7 @@ export class Cache<A> {
     /**
      * Allows for the concatination of values into the cache.
      *
-     * Time Complexity: O(1)
+     * Time Complexity: O(n)
      *
      * @alias append
      */
@@ -59,7 +59,7 @@ export class Cache<A> {
     /**
      * Sets the value in the List using a predicate match to determine index in List to set.
      *
-     * Time Complexity: O(n) + O(1)
+     * Time Complexity: O(log n)
      */
     setIn(value: A, matcher: (v: A) => boolean): List<A> {
         console.time('Cache (SetIn)');
@@ -73,7 +73,7 @@ export class Cache<A> {
      * This method does not perform a transformation internally, instead it is assumed that the input has already
      * has a transformation applied to it, this is to keep this method as quick and unopinionated as possible
      *
-     * Time Complexity: O(1) + O(1)
+     * Time Complexity: O(log n)
      */
     update(list: List<A>): List<A> {
         console.time('Cache (Update)');
