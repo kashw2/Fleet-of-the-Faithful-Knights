@@ -6,6 +6,7 @@ import {CandidateService} from "./candidate.service";
 import {UserService} from "./user.service";
 import {ToastService} from "./toast.service";
 import {FfkApiService} from "./ffk-api.service";
+import {None, Option} from "funfix-core";
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,7 @@ export class VoteService {
       .then(v => this.setVotes(this.toastService.showAndRecoverList(v, `Loaded ${v.getOrElse(List()).size} Votes`)));
   }
 
+  private selectedVote: BehaviorSubject<Option<Vote>> = new BehaviorSubject<Option<Vote>>(None);
   private votes: BehaviorSubject<List<Vote>> = new BehaviorSubject(List());
 
   addVote(vote: Vote): List<Vote> {
@@ -37,8 +39,28 @@ export class VoteService {
     return this.votes.next(List());
   }
 
+  clearSelectedVote(): void {
+    return this.selectedVote.next(None);
+  }
+
+  getSelectedVote(): Option<Vote> {
+    return this.selectedVote
+      .getValue();
+  }
+
   getVotes(): List<Vote> {
     return this.votes.getValue();
+  }
+
+  selectedVoteAsObs(): Observable<Option<Vote>> {
+    return this.selectedVote;
+  }
+
+  setSelectedVote(vote: Vote): Option<Vote> {
+    console.log('Setting Vote');
+    this.selectedVote.next(Option.of(vote));
+    console.log(vote);
+    return Option.of(vote);
   }
 
   setVotes(votes: List<Vote>): List<Vote> {
