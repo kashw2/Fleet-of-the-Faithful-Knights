@@ -10,11 +10,11 @@ import {UserService} from "../../service/user.service";
 import {VoteService} from "../../service/vote.service";
 
 @Component({
-  selector: 'app-vote',
-  templateUrl: './vote.component.html',
-  styleUrls: ['./vote.component.scss'],
+  selector: 'app-votes',
+  templateUrl: './votes.component.html',
+  styleUrls: ['./votes.component.scss'],
 })
-export class VoteComponent implements OnInit {
+export class VotesComponent implements OnInit {
 
   constructor(
     readonly voteService: VoteService,
@@ -55,7 +55,7 @@ export class VoteComponent implements OnInit {
   }
 
   getVotesForTable(): MatTableDataSource<object> {
-    return new MatTableDataSource<object>(this.getFilteredVotes().map(v => VoteJsonSerializer.instance.toJsonImpl(v)).toArray())
+    return new MatTableDataSource<object>(this.getFilteredVotes().map(v => VoteJsonSerializer.instance.toJsonImpl(v)).toArray());
   }
 
   ngOnInit(): void {

@@ -9,7 +9,7 @@ export class NavigationService {
   constructor(private router: Router) { }
 
   createVote(): void {
-    return this.navigate('vote/create');
+    return this.navigate('votes/create');
   }
 
   home(): void {

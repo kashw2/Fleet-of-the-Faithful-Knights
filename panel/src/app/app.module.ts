@@ -6,7 +6,7 @@ import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ComponentsModule} from "./components/components.module";
 import {HomeComponent} from './pages/home/home.component';
-import {VoteComponent} from './pages/vote/vote.component';
+import {VotesComponent} from './pages/votes/votes.component';
 import {CreateVoteComponent} from './pages/create-vote/create-vote.component';
 import {environment} from "../environments/environment";
 import {MatSelectModule} from "@angular/material/select";
@@ -18,7 +18,7 @@ import {MatInputModule} from "@angular/material/input";
   declarations: [
     AppComponent,
     HomeComponent,
-    VoteComponent,
+    VotesComponent,
     CreateVoteComponent,
   ],
     imports: [

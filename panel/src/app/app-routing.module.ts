@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {HomeComponent} from "./pages/home/home.component";
-import {VoteComponent} from "./pages/vote/vote.component";
+import {VotesComponent} from "./pages/votes/votes.component";
 import {CreateVoteComponent} from "./pages/create-vote/create-vote.component";
 
 @NgModule({
@@ -17,10 +17,10 @@ import {CreateVoteComponent} from "./pages/create-vote/create-vote.component";
     },
     {
       path: 'votes',
-      component: VoteComponent,
+      component: VotesComponent,
     },
     {
-      path: 'vote/create',
+      path: 'votes/create',
       component: CreateVoteComponent,
     },
     {
