@@ -59,7 +59,6 @@ export class VoteService {
   setSelectedVote(vote: Vote): Option<Vote> {
     console.log('Setting Vote');
     this.selectedVote.next(Option.of(vote));
-    console.log(vote);
     return Option.of(vote);
   }
 
