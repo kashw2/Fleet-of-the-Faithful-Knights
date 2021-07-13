@@ -99,8 +99,8 @@ export class ToastService {
       if (i.isRight()) {
         this.show(success, rType);
       }
-      EitherUtils.leftTap(i, v => this.show(v, lType))
-    })
+      EitherUtils.leftTap(i, v => this.show(v, lType));
+    });
   }
 
   private showSuccess(message: string, title: string = 'Success!', timeout: number = 1750): void {

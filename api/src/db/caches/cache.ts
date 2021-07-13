@@ -1,4 +1,6 @@
 import {List} from "immutable";
+import {match} from "assert";
+import {VoteJsonSerializer} from "@kashw2/lib-ts";
 
 export class Cache<A> {
 
@@ -12,10 +14,9 @@ export class Cache<A> {
     }
 
     /**
-     * Allows for addition of a single element into the cache in O(n) + O(1) time.
+     * Allows addition of an element to the Cache.
      *
-     * Inserts a value into the List by iterating over the values in the list until it gets to the last and makes the next value
-     * the input param to the method.
+     * Time Complexity: O(n)
      */
     add(value: A): List<A> {
         console.time('Cache (Add)');
@@ -25,12 +26,11 @@ export class Cache<A> {
     }
 
     /**
-     * Allows concatenation into the cache in O(n) + O(1) time.
+     * Allows for the concatination of values into the cache.
      *
-     * O(n) for iteration through list
-     * O(1) for insert
+     * Time Complexity: O(n)
      *
-     * O(n) + O(1) due to the fact that in a LinkedList you need to Access an element before you can insert
+     * @alias append
      */
     concat(values: List<A>): List<A> {
         console.time('Cache (Concat)');
@@ -43,10 +43,37 @@ export class Cache<A> {
         return this.values;
     }
 
+
+    /**
+     * Sets the value at a given index in the List
+     *
+     * Time Complexity: O(n) + O(1)
+     */
+    set(index: number, value: A): List<A> {
+        console.time('Cache (Set)');
+        this.values = this.values.set(index, value);
+        console.timeEnd('Cache (Set)');
+        return this.values;
+    }
+
+    /**
+     * Sets the value in the List using a predicate match to determine index in List to set.
+     *
+     * Time Complexity: O(log n)
+     */
+    setIn(value: A, matcher: (v: A) => boolean): List<A> {
+        console.time('Cache (SetIn)');
+        this.values = this.values.set(this.values.findIndex(v => matcher(v)), value);
+        console.timeEnd('Cache (SetIn)');
+        return this.values;
+    }
+
     /**
      * Allows for updating the values inside of the Cache.
      * This method does not perform a transformation internally, instead it is assumed that the input has already
      * has a transformation applied to it, this is to keep this method as quick and unopinionated as possible
+     *
+     * Time Complexity: O(log n)
      */
     update(list: List<A>): List<A> {
         console.time('Cache (Update)');

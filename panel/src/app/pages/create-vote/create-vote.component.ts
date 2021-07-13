@@ -39,7 +39,7 @@ export class CreateVoteComponent implements OnInit {
       Option.of(startcitizenUrl),
       Some(moment()),
       Some(moment()),
-    )
+    );
     return Option.of(this.voteService.writeVote(vote));
   }
 
@@ -54,12 +54,12 @@ export class CreateVoteComponent implements OnInit {
   getCandidateNames(): List<string> {
     return OptionUtils.flattenList(this.candidateService
       .getCandidates()
-      .map(c => c.getDiscordUsername()))
+      .map(c => c.getDiscordUsername()));
   }
 
   getCandidateProfileImage(): Option<string> {
     return this.getSelectedCandidate()
-      .flatMap(c => c.getAvatar())
+      .flatMap(c => c.getAvatar());
   }
 
   getGroup(index: number): Option<Group> {

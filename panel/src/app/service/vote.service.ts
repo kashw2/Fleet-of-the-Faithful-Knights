@@ -19,13 +19,13 @@ export class VoteService {
     private toastService: ToastService,
   ) {
     this.ffkApiService.getVotes()
-      .then(v => this.setVotes(this.toastService.showAndRecoverList(v, 'Loaded Votes')))
+      .then(v => this.setVotes(this.toastService.showAndRecoverList(v, `Loaded ${v.getOrElse(List()).size} Votes`)));
   }
 
   private votes: BehaviorSubject<List<Vote>> = new BehaviorSubject(List());
 
   addVote(vote: Vote): List<Vote> {
-    this.votes.next(this.getVotes().insert(this.getVotes().size + 1, vote))
+    this.votes.next(this.getVotes().insert(this.getVotes().size + 1, vote));
     return this.getVotes();
   }
 
@@ -51,7 +51,7 @@ export class VoteService {
 
   writeVote(vote: Vote): Vote {
     this.toastService.showSequencePromise(this.ffkApiService.writeVote(vote), 'Created Vote', 'Error', 'Success')
-      .then(v => this.addVote(vote))
+      .then(v => this.addVote(vote));
     return vote;
   }
 
