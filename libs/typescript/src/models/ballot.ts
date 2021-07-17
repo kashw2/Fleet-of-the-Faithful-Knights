@@ -28,6 +28,14 @@ export class Ballot {
 		return this.description;
 	}
 
+	public getFormattedVoterDiscordAvatar(): Option<string> {
+		return Option.map2(
+			this.getVoterDiscordId(),
+			this.getVoterDiscordAvatar(),
+			(did, avatar) => `https://cdn.discordapp.com/avatars/${did}/${avatar}.png`,
+		);
+	}
+
 	public getId(): Option<string> {
 		return this.id;
 	}
@@ -55,6 +63,16 @@ export class Ballot {
 
 	public getVoter(): Option<User> {
 		return this.voter;
+	}
+
+	public getVoterDiscordAvatar(): Option<string> {
+		return this.getVoter()
+			.flatMap(v => v.getAvatar());
+	}
+
+	public getVoterDiscordId(): Option<string> {
+		return this.getVoter()
+			.flatMap(v => v.getDiscordId());
 	}
 
 	public getVoterId(): Option<string> {
