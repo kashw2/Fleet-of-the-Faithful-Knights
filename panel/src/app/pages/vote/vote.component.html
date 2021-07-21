@@ -1,57 +1,75 @@
 <div class="d-flex container-fluid flex-column h-100">
   <div class="row flex-grow-1">
-    <app-sidebar id="sidebar"></app-sidebar>
-    <div class="d-flex col flex-column">
-      <div class="row">
-        <div class="col-auto">
-          <h2>Votes</h2>
-        </div>
-      </div>
+    <app-sidebar id="sidebar" class="p-0 ffk-white-bg align-items-center">
+    </app-sidebar>
+    <div class="d-flex col flex-grow-1 flex-column mb-2">
       <div class="row flex-grow-1">
-        <div class="col-4">
-          <div class="d-flex container-fluid flex-column h-100">
-            <div class="row">
-              <div class="d-flex col justify-content-end">
-                <button mat-button (click)="navigationService.createVote()">Create</button>
-              </div>
+        <div class="d-flex container-fluid flex-column">
+          <div class="row">
+            <div class="col-3">
+              <h2 *ngIf="getCandidateUsername().nonEmpty()" class="font-weight-bold mt-2">{{getCandidateUsername().get()}}'s Vote</h2>
             </div>
-            <div class="row flex-grow-1 my-2">
-              <div class="col">
-                <div class="d-flex container-fluid flex-column h-100 ffk-content-bg">
-                  <div class="row flex-grow-1">
-                    <div class="d-flex col flex-column align-items-center justify-content-between">
-                      <ng-container *ngFor="let label of getHierarchicalGroupLabels(); let idx = index">
-                        <h2 *ngIf="label.nonEmpty()" class="ffk-text-fg my-auto c-pointer" (click)="setSelectedGroup(label)">{{label.get()}}</h2>
-                      </ng-container>
+          </div>
+          <div class="row flex-grow-1">
+            <div class="d-flex col">
+              <div class="d-flex container-fluid flex-column ffk-content-bg flex-grow-1 rounded shadow px-0">
+                <div class="row">
+                  <div class="col-auto">
+                    <img *ngIf="getFormattedCandidateAvatar().nonEmpty()"
+                         [src]="getFormattedCandidateAvatar().get()"
+                         width="300"
+                         height="300"
+                         class="ms-3 my-1">
+                  </div>
+                  <div class="d-flex col flex-column">
+                    <h1 *ngIf="getCandidateUsername().nonEmpty()">{{getCandidateUsername().get()}}</h1>
+                    <h2 *ngIf="getCandidateGroup().nonEmpty() && getCandidatePromotionGroup().nonEmpty()">{{getCandidateGroup().get()}} - {{getCandidatePromotionGroup().get()}}</h2>
+                    <p *ngIf="getVoteDescription().nonEmpty()">{{getVoteDescription().get()}}</p>
+                  </div>
+                  <div class="col-auto">
+                    <div class="d-flex container-fluid flex-column h-100">
+                      <div class="row flex-grow-1">
+                        <div class="col">
+                          <mat-form-field>
+                            <mat-label>Response</mat-label>
+                            <textarea matInput type="text" class="h-100"></textarea>
+                          </mat-form-field>
+                        </div>
+                        <div class="d-flex col-auto flex-column">
+                          <button *ngIf="canAffirm()" mat-button class="mx-2 my-1 br-none text-success">Affirm</button>
+                          <button *ngIf="canDeny()" mat-button class="mx-2 my-1 br-none text-danger">Deny</button>
+                          <button *ngIf="canVeto()" mat-button class="mx-2 my-1 br-none text-danger">Veto</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row flex-grow-1">
+                  <div *ngFor="let ballot of getBallots()" class="d-flex col m-3">
+                    <div
+                      [class.border-success]="ballot.getPreparedResponse().contains('Affirm')"
+                      [class.border-danger]="ballot.getPreparedResponse().contains('Deny')"
+                      class="d-flex container-fluid flex-column h-100 align-self-center ffk-content-bg shadow px-0 border">
+                      <div class="row">
+                        <div class="col">
+                          <img *ngIf="ballot.getFormattedVoterDiscordAvatar().nonEmpty()"
+                               [src]="ballot.getFormattedVoterDiscordAvatar().get()"
+                               height="50"
+                               width="50"
+                               class="my-4 mx-2">
+                          <h1 *ngIf="ballot.getVoterUsername().nonEmpty()" class="d-inline my-4">{{ballot.getVoterUsername().get()}}</h1>
+                        </div>
+                        <div class="row flex-grow-1">
+                          <div class="col">
+                            <p *ngIf="ballot.getDescription().nonEmpty()" class="mx-2">{{ballot.getDescription().get()}}</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="d-flex container-fluid flex-column h-100 ffk-content-bg px-0">
-            <table mat-table [dataSource]="getVotesForTable()">
-              <ng-container matColumnDef="id">
-                <th mat-header-cell *matHeaderCellDef>Id</th>
-                <td mat-cell *matCellDef="let vote">{{vote.id}}</td>
-              </ng-container>
-              <ng-container matColumnDef="candidate">
-                <th mat-header-cell *matHeaderCellDef>Candidate</th>
-                <td mat-cell *matCellDef="let vote">{{vote.candidate.discord_username}}</td>
-              </ng-container>
-              <ng-container matColumnDef="sponsor">
-                <th mat-header-cell *matHeaderCellDef>Sponsor</th>
-                <td mat-cell *matCellDef="let vote">{{vote.sponsor.username}}</td>
-              </ng-container>
-              <ng-container matColumnDef="group">
-                <th mat-header-cell *matHeaderCellDef>Group</th>
-                <td mat-cell *matCellDef="let vote">{{vote.group.label}}</td>
-              </ng-container>
-              <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
-              <tr mat-row *matRowDef="let row; columns: getDisplayedColumns();"></tr>
-            </table>
           </div>
         </div>
       </div>

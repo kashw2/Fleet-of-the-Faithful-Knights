@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Router} from "@angular/router";
 
 @Injectable({
@@ -6,10 +6,11 @@ import {Router} from "@angular/router";
 })
 export class NavigationService {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+  }
 
   createVote(): void {
-    return this.navigate('vote/create');
+    return this.navigate('votes/create');
   }
 
   home(): void {
@@ -17,7 +18,7 @@ export class NavigationService {
   }
 
   navigate(route: string): void {
-    if (!this.router.url.includes(route)) {
+    if (this.router.url !== `/${route}`) {
       console.log('Navigating to', route);
       this.router.navigate([route])
         .then(v => console.log('Navigated to', route))
@@ -26,6 +27,11 @@ export class NavigationService {
     }
     console.info(`Navigation request rejected ${this.router.url} = /${route}`);
     return;
+  }
+
+
+  vote(id: number): void {
+    return this.navigate(`vote/${id}`);
   }
 
   votes(): void {

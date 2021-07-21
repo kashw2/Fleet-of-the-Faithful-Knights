@@ -1,77 +1,99 @@
 import {Component, OnInit} from '@angular/core';
-import {List} from "immutable";
-import {None, Option} from "funfix-core";
-import {BehaviorSubject} from "rxjs";
-import {Group, Vote, VoteJsonSerializer} from "@kashw2/lib-ts";
-import {NavigationService} from "../../service/navigation.service";
-import {GroupService} from "../../service/group.service";
-import {MatTableDataSource} from "@angular/material/table";
-import {UserService} from "../../service/user.service";
 import {VoteService} from "../../service/vote.service";
+import {Option} from "funfix-core";
+import {Ballot} from "@kashw2/lib-ts";
+import {Set} from 'immutable';
+import {UserService} from "../../service/user.service";
+import {OptionUtils} from "@kashw2/lib-util";
 
 @Component({
   selector: 'app-vote',
   templateUrl: './vote.component.html',
-  styleUrls: ['./vote.component.scss'],
+  styleUrls: ['./vote.component.scss']
 })
 export class VoteComponent implements OnInit {
 
   constructor(
     readonly voteService: VoteService,
     private userService: UserService,
-    readonly navigationService: NavigationService,
-    private groupService: GroupService,
   ) {
   }
 
-  selectedGroup: BehaviorSubject<Option<string>> = new BehaviorSubject<Option<string>>(None);
-
-  getDisplayedColumns(): string[] {
-    return ['id', 'candidate', 'sponsor', 'group'];
+  canAffirm(): boolean {
+    return this.isVotableByUserGroup()
+      && this.voteService.getSelectedVote()
+        .exists(v => v.getBallots().size < 4);
   }
 
-  getFilteredVotes(): List<Vote> {
-    return this.voteService.getVotes()
-      .filter(v => v.getPromotionGroupName().equals(this.getSelectedGroup()));
+  canDeny(): boolean {
+    return this.isVotableByUserGroup()
+      && this.voteService.getSelectedVote()
+        .exists(v => v.getBallots().size < 4);
   }
 
-  getHierarchicalGroupLabels(): List<Option<string>> {
-    return this.groupService.getGroups()
-      .filterNot(g => g.getLabel().contains('Default'))
-      .filter(g => this.getUserGroup().exists(uG => uG.isHigherOrEqual(g)))
-      .map(g => g.getLabel())
-      .reverse();
+  canVeto(): boolean {
+    return this.isVotableByUserGroup()
+      && this.voteService.getSelectedVote()
+        .exists(v => v.getBallots().size < 4);
   }
 
-  getSelectedGroup(): Option<string> {
-    return this.selectedGroup
-      .getValue();
+  getBallots(): Set<Ballot> {
+    return this.voteService
+      .getSelectedVote()
+      .map(v => v.getBallots())
+      .getOrElse(Set());
   }
 
-  private getUserGroup(): Option<Group> {
-    return this.userService
-      .getUser()
-      .flatMap(u => u.getGroup());
+  getCandidateAvatar(): Option<string> {
+    return this.voteService.getSelectedVote()
+      .flatMap(v => v.getCandidate())
+      .flatMap(v => v.getAvatar());
   }
 
-  getVotesForTable(): MatTableDataSource<object> {
-    return new MatTableDataSource<object>(this.getFilteredVotes().map(v => VoteJsonSerializer.instance.toJsonImpl(v)).toArray())
+  getCandidateDiscordId(): Option<string> {
+    return this.voteService
+      .getSelectedVote()
+      .flatMap(v => v.getCandidate())
+      .flatMap(c => c.getDiscordId());
+  }
+
+  getCandidateGroup(): Option<string> {
+    return this.voteService.getSelectedVote()
+      .flatMap(v => v.getCandidateGroupName());
+  }
+
+  getCandidatePromotionGroup(): Option<string> {
+    return this.voteService.getSelectedVote()
+      .flatMap(v => v.getPromotionGroupName());
+  }
+
+  getCandidateUsername(): Option<string> {
+    return this.voteService.getSelectedVote()
+      .flatMap(v => v.getCandidateUsername());
+  }
+
+  getFormattedCandidateAvatar(): Option<string> {
+    return Option.map2(
+      this.getCandidateDiscordId(),
+      this.getCandidateAvatar(),
+      (did, avatar) => `https://cdn.discordapp.com/avatars/${did}/${avatar}.png`,
+    );
+  }
+
+  getVoteDescription(): Option<string> {
+    return this.voteService.getSelectedVote()
+      .flatMap(v => v.getDescription());
+  }
+
+  isVotableByUserGroup(): boolean {
+    return OptionUtils.exists2(
+      this.userService.getUser(),
+      this.voteService.getSelectedVote().flatMap(v => v.getPromotionGroup()),
+      (u, vG) => u.getGroup().exists(uG => uG.isHigher(vG))
+    );
   }
 
   ngOnInit(): void {
-  }
-
-  setSelectedGroup(group: Option<string>): Option<string> {
-    if (group.isEmpty()) {
-      return this.getSelectedGroup();
-    }
-    if (this.getSelectedGroup().equals(group)) {
-      this.selectedGroup.next(None);
-      return this.getSelectedGroup();
-    }
-    console.info(`Setting Group to ${group.get()}`);
-    this.selectedGroup.next(group);
-    return group;
   }
 
 }

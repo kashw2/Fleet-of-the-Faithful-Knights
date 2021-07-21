@@ -37,20 +37,22 @@ router.use((req: Request, res: Response, next: NextFunction) => {
     discordId.map(id => {
         db.procedures.read.readUserByDiscordId(id)
             .then(u => {
-                u.isLeft() ? req.user = undefined : req.user = UserJsonSerializer.instance.toJsonImpl(u.get())
+                u.isLeft() ? req.user = undefined : req.user = UserJsonSerializer.instance.toJsonImpl(u.get());
                 next();
             })
             .catch(e => {
-                req.user = undefined
+                req.user = undefined;
                 next();
             });
     });
     if (discordId.isEmpty()) {
         next();
     }
-})
+});
 
 app.use((req: Request, res: Response, next: NextFunction) => {
+    if (!req.route)
+        res.status(404);
     if (!db.cache?.isReady()) {
         res.json({error: 'API Server Starting'});
     } else {
