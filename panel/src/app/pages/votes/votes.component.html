@@ -50,7 +50,7 @@
                 <td mat-cell *matCellDef="let vote">{{vote.group.label}}</td>
               </ng-container>
               <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
-              <tr mat-row *matRowDef="let row; columns: getDisplayedColumns();" (click)="voteService.setSelectedVote(voteService.getVotes().get(row.id - 1))"></tr>
+              <tr mat-row class="c-pointer" *matRowDef="let row; columns: getDisplayedColumns();" (click)="setAndNavigateToVote(row.id - 1)"></tr>
             </table>
           </div>
         </div>

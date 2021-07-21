@@ -56,10 +56,10 @@ export class VoteService {
     return this.selectedVote;
   }
 
-  setSelectedVote(vote: Vote): Option<Vote> {
+  setSelectedVote(vote: Option<Vote>): Option<Vote> {
     console.log('Setting Vote');
-    this.selectedVote.next(Option.of(vote));
-    return Option.of(vote);
+    this.selectedVote.next(vote);
+    return vote;
   }
 
   setVotes(votes: List<Vote>): List<Vote> {

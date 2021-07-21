@@ -61,6 +61,11 @@ export class VotesComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  setAndNavigateToVote(voteId: number): void {
+    this.voteService.setSelectedVote(Option.of(this.voteService.getVotes().get(voteId)));
+    this.navigationService.vote(voteId);
+  }
+
   setSelectedGroup(group: Option<string>): Option<string> {
     if (group.isEmpty()) {
       return this.getSelectedGroup();

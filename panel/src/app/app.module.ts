@@ -13,6 +13,8 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatButtonModule} from "@angular/material/button";
 import {MatTableModule} from "@angular/material/table";
 import {MatInputModule} from "@angular/material/input";
+import { VoteComponent } from './pages/vote/vote.component';
+import {MatDividerModule} from "@angular/material/divider";
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import {MatInputModule} from "@angular/material/input";
     HomeComponent,
     VotesComponent,
     CreateVoteComponent,
+    VoteComponent,
   ],
     imports: [
         BrowserModule,
@@ -31,6 +34,7 @@ import {MatInputModule} from "@angular/material/input";
         MatButtonModule,
         MatTableModule,
         MatInputModule,
+        MatDividerModule,
     ],
   providers: [
     {provide: 'ffkApiServer', useValue: environment.FFK_API_SERVER},

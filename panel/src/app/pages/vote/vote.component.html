@@ -1,0 +1,78 @@
+<div class="d-flex container-fluid flex-column h-100">
+  <div class="row flex-grow-1">
+    <app-sidebar id="sidebar" class="p-0 ffk-white-bg align-items-center">
+    </app-sidebar>
+    <div class="d-flex col flex-grow-1 flex-column mb-2">
+      <div class="row flex-grow-1">
+        <div class="d-flex container-fluid flex-column">
+          <div class="row">
+            <div class="col-3">
+              <h2 *ngIf="getCandidateUsername().nonEmpty()" class="font-weight-bold mt-2">{{getCandidateUsername().get()}}'s Vote</h2>
+            </div>
+          </div>
+          <div class="row flex-grow-1">
+            <div class="d-flex col">
+              <div class="d-flex container-fluid flex-column ffk-content-bg flex-grow-1 rounded shadow px-0">
+                <div class="row">
+                  <div class="col-auto">
+                    <img *ngIf="getFormattedCandidateAvatar().nonEmpty()"
+                         [src]="getFormattedCandidateAvatar().get()"
+                         width="300"
+                         height="300"
+                         class="ms-3 my-1">
+                  </div>
+                  <div class="d-flex col flex-column">
+                    <h1 *ngIf="getCandidateUsername().nonEmpty()">{{getCandidateUsername().get()}}</h1>
+                    <h2 *ngIf="getCandidateGroup().nonEmpty() && getCandidatePromotionGroup().nonEmpty()">{{getCandidateGroup().get()}} - {{getCandidatePromotionGroup().get()}}</h2>
+                    <p *ngIf="getVoteDescription().nonEmpty()">{{getVoteDescription().get()}}</p>
+                  </div>
+                  <div class="col-auto">
+                    <div class="d-flex container-fluid flex-column h-100">
+                      <div class="row flex-grow-1">
+                        <div class="col">
+                          <mat-form-field>
+                            <mat-label>Response</mat-label>
+                            <textarea matInput type="text" class="h-100"></textarea>
+                          </mat-form-field>
+                        </div>
+                        <div class="d-flex col-auto flex-column">
+                          <button *ngIf="canAffirm()" mat-button class="mx-2 my-1 br-none text-success">Affirm</button>
+                          <button *ngIf="canDeny()" mat-button class="mx-2 my-1 br-none text-danger">Deny</button>
+                          <button *ngIf="canVeto()" mat-button class="mx-2 my-1 br-none text-danger">Veto</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row flex-grow-1">
+                  <div *ngFor="let ballot of getBallots()" class="d-flex col m-3">
+                    <div
+                      [class.border-success]="ballot.getPreparedResponse().contains('Affirm')"
+                      [class.border-danger]="ballot.getPreparedResponse().contains('Deny')"
+                      class="d-flex container-fluid flex-column h-100 align-self-center ffk-content-bg shadow px-0 border">
+                      <div class="row">
+                        <div class="col">
+                          <img *ngIf="ballot.getFormattedVoterDiscordAvatar().nonEmpty()"
+                               [src]="ballot.getFormattedVoterDiscordAvatar().get()"
+                               height="50"
+                               width="50"
+                               class="my-4 mx-2">
+                          <h1 *ngIf="ballot.getVoterUsername().nonEmpty()" class="d-inline my-4">{{ballot.getVoterUsername().get()}}</h1>
+                        </div>
+                        <div class="row flex-grow-1">
+                          <div class="col">
+                            <p *ngIf="ballot.getDescription().nonEmpty()" class="mx-2">{{ballot.getDescription().get()}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
