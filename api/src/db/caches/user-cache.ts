@@ -23,7 +23,7 @@ export class UserCache extends Cache<User> {
     }
 
     getUsers(): List<User> {
-        return this.users;
+        return super.getValues();
     }
 
 }

@@ -7,7 +7,7 @@ import {Either, Option} from "funfix-core";
 export class PermissionCache extends Cache<Permission> {
 
     constructor(private permissions: List<Permission> = List()) {
-        super();
+        super(permissions);
     }
 
     private byId: Map<string, Permission> = CollectionUtils.buildKeyedMap(this.getPermissions(), (p) => p.getId());
@@ -17,7 +17,7 @@ export class PermissionCache extends Cache<Permission> {
     }
 
     getPermissions(): List<Permission> {
-        return this.permissions;
+        return super.getValues();
     }
 
 }

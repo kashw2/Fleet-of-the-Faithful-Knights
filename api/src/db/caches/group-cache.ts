@@ -13,7 +13,7 @@ export class GroupCache extends Cache<Group> {
     byId: Map<string, Group> = CollectionUtils.buildKeyedMap(this.getGroups(), (g) => g.getId());
 
     getGroups(): List<Group> {
-        return this.groups;
+        return super.getValues();
     }
 
     getGroupsById(groupId: string): Either<string, Group> {
