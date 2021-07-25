@@ -76,7 +76,15 @@ export class UserEndpoint extends CrudEndpoint {
             case 'PUT':
                 return this.getUser(req)
                     .filterOrElse(u => u.getId().nonEmpty(), () => 'User must have an Id');
-            default:
+            case 'POST':
+                return this.getUser(req)
+                    .filterOrElse(u => u.getUsername().nonEmpty(), () => 'User must have a name')
+                    .filterOrElse(u => u.getLocale().nonEmpty(), () => 'User must have a locale')
+                    .filterOrElse(u => u.getAvatar().nonEmpty(), () => 'User must have a avatar')
+                    .filterOrElse(u => u.getDiscordId().nonEmpty(), () => 'User must have a discord id')
+                    .filterOrElse(u => u.getDiscordDiscriminator().nonEmpty(), () => 'User must have a discord discriminator')
+                    .filterOrElse(u => u.getGroup().nonEmpty(), () => 'User must have a group')
+                default:
                 return this.getUser(req);
         }
     }
