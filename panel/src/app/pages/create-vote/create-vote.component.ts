@@ -44,11 +44,14 @@ export class CreateVoteComponent implements OnInit {
   }
 
   getAvailableGroupLabels(): List<string> {
-    return OptionUtils.flattenList(this.groupService.getGroups()
+    return OptionUtils.flattenList(this.getAvailableGroups()
+      .map(g => g.getLabel()));
+  }
+
+  getAvailableGroups(): List<Group> {
+    return this.groupService.getGroups()
       .filterNot(g => g.getLabel().contains('Default'))
-      .filter(g => this.getUserGroup().exists(uG => g.isLower(uG)))
-      .map(g => g.getLabel()))
-      .reverse();
+      .filter(g => this.getUserGroup().exists(uG => g.isLower(uG)));
   }
 
   getCandidateNames(): List<string> {
@@ -63,7 +66,7 @@ export class CreateVoteComponent implements OnInit {
   }
 
   getGroup(index: number): Option<Group> {
-    return Option.of(this.groupService.getGroups().get(index));
+    return Option.of(this.getAvailableGroups().get(index));
   }
 
   getSelectableCandidateNames(): List<string> {

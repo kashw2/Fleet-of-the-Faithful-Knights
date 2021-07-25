@@ -30,7 +30,7 @@
                       <mat-select [disabled]="getAvailableGroupLabels().isEmpty()">
                         <mat-option *ngFor="let group of getAvailableGroupLabels(); let idx = index"
                                     [value]="group"
-                                    (onSelectionChange)="setSelectedGroup(getGroup(getAvailableGroupLabels().size - idx))">
+                                    (onSelectionChange)="setSelectedGroup(getGroup(idx))">
                           {{group}}
                         </mat-option>
                       </mat-select>
