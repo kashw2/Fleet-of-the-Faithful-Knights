@@ -17,7 +17,7 @@ export class VoteCache extends Cache<Vote> {
     }
 
     getVotes(): List<Vote> {
-        return this.votes;
+        return super.getValues();
     }
 
 }

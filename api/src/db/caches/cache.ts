@@ -39,10 +39,9 @@ export class Cache<A> {
         return this.values;
     }
 
-    private getValues(): List<A> {
+    protected getValues(): List<A> {
         return this.values;
     }
-
 
     /**
      * Sets the value at a given index in the List
