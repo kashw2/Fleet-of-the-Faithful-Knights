@@ -27,6 +27,12 @@ export class BallotEndpoint extends CrudEndpoint {
             .then(v => v.map(b => BallotJsonSerializer.instance.toJsonImpl(b)));
     }
 
+    read(req: Request): Promise<Either<string, any>> {
+        return Promise.resolve(this.getVoteId(req)
+            .flatMap(bid => this.db.cache.ballots.getBallotById(bid)))
+            .then(v => v.map(x => BallotJsonSerializer.instance.toJsonImpl(x)));
+    }
+
     private getBallot(req: Request): Either<string, Ballot> {
         return ApiUtils.parseBodyParamSerialized(req, 'ballot', BallotJsonSerializer.instance);
     }
