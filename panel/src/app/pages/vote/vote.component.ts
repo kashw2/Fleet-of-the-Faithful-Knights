@@ -5,6 +5,8 @@ import {Ballot} from "@kashw2/lib-ts";
 import {Set} from 'immutable';
 import {UserService} from "../../service/user.service";
 import {OptionUtils} from "@kashw2/lib-util";
+import {MatDialog} from "@angular/material/dialog";
+import {BallotDialogComponent} from "../../dialogs/ballot-dialog/ballot-dialog.component";
 
 @Component({
   selector: 'app-vote',
@@ -15,26 +17,8 @@ export class VoteComponent implements OnInit {
 
   constructor(
     readonly voteService: VoteService,
-    private userService: UserService,
+    private dialog: MatDialog,
   ) {
-  }
-
-  canAffirm(): boolean {
-    return this.isVotableByUserGroup()
-      && this.voteService.getSelectedVote()
-        .exists(v => v.getBallots().size < 4);
-  }
-
-  canDeny(): boolean {
-    return this.isVotableByUserGroup()
-      && this.voteService.getSelectedVote()
-        .exists(v => v.getBallots().size < 4);
-  }
-
-  canVeto(): boolean {
-    return this.isVotableByUserGroup()
-      && this.voteService.getSelectedVote()
-        .exists(v => v.getBallots().size < 4);
   }
 
   getBallots(): Set<Ballot> {
@@ -85,15 +69,15 @@ export class VoteComponent implements OnInit {
       .flatMap(v => v.getDescription());
   }
 
-  isVotableByUserGroup(): boolean {
-    return OptionUtils.exists2(
-      this.userService.getUser(),
-      this.voteService.getSelectedVote().flatMap(v => v.getPromotionGroup()),
-      (u, vG) => u.getGroup().exists(uG => uG.isHigher(vG))
-    );
+  ngOnInit(): void {
   }
 
-  ngOnInit(): void {
+  openBallotDialog(): void {
+    this.dialog.open(BallotDialogComponent, {
+      width: '350px',
+      autoFocus: true,
+      data: this.voteService.getSelectedVote()
+    });
   }
 
 }
