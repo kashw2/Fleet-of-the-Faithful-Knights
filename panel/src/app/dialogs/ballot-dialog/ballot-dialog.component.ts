@@ -1,9 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {Option} from "funfix-core";
-import {Vote} from "@kashw2/lib-ts";
+import {None, Option, Some} from "funfix-core";
+import {Ballot, Vote} from "@kashw2/lib-ts";
 import {OptionUtils} from "@kashw2/lib-util";
 import {UserService} from "../../service/user.service";
+import moment from "moment";
+import {FfkApiService} from "../../service/ffk-api.service";
+import {ToastService} from "../../service/toast.service";
 
 @Component({
   selector: 'app-ballot-dialog',
@@ -16,6 +19,8 @@ export class BallotDialogComponent implements OnInit {
     private userService: UserService,
     readonly dialogRef: MatDialogRef<BallotDialogComponent>,
     @Inject(MAT_DIALOG_DATA) readonly vote: Option<Vote>,
+    private ffkApiService: FfkApiService,
+    private toastService: ToastService,
   ) {
   }
 
@@ -34,12 +39,34 @@ export class BallotDialogComponent implements OnInit {
       && this.vote.exists(v => v.getBallots().size < 4);
   }
 
-  castBallot(type: string): void {
+  castBallot(
+    type: number,
+    description: string,
+  ): void {
+    const ballot = new Ballot(
+      None,
+      this.userService.getUser(),
+      Option.of(description),
+      Option.of(type),
+      Some(moment()),
+      Some(moment()),
+    );
+    this.getVoteId()
+      .map(vid => this.toastService.showSequencePromise(
+        this.ffkApiService.writeBallot(ballot, vid),
+        'Ballot Submitted',
+        'Error',
+        'Success',
+      ));
     this.dialogRef.close();
   }
 
   getCandidateUsername(): Option<string> {
     return this.vote.flatMap(v => v.getCandidateUsername());
+  }
+
+  private getVoteId(): Option<string> {
+    return this.vote.flatMap(v => v.getId());
   }
 
   isVotableByUserGroup(): boolean {

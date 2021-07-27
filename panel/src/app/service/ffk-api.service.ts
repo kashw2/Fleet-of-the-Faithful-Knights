@@ -1,5 +1,14 @@
 import {Inject, Injectable} from '@angular/core';
-import {CrudApiBase, Group, GroupJsonSerializer, User, UserJsonSerializer, Vote, VoteJsonSerializer} from "@kashw2/lib-ts";
+import {
+  Ballot, BallotJsonSerializer,
+  CrudApiBase,
+  Group,
+  GroupJsonSerializer,
+  User,
+  UserJsonSerializer,
+  Vote,
+  VoteJsonSerializer
+} from "@kashw2/lib-ts";
 import {Either} from "funfix-core";
 import {List} from "immutable";
 
@@ -14,9 +23,10 @@ export class FfkApiService {
     @Inject('ffkDiscordId') private discordId: string,
   ) {
   }
-
   permission: CrudApiBase = new CrudApiBase(this.apiServer, 'permission');
   vote: CrudApiBase = new CrudApiBase(this.apiServer, 'vote');
+
+  ballot: (vid: string) => CrudApiBase = (vid?: string) => new CrudApiBase(this.apiServer, `ballot?vote_id=${vid}`);
 
   getDiscordId(): string {
     return this.discordId;
@@ -50,10 +60,22 @@ export class FfkApiService {
         {'Discord-Id': this.getDiscordId()}
       );
   }
-
   group: (gid?: number) => CrudApiBase = (gid?: number) => new CrudApiBase(this.apiServer, gid ? `group?group_id=${gid}` : 'group');
   user: (uid: string) => CrudApiBase = (uid: string) => new CrudApiBase(this.apiServer, uid ? `user?user_id=${uid}` : 'user');
   userPermissionMapping: (uid: string) => CrudApiBase = (uid: string) => new CrudApiBase(this.apiServer, `user/${uid}/permission/mapping`);
+
+  writeBallot(ballot: Ballot, voteId: string): Promise<Either<string, Ballot>> {
+    return this.ballot(voteId)
+      .sendCreateRequest(
+        BallotJsonSerializer.instance,
+        {
+          ballot: BallotJsonSerializer.instance.toJsonImpl(ballot)
+        },
+        {
+          'Discord-Id': this.getDiscordId(),
+        }
+      );
+  }
 
   writeVote(vote: Vote): Promise<Either<string, Vote>> {
     return this.vote
