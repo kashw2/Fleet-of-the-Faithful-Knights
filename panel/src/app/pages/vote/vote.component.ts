@@ -3,8 +3,6 @@ import {VoteService} from "../../service/vote.service";
 import {Option} from "funfix-core";
 import {Ballot} from "@kashw2/lib-ts";
 import {Set} from 'immutable';
-import {UserService} from "../../service/user.service";
-import {OptionUtils} from "@kashw2/lib-util";
 import {MatDialog} from "@angular/material/dialog";
 import {BallotDialogComponent} from "../../dialogs/ballot-dialog/ballot-dialog.component";
 
@@ -62,6 +60,11 @@ export class VoteComponent implements OnInit {
       this.getCandidateAvatar(),
       (did, avatar) => `https://cdn.discordapp.com/avatars/${did}/${avatar}.png`,
     );
+  }
+
+  isVotable(): boolean {
+    return this.voteService.getSelectedVote()
+      .exists(v => v.getBallots().size < 4)
   }
 
   getVoteDescription(): Option<string> {

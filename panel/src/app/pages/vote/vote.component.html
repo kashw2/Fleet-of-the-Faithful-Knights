@@ -26,7 +26,7 @@
                     <h2 *ngIf="getCandidateGroup().nonEmpty() && getCandidatePromotionGroup().nonEmpty()">{{getCandidateGroup().get()}} - {{getCandidatePromotionGroup().get()}}</h2>
                     <p *ngIf="getVoteDescription().nonEmpty()">{{getVoteDescription().get()}}</p>
                   </div>
-                  <div class="col-auto">
+                  <div *ngIf="isVotable()" class="col-auto">
                     <button mat-button class="mx-2 my-1 br-none" (click)="openBallotDialog()">Vote</button>
                   </div>
                 </div>
