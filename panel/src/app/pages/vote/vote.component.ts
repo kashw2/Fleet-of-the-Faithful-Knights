@@ -29,7 +29,7 @@ export class VoteComponent implements OnInit {
   getCandidateAvatar(): Option<string> {
     return this.voteService.getSelectedVote()
       .flatMap(v => v.getCandidate())
-      .flatMap(v => v.getAvatar());
+      .flatMap(v => v.getFormedDiscordAvatar());
   }
 
   getCandidateDiscordId(): Option<string> {

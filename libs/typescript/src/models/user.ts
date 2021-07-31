@@ -24,7 +24,7 @@ export class User {
         private id: Option<string> = None,
         private username: Option<string> = None,
         private locale: Option<string> = None,
-        private avatar: Option<string> = None,
+        private discordAvatar: Option<string> = None,
         private discordId: Option<string> = None,
         private discordDiscriminator: Option<string> = None,
         private group: Option<Group> = None,
@@ -34,8 +34,8 @@ export class User {
     ) {
     }
 
-    public getAvatar(): Option<string> {
-        return this.avatar;
+    public getDiscordAvatar(): Option<string> {
+        return this.discordAvatar;
     }
 
     public getDiscordDiscriminator(): Option<string> {
@@ -44,6 +44,14 @@ export class User {
 
     public getDiscordId(): Option<string> {
         return this.discordId;
+    }
+
+    public getFormedDiscordAvatar(): Option<string> {
+        return Option.map2(
+            this.getDiscordId(),
+            this.getDiscordAvatar(),
+            (did, avatar) => `https://cdn.discordapp.com/avatars/${did}/${avatar}.png`
+        );
     }
 
     public getGroup(): Option<Group> {
@@ -112,7 +120,7 @@ export class UserJsonSerializer extends JsonSerializer<User> {
         return builder.addOptional(value.getId(), idKey)
             .addOptional(value.getUsername(), usernameKey)
             .addOptional(value.getLocale(), localeKey)
-            .addOptional(value.getAvatar(), avatarKey)
+            .addOptional(value.getDiscordAvatar(), avatarKey)
             .addOptional(value.getDiscordId(), discordIdKey)
             .addOptional(value.getDiscordDiscriminator(), discordDiscriminatorKey)
             .addOptionalSerialized(value.getGroup(), groupKey, GroupJsonSerializer.instance)

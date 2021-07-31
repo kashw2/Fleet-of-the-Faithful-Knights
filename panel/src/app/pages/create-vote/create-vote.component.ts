@@ -62,7 +62,7 @@ export class CreateVoteComponent implements OnInit {
 
   getCandidateProfileImage(): Option<string> {
     return this.getSelectedCandidate()
-      .flatMap(c => c.getAvatar());
+      .flatMap(c => c.getFormedDiscordAvatar());
   }
 
   getGroup(index: number): Option<Group> {

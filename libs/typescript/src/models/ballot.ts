@@ -71,7 +71,7 @@ export class Ballot {
 
     public getVoterDiscordAvatar(): Option<string> {
         return this.getVoter()
-            .flatMap(v => v.getAvatar());
+            .flatMap(v => v.getDiscordAvatar());
     }
 
     public getVoterDiscordId(): Option<string> {
