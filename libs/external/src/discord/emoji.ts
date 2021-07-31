@@ -1,6 +1,6 @@
 import {None, Option} from 'funfix-core';
 import {Set} from 'immutable';
-import {DiscordUser, UserJsonSerializer} from './user';
+import {DiscordUser, DiscordUserJsonSerializer} from './user';
 import {JsonBuilder, JsonSerializer, parseBoolean, parseSet, parseString} from '@kashw2/lib-util';
 import {animatedKey, availableKey, idKey, managedKey, nameKey, requireColonsKey, rolesKey, userKey} from './json-keys';
 
@@ -52,16 +52,16 @@ export class DiscordEmoji {
 
 }
 
-export class EmojiJsonSerializer extends JsonSerializer<DiscordEmoji> {
+export class DiscordEmojiJsonSerializer extends JsonSerializer<DiscordEmoji> {
 
-	static instance: EmojiJsonSerializer = new EmojiJsonSerializer();
+	static instance: DiscordEmojiJsonSerializer = new DiscordEmojiJsonSerializer();
 
 	fromJson(json: any): DiscordEmoji {
 		return new DiscordEmoji(
 			parseString(json[idKey]),
 			parseString(json[nameKey]),
 			parseSet(json[rolesKey]),
-			UserJsonSerializer.instance.fromJsonImpl(json[userKey]),
+			DiscordUserJsonSerializer.instance.fromJsonImpl(json[userKey]),
 			parseBoolean(json[requireColonsKey]),
 			parseBoolean(json[managedKey]),
 			parseBoolean(json[animatedKey]),
@@ -73,7 +73,7 @@ export class EmojiJsonSerializer extends JsonSerializer<DiscordEmoji> {
 		return builder.addOptional(value.getId(), idKey)
 			.addOptional(value.getName(), nameKey)
 			.addIterable(value.getRoles(), rolesKey)
-			.addOptionalSerialized(value.getUser(), userKey, UserJsonSerializer.instance)
+			.addOptionalSerialized(value.getUser(), userKey, DiscordUserJsonSerializer.instance)
 			.addOptional(value.getRequireColons(), requireColonsKey)
 			.addOptional(value.getManaged(), managedKey)
 			.addOptional(value.getAnimated(), animatedKey)

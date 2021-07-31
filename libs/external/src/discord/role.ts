@@ -1,6 +1,6 @@
 import {None, Option} from 'funfix-core';
 import {List} from 'immutable';
-import {DiscordRoleTag, RoleTagJsonSerializer} from './role-tag';
+import {DiscordRoleTag, DiscordRoleTagJsonSerializer} from './role-tag';
 import {JsonBuilder, JsonSerializer, parseBoolean, parseListSerialized, parseNumber, parseString} from '@kashw2/lib-util';
 import {
 	colorKey,
@@ -67,9 +67,9 @@ export class DiscordRole {
 
 }
 
-export class RoleJsonSerializer extends JsonSerializer<DiscordRole> {
+export class DiscordRoleJsonSerializer extends JsonSerializer<DiscordRole> {
 
-	static instance: RoleJsonSerializer = new RoleJsonSerializer();
+	static instance: DiscordRoleJsonSerializer = new DiscordRoleJsonSerializer();
 
 	fromJson(json: any): DiscordRole {
 		return new DiscordRole(
@@ -81,7 +81,7 @@ export class RoleJsonSerializer extends JsonSerializer<DiscordRole> {
 			parseString(json[permissionsKey]),
 			parseBoolean(json[managedKey]),
 			parseBoolean(json[mentionableKey]),
-			parseListSerialized(json[tagsKey], RoleTagJsonSerializer.instance),
+			parseListSerialized(json[tagsKey], DiscordRoleTagJsonSerializer.instance),
 		);
 	}
 
@@ -94,7 +94,7 @@ export class RoleJsonSerializer extends JsonSerializer<DiscordRole> {
 			.addOptional(value.getPermissions(), permissionsKey)
 			.addOptional(value.getManaged(), managedKey)
 			.addOptional(value.getMentionable(), mentionableKey)
-			.addIterableSerialized(value.getTags(), tagsKey, RoleTagJsonSerializer.instance)
+			.addIterableSerialized(value.getTags(), tagsKey, DiscordRoleTagJsonSerializer.instance)
 			.build();
 	}
 

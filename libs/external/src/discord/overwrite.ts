@@ -30,9 +30,9 @@ export class DiscordOverwrite {
 
 }
 
-export class OverwriteJsonSerializer extends JsonSerializer<DiscordOverwrite> {
+export class DiscordOverwriteJsonSerializer extends JsonSerializer<DiscordOverwrite> {
 
-	static instance: OverwriteJsonSerializer = new OverwriteJsonSerializer();
+	static instance: DiscordOverwriteJsonSerializer = new DiscordOverwriteJsonSerializer();
 
 	fromJson(json: any): DiscordOverwrite {
 		return new DiscordOverwrite(

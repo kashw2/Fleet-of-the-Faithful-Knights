@@ -1,12 +1,12 @@
 import {None, Option} from 'funfix-core';
 import {List, Set} from 'immutable';
 import * as moment from 'moment';
-import {DiscordEmoji, EmojiJsonSerializer} from './emoji';
-import {DiscordRole, RoleJsonSerializer} from './role';
-import {DiscordVoiceState, VoiceStateJsonSerializer} from './voice-state';
-import {DiscordGuildMember, GuildMemberJsonSerializer} from './guild-member';
-import {DiscordChannel, ChannelJsonSerializer} from './channel';
-import {DiscordPresence, PresenceJsonSerializer} from './presence';
+import {DiscordEmoji, DiscordEmojiJsonSerializer} from './emoji';
+import {DiscordRole, DiscordRoleJsonSerializer} from './role';
+import {DiscordVoiceState, DiscordVoiceStateJsonSerializer} from './voice-state';
+import {DiscordGuildMember, DiscordGuildMemberJsonSerializer} from './guild-member';
+import {DiscordChannel, DiscordChannelJsonSerializer} from './channel';
+import {DiscordPresence, DiscordPresenceJsonSerializer} from './presence';
 import {
 	JsonBuilder,
 	JsonSerializer,
@@ -290,9 +290,9 @@ export class DiscordGuild {
 
 }
 
-export class GuildJsonSerializer extends JsonSerializer<DiscordGuild> {
+export class DiscordGuildJsonSerializer extends JsonSerializer<DiscordGuild> {
 
-	static instance: GuildJsonSerializer = new GuildJsonSerializer();
+	static instance: DiscordGuildJsonSerializer = new DiscordGuildJsonSerializer();
 
 	fromJson(json: any): DiscordGuild {
 		return new DiscordGuild(
@@ -313,8 +313,8 @@ export class GuildJsonSerializer extends JsonSerializer<DiscordGuild> {
 			parseNumber(json[verificationLevelKey]),
 			parseNumber(json[defaultMessageNotificationsKey]),
 			parseNumber(json[explicitContentFilterKey]),
-			parseSetSerialized(json[rolesKey], RoleJsonSerializer.instance),
-			parseSetSerialized(json[emojiKey], EmojiJsonSerializer.instance),
+			parseSetSerialized(json[rolesKey], DiscordRoleJsonSerializer.instance),
+			parseSetSerialized(json[emojiKey], DiscordEmojiJsonSerializer.instance),
 			parseSet(json[featuresKey]),
 			parseNumber(json[mfaLevelKey]),
 			parseString(json[applicationIdKey]),
@@ -325,10 +325,10 @@ export class GuildJsonSerializer extends JsonSerializer<DiscordGuild> {
 			parseBoolean(json[largeKey]),
 			parseBoolean(json[unavailableKey]),
 			parseNumber(json[memberCountKey]),
-			parseListSerialized(json[voiceStatesKey], VoiceStateJsonSerializer.instance),
-			parseSetSerialized(json[membersKey], GuildMemberJsonSerializer.instance),
-			parseSetSerialized(json[channelsKey], ChannelJsonSerializer.instance),
-			parseSetSerialized(json[presencesKey], PresenceJsonSerializer.instance),
+			parseListSerialized(json[voiceStatesKey], DiscordVoiceStateJsonSerializer.instance),
+			parseSetSerialized(json[membersKey], DiscordGuildMemberJsonSerializer.instance),
+			parseSetSerialized(json[channelsKey], DiscordChannelJsonSerializer.instance),
+			parseSetSerialized(json[presencesKey], DiscordPresenceJsonSerializer.instance),
 			parseNumber(json[maxPresencesKey]),
 			parseNumber(json[maxMembersKey]),
 			parseString(json[vanityUrlCodeKey]),
@@ -361,8 +361,8 @@ export class GuildJsonSerializer extends JsonSerializer<DiscordGuild> {
 			.addOptional(value.getVerificationLevel(), verificationLevelKey)
 			.addOptional(value.getDefaultMessageNotifications(), defaultMessageNotificationsKey)
 			.addOptional(value.getExplicitContentFilter(), explicitContentFilterKey)
-			.addIterableSerialized(value.getRoles(), rolesKey, RoleJsonSerializer.instance)
-			.addIterableSerialized(value.getEmojis(), emojiKey, EmojiJsonSerializer.instance)
+			.addIterableSerialized(value.getRoles(), rolesKey, DiscordRoleJsonSerializer.instance)
+			.addIterableSerialized(value.getEmojis(), emojiKey, DiscordEmojiJsonSerializer.instance)
 			.addIterable(value.getFeatures(), featuresKey)
 			.addOptional(value.getApplicationId(), applicationIdKey)
 			.addOptional(value.getMfaLevel(), mfaLevelKey)
@@ -373,10 +373,10 @@ export class GuildJsonSerializer extends JsonSerializer<DiscordGuild> {
 			.addOptional(value.getLarge(), largeKey)
 			.addOptional(value.getUnavailable(), unavailableKey)
 			.addOptional(value.getMemberCount(), memberCountKey)
-			.addIterableSerialized(value.getVoiceStates(), voiceStatesKey, VoiceStateJsonSerializer.instance)
-			.addIterableSerialized(value.getMembers(), membersKey, GuildMemberJsonSerializer.instance)
-			.addIterableSerialized(value.getChannels(), channelsKey, ChannelJsonSerializer.instance)
-			.addIterableSerialized(value.getPresences(), presencesKey, PresenceJsonSerializer.instance)
+			.addIterableSerialized(value.getVoiceStates(), voiceStatesKey, DiscordVoiceStateJsonSerializer.instance)
+			.addIterableSerialized(value.getMembers(), membersKey, DiscordGuildMemberJsonSerializer.instance)
+			.addIterableSerialized(value.getChannels(), channelsKey, DiscordChannelJsonSerializer.instance)
+			.addIterableSerialized(value.getPresences(), presencesKey, DiscordPresenceJsonSerializer.instance)
 			.addOptional(value.getMaxPresences(), maxPresencesKey)
 			.addOptional(value.getMaxMembers(), maxMembersKey)
 			.addOptional(value.getVanityUrlCode(), vanityUrlCodeKey)

@@ -25,9 +25,9 @@ export class DiscordClientStatus {
 
 }
 
-export class ClientStatusJsonSerializer extends JsonSerializer<DiscordClientStatus> {
+export class DiscordClientStatusJsonSerializer extends JsonSerializer<DiscordClientStatus> {
 
-	static instance: ClientStatusJsonSerializer = new ClientStatusJsonSerializer();
+	static instance: DiscordClientStatusJsonSerializer = new DiscordClientStatusJsonSerializer();
 
 	fromJson(json: any): DiscordClientStatus {
 		return new DiscordClientStatus(

@@ -83,9 +83,9 @@ export class DiscordUser {
 
 }
 
-export class UserJsonSerializer extends JsonSerializer<DiscordUser> {
+export class DiscordUserJsonSerializer extends JsonSerializer<DiscordUser> {
 
-	static instance: UserJsonSerializer = new UserJsonSerializer();
+	static instance: DiscordUserJsonSerializer = new DiscordUserJsonSerializer();
 
 	fromJson(json: any): DiscordUser {
 		return new DiscordUser(

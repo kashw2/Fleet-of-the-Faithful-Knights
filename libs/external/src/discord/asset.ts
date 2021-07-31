@@ -30,9 +30,9 @@ export class DiscordAsset {
 
 }
 
-export class AssetJsonSerializer extends JsonSerializer<DiscordAsset> {
+export class DiscordAssetJsonSerializer extends JsonSerializer<DiscordAsset> {
 
-	static instance: AssetJsonSerializer = new AssetJsonSerializer();
+	static instance: DiscordAssetJsonSerializer = new DiscordAssetJsonSerializer();
 
 	fromJson(json: any): DiscordAsset {
 		return new DiscordAsset(

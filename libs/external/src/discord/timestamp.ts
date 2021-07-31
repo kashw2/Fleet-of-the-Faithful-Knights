@@ -21,9 +21,9 @@ export class DiscordTimestamp {
 
 }
 
-export class TimestampJsonSerializer extends JsonSerializer<DiscordTimestamp> {
+export class DiscordTimestampJsonSerializer extends JsonSerializer<DiscordTimestamp> {
 
-	static instance: TimestampJsonSerializer = new TimestampJsonSerializer();
+	static instance: DiscordTimestampJsonSerializer = new DiscordTimestampJsonSerializer();
 
 	fromJson(json: any): DiscordTimestamp {
 		return new DiscordTimestamp(
