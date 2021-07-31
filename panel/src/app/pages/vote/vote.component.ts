@@ -62,14 +62,21 @@ export class VoteComponent implements OnInit {
     );
   }
 
-  isVotable(): boolean {
-    return this.voteService.getSelectedVote()
-      .exists(v => v.getBallots().size < 4)
-  }
-
   getVoteDescription(): Option<string> {
     return this.voteService.getSelectedVote()
       .flatMap(v => v.getDescription());
+  }
+
+  isVotable(): boolean {
+    if (this.voteService.getSelectedVote().exists(v => v.isKnightLike())) {
+      return this.voteService.getSelectedVote()
+        .exists(v => v.getBallots().size < 4);
+    }
+    if (this.voteService.getSelectedVote().exists(v => v.isSergeantLike())) {
+      return this.voteService.getSelectedVote()
+        .exists(v => v.getBallots().size < 3);
+    }
+    return false;
   }
 
   ngOnInit(): void {
