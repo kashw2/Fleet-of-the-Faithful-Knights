@@ -15,7 +15,7 @@ export class GroupEndpoint extends CrudEndpoint {
         return EitherUtils.sequence(this.validate(req)
             .map(g => {
                 this.db.cache.groups.add(g);
-                return this.db.procedures.insert.insertGroup(g)(this.getModifiedBy(req))
+                return this.db.procedures.insert.insertGroup(g)(this.getModifiedBy(req));
             }))
             .then(v => v.map(u => GroupJsonSerializer.instance.toJsonImpl(u)));
     }
@@ -24,6 +24,10 @@ export class GroupEndpoint extends CrudEndpoint {
         return EitherUtils.sequence(this.getGroupId(req)
             .map(gid => this.db.procedures.delete.deleteGroup(gid)))
             .then(v => v.map(u => GroupJsonSerializer.instance.toJsonImpl(u)));
+    }
+
+    doesRequireAuthentication(req: Request): boolean {
+        return true;
     }
 
     private getGroup(req: Request): Either<string, Group> {
@@ -51,7 +55,7 @@ export class GroupEndpoint extends CrudEndpoint {
 
     read(req: Request): Promise<Either<string, any>> {
         if (this.getGroupId(req).isLeft()) {
-            return Promise.resolve(EitherUtils.liftEither(GroupJsonSerializer.instance.toJsonArray(this.db.cache.groups.getGroups().toArray()), "Groups cache is empty"))
+            return Promise.resolve(EitherUtils.liftEither(GroupJsonSerializer.instance.toJsonArray(this.db.cache.groups.getGroups().toArray()), "Groups cache is empty"));
         }
         return Promise.resolve(this.getGroupId(req)
             .flatMap(gid => this.db.cache.groups.getGroupsById(gid)))

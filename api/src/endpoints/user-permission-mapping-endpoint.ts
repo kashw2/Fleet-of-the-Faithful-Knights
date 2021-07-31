@@ -23,6 +23,10 @@ export class UserPermissionMappingEndpoint extends CrudEndpoint {
             .then(v => v.map(u => UserPermissionMappingJsonSerializer.instance.toJsonImpl(u)));
     }
 
+    doesRequireAuthentication(req: Request): boolean {
+        return true;
+    }
+
     private getMapping(req: Request): Either<string, UserPermissionMapping> {
         return ApiUtils.parseBodyParamSerialized(req, 'mapping', UserPermissionMappingJsonSerializer.instance);
     }
@@ -55,7 +59,7 @@ export class UserPermissionMappingEndpoint extends CrudEndpoint {
         // TODO: See if we can make this a bit more readable
         return EitherUtils.sequence(this.getUserId(req)
             .map(uid => this.db.procedures.read.readUserPermissionMappings(uid)))
-            .then(v => v.map(x => OptionUtils.flattenList(x.map(q => q.getId()))))
+            .then(v => v.map(x => OptionUtils.flattenList(x.map(q => q.getId()))));
     }
 
     update(req: Request): Promise<Either<string, any>> {
@@ -69,12 +73,12 @@ export class UserPermissionMappingEndpoint extends CrudEndpoint {
             case 'POST':
                 return this.getMapping(req)
                     .filterOrElse(upm => upm.getUserId().nonEmpty(), () => 'Mapping must have a user id')
-                    .filterOrElse(upm => upm.getPermissionId().nonEmpty(), () => 'Mapping must have a permission id')
+                    .filterOrElse(upm => upm.getPermissionId().nonEmpty(), () => 'Mapping must have a permission id');
             case 'PUT':
                 return this.getMapping(req)
                     .filterOrElse(upm => upm.getId().nonEmpty(), () => 'Mapping must have an id')
                     .filterOrElse(upm => upm.getUserId().nonEmpty(), () => 'Mapping must have a user id')
-                    .filterOrElse(upm => upm.getPermissionId().nonEmpty(), () => 'Mapping must have a permission id')
+                    .filterOrElse(upm => upm.getPermissionId().nonEmpty(), () => 'Mapping must have a permission id');
             default:
                 return this.getMapping(req);
         }

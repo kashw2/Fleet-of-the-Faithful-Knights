@@ -8,6 +8,8 @@ export abstract class ApiEndpoint {
     constructor(readonly endpoint: string) {
     }
 
+    abstract doesRequireAuthentication(req: Request): boolean;
+
     protected getEndpoint(): string {
         return this.endpoint;
     }
@@ -16,7 +18,7 @@ export abstract class ApiEndpoint {
         return this.getEndpoint()
             .startsWith('/')
             ? this.getEndpoint().substr(1, this.getEndpoint().length).replace('-', ' ')
-            : this.getEndpoint().replace('-', ' ')
+            : this.getEndpoint().replace('-', ' ');
     }
 
     getHTTPMethod(req: Request): string {
@@ -38,6 +40,6 @@ export abstract class ApiEndpoint {
             .getOrElse('System');
     }
 
-    abstract hasPermission(req: Request, res: Response, user: User): boolean;
+    abstract hasPermission(req: Request, res: Response, user?: User): boolean;
 
 }

@@ -15,7 +15,7 @@ export class PermissionsEndpoint extends CrudEndpoint {
         return EitherUtils.sequence(this.validate(req)
             .map(p => {
                 this.db.cache.permissions.add(p);
-                return this.db.procedures.insert.insertPermission(p)(this.getModifiedBy(req))
+                return this.db.procedures.insert.insertPermission(p)(this.getModifiedBy(req));
             }))
             .then(v => v.map(u => PermissionJsonSerializer.instance.toJsonImpl(u)));
     }
@@ -24,6 +24,10 @@ export class PermissionsEndpoint extends CrudEndpoint {
         return EitherUtils.sequence(this.getPermissionId(req)
             .map(pid => this.db.procedures.delete.deletePermission(pid)))
             .then(v => v.map(x => PermissionJsonSerializer.instance.toJsonImpl(x)));
+    }
+
+    doesRequireAuthentication(req: Request): boolean {
+        return true;
     }
 
     private getPermission(req: Request): Either<string, Permission> {
@@ -51,7 +55,7 @@ export class PermissionsEndpoint extends CrudEndpoint {
 
     read(req: Request): Promise<Either<string, any>> {
         if (this.getPermissionId(req).isLeft()) {
-            return Promise.resolve(EitherUtils.liftEither(PermissionJsonSerializer.instance.toJsonArray(this.db.cache.permissions.getPermissions().toArray()), "Permission cache is empty"))
+            return Promise.resolve(EitherUtils.liftEither(PermissionJsonSerializer.instance.toJsonArray(this.db.cache.permissions.getPermissions().toArray()), "Permission cache is empty"));
         }
         return Promise.resolve(this.getPermissionId(req)
             .flatMap(pid => this.db.cache.permissions.getByPermissionId(pid)))

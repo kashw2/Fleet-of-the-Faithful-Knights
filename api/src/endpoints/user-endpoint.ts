@@ -4,6 +4,11 @@ import {Request, Response} from "express";
 import {ApiUtils, EitherUtils} from "@kashw2/lib-util";
 import {Either, Right} from "funfix-core";
 import {Database} from "../db/database";
+import {from} from "rxjs";
+import {map} from "rxjs/operators";
+import {DiscordTokenJsonSerializer} from "@kashw2/lib-external";
+
+const DiscordOAuth2 = require('discord-oauth2');
 
 export class UserEndpoint extends CrudEndpoint {
 
@@ -11,7 +16,22 @@ export class UserEndpoint extends CrudEndpoint {
         super('/user');
     }
 
+    discordOAuth = new DiscordOAuth2({
+        clientId: "607005043043860521",
+        clientSecret: process.env.FFK_DISCORD_CLIENT_SECRET,
+        redirectUri: process.env.FFK_DISCORD_REDIRECT,
+    });
+
     async create(req: Request): Promise<Either<string, any>> {
+        if (this.getDiscordAuthToken(req).isRight()) {
+            from(this.discordOAuth.tokenRequest({
+                code: this.getDiscordAuthToken(req).get(),
+                grantType: "authorization_code",
+                scope: ["identity", "email", "guilds"],
+            })).pipe(map(v => DiscordTokenJsonSerializer.instance.fromJson(v)))
+                .subscribe(console.log);
+        }
+
         return EitherUtils.sequence(this.validate(req)
             .map(u => {
                 this.db.cache.users.add(u);
@@ -24,6 +44,25 @@ export class UserEndpoint extends CrudEndpoint {
         return EitherUtils.sequence(this.getUserId(req)
             .map(uid => this.db.procedures.delete.deleteUser(uid)))
             .then(v => v.map(u => UserJsonSerializer.instance.toJsonImpl(u)));
+    }
+
+    doesRequireAuthentication(req: Request): boolean {
+        switch (this.getHTTPMethod(req)) {
+            case 'POST':
+                return false;
+            case 'GET':
+                return true;
+            case 'PUT':
+                return true;
+            case 'DELETE':
+                return true;
+            default:
+                return true;
+        }
+    }
+
+    getDiscordAuthToken(req: Request): Either<string, string> {
+        return ApiUtils.parseStringQueryParam(req, 'discord_token');
     }
 
     private getUser(req: Request): Either<string, User> {
@@ -76,15 +115,7 @@ export class UserEndpoint extends CrudEndpoint {
             case 'PUT':
                 return this.getUser(req)
                     .filterOrElse(u => u.getId().nonEmpty(), () => 'User must have an Id');
-            case 'POST':
-                return this.getUser(req)
-                    .filterOrElse(u => u.getUsername().nonEmpty(), () => 'User must have a name')
-                    .filterOrElse(u => u.getLocale().nonEmpty(), () => 'User must have a locale')
-                    .filterOrElse(u => u.getAvatar().nonEmpty(), () => 'User must have a avatar')
-                    .filterOrElse(u => u.getDiscordId().nonEmpty(), () => 'User must have a discord id')
-                    .filterOrElse(u => u.getDiscordDiscriminator().nonEmpty(), () => 'User must have a discord discriminator')
-                    .filterOrElse(u => u.getGroup().nonEmpty(), () => 'User must have a group')
-                default:
+            default:
                 return this.getUser(req);
         }
     }
