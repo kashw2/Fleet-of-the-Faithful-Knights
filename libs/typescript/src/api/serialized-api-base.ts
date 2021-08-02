@@ -18,10 +18,10 @@ export class SerializedApiBase extends ApiBase {
         endpoint: string,
         method: 'GET' | 'POST' | 'PUT' | 'DELETE',
         serializer: JsonSerializer<A>,
-        body: any,
         headers: object = this.getHeaders(),
+        body?: any,
     ): Promise<Either<string, List<A>>> {
-        return this.sendRequest(endpoint, method, body, headers)
+        return this.sendRequest(endpoint, method, headers, body)
             .then(v => v.map(x => serializer.fromJsonArray(x)))
             .catch(err => Left(err));
     }
@@ -30,10 +30,10 @@ export class SerializedApiBase extends ApiBase {
         endpoint: string,
         method: 'GET' | 'POST' | 'PUT' | 'DELETE',
         serializer: JsonSerializer<A>,
-        body: any,
         headers: object = this.getHeaders(),
+        body?: any,
     ): Promise<Either<string, A>> {
-        return this.sendRequest(endpoint, method, body, headers)
+        return this.sendRequest(endpoint, method, headers, body)
             .then(v => v.map(x => serializer.fromJson(x)))
             .catch(err => Left(err));
     }

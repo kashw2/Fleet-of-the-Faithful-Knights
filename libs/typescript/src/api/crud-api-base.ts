@@ -26,113 +26,113 @@ export class CrudApiBase extends SerializedApiBase {
 
     sendCreateRequest<A>(
         serializer: JsonSerializer<A>,
-        body: any,
         headers: object = this.getHeaders(),
+        body?: any,
     ): Promise<Either<string, A>> {
         return this.sendRequestSerialized(
             this.getEndpoint(),
             "POST",
             serializer,
-            body,
             headers,
+            body,
         );
     }
 
     sendCreateRequestList<A>(
         serializer: JsonSerializer<A>,
-        body: any,
         headers: object = this.getHeaders(),
+        body?: any,
     ): Promise<Either<string, List<A>>> {
         return this.sendRequestListSerialized(
             this.getEndpoint(),
             "POST",
             serializer,
-            body,
             headers,
+            body,
         );
     }
 
     sendDeleteRequest<A>(
         serializer: JsonSerializer<A>,
-        body: any,
         headers: object = this.getHeaders(),
+        body?: any,
     ): Promise<Either<string, A>> {
         return this.sendRequestSerialized(
             this.getEndpoint(),
             "DELETE",
             serializer,
-            body,
             headers,
+            body,
         );
     }
 
     sendDeleteRequestList<A>(
         serializer: JsonSerializer<A>,
-        body: any,
         headers: object = this.getHeaders(),
+        body?: any,
     ): Promise<Either<string, List<A>>> {
         return this.sendRequestListSerialized(
             this.getEndpoint(),
             "DELETE",
             serializer,
-            body,
             headers,
+            body,
         );
     }
 
     sendReadRequest<A>(
         serializer: JsonSerializer<A>,
-        body: any,
         headers: object = this.getHeaders(),
+        body?: any,
     ): Promise<Either<string, A>> {
         return this.sendRequestSerialized(
             this.getEndpoint(),
             "GET",
             serializer,
-            body,
             headers,
+            body,
         );
     }
 
     sendReadRequestList<A>(
         serializer: JsonSerializer<A>,
-        body: any,
         headers: object = this.getHeaders(),
+        body?: any,
     ): Promise<Either<string, List<A>>> {
         return this.sendRequestListSerialized(
             this.getEndpoint(),
             "GET",
             serializer,
-            body,
             headers,
+            body,
         );
     }
 
     sendUpdateRequest<A>(
         serializer: JsonSerializer<A>,
-        body: any,
         headers: object = this.getHeaders(),
+        body?: any,
     ): Promise<Either<string, A>> {
         return this.sendRequestSerialized(
             this.getEndpoint(),
             "PUT",
             serializer,
-            body,
             headers,
+            body,
         );
     }
 
     sendUpdateRequestList<A>(
         serializer: JsonSerializer<A>,
-        body: any,
         headers: object = this.getHeaders(),
+        body?: any,
     ): Promise<Either<string, List<A>>> {
         return this.sendRequestListSerialized(
             this.getEndpoint(),
             "PUT",
             serializer,
-            body,
             headers,
+            body,
         );
     }
 
