@@ -1,7 +1,7 @@
 import {Set} from 'immutable';
-import * as moment from 'moment';
+import moment from 'moment';
 import {JsonBuilder, JsonSerializer, OptionUtils, parseDate, parseString} from '@kashw2/lib-util';
-import {None, Option} from 'funfix-core';
+import {None, Option, Some} from 'funfix-core';
 import {
     avatarKey,
     discordDiscriminatorKey,
@@ -15,7 +15,7 @@ import {
     usernameKey
 } from '../misc/json-keys';
 import {Group, GroupJsonSerializer} from './group';
-import {StarCitizenUser, StarCitizenUserJsonSerializer} from '@kashw2/lib-external';
+import {DiscordUser, StarCitizenUser, StarCitizenUserJsonSerializer} from '@kashw2/lib-external';
 import {Permission, PermissionJsonSerializer} from "./permission";
 
 export class User {
@@ -32,6 +32,21 @@ export class User {
         private memberSince: Option<moment.Moment> = None,
         private starCitizenUser: Option<StarCitizenUser> = None,
     ) {
+    }
+
+    public static fromDiscordUser(discordUser: DiscordUser): User {
+        return new User(
+            None,
+            discordUser.getUsername(),
+            discordUser.getLocale(),
+            discordUser.getAvatar(),
+            discordUser.getId(),
+            discordUser.getDiscriminator(),
+            None,
+            Set(),
+            Some(moment()),
+            None,
+        );
     }
 
     public getDiscordAvatar(): Option<string> {
