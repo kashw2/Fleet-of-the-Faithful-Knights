@@ -110,6 +110,21 @@ export class User {
         return permissionIds.some(pid => this.getPermissionIds().contains(pid));
     }
 
+    public withGroup(group: Group): User {
+        return new User(
+            this.getId(),
+            this.getUsername(),
+            this.getLocale(),
+            this.getDiscordAvatar(),
+            this.getDiscordId(),
+            this.getDiscordDiscriminator(),
+            Option.of(group),
+            this.getPermissions(),
+            this.getMemberSince(),
+            this.getStarCitizenUser(),
+        );
+    }
+
 }
 
 export class UserJsonSerializer extends JsonSerializer<User> {
