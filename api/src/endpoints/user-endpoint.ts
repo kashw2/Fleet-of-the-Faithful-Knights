@@ -136,11 +136,7 @@ export class UserEndpoint extends CrudEndpoint {
                                 }));
                         }));
                 })))
-                .then(u => {
-                    console.log(u);
-                    console.log(UserJsonSerializer.instance.fromJsonImpl(u));
-                    return EitherUtils.liftEither(UserJsonSerializer.instance.toJsonImpl(u), "Unable to create User")
-                })
+                .then(u => EitherUtils.liftEither(UserJsonSerializer.instance.toJsonImpl(u), "Unable to create User"));
         }
         return EitherUtils.sequence(this.validate(req)
             .map(u => {
