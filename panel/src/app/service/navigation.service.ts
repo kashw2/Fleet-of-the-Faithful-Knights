@@ -29,7 +29,6 @@ export class NavigationService {
     return;
   }
 
-
   vote(id: number): void {
     return this.navigate(`vote/${id}`);
   }

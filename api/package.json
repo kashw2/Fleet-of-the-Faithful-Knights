@@ -29,7 +29,6 @@
   },
   "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights#readme",
   "dependencies": {
-    "discord-oauth2": "2.7.1",
     "typescript": "4.3.5"
   },
   "devDependencies": {

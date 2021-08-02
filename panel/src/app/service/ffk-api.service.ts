@@ -72,7 +72,7 @@ export class FfkApiService {
   }
 
   group: (gid?: number) => CrudApiBase = (gid?: number) => new CrudApiBase(this.apiServer, gid ? `group?group_id=${gid}` : 'group');
-  user: (uid: string) => CrudApiBase = (uid: string) => new CrudApiBase(this.apiServer, uid ? `user?user_id=${uid}` : 'user');
+  user: (uid?: string, discord?: boolean) => CrudApiBase = (uid: string, discord: boolean) => new CrudApiBase(this.apiServer, discord ? `user?discord_token=${uid}` : uid ? `user?user_id=${uid}` : 'user');
   userPermissionMapping: (uid: string) => CrudApiBase = (uid: string) => new CrudApiBase(this.apiServer, `user/${uid}/permission/mapping`);
 
   writeBallot(ballot: Ballot, voteId: string): Promise<Either<string, Ballot>> {
@@ -85,6 +85,14 @@ export class FfkApiService {
         {
           'Discord-Id': this.getDiscordId(),
         }
+      );
+  }
+
+  writeUser(code: string): Promise<Either<string, User>> {
+    return this.user(code, true)
+      .sendCreateRequest(
+        UserJsonSerializer.instance,
+        {},
       );
   }
 
