@@ -14,6 +14,7 @@ import {
 	usernameKey,
 	verifiedKey
 } from './json-keys';
+import {avatarKey} from "@kashw2/lib-ts";
 
 export class DiscordUser {
 
@@ -21,6 +22,7 @@ export class DiscordUser {
 		readonly id: Option<string> = None,
 		readonly username: Option<string> = None,
 		readonly discriminator: Option<string> = None,
+		readonly avatar: Option<string> = None,
 		readonly bot: Option<boolean> = None,
 		readonly system: Option<boolean> = None,
 		readonly mfaEnabled: Option<boolean> = None,
@@ -31,6 +33,10 @@ export class DiscordUser {
 		readonly premiumType: Option<number> = None,
 		readonly publicFlags: Option<string> = None // TODO: Implement Flags
 	) {
+	}
+
+	public getAvatar(): Option<string> {
+		return this.avatar;
 	}
 
 	public getBot(): Option<boolean> {
@@ -92,6 +98,7 @@ export class DiscordUserJsonSerializer extends JsonSerializer<DiscordUser> {
 			parseString(json[idKey]),
 			parseString(json[usernameKey]),
 			parseString(json[discriminatorKey]),
+			parseString(json[avatarKey]),
 			parseBoolean(json[botKey]),
 			parseBoolean(json[systemKey]),
 			parseBoolean(json[mfaEnabledKey]),
@@ -108,6 +115,7 @@ export class DiscordUserJsonSerializer extends JsonSerializer<DiscordUser> {
 		return builder.addOptional(value.getId(), idKey)
 			.addOptional(value.getUsername(), usernameKey)
 			.addOptional(value.getDiscriminator(), discriminatorKey)
+			.addOptional(value.getAvatar(), avatarKey)
 			.addOptional(value.getBot(), botKey)
 			.addOptional(value.getSystem(), systemKey)
 			.addOptional(value.getMfaEnabled(), mfaEnabledKey)
