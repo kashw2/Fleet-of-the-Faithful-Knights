@@ -3,8 +3,8 @@ import {VoteService} from "../../service/vote.service";
 import {Option} from "funfix-core";
 import {Ballot} from "@kashw2/lib-ts";
 import {Set} from 'immutable';
-import {UserService} from "../../service/user.service";
-import {OptionUtils} from "@kashw2/lib-util";
+import {MatDialog} from "@angular/material/dialog";
+import {BallotDialogComponent} from "../../dialogs/ballot-dialog/ballot-dialog.component";
 
 @Component({
   selector: 'app-vote',
@@ -15,26 +15,8 @@ export class VoteComponent implements OnInit {
 
   constructor(
     readonly voteService: VoteService,
-    private userService: UserService,
+    private dialog: MatDialog,
   ) {
-  }
-
-  canAffirm(): boolean {
-    return this.isVotableByUserGroup()
-      && this.voteService.getSelectedVote()
-        .exists(v => v.getBallots().size < 4);
-  }
-
-  canDeny(): boolean {
-    return this.isVotableByUserGroup()
-      && this.voteService.getSelectedVote()
-        .exists(v => v.getBallots().size < 4);
-  }
-
-  canVeto(): boolean {
-    return this.isVotableByUserGroup()
-      && this.voteService.getSelectedVote()
-        .exists(v => v.getBallots().size < 4);
   }
 
   getBallots(): Set<Ballot> {
@@ -47,7 +29,7 @@ export class VoteComponent implements OnInit {
   getCandidateAvatar(): Option<string> {
     return this.voteService.getSelectedVote()
       .flatMap(v => v.getCandidate())
-      .flatMap(v => v.getAvatar());
+      .flatMap(v => v.getFormedDiscordAvatar());
   }
 
   getCandidateDiscordId(): Option<string> {
@@ -85,15 +67,27 @@ export class VoteComponent implements OnInit {
       .flatMap(v => v.getDescription());
   }
 
-  isVotableByUserGroup(): boolean {
-    return OptionUtils.exists2(
-      this.userService.getUser(),
-      this.voteService.getSelectedVote().flatMap(v => v.getPromotionGroup()),
-      (u, vG) => u.getGroup().exists(uG => uG.isHigher(vG))
-    );
+  isVotable(): boolean {
+    if (this.voteService.getSelectedVote().exists(v => v.isKnightLike())) {
+      return this.voteService.getSelectedVote()
+        .exists(v => v.getBallots().size < 4);
+    }
+    if (this.voteService.getSelectedVote().exists(v => v.isSergeantLike())) {
+      return this.voteService.getSelectedVote()
+        .exists(v => v.getBallots().size < 3);
+    }
+    return false;
   }
 
   ngOnInit(): void {
+  }
+
+  openBallotDialog(): void {
+    this.dialog.open(BallotDialogComponent, {
+      width: '350px',
+      autoFocus: true,
+      data: this.voteService.getSelectedVote()
+    });
   }
 
 }

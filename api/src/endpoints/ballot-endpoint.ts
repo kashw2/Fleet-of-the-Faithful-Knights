@@ -11,7 +11,6 @@ export class BallotEndpoint extends CrudEndpoint {
         super('/ballot');
     }
 
-
     create(req: Request): Promise<Either<string, any>> {
         return EitherUtils.sequence(Either.map2(
             this.validate(req),
@@ -25,6 +24,11 @@ export class BallotEndpoint extends CrudEndpoint {
             }
         ))
             .then(v => v.map(b => BallotJsonSerializer.instance.toJsonImpl(b)));
+    }
+
+
+    doesRequireAuthentication(req: Request): boolean {
+        return true;
     }
 
     private getBallot(req: Request): Either<string, Ballot> {
@@ -48,6 +52,12 @@ export class BallotEndpoint extends CrudEndpoint {
             default:
                 return false;
         }
+    }
+
+    read(req: Request): Promise<Either<string, any>> {
+        return Promise.resolve(this.getVoteId(req)
+            .flatMap(bid => this.db.cache.ballots.getBallotById(bid)))
+            .then(v => v.map(x => BallotJsonSerializer.instance.toJsonImpl(x)));
     }
 
     private validate(req: Request): Either<string, Ballot> {

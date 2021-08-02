@@ -25,9 +25,9 @@ export class DiscordSecret {
 
 }
 
-export class SecretJsonSerializer extends JsonSerializer<DiscordSecret> {
+export class DiscordSecretJsonSerializer extends JsonSerializer<DiscordSecret> {
 
-	static instance: SecretJsonSerializer = new SecretJsonSerializer();
+	static instance: DiscordSecretJsonSerializer = new DiscordSecretJsonSerializer();
 
 	fromJson(json: any): DiscordSecret {
 		return new DiscordSecret(

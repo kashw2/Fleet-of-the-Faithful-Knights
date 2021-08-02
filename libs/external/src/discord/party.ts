@@ -21,9 +21,9 @@ export class DiscordParty {
 
 }
 
-export class PartyJsonSerializer extends JsonSerializer<DiscordParty> {
+export class DiscordPartyJsonSerializer extends JsonSerializer<DiscordParty> {
 
-	static instance: PartyJsonSerializer = new PartyJsonSerializer();
+	static instance: DiscordPartyJsonSerializer = new DiscordPartyJsonSerializer();
 
 	fromJson(json: any): DiscordParty {
 		return new DiscordParty(

@@ -30,23 +30,39 @@ export abstract class CrudEndpoint extends ApiEndpoint {
     mount(router: Router): void {
         // C - Create
         router.post(this.getEndpoint(), (req: Request, res: Response) => {
-            this.getRequestUser(req)
-                .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user))
+            if (this.doesRequireAuthentication(req)) {
+                this.getRequestUser(req)
+                    .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user));
+            } else {
+                this.runImpl(req, res);
+            }
         });
         // R - Read
         router.get(this.getEndpoint(), (req: Request, res: Response) => {
-            this.getRequestUser(req)
-                .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user))
+            if (this.doesRequireAuthentication(req)) {
+                this.getRequestUser(req)
+                    .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user));
+            } else {
+                this.runImpl(req, res);
+            }
         });
         // U - Update
         router.put(this.getEndpoint(), (req: Request, res: Response) => {
-            this.getRequestUser(req)
-                .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user))
+            if (this.doesRequireAuthentication(req)) {
+                this.getRequestUser(req)
+                    .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user));
+            } else {
+                this.runImpl(req, res);
+            }
         });
         // D - Delete
         router.delete(this.getEndpoint(), (req: Request, res: Response) => {
-            this.getRequestUser(req)
-                .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user))
+            if (this.doesRequireAuthentication(req)) {
+                this.getRequestUser(req)
+                    .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user));
+            } else {
+                this.runImpl(req, res);
+            }
         });
     }
 
@@ -57,7 +73,7 @@ export abstract class CrudEndpoint extends ApiEndpoint {
         return Promise.resolve(Left(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`));
     }
 
-    runImpl(req: Request, res: Response, user: User): void {
+    runImpl(req: Request, res: Response, user?: User): void {
         if (this.hasPermission(req, res, user)) {
             try {
                 switch (this.getHTTPMethod(req)) {

@@ -26,6 +26,10 @@ export class VotesEndpoint extends CrudEndpoint {
             .then(v => v.map(x => VoteJsonSerializer.instance.toJsonImpl(x)));
     }
 
+    doesRequireAuthentication(req: Request): boolean {
+        return true;
+    }
+
     private getVote(req: Request): Either<string, Vote> {
         return ApiUtils.parseBodyParamSerialized(req, 'vote', VoteJsonSerializer.instance);
     }

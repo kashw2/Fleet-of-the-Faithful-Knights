@@ -25,9 +25,9 @@ export class DiscordRoleTag {
 
 }
 
-export class RoleTagJsonSerializer extends JsonSerializer<DiscordRoleTag> {
+export class DiscordRoleTagJsonSerializer extends JsonSerializer<DiscordRoleTag> {
 
-	static instance: RoleTagJsonSerializer = new RoleTagJsonSerializer();
+	static instance: DiscordRoleTagJsonSerializer = new DiscordRoleTagJsonSerializer();
 
 	fromJson(json: any): DiscordRoleTag {
 		return new DiscordRoleTag(

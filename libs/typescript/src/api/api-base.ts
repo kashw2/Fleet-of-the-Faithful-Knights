@@ -23,8 +23,8 @@ export class ApiBase {
     public sendRequest(
         endpoint: string,
         method: 'GET' | 'POST' | 'PUT' | 'DELETE',
-        body: any,
         headers: object = this.getHeaders(),
+        body?: any,
     ): Promise<Either<string, any>> {
         return axios({
             method,
@@ -32,7 +32,7 @@ export class ApiBase {
             data: body,
             url: this.getFullUrl(endpoint)
         }).then(v => Right(v.data))
-            .catch(err => Left(err))
+            .catch(err => Left(err));
     }
 
 }

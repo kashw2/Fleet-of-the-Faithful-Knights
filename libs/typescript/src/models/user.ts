@@ -1,7 +1,7 @@
 import {Set} from 'immutable';
-import * as moment from 'moment';
+import moment from 'moment';
 import {JsonBuilder, JsonSerializer, OptionUtils, parseDate, parseString} from '@kashw2/lib-util';
-import {None, Option} from 'funfix-core';
+import {None, Option, Some} from 'funfix-core';
 import {
     avatarKey,
     discordDiscriminatorKey,
@@ -15,7 +15,7 @@ import {
     usernameKey
 } from '../misc/json-keys';
 import {Group, GroupJsonSerializer} from './group';
-import {StarCitizenUser, StarCitizenUserJsonSerializer} from '@kashw2/lib-external';
+import {DiscordUser, StarCitizenUser, StarCitizenUserJsonSerializer} from '@kashw2/lib-external';
 import {Permission, PermissionJsonSerializer} from "./permission";
 
 export class User {
@@ -24,7 +24,7 @@ export class User {
         private id: Option<string> = None,
         private username: Option<string> = None,
         private locale: Option<string> = None,
-        private avatar: Option<string> = None,
+        private discordAvatar: Option<string> = None,
         private discordId: Option<string> = None,
         private discordDiscriminator: Option<string> = None,
         private group: Option<Group> = None,
@@ -34,8 +34,23 @@ export class User {
     ) {
     }
 
-    public getAvatar(): Option<string> {
-        return this.avatar;
+    public static fromDiscordUser(discordUser: DiscordUser): User {
+        return new User(
+            None,
+            discordUser.getUsername(),
+            discordUser.getLocale(),
+            discordUser.getAvatar(),
+            discordUser.getId(),
+            discordUser.getDiscriminator(),
+            None,
+            Set(),
+            Some(moment()),
+            None,
+        );
+    }
+
+    public getDiscordAvatar(): Option<string> {
+        return this.discordAvatar;
     }
 
     public getDiscordDiscriminator(): Option<string> {
@@ -44,6 +59,14 @@ export class User {
 
     public getDiscordId(): Option<string> {
         return this.discordId;
+    }
+
+    public getFormedDiscordAvatar(): Option<string> {
+        return Option.map2(
+            this.getDiscordId(),
+            this.getDiscordAvatar(),
+            (did, avatar) => `https://cdn.discordapp.com/avatars/${did}/${avatar}.png`
+        );
     }
 
     public getGroup(): Option<Group> {
@@ -87,6 +110,21 @@ export class User {
         return permissionIds.some(pid => this.getPermissionIds().contains(pid));
     }
 
+    public withGroup(group: Group): User {
+        return new User(
+            this.getId(),
+            this.getUsername(),
+            this.getLocale(),
+            this.getDiscordAvatar(),
+            this.getDiscordId(),
+            this.getDiscordDiscriminator(),
+            Option.of(group),
+            this.getPermissions(),
+            this.getMemberSince(),
+            this.getStarCitizenUser(),
+        );
+    }
+
 }
 
 export class UserJsonSerializer extends JsonSerializer<User> {
@@ -112,7 +150,7 @@ export class UserJsonSerializer extends JsonSerializer<User> {
         return builder.addOptional(value.getId(), idKey)
             .addOptional(value.getUsername(), usernameKey)
             .addOptional(value.getLocale(), localeKey)
-            .addOptional(value.getAvatar(), avatarKey)
+            .addOptional(value.getDiscordAvatar(), avatarKey)
             .addOptional(value.getDiscordId(), discordIdKey)
             .addOptional(value.getDiscordDiscriminator(), discordDiscriminatorKey)
             .addOptionalSerialized(value.getGroup(), groupKey, GroupJsonSerializer.instance)

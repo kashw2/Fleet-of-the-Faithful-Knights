@@ -1,5 +1,5 @@
 import {None, Option} from 'funfix-core';
-import {DiscordGuildMember, GuildMemberJsonSerializer} from './guild-member';
+import {DiscordGuildMember, DiscordGuildMemberJsonSerializer} from './guild-member';
 import {JsonBuilder, JsonSerializer, parseBoolean, parseString} from '@kashw2/lib-util';
 import {
 	channelIdKey,
@@ -84,16 +84,16 @@ export class DiscordVoiceState {
 
 }
 
-export class VoiceStateJsonSerializer extends JsonSerializer<DiscordVoiceState> {
+export class DiscordVoiceStateJsonSerializer extends JsonSerializer<DiscordVoiceState> {
 
-	static instance: VoiceStateJsonSerializer = new VoiceStateJsonSerializer();
+	static instance: DiscordVoiceStateJsonSerializer = new DiscordVoiceStateJsonSerializer();
 
 	fromJson(json: any): DiscordVoiceState {
 		return new DiscordVoiceState(
 			parseString(json[guildIdKey]),
 			parseString(json[channelIdKey]),
 			parseString(json[userIdKey]),
-			GuildMemberJsonSerializer.instance.fromJsonImpl(json[memberKey]),
+			DiscordGuildMemberJsonSerializer.instance.fromJsonImpl(json[memberKey]),
 			parseString(json[sessionIdKey]),
 			parseBoolean(json[deafKey]),
 			parseBoolean(json[muteKey]),
@@ -109,7 +109,7 @@ export class VoiceStateJsonSerializer extends JsonSerializer<DiscordVoiceState> 
 		return builder.addOptional(value.getGuildId(), guildIdKey)
 			.addOptional(value.getChannelId(), channelIdKey)
 			.addOptional(value.getUserId(), userIdKey)
-			.addOptionalSerialized(value.getMember(), memberKey, GuildMemberJsonSerializer.instance)
+			.addOptionalSerialized(value.getMember(), memberKey, DiscordGuildMemberJsonSerializer.instance)
 			.addOptional(value.getSessionId(), sessionIdKey)
 			.addOptional(value.getDeaf(), deafKey)
 			.addOptional(value.getMute(), muteKey)

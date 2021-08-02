@@ -24,7 +24,7 @@ export class UserService {
           return;
         }
         this.toastService.show('Logged In', "Success");
-        this.setUser(u.toOption());
+        // this.setUser(u.toOption());
       });
   }
 

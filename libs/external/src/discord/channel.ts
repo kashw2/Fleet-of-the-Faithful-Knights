@@ -1,7 +1,7 @@
 import {None, Option} from 'funfix-core';
-import {DiscordOverwrite, OverwriteJsonSerializer} from './overwrite';
+import {DiscordOverwrite, DiscordOverwriteJsonSerializer} from './overwrite';
 import {Set} from 'immutable';
-import {DiscordUser, UserJsonSerializer} from './user';
+import {DiscordUser, DiscordUserJsonSerializer} from './user';
 import * as moment from 'moment';
 import {
 	JsonBuilder,
@@ -131,9 +131,9 @@ export class DiscordChannel {
 
 }
 
-export class ChannelJsonSerializer extends JsonSerializer<DiscordChannel> {
+export class DiscordChannelJsonSerializer extends JsonSerializer<DiscordChannel> {
 
-	static instance: ChannelJsonSerializer = new ChannelJsonSerializer();
+	static instance: DiscordChannelJsonSerializer = new DiscordChannelJsonSerializer();
 
 	fromJson(json: any): DiscordChannel {
 		return new DiscordChannel(
@@ -141,7 +141,7 @@ export class ChannelJsonSerializer extends JsonSerializer<DiscordChannel> {
 			parseNumber(json[typeKey]),
 			parseString(json[guildIdKey]),
 			parseNumber(json[positionKey]),
-			parseSetSerialized(json[permissionOverwritesKey], OverwriteJsonSerializer.instance),
+			parseSetSerialized(json[permissionOverwritesKey], DiscordOverwriteJsonSerializer.instance),
 			parseString(json[nameKey]),
 			parseString(json[topicKey]),
 			parseBoolean(json[nsfwKey]),
@@ -149,7 +149,7 @@ export class ChannelJsonSerializer extends JsonSerializer<DiscordChannel> {
 			parseNumber(json[bitrateKey]),
 			parseNumber(json[userLimitKey]),
 			parseNumber(json[rateLimitPerUserKey]),
-			parseSetSerialized(json[recipientsKey], UserJsonSerializer.instance),
+			parseSetSerialized(json[recipientsKey], DiscordUserJsonSerializer.instance),
 			parseString(json[iconKey]),
 			parseString(json[ownerIdKey]),
 			parseString(json[applicationIdKey]),
@@ -163,7 +163,7 @@ export class ChannelJsonSerializer extends JsonSerializer<DiscordChannel> {
 			.addOptional(value.getType(), typeKey)
 			.addOptional(value.getGuildId(), guildIdKey)
 			.addOptional(value.getPosition(), positionKey)
-			.addIterableSerialized(value.getPermissionOverwrites(), permissionOverwritesKey, OverwriteJsonSerializer.instance)
+			.addIterableSerialized(value.getPermissionOverwrites(), permissionOverwritesKey, DiscordOverwriteJsonSerializer.instance)
 			.addOptional(value.getName(), nameKey)
 			.addOptional(value.getTopic(), topicKey)
 			.addOptional(value.getNsfw(), nsfwKey)
@@ -171,7 +171,7 @@ export class ChannelJsonSerializer extends JsonSerializer<DiscordChannel> {
 			.addOptional(value.getBitrate(), bitrateKey)
 			.addOptional(value.getUserLimit(), userLimitKey)
 			.addOptional(value.getRateLimitPerUser(), rateLimitPerUserKey)
-			.addIterableSerialized(value.getRecipients(), recipientsKey, UserJsonSerializer.instance)
+			.addIterableSerialized(value.getRecipients(), recipientsKey, DiscordUserJsonSerializer.instance)
 			.addOptional(value.getIcon(), iconKey)
 			.addOptional(value.getOwnerId(), ownerIdKey)
 			.addOptional(value.getApplicationId(), applicationIdKey)

@@ -1,0 +1,12 @@
+<h1 *ngIf="getCandidateUsername().nonEmpty()" mat-dialog-title>{{getCandidateUsername().get()}}'s Vote</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill" class="w-100">
+    <mat-label>Reasoning</mat-label>
+    <textarea #response matInput></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions class="justify-content-between">
+  <button *ngIf="canAffirm()" mat-button class="mx-2 my-1 br-none text-success" (click)="castBallot(0, response.value)">Affirm</button>
+  <button *ngIf="canDeny()" mat-button class="mx-2 my-1 br-none text-danger" (click)="castBallot(1, response.value)">Deny</button>
+  <button *ngIf="canVeto()" mat-button class="mx-2 my-1 br-none text-danger" (click)="castBallot(2, response.value)">Veto</button>
+</div>

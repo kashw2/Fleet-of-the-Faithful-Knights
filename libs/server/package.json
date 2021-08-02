@@ -1,6 +1,6 @@
 {
   "name": "@kashw2/lib-server",
-  "version": "1.2.3",
+  "version": "2.0.1",
   "description": "Fleet of the Faithful Knights Serverside Library",
   "main": "./dist/lib-server.js",
   "typings": "./dist/src/index.d.ts",

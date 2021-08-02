@@ -10,8 +10,8 @@ import {
 import {None, Option} from 'funfix-core';
 import {List} from 'immutable';
 import * as moment from 'moment';
-import {DiscordAsset, AssetJsonSerializer} from './asset';
-import {DiscordEmoji, EmojiJsonSerializer} from './emoji';
+import {DiscordAsset, DiscordAssetJsonSerializer} from './asset';
+import {DiscordEmoji, DiscordEmojiJsonSerializer} from './emoji';
 import {
 	applicationIdKey,
 	assetsKey,
@@ -28,9 +28,9 @@ import {
 	typeKey,
 	urlKey
 } from './json-keys';
-import {DiscordParty, PartyJsonSerializer} from './party';
-import {DiscordSecret, SecretJsonSerializer} from './secret';
-import {DiscordTimestamp, TimestampJsonSerializer} from './timestamp';
+import {DiscordParty, DiscordPartyJsonSerializer} from './party';
+import {DiscordSecret, DiscordSecretJsonSerializer} from './secret';
+import {DiscordTimestamp, DiscordTimestampJsonSerializer} from './timestamp';
 
 export class DiscordActivity {
 
@@ -110,9 +110,9 @@ export class DiscordActivity {
 
 }
 
-export class ActivityJsonSerializer extends JsonSerializer<DiscordActivity> {
+export class DiscordActivityJsonSerializer extends JsonSerializer<DiscordActivity> {
 
-	static instance: ActivityJsonSerializer = new ActivityJsonSerializer();
+	static instance: DiscordActivityJsonSerializer = new DiscordActivityJsonSerializer();
 
 	fromJson(json: any): DiscordActivity {
 		return new DiscordActivity(
@@ -120,14 +120,14 @@ export class ActivityJsonSerializer extends JsonSerializer<DiscordActivity> {
 			parseNumber(json[typeKey]),
 			parseString(json[urlKey]),
 			parseDate(json[createdAtKey]),
-			parseListSerialized(json[timestampsKey], TimestampJsonSerializer.instance),
+			parseListSerialized(json[timestampsKey], DiscordTimestampJsonSerializer.instance),
 			parseString(json[applicationIdKey]),
 			parseString(json[detailsKey]),
 			parseString(json[stateKey]),
-			EmojiJsonSerializer.instance.fromJsonImpl(json[emojiKey]),
-			PartyJsonSerializer.instance.fromJsonImpl(json[partyKey]),
-			AssetJsonSerializer.instance.fromJsonImpl(json[assetsKey]),
-			SecretJsonSerializer.instance.fromJsonImpl(json[secretKey]),
+			DiscordEmojiJsonSerializer.instance.fromJsonImpl(json[emojiKey]),
+			DiscordPartyJsonSerializer.instance.fromJsonImpl(json[partyKey]),
+			DiscordAssetJsonSerializer.instance.fromJsonImpl(json[assetsKey]),
+			DiscordSecretJsonSerializer.instance.fromJsonImpl(json[secretKey]),
 			parseBoolean(json[instanceKey]),
 			parseNumber(json[flagsKey]),
 		);
@@ -138,14 +138,14 @@ export class ActivityJsonSerializer extends JsonSerializer<DiscordActivity> {
 			.addOptional(value.getType(), typeKey)
 			.addOptional(value.getUrl(), urlKey)
 			.addOptional(value.getCreatedAt(), createdAtKey)
-			.addIterableSerialized(value.getTimestamps(), timestampsKey, TimestampJsonSerializer.instance)
+			.addIterableSerialized(value.getTimestamps(), timestampsKey, DiscordTimestampJsonSerializer.instance)
 			.addOptional(value.getApplicationId(), applicationIdKey)
 			.addOptional(value.getDetails(), detailsKey)
 			.addOptional(value.getState(), stateKey)
-			.addOptionalSerialized(value.getEmoji(), emojiKey, EmojiJsonSerializer.instance)
-			.addOptionalSerialized(value.getParty(), partyKey, PartyJsonSerializer.instance)
-			.addOptionalSerialized(value.getAssets(), assetsKey, AssetJsonSerializer.instance)
-			.addOptionalSerialized(value.getSecret(), secretKey, SecretJsonSerializer.instance)
+			.addOptionalSerialized(value.getEmoji(), emojiKey, DiscordEmojiJsonSerializer.instance)
+			.addOptionalSerialized(value.getParty(), partyKey, DiscordPartyJsonSerializer.instance)
+			.addOptionalSerialized(value.getAssets(), assetsKey, DiscordAssetJsonSerializer.instance)
+			.addOptionalSerialized(value.getSecret(), secretKey, DiscordSecretJsonSerializer.instance)
 			.addOptional(value.getInstance(), instanceKey)
 			.addOptional(value.getFlags(), flagsKey)
 			.build();

@@ -1,10 +1,21 @@
-<img src="./assets/images/Fleet_of_the_Faithful_Knights_Shield.png" class="img-fluid c-pointer m-1" (click)="navigationService.home()">
-<img src="./assets/images/profile-picture.png"
+<img src="./assets/images/Fleet_of_the_Faithful_Knights_Shield.png" class="img-fluid c-pointer m-1"
+     (click)="navigationService.home()">
+<img *ngIf="userService.getUser().nonEmpty()"
+     [src]="getUserAvatar().getOrElse('./assets/images/discord.jpg')"
      matTooltip="Profile"
      id="nav-profile"
      class="rounded-circle c-pointer mt-4"
      height="50"
-     width="50">
+     width="50"
+     (click)="navigationService.home()">
+<img *ngIf="userService.getUser().isEmpty()"
+     [src]="getUserAvatar().getOrElse('./assets/images/discord.jpg')"
+     matTooltip="Profile"
+     id="nav-profile"
+     class="rounded-circle c-pointer mt-4"
+     height="50"
+     width="50"
+     (click)="signIn()">
 <div matTooltip="Home"
      class="d-flex container-fluid align-items-center justify-content-center nav-action ffk-content-bg c-pointer ffk-icon-shade hover rounded mt-4 mb-2"
      (click)="navigationService.home()">

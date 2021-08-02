@@ -1,6 +1,6 @@
 {
   "name": "@kashw2/lib-external",
-  "version": "1.1.1",
+  "version": "3.1.1",
   "description": "Fleet of the Faithful Knights External API Library",
   "main": "./dist/lib-external.js",
   "typings": "./dist/src/index.d.ts",
