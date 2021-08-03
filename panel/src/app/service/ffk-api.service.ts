@@ -1,6 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {
-  Ballot, BallotJsonSerializer,
+  Ballot,
+  BallotJsonSerializer,
   CrudApiBase,
   Group,
   GroupJsonSerializer,
@@ -11,6 +12,8 @@ import {
 } from "@kashw2/lib-ts";
 import {Either} from "funfix-core";
 import {List} from "immutable";
+import {CrudLocalStorageService} from "./crud.service";
+import {EitherUtils} from "@kashw2/lib-util";
 
 
 @Injectable({
@@ -20,7 +23,7 @@ export class FfkApiService {
 
   constructor(
     @Inject('ffkApiServer') private apiServer: string,
-    @Inject('ffkDiscordId') private discordId: string,
+    private crudLocalStorageService: CrudLocalStorageService,
   ) {
   }
 
@@ -30,45 +33,54 @@ export class FfkApiService {
   ballot: (vid?: string) => CrudApiBase = (vid?: string) => new CrudApiBase(this.apiServer, `ballot?vote_id=${vid}`);
 
   getBallots(): Promise<Either<string, List<Ballot>>> {
-    return this.ballot()
-      .sendReadRequestList(
-        BallotJsonSerializer.instance,
-        {},
-        {'Discord-Id': this.getDiscordId()},
-      );
+    return EitherUtils.sequence(this.getDiscordId()
+      .map(did => this.ballot()
+        .sendReadRequestList(
+          BallotJsonSerializer.instance,
+          {
+            'Discord-Id': did
+          },
+          {},
+        )));
   }
 
-  getDiscordId(): string {
-    return this.discordId;
+  getDiscordId(): Either<string, string> {
+    return EitherUtils.toEither(this.crudLocalStorageService.read('discordid'), "Client -> Server Handshake Failed");
   }
 
   getGroups(): Promise<Either<string, List<Group>>> {
-    return this.group()
-      .sendReadRequestList(
-        GroupJsonSerializer.instance,
-        {},
-        {'Discord-Id': this.getDiscordId()}
-      );
+    return EitherUtils.sequence(this.getDiscordId()
+      .map(did => this.group()
+        .sendReadRequestList(
+          GroupJsonSerializer.instance,
+          {
+            'Discord-Id': did
+          },
+          {},
+        )));
   }
 
   getUser(): Promise<Either<string, User>> {
-    return this.user(this.getDiscordId())
-      .sendReadRequest(
+    return EitherUtils.sequence(this.getDiscordId()
+      .map(did => this.user(did).sendReadRequest(
         UserJsonSerializer.instance,
-        {},
         {
-          'Discord-Id': this.getDiscordId(),
-        }
-      );
+          'Discord-Id': did,
+        },
+        {},
+      )));
   }
 
   getVotes(): Promise<Either<string, List<Vote>>> {
-    return this.vote
-      .sendReadRequestList(
-        VoteJsonSerializer.instance,
-        {},
-        {'Discord-Id': this.getDiscordId()}
-      );
+    return EitherUtils.sequence(this.getDiscordId()
+      .map(did => this.vote
+        .sendReadRequestList(
+          VoteJsonSerializer.instance,
+          {
+            'Discord-Id': did
+          },
+          {},
+        )));
   }
 
   group: (gid?: number) => CrudApiBase = (gid?: number) => new CrudApiBase(this.apiServer, gid ? `group?group_id=${gid}` : 'group');
@@ -76,37 +88,36 @@ export class FfkApiService {
   userPermissionMapping: (uid: string) => CrudApiBase = (uid: string) => new CrudApiBase(this.apiServer, `user/${uid}/permission/mapping`);
 
   writeBallot(ballot: Ballot, voteId: string): Promise<Either<string, Ballot>> {
-    return this.ballot(voteId)
-      .sendCreateRequest(
-        BallotJsonSerializer.instance,
-        {
-          ballot: BallotJsonSerializer.instance.toJsonImpl(ballot)
-        },
-        {
-          'Discord-Id': this.getDiscordId(),
-        }
-      );
+    return EitherUtils.sequence(this.getDiscordId()
+      .map(did => this.ballot(voteId)
+        .sendCreateRequest(
+          BallotJsonSerializer.instance,
+          {
+            'Discord-Id': did,
+          },
+          {
+            ballot: BallotJsonSerializer.instance.toJsonImpl(ballot)
+          },
+        )));
   }
 
   writeUser(code: string): Promise<Either<string, User>> {
     return this.user(code, true)
-      .sendCreateRequest(
-        UserJsonSerializer.instance,
-        {},
-      );
+      .sendCreateRequest(UserJsonSerializer.instance);
   }
 
   writeVote(vote: Vote): Promise<Either<string, Vote>> {
-    return this.vote
-      .sendCreateRequest(
-        VoteJsonSerializer.instance,
-        {
-          vote: VoteJsonSerializer.instance.toJsonImpl(vote)
-        },
-        {
-          'Discord-Id': this.getDiscordId(),
-        }
-      );
+    return EitherUtils.sequence(this.getDiscordId()
+      .map(did => this.vote
+        .sendCreateRequest(
+          VoteJsonSerializer.instance,
+          {
+            'Discord-Id': did,
+          },
+          {
+            vote: VoteJsonSerializer.instance.toJsonImpl(vote)
+          },
+        )));
   }
 
 }

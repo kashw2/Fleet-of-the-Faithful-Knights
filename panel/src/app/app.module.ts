@@ -42,7 +42,6 @@ import {MatDialogModule} from "@angular/material/dialog";
   ],
   providers: [
     {provide: 'ffkApiServer', useValue: environment.FFK_API_SERVER},
-    {provide: 'ffkDiscordId', useValue: environment.FFK_DISCORD_ID}
   ],
   bootstrap: [AppComponent]
 })
