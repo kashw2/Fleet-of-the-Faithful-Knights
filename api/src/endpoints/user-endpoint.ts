@@ -133,6 +133,7 @@ export class UserEndpoint extends CrudEndpoint {
                                 .pipe(tap(u => {
                                     this.db.cache.users.add(u);
                                     this.db.procedures.insert.insertUser(u)('System');
+                                    this.db.cache.cacheUsers();
                                 }));
                         }));
                 })))
