@@ -1,18 +1,23 @@
 import {DbProcedures} from "./procedures/db-procedures";
 import {List} from "immutable";
 import {Ballot, Group, Permission, User, Vote} from "@kashw2/lib-ts";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, interval, of} from "rxjs";
 import {UserCache} from "./caches/user-cache";
 import {GroupCache} from "./caches/group-cache";
 import {PermissionCache} from "./caches/permission-cache";
 import {VoteCache} from "./caches/vote-cache";
 import {BallotCache} from "./caches/ballot-cache";
+import {switchMap} from "rxjs/operators";
 
 export class DbCache {
 
     constructor(private procedures: DbProcedures) {
-        this.cache();
+        of(this.cache())
+            .pipe(switchMap(_ => interval(300000)))
+            .subscribe(_ => this.cache());
     }
+
+    ballots: BallotCache = new BallotCache(List());
 
     groups: GroupCache = new GroupCache(List());
 
@@ -24,8 +29,6 @@ export class DbCache {
 
     votes: VoteCache = new VoteCache(List());
 
-    ballots: BallotCache = new BallotCache(List());
-
     cache(): void {
         console.info('Starting Cache');
         Promise.all([
@@ -36,8 +39,8 @@ export class DbCache {
             this.cacheBallots(),
         ]).then(_ => {
             console.info('Cache Complete');
-            this.ready.next(true)
-        })
+            this.ready.next(true);
+        });
     }
 
     async cacheBallots(): Promise<void> {
@@ -45,7 +48,7 @@ export class DbCache {
             .then(b => {
                 this.ballots = new BallotCache(b.getOrElse(List<Ballot>()));
                 console.info(`Loaded ${this.ballots.size} Ballots`);
-            })
+            });
     }
 
     async cacheGroups(): Promise<void> {
@@ -53,7 +56,7 @@ export class DbCache {
             .then(g => {
                 this.groups = new GroupCache(g.getOrElse(List<Group>()));
                 console.info(`Loaded ${this.groups.size} Groups`);
-            })
+            });
     }
 
     async cachePermissions(): Promise<void> {
@@ -61,7 +64,7 @@ export class DbCache {
             .then(p => {
                 this.permissions = new PermissionCache(p.getOrElse(List<Permission>()));
                 console.log(`Loaded ${this.permissions.size} Permissions`);
-            })
+            });
     }
 
     async cacheUsers(): Promise<void> {
@@ -77,7 +80,7 @@ export class DbCache {
             .then(v => {
                 this.votes = new VoteCache(v.getOrElse(List<Vote>()));
                 console.log(`Loaded ${this.votes.size} Votes`);
-            })
+            });
     }
 
     isReady(): boolean {
