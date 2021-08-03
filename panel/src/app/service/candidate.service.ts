@@ -41,7 +41,7 @@ export class CandidateService {
         Some('Bship'),
         Some('280932387716726786'),
         Some('#5578'),
-        Some('https://dto9r5vaiz7bu.cloudfront.net/bj7w80a5h2mic/source.png'),
+        Some('5c9a69a8ed4d1130447d8bf0a5685461'),
         Some(new Group(Some('1'), Some('Master Commander'), Some('#ff0000'))),
         Some(new StarCitizenUser(
           Some('123456'),
