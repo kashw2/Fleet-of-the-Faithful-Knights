@@ -23,8 +23,22 @@ export class UserService {
           );
           return;
         }
-        this.toastService.show('Logged In', "Success");
-        // this.setUser(u.toOption());
+
+        /**
+         * TODO: There seems to be a bug here where either the API is returning a new User if one isn't found
+         * or our sendRequest is funky somewhere and is returning a new User if it doesn't find one in the API.
+         *
+         * This means we only know if the user that came back is authentic if we check for a username or some other field
+         */
+        u.toOption()
+          .flatMap(v => v.getUsername())
+          .fold(
+            (left: void) => this.toastService.show("Unable to Authenticate", "Error"),
+            (username) => {
+              this.toastService.show(`Welcome ${username}`, "Success");
+              this.setUser(u.toOption());
+            }
+          );
       });
   }
 
