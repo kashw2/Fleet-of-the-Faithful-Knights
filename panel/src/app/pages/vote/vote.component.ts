@@ -55,11 +55,9 @@ export class VoteComponent implements OnInit {
   }
 
   getFormattedCandidateAvatar(): Option<string> {
-    return Option.map2(
-      this.getCandidateDiscordId(),
-      this.getCandidateAvatar(),
-      (did, avatar) => `https://cdn.discordapp.com/avatars/${did}/${avatar}.png`,
-    );
+    return this.voteService.getSelectedVote()
+      .flatMap(v => v.getCandidate())
+      .flatMap(c => c.getFormedDiscordAvatar());
   }
 
   getVoteDescription(): Option<string> {

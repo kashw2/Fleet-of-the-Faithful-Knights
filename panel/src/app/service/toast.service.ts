@@ -67,6 +67,16 @@ export class ToastService {
       .pipe(map(([either, label]) => this.showAndRecoverList<A>(either, label)));
   }
 
+  showEither<A>(
+    input: Either<string, A>,
+    success: string,
+  ): void {
+    input.fold(
+      (left) => this.show(left, 'Error'),
+      (right) => this.show(success, "Success")
+    );
+  }
+
   private showError(message: string, title: string = 'Error!', timeout: number = 2500): void {
     this.toastrService.error(message, title, {
       timeOut: timeout,

@@ -14,32 +14,16 @@ export class UserService {
     private ffkApiService: FfkApiService,
     private toastService: ToastService,
   ) {
-    this.ffkApiService.getUser()
-      .then(u => {
-        if (u.isLeft()) {
-          this.toastService.show(
-            u.value,
-            "Error",
-          );
-          return;
-        }
-
-        /**
-         * TODO: There seems to be a bug here where either the API is returning a new User if one isn't found
-         * or our sendRequest is funky somewhere and is returning a new User if it doesn't find one in the API.
-         *
-         * This means we only know if the user that came back is authentic if we check for a username or some other field
-         */
-        u.toOption()
-          .flatMap(v => v.getUsername())
-          .fold(
-            (left: void) => this.toastService.show("Unable to Authenticate", "Error"),
-            (username) => {
-              this.toastService.show(`Welcome ${username}`, "Success");
-              this.setUser(u.toOption());
-            }
-          );
-      });
+    if (this.ffkApiService.getDiscordId().isRight()) {
+      this.ffkApiService.getUser()
+        .then(u => {
+          u.toOption()
+            .flatMap(v => v.getUsername())
+            .fold(
+              (left: void) => this.toastService.show("Authentication Error", "Error"),
+              (username) => this.setUser(u.toOption()));
+        });
+    }
   }
 
   private user: BehaviorSubject<Option<User>> = new BehaviorSubject<Option<User>>(None);
