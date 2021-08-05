@@ -26,6 +26,7 @@ export class ApiBase {
         headers: object = this.getHeaders(),
         body?: any,
     ): Promise<Either<string, any>> {
+        console.info(`Sending ${method} Request to ${this.getFullUrl(endpoint)}`);
         return axios({
             method,
             headers,
