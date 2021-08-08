@@ -4,6 +4,8 @@ import {ActivatedRoute} from "@angular/router";
 import {FfkApiService} from "../../service/ffk-api.service";
 import {filter, from, map, tap} from "rxjs";
 import {CrudService} from "../../service/crud.service";
+import {UserService} from "../../service/user.service";
+import {ToastService} from "../../service/toast.service";
 
 @Component({
   selector: 'app-home',
@@ -16,6 +18,8 @@ export class HomeComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private ffkApiService: FfkApiService,
     private crudService: CrudService,
+    private userService: UserService,
+    private toastService: ToastService,
     ) { }
 
   getDiscordAuthCode(): Option<string> {
@@ -25,6 +29,8 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     if (this.getDiscordAuthCode().nonEmpty()) {
       from(this.ffkApiService.writeUser(this.getDiscordAuthCode().get()))
+        .pipe(tap(v => this.toastService.showEither(v, "Successfully Logged In")))
+        .pipe(tap(v => this.userService.setUser(v.toOption())))
         .pipe(map(v => v.toOption().flatMap(u => u.getDiscordId())))
         .pipe(filter(v => v.nonEmpty()))
         .pipe(map(v => v.get()))

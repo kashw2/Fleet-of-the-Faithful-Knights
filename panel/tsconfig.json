@@ -27,6 +27,18 @@
       ],
       "stream": [
         "../node_modules/stream-browserify"
+      ],
+      "assert": [
+        "../node_modules/assert-browserify"
+      ],
+      "util": [
+        "../node_modules/util-browser"
+      ],
+      "url": [
+        "../node_modules/url-browser"
+      ],
+      "querystring": [
+        "../node_modules/querystring-browser"
       ]
     },
     "lib": [
