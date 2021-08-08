@@ -42,6 +42,10 @@ export class ApiUtils {
         res.json({error});
     }
 
+    static sendSerializedListResponse<A>(res: Response, data: A[], serializer: JsonSerializer<A>): void {
+        res.send(serializer.toJsonArray(data));
+    }
+
     static sendSerializedResponse<A>(res: Response, data: A, serializer: JsonSerializer<A>): void {
         res.send(serializer.toJsonImpl(data));
     }
