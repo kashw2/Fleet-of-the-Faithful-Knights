@@ -61,6 +61,7 @@
   "workspaces": [
     "./",
     "./api",
+    "./onboarding",
     "./panel",
     "./libs/angular",
     "./libs/external",

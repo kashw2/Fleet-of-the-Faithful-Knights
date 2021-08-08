@@ -1,0 +1,41 @@
+{
+  "name": "@ffk/onboarding",
+  "version": "1.0.0",
+  "description": "Fleet of the Faithful Knights Onboarding Server",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config ./webpack/webpack.config.ts",
+    "build:dev": "webpack --config ./webpack/webpack.dev.config.ts",
+    "build:watch": "webpack --stats-error-details true --watch --config ./webpack/webpack.dev.config.ts",
+    "start:watch": "nodemon --inspect ./dist/onboarding.js",
+    "start": "nodemon --inspect ./dist/onboarding.js",
+    "docker-build": "docker build -t gcr.io/the-sandbox-311907/onboarding:$(git rev-parse --verify HEAD) -t gcr.io/the-sandbox-311907/onboarding:latest -f Dockerfile .",
+    "docker-run": "docker run -i --net='host' gcr.io/the-sandbox-311907/onboarding:$(git rev-parse --verify HEAD)",
+    "docker-publish": "docker push gcr.io/the-sandbox-311907/onboarding:$(git rev-parse --verify HEAD) && docker push gcr.io/the-sandbox-311907/onboarding:latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kashw2/Fleet-of-the-Faithful-Knights.git"
+  },
+  "keywords": [
+    "API",
+    "Onboarding",
+    "ETL",
+    "FFK",
+    "Fleet of the Faithful Knights"
+  ],
+  "author": "Keanu Ashwell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights/issues"
+  },
+  "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights#readme",
+  "dependencies": {
+    "typescript": "4.3.5"
+  },
+  "devDependencies": {
+    "ts-loader": "9.2.5",
+    "webpack": "5.49.0",
+    "webpack-cli": "4.7.2"
+  }
+}
