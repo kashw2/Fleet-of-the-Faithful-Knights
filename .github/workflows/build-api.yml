@@ -31,7 +31,7 @@ jobs:
           npm config set registry https://registry.npmjs.org/
 
       - name: install globals
-        run: sudo npm install -g lerna
+        run: npm install -g lerna
 
       - name: npm install
         run: |
@@ -39,7 +39,7 @@ jobs:
           lerna exec npm install --scope=@ffk/api
 
       - name: build api
-        run: lerna run build --scope=@ffk/api
+        run: lerna run build:dev --scope=@ffk/api
   deploy-api:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
@@ -56,7 +56,7 @@ jobs:
           npm config set registry https://registry.npmjs.org/
 
       - name: install globals
-        run: sudo npm install -g lerna
+        run: npm install -g lerna
 
       - name: npm install
         run: |
