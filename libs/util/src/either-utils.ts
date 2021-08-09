@@ -2,6 +2,35 @@ import {Either, Left, Option, Right} from "funfix-core";
 
 export class EitherUtils {
 
+    static flatMap2<A, B, C, D>(
+        e1: Either<A, B>,
+        e2: Either<A, C>,
+        f: (a: B, b: C) => Either<A, D>,
+    ): Either<A, D> {
+        if (e1.isLeft()) {
+            return e1;
+        } else if (e2.isLeft()) {
+            return e2;
+        }
+        return f(e1.get(), e2.get());
+    }
+
+    static flatMap3<A, B, C, D, E>(
+        e1: Either<A, B>,
+        e2: Either<A, C>,
+        e3: Either<A, D>,
+        f: (a: B, b: C, c: D) => Either<A, E>,
+    ): Either<A, E> {
+        if (e1.isLeft()) {
+            return e1;
+        } else if (e2.isLeft()) {
+            return e2;
+        } else if(e3.isLeft()) {
+            return e3;
+        }
+        return f(e1.get(), e2.get(), e3.get());
+    }
+
     static leftMap<A, B, C>(e: Either<B, A>, f: (b: B) => C): Either<C, A> {
         if (e.isLeft()) {
             return Left(f(e.value));
