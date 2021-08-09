@@ -10,3 +10,4 @@ export * from './models/candidate';
 export * from './models/ballot';
 export * from './models/permission';
 export * from './models/user-permission-mapping';
+export * from './models/api-template';
