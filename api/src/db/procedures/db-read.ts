@@ -1,7 +1,7 @@
 import {DbRequest} from "../db-request";
 import {Either} from "funfix-core";
 import {
-    Ballot, BallotJsonSerializer,
+    Ballot, BallotJsonSerializer, Candidate, CandidateJsonSerializer,
     Group,
     GroupJsonSerializer,
     Permission,
@@ -20,12 +20,16 @@ export class DbRead {
     constructor(private requests: DbRequest) {
     }
 
-    readGroups(): Promise<Either<string, List<Group>>> {
-        return this.requests.sendRequestListSerialized('ssp_json_GetGroups', List(), GroupJsonSerializer.instance);
-    }
-
     readBallots(): Promise<Either<string, List<Ballot>>> {
         return this.requests.sendRequestListSerialized('ssp_json_GetBallots', List(), BallotJsonSerializer.instance);
+    }
+
+    readCandidates(): Promise<Either<string, List<Candidate>>> {
+        return this.requests.sendRequestListSerialized('ssp_json_GetCandidates', List(), CandidateJsonSerializer.instance);
+    }
+
+    readGroups(): Promise<Either<string, List<Group>>> {
+        return this.requests.sendRequestListSerialized('ssp_json_GetGroups', List(), GroupJsonSerializer.instance);
     }
 
     readPermissions(): Promise<Either<string, List<Permission>>> {
