@@ -2,11 +2,16 @@ import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {EitherUtils} from "./either-utils";
 import {JsonSerializer} from "./json-serializer";
+import {List} from "immutable";
 
 export class ApiUtils {
 
     static parseBodyParamSerialized<A>(req: Request, key: string, serializer: JsonSerializer<A>): Either<string, A> {
         return EitherUtils.toEither(serializer.fromJsonImpl(req.body[key]), `Unable to parse body param ${key}`);
+    }
+
+    static parseBodyParamSerializedList<A>(req: Request, key: string, serializer: JsonSerializer<A>): Either<string, List<A>> {
+        return EitherUtils.liftEither(serializer.fromJsonArray(req.body[key]), `Unable to parse body param ${key}`);
     }
 
     static parseBooleanQueryParam(req: Request, key: string): Either<string, boolean> {
