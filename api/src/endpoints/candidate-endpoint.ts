@@ -15,20 +15,20 @@ export class CandidateEndpoint extends CrudEndpoint {
     create(req: Request): Promise<Either<string, any>> {
         if (this.isForSingle(req)) {
             return EitherUtils.sequence(
-                this.getCandidates(req)
+                this.getCandidate(req)
                     .map(c => {
-                        this.db.cache.candidates.update(c);
-                        return this.db.procedures.insert.insertCandidates(c)(this.getRequestUsername(req))
+                        this.db.cache.candidates.add(c);
+                        return this.db.procedures.insert.insertCandidate(c)(this.getRequestUsername(req));
                     })
-            );
+            ).then(v => v.map(x => CandidateJsonSerializer.instance.toJsonImpl(x)));
         }
         return EitherUtils.sequence(
-            this.getCandidate(req)
+            this.getCandidates(req)
                 .map(c => {
-                    this.db.cache.candidates.add(c);
-                    return this.db.procedures.insert.insertCandidate(c)(this.getRequestUsername(req))
+                    this.db.cache.candidates.update(c);
+                    return this.db.procedures.insert.insertCandidates(c)(this.getRequestUsername(req));
                 })
-        );
+        ).then(v => v.map(x => CandidateJsonSerializer.instance.toJsonArray(x.toArray())));
     }
 
     delete(req: Request): Promise<Either<string, any>> {
@@ -38,7 +38,12 @@ export class CandidateEndpoint extends CrudEndpoint {
     }
 
     doesRequireAuthentication(req: Request): boolean {
-        return false;
+        switch (this.getHTTPMethod(req)) {
+            case 'POST':
+                return false;
+            default:
+                return true;
+        }
     }
 
     getCandidate(req: Request): Either<string, Candidate> {

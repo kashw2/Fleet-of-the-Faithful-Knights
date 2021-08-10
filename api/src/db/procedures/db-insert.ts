@@ -40,7 +40,7 @@ export class DbInsert {
             return this.requests.sendRequestSerialized(
                 'ssp_json_InsertCandidate',
                 List.of(
-                    `@Json = '${CandidateJsonSerializer.instance.toJsonString(candidates)}`,
+                    `@Json = '${CandidateJsonSerializer.instance.toJsonString(candidates)}'`,
                     `@ModifiedBy = '${modifiedBy}'`,
                 ),
                 CandidateJsonSerializer.instance
@@ -53,7 +53,7 @@ export class DbInsert {
             return this.requests.sendRequestListSerialized(
                 'ssp_json_InsertCandidates',
                 List.of(
-                    `@Json = '${CandidateJsonSerializer.instance.toJsonStringArray(candidates.toArray())}`,
+                    `@Json = '${CandidateJsonSerializer.instance.toJsonStringArray(candidates.toArray())}'`,
                     `@ModifiedBy = '${modifiedBy}'`,
                 ),
                 CandidateJsonSerializer.instance
@@ -67,7 +67,7 @@ export class DbInsert {
                 'ssp_json_InsertGroup',
                 List.of(
                     `@Json = '${GroupJsonSerializer.instance.toJsonString(group)}'`,
-                    `@ModifiedBy = '${modifiedBy}'`),
+                ),
                 GroupJsonSerializer.instance,
             );
         };
