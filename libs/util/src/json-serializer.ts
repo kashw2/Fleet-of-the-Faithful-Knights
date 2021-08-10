@@ -37,4 +37,8 @@ export abstract class JsonSerializer<A> {
         return JSON.stringify(this.toJson(value, new JsonBuilder()));
     }
 
+    public toJsonStringArray(values: A[]): string {{
+        return JSON.stringify(this.toJsonArray(values), null, 2);
+    }}
+
 }
