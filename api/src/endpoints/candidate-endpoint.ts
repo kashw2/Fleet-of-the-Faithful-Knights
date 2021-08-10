@@ -12,6 +12,25 @@ export class CandidateEndpoint extends CrudEndpoint {
         super('/candidate');
     }
 
+    create(req: Request): Promise<Either<string, any>> {
+        if (this.isForSingle(req)) {
+            return EitherUtils.sequence(
+                this.getCandidates(req)
+                    .map(c => {
+                        this.db.cache.candidates.update(c);
+                        return this.db.procedures.insert.insertCandidates(c)(this.getRequestUsername(req))
+                    })
+            );
+        }
+        return EitherUtils.sequence(
+            this.getCandidate(req)
+                .map(c => {
+                    this.db.cache.candidates.add(c);
+                    return this.db.procedures.insert.insertCandidate(c)(this.getRequestUsername(req))
+                })
+        );
+    }
+
     delete(req: Request): Promise<Either<string, any>> {
         return EitherUtils.sequence(this.getCandidateId(req)
             .map(cid => this.db.procedures.delete.deleteCandidate(cid)))

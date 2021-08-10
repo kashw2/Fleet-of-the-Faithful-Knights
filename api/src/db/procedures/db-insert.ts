@@ -1,7 +1,7 @@
 import {DbRequest} from "../db-request";
 import {
     Ballot,
-    BallotJsonSerializer,
+    BallotJsonSerializer, Candidate, CandidateJsonSerializer,
     Group,
     GroupJsonSerializer,
     Permission,
@@ -31,6 +31,32 @@ export class DbInsert {
                     `@ModifiedBy = '${modifiedBy}'`,
                 ),
                 BallotJsonSerializer.instance
+            );
+        };
+    }
+
+    insertCandidate(candidates: Candidate): (modifiedBy: string) => Promise<Either<string, Candidate>> {
+        return (modifiedBy: string): Promise<Either<string, Candidate>> => {
+            return this.requests.sendRequestSerialized(
+                'ssp_json_InsertCandidate',
+                List.of(
+                    `@Json = '${CandidateJsonSerializer.instance.toJsonString(candidates)}`,
+                    `@ModifiedBy = '${modifiedBy}'`,
+                ),
+                CandidateJsonSerializer.instance
+            );
+        };
+    }
+
+    insertCandidates(candidates: List<Candidate>): (modifiedBy: string) => Promise<Either<string, List<Candidate>>> {
+        return (modifiedBy: string): Promise<Either<string, List<Candidate>>> => {
+            return this.requests.sendRequestListSerialized(
+                'ssp_json_InsertCandidates',
+                List.of(
+                    `@Json = '${CandidateJsonSerializer.instance.toJsonStringArray(candidates.toArray())}`,
+                    `@ModifiedBy = '${modifiedBy}'`,
+                ),
+                CandidateJsonSerializer.instance
             );
         };
     }
