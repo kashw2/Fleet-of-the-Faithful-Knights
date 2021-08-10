@@ -32,9 +32,20 @@ export class CandidateEndpoint extends CrudEndpoint {
         return true;
     }
 
-    isCreatingSingle(req: Request): boolean {
+    isForSingle(req: Request): boolean {
         return ApiUtils.parseBooleanQueryParam(req, 'single')
             .contains(true);
+    }
+
+    update(req: Request): Promise<Either<string, any>> {
+        return EitherUtils.sequence(Either.map2(
+            this.getCandidate(req),
+            this.getCandidateId(req),
+            (candidate, cid) => EitherUtils.sequence(this.validate(req)
+                .map(c => {
+                    return this.db.procedures.update.updateCandidate(c, cid)(this.getRequestUsername(req));
+                })
+            )));
     }
 
     read(req: Request): Promise<Either<string, any>> {
