@@ -1,5 +1,6 @@
 import express, {NextFunction, Request, Response} from "express";
 import bodyParser from "body-parser";
+import {AllEndpoints} from "./endpoints/all-endpoints";
 
 const app = express();
 const router = express.Router();
@@ -29,8 +30,11 @@ router.use((req: Request, res: Response, next: NextFunction) => {
 app.use((req: Request, res: Response, next: NextFunction) => {
     if (!req.route)
         res.status(404);
-    res.json({message: 'Welcome to the Fleet of the Faithful Knights Onboarding Server'});
+    else
+        res.json({message: 'Welcome to the Fleet of the Faithful Knights Onboarding Server'});
     next();
 });
+
+AllEndpoints.initialiseEndpoints(router);
 
 app.listen(process.env.PORT || 3002, () => console.log(`Listening on port 3002`));
