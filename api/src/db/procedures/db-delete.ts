@@ -1,6 +1,7 @@
 import {DbRequest} from "../db-request";
 import {Either} from "funfix-core";
 import {
+    Candidate, CandidateJsonSerializer,
     Group,
     GroupJsonSerializer,
     Permission,
@@ -14,6 +15,10 @@ import {List} from "immutable";
 export class DbDelete {
 
     constructor(private requests: DbRequest) {
+    }
+
+    deleteCandidate(candidateId: string): Promise<Either<string, Candidate>> {
+        return this.requests.sendRequestSerialized('ssp_json_DeleteCandidate', List.of(`@CandidateId = ${candidateId}`), CandidateJsonSerializer.instance);
     }
 
     deleteGroup(groupId: string): Promise<Either<string, Group>> {

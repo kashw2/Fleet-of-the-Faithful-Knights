@@ -16,7 +16,7 @@ export class OptionUtils {
      */
     static flattenCollection<T>(collection: Collection<any, Option<T>>): Collection<any, T> {
         return collection.filter(v => v.nonEmpty())
-            .map(v => v.get())
+            .map(v => v.get());
     }
 
     static flattenList<T>(list: List<Option<T>>): List<T> {
@@ -40,7 +40,7 @@ export class OptionUtils {
         if (op.isEmpty()) {
             return Promise.resolve(None);
         }
-        return op.get()
+        return op.get();
     }
 
     static toList<T>(...items: Option<T>[]): List<T> {

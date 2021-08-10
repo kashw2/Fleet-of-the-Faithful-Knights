@@ -6,6 +6,7 @@ import {PermissionsEndpoint} from "./permission-endpoint";
 import {UserPermissionMappingEndpoint} from "./user-permission-mapping-endpoint";
 import {VotesEndpoint} from "./votes-endpoint";
 import {BallotEndpoint} from "./ballot-endpoint";
+import {CandidateEndpoint} from "./candidate-endpoint";
 
 export class AllEndpoints {
 
@@ -16,6 +17,7 @@ export class AllEndpoints {
         new UserPermissionMappingEndpoint(db).mount(router);
         new VotesEndpoint(db).mount(router);
         new BallotEndpoint(db).mount(router);
+        new CandidateEndpoint(db).mount(router);
     }
 
 }

@@ -1,4 +1,4 @@
-import {Request, Response} from "express";
+import {Request, Response, Router} from "express";
 import {User, UserJsonSerializer} from "@kashw2/lib-ts";
 import {Either} from "funfix-core";
 import {EitherUtils} from "@kashw2/lib-util";
@@ -41,5 +41,7 @@ export abstract class ApiEndpoint {
     }
 
     abstract hasPermission(req: Request, res: Response, user?: User): boolean;
+
+    abstract mount(router: Router): void;
 
 }

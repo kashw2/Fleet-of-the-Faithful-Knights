@@ -6,6 +6,7 @@ import {DiscordUser, DiscordUserJsonSerializer} from "../user";
 import {DiscordGuild, DiscordGuildJsonSerializer} from "../guild";
 import {DiscordGuildMember, DiscordGuildMemberJsonSerializer} from "../guild-member";
 import {Observable, from} from "rxjs";
+import {List} from "immutable";
 
 export class DiscordApi extends SerializedApiBase {
 
@@ -63,6 +64,24 @@ export class DiscordApi extends SerializedApiBase {
     getGuildMember(memberId: string, guildId: string): Observable<Either<string, DiscordGuildMember>> {
         return from(this.sendRequestSerialized(
             `guilds/${guildId}/members/${memberId}`,
+            "GET",
+            DiscordGuildMemberJsonSerializer.instance,
+            {
+                Authorization: `Bot ${this.botToken}`,
+            },
+        ));
+    }
+
+    /**
+     * Used to list guild members given the unique identifier of the guild
+     *
+     * A limit can be specified with a hard max of 1000 set by Discord.
+     *
+     * @returns List<DiscordGuildMember>
+     */
+    getGuildMembers(guildId: string, limit: number = 1000): Observable<Either<string, List<DiscordGuildMember>>> {
+        return from(this.sendRequestListSerialized(
+            `guilds/${guildId}/members?limit=${limit}`,
             "GET",
             DiscordGuildMemberJsonSerializer.instance,
             {

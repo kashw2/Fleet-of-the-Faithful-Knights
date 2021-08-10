@@ -1,7 +1,7 @@
 import {DbRequest} from "../db-request";
 import {
     Ballot,
-    BallotJsonSerializer,
+    BallotJsonSerializer, Candidate, CandidateJsonSerializer,
     Group,
     GroupJsonSerializer,
     Permission,
@@ -35,13 +35,39 @@ export class DbInsert {
         };
     }
 
+    insertCandidate(candidates: Candidate): (modifiedBy: string) => Promise<Either<string, Candidate>> {
+        return (modifiedBy: string): Promise<Either<string, Candidate>> => {
+            return this.requests.sendRequestSerialized(
+                'ssp_json_InsertCandidate',
+                List.of(
+                    `@Json = '${CandidateJsonSerializer.instance.toJsonString(candidates)}'`,
+                    `@ModifiedBy = '${modifiedBy}'`,
+                ),
+                CandidateJsonSerializer.instance
+            );
+        };
+    }
+
+    insertCandidates(candidates: List<Candidate>): (modifiedBy: string) => Promise<Either<string, List<Candidate>>> {
+        return (modifiedBy: string): Promise<Either<string, List<Candidate>>> => {
+            return this.requests.sendRequestListSerialized(
+                'ssp_json_InsertCandidates',
+                List.of(
+                    `@Json = '${CandidateJsonSerializer.instance.toJsonStringArray(candidates.toArray())}'`,
+                    `@ModifiedBy = '${modifiedBy}'`,
+                ),
+                CandidateJsonSerializer.instance
+            );
+        };
+    }
+
     insertGroup(group: Group): (modifiedBy: string) => Promise<Either<string, Group>> {
         return (modifiedBy: string): Promise<Either<string, Group>> => {
             return this.requests.sendRequestSerialized(
                 'ssp_json_InsertGroup',
                 List.of(
                     `@Json = '${GroupJsonSerializer.instance.toJsonString(group)}'`,
-                    `@ModifiedBy = '${modifiedBy}'`),
+                ),
                 GroupJsonSerializer.instance,
             );
         };

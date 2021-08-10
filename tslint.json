@@ -26,6 +26,7 @@
     "no-console": false,
     "no-unused-expression": false,
     "no-unused-variable": true,
+    "no-string-literal": false,
     "no-for-in-array": false,
     "forin": false,
     "quotemark": false,

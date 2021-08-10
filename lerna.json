@@ -14,6 +14,7 @@
     "./libs/angular",
     "./libs/external",
     "./panel",
-    "./api"
+    "./api",
+    "./onboarding"
   ]
 }

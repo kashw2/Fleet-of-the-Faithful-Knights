@@ -25,6 +25,18 @@ export class Candidate {
     ) {
     }
 
+    public buildCandidate(): Option<Candidate> {
+        return Option.of(new Candidate(
+            this.getId(),
+            this.getDiscordUsername(),
+            this.getDiscordId(),
+            this.getDiscordDiscriminator(),
+            this.getDiscordAvatar(),
+            this.getGroup(),
+            this.getStarCitizenUser(),
+        ));
+    }
+
     public getDiscordAvatar(): Option<string> {
         return this.discordAvatar;
     }

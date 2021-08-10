@@ -1,6 +1,6 @@
 import {DbProcedures} from "./procedures/db-procedures";
 import {List} from "immutable";
-import {Ballot, Group, Permission, User, Vote} from "@kashw2/lib-ts";
+import {Ballot, Candidate, Group, Permission, User, Vote} from "@kashw2/lib-ts";
 import {BehaviorSubject, interval, of} from "rxjs";
 import {UserCache} from "./caches/user-cache";
 import {GroupCache} from "./caches/group-cache";
@@ -8,6 +8,7 @@ import {PermissionCache} from "./caches/permission-cache";
 import {VoteCache} from "./caches/vote-cache";
 import {BallotCache} from "./caches/ballot-cache";
 import {switchMap} from "rxjs/operators";
+import {CandidateCache} from "./caches/candidate-cache";
 
 export class DbCache {
 
@@ -18,6 +19,8 @@ export class DbCache {
     }
 
     ballots: BallotCache = new BallotCache(List());
+
+    candidates: CandidateCache = new CandidateCache(List());
 
     groups: GroupCache = new GroupCache(List());
 
@@ -37,6 +40,7 @@ export class DbCache {
             this.cachePermissions(),
             this.cacheVotes(),
             this.cacheBallots(),
+            this.cacheCandidates(),
         ]).then(_ => {
             console.info('Cache Complete');
             this.ready.next(true);
@@ -48,6 +52,14 @@ export class DbCache {
             .then(b => {
                 this.ballots = new BallotCache(b.getOrElse(List<Ballot>()));
                 console.info(`Loaded ${this.ballots.size} Ballots`);
+            });
+    }
+
+    async cacheCandidates(): Promise<void> {
+        this.procedures.read.readCandidates()
+            .then(b => {
+                this.candidates = new CandidateCache(b.getOrElse(List<Candidate>()));
+                console.info(`Loaded ${this.candidates.size} Candidate`);
             });
     }
 
