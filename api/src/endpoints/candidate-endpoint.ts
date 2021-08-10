@@ -1,5 +1,5 @@
 import {CrudEndpoint} from "@kashw2/lib-server";
-import {Candidate, CandidateJsonSerializer, User, Vote, VoteJsonSerializer} from "@kashw2/lib-ts";
+import {Candidate, CandidateJsonSerializer, User} from "@kashw2/lib-ts";
 import {Request, Response} from 'express';
 import {Either} from "funfix-core";
 import {ApiUtils, EitherUtils} from "@kashw2/lib-util";
@@ -10,6 +10,12 @@ export class CandidateEndpoint extends CrudEndpoint {
 
     constructor(private db: Database) {
         super('/candidate');
+    }
+
+    delete(req: Request): Promise<Either<string, any>> {
+        return EitherUtils.sequence(this.getCandidateId(req)
+            .map(cid => this.db.procedures.delete.deleteCandidate(cid)))
+            .then(v => v.map(x => CandidateJsonSerializer.instance.toJsonImpl(x)));
     }
 
     doesRequireAuthentication(req: Request): boolean {
@@ -37,6 +43,15 @@ export class CandidateEndpoint extends CrudEndpoint {
             .contains(true);
     }
 
+    read(req: Request): Promise<Either<string, any>> {
+        if (this.getCandidateId(req).isLeft()) {
+            return Promise.resolve(EitherUtils.liftEither(CandidateJsonSerializer.instance.toJsonArray(this.db.cache.candidates.getCandidates().toArray()), "Candidates cache is empty"));
+        }
+        return Promise.resolve(this.getCandidateId(req)
+            .flatMap(cid => this.db.cache.candidates.getCandidateById(cid)))
+            .then(v => v.map(x => CandidateJsonSerializer.instance.toJsonImpl(x)));
+    }
+
     update(req: Request): Promise<Either<string, any>> {
         return EitherUtils.sequence(Either.map2(
             this.getCandidate(req),
@@ -46,15 +61,6 @@ export class CandidateEndpoint extends CrudEndpoint {
                     return this.db.procedures.update.updateCandidate(c, cid)(this.getRequestUsername(req));
                 })
             )));
-    }
-
-    read(req: Request): Promise<Either<string, any>> {
-        if (this.getCandidateId(req).isLeft()) {
-            return Promise.resolve(EitherUtils.liftEither(CandidateJsonSerializer.instance.toJsonArray(this.db.cache.candidates.getCandidates().toArray()), "Candidates cache is empty"));
-        }
-        return Promise.resolve(this.getCandidateId(req)
-            .flatMap(cid => this.db.cache.candidates.getCandidateById(cid)))
-            .then(v => v.map(x => CandidateJsonSerializer.instance.toJsonImpl(x)));
     }
 
     private validate(req: Request): Either<string, Candidate> {
