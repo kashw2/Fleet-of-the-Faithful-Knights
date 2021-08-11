@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {
   Ballot,
-  BallotJsonSerializer,
+  BallotJsonSerializer, Candidate, CandidateJsonSerializer,
   CrudApiBase,
   Group,
   GroupJsonSerializer,
@@ -26,6 +26,7 @@ export class FfkApiService {
     private crudLocalStorageService: CrudLocalStorageService,
   ) {
   }
+  candidate: CrudApiBase = new CrudApiBase(this.apiServer, 'candidate');
 
   permission: CrudApiBase = new CrudApiBase(this.apiServer, 'permission');
   vote: CrudApiBase = new CrudApiBase(this.apiServer, 'vote');
@@ -37,6 +38,18 @@ export class FfkApiService {
       .map(did => this.ballot()
         .sendReadRequestList(
           BallotJsonSerializer.instance,
+          {
+            'Discord-Id': did
+          },
+          {},
+        )));
+  }
+
+  getCandidates(): Promise<Either<string, List<Candidate>>> {
+    return EitherUtils.sequence(this.getDiscordId()
+      .map(did => this.candidate
+        .sendReadRequestList(
+          CandidateJsonSerializer.instance,
           {
             'Discord-Id': did
           },

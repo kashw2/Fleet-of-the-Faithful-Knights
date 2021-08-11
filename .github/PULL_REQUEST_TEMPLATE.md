@@ -19,16 +19,6 @@ Please select the type of change your PR proposes
 - [ ] CI/CD Changes
 - [ ] Other (Please Describe)
 
-## Confidence
-
-If applicable, please select the level of change your PR imposes.
-
-The selection can also be based on the SemVer standard.
-
-- [ ] Major
-- [ ] Minor
-- [ ] Patch
-
 ## Description
 
 BREAKING CHANGES:
