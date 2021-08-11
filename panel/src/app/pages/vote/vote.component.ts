@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {VoteService} from "../../service/vote.service";
 import {Option} from "funfix-core";
-import {Ballot} from "@kashw2/lib-ts";
+import {Ballot, Vote} from "@kashw2/lib-ts";
 import {Set} from 'immutable';
 import {MatDialog} from "@angular/material/dialog";
 import {BallotDialogComponent} from "../../dialogs/ballot-dialog/ballot-dialog.component";
+import {OptionUtils} from "@kashw2/lib-util";
 
 @Component({
   selector: 'app-vote',
@@ -65,7 +66,17 @@ export class VoteComponent implements OnInit {
       .flatMap(v => v.getDescription());
   }
 
+  hasBeenVetod(): boolean {
+    return this.voteService.getSelectedVote()
+      .map(v => v.getBallots())
+      .getOrElse(Set<Ballot>())
+      .some(b => b.getPreparedResponse().contains('Veto'));
+  }
+
   isVotable(): boolean {
+    if (this.hasBeenVetod()) {
+      return false;
+    }
     if (this.voteService.getSelectedVote().exists(v => v.isKnightLike())) {
       return this.voteService.getSelectedVote()
         .exists(v => v.getBallots().size < 4);
