@@ -32,7 +32,7 @@ export class DiscordOnboardingTemplate extends OnboardingTemplate {
                     .sendCreateRequestList(
                         CandidateJsonSerializer.instance,
                         {},
-                        {candidates: CandidateJsonSerializer.instance.toJsonArray(candidates.getOrElse(List()).toArray())})
+                        {candidates: CandidateJsonSerializer.instance.toJsonArray(candidates.getOrElse(List<Candidate>()).toArray())})
                 );
             }))
         );
