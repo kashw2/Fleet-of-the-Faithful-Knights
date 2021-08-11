@@ -7,6 +7,7 @@ import {UserService} from "./user.service";
 import {ToastService} from "./toast.service";
 import {FfkApiService} from "./ffk-api.service";
 import {None, Option} from "funfix-core";
+import {OptionUtils} from "@kashw2/lib-util";
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,15 @@ export class VoteService {
 
   clearSelectedVote(): void {
     return this.selectedVote.next(None);
+  }
+
+  exists(vote: Vote): boolean {
+    return this.getVotes()
+      .some(v => {
+        return v.getCandidate()
+          .flatMap(c => c.getId())
+          .equals(vote.getCandidate().flatMap(c => c.getId()));
+      });
   }
 
   getSelectedVote(): Option<Vote> {

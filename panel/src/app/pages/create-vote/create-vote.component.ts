@@ -9,6 +9,7 @@ import {BehaviorSubject} from "rxjs";
 import * as moment from "moment";
 import {VoteService} from "../../service/vote.service";
 import {GroupService} from "../../service/group.service";
+import {ToastService} from "../../service/toast.service";
 
 @Component({
   selector: 'app-create-vote',
@@ -22,6 +23,7 @@ export class CreateVoteComponent implements OnInit {
     private voteService: VoteService,
     private userService: UserService,
     readonly groupService: GroupService,
+    private toastService: ToastService,
   ) {
   }
 
@@ -40,6 +42,15 @@ export class CreateVoteComponent implements OnInit {
       Some(moment()),
       Some(moment()),
     );
+    if (this.voteService.exists(vote)) {
+      this.getSelectedCandidate()
+        .flatMap(c => c.getDiscordUsername())
+        .fold(
+          () => this.toastService.show(`A vote for this user already exists`, 'Warning'),
+          (username) => this.toastService.show(`A vote for ${username} already exists`, 'Warning'),
+        );
+      return Option.of(vote);
+    }
     return Option.of(this.voteService.writeVote(vote));
   }
 
