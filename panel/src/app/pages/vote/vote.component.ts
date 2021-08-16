@@ -26,12 +26,6 @@ export class VoteComponent implements OnInit {
       .getOrElse(Set());
   }
 
-  getCandidateAvatar(): Option<string> {
-    return this.voteService.getSelectedVote()
-      .flatMap(v => v.getCandidate())
-      .flatMap(v => v.getFormedDiscordAvatar());
-  }
-
   getCandidateDiscordId(): Option<string> {
     return this.voteService
       .getSelectedVote()
@@ -65,7 +59,17 @@ export class VoteComponent implements OnInit {
       .flatMap(v => v.getDescription());
   }
 
+  hasBeenVetod(): boolean {
+    return this.voteService.getSelectedVote()
+      .map(v => v.getBallots())
+      .getOrElse(Set<Ballot>())
+      .some(b => b.getPreparedResponse().contains('Veto'));
+  }
+
   isVotable(): boolean {
+    if (this.hasBeenVetod()) {
+      return false;
+    }
     if (this.voteService.getSelectedVote().exists(v => v.isKnightLike())) {
       return this.voteService.getSelectedVote()
         .exists(v => v.getBallots().size < 4);
