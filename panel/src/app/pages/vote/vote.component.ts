@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {VoteService} from "../../service/vote.service";
 import {Option} from "funfix-core";
-import {Ballot, Vote} from "@kashw2/lib-ts";
+import {Ballot} from "@kashw2/lib-ts";
 import {Set} from 'immutable';
 import {MatDialog} from "@angular/material/dialog";
 import {BallotDialogComponent} from "../../dialogs/ballot-dialog/ballot-dialog.component";
-import {OptionUtils} from "@kashw2/lib-util";
 
 @Component({
   selector: 'app-vote',
@@ -25,12 +24,6 @@ export class VoteComponent implements OnInit {
       .getSelectedVote()
       .map(v => v.getBallots())
       .getOrElse(Set());
-  }
-
-  getCandidateAvatar(): Option<string> {
-    return this.voteService.getSelectedVote()
-      .flatMap(v => v.getCandidate())
-      .flatMap(v => v.getFormedDiscordAvatar());
   }
 
   getCandidateDiscordId(): Option<string> {

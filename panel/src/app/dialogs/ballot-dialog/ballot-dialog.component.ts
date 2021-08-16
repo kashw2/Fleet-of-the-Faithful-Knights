@@ -7,6 +7,7 @@ import {UserService} from "../../service/user.service";
 import moment from "moment";
 import {FfkApiService} from "../../service/ffk-api.service";
 import {ToastService} from "../../service/toast.service";
+import {VoteService} from "../../service/vote.service";
 
 @Component({
   selector: 'app-ballot-dialog',
@@ -21,6 +22,7 @@ export class BallotDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) readonly vote: Option<Vote>,
     private ffkApiService: FfkApiService,
     private toastService: ToastService,
+    private voteService: VoteService,
   ) {
   }
 
@@ -57,7 +59,8 @@ export class BallotDialogComponent implements OnInit {
         'Ballot Submitted',
         'Error',
         'Success',
-      ));
+      ))
+      .forEach(() => this.voteService.setSelectedVote(this.voteService.getSelectedVote().map(v => v.withBallot(ballot))));
     this.dialogRef.close();
   }
 
