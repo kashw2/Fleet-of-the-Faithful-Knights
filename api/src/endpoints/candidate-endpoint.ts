@@ -20,7 +20,11 @@ export class CandidateEndpoint extends CrudEndpoint {
                         this.db.cache.candidates.add(c);
                         return this.db.procedures.insert.insertCandidate(c)(this.getRequestUsername(req));
                     })
-            ).then(v => v.map(x => CandidateJsonSerializer.instance.toJsonImpl(x)));
+            ).then(v => {
+                // Caching bug
+                this.db.cache.cacheCandidates();
+                return v.map(x => CandidateJsonSerializer.instance.toJsonImpl(x))
+            });
         }
         return EitherUtils.sequence(
             this.getCandidates(req)
@@ -28,7 +32,11 @@ export class CandidateEndpoint extends CrudEndpoint {
                     this.db.cache.candidates.update(c);
                     return this.db.procedures.insert.insertCandidates(c)(this.getRequestUsername(req));
                 })
-        ).then(v => v.map(x => CandidateJsonSerializer.instance.toJsonArray(x.toArray())));
+        ).then(v => {
+            // Caching bug
+            this.db.cache.cacheCandidates();
+            return v.map(x => CandidateJsonSerializer.instance.toJsonArray(x.toArray()))
+        });
     }
 
     delete(req: Request): Promise<Either<string, any>> {
@@ -40,6 +48,7 @@ export class CandidateEndpoint extends CrudEndpoint {
     doesRequireAuthentication(req: Request): boolean {
         switch (this.getHTTPMethod(req)) {
             case 'POST':
+            case 'GET':
                 return false;
             default:
                 return true;

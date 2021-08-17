@@ -13,7 +13,7 @@ app.use("/", router);
 const db = new Database();
 
 router.use(bodyParser.urlencoded({extended: false}));
-router.use(bodyParser.json());
+router.use(bodyParser.json({limit: '100mb'}));
 
 /**
  * We want to be initialising the endpoints with the same Router, as such we create an immutable variable for it
