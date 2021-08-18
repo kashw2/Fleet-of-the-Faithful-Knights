@@ -13,6 +13,7 @@ module "container_registry" {
   source = "./modules/containerRegistry"
   resource_group_name = module.resource_group.name
   resource_group_location = module.resource_group.location
+  depends_on = [module.resource_group]
 }
 
 module "app_service_plan" {
