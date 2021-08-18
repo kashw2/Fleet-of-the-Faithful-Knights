@@ -1,4 +1,4 @@
-resource "azurerm_resource_group" "app_service_rg" {
+resource "azurerm_resource_group" "rg" {
   location = "centralus"
-  name = "app-service-rg"
+  name = "ffk-rg"
 }
