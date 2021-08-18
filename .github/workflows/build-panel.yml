@@ -75,8 +75,8 @@ jobs:
           username: _json_key
           password: ${{ secrets.GCP_SERVICE_ACCOUNT }}
       - run: |
-          docker build -t gcr.io/the-sandbox-311907/panel:${{ github.sha }} -t gcr.io/the-sandbox-311907/panel:latest -f Dockerfile .
-          docker push gcr.io/the-sandbox-311907/panel:${{ github.sha }}
-          docker push gcr.io/the-sandbox-311907/panel:latest
+          docker build -t ffkcontainerregistry.azurecr.io/panel:${{ github.sha }} -t ffkcontainerregistry.azurecr.io/panel:latest -f Dockerfile .
+          docker push ffkcontainerregistry.azurecr.io/panel:${{ github.sha }}
+          docker push ffkcontainerregistry.azurecr.io/panel:latest
         working-directory: panel
 

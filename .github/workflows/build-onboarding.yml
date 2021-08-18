@@ -69,11 +69,11 @@ jobs:
       - name: deploy
         uses: docker/login-action@v1
         with:
-          registry: gcr.io
-          username: _json_key
-          password: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+          registry: ffkcontainerregistry.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
       - run: |
-          docker build -t gcr.io/the-sandbox-311907/onboarding:${{ github.sha }} -t gcr.io/the-sandbox-311907/onboarding:latest -f Dockerfile .
-          docker push gcr.io/the-sandbox-311907/onboarding:${{ github.sha }}
-          docker push gcr.io/the-sandbox-311907/onboarding:latest
+          docker build -t ffkcontainerregistry.azurecr.io/onboarding:${{ github.sha }} -t ffkcontainerregistry.azurecr.io/onboarding:latest -f Dockerfile .
+          docker push ffkcontainerregistry.azurecr.io/onboarding:${{ github.sha }}
+          docker push ffkcontainerregistry.azurecr.io/onboarding:latest
         working-directory: onboarding
