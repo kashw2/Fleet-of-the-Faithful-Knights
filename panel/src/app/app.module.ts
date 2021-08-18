@@ -17,6 +17,7 @@ import {VoteComponent} from './pages/vote/vote.component';
 import {MatDividerModule} from "@angular/material/divider";
 import {BallotDialogComponent} from './dialogs/ballot-dialog/ballot-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import {MatDialogModule} from "@angular/material/dialog";
     MatInputModule,
     MatDividerModule,
     MatDialogModule,
+    MatPaginatorModule,
   ],
   providers: [
     {provide: 'ffkApiServer', useValue: environment.FFK_API_SERVER},
