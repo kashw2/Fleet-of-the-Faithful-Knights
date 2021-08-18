@@ -1,20 +1,22 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {List} from "immutable";
 import {None, Option} from "funfix-core";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, combineAll, combineLatest, zip} from "rxjs";
 import {Group, Vote, VoteJsonSerializer} from "@kashw2/lib-ts";
 import {NavigationService} from "../../service/navigation.service";
 import {GroupService} from "../../service/group.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {UserService} from "../../service/user.service";
 import {VoteService} from "../../service/vote.service";
+import {map, tap} from "rxjs/operators";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-votes',
   templateUrl: './votes.component.html',
   styleUrls: ['./votes.component.scss'],
 })
-export class VotesComponent implements OnInit {
+export class VotesComponent implements OnInit, AfterViewInit {
 
   constructor(
     readonly voteService: VoteService,
@@ -24,7 +26,11 @@ export class VotesComponent implements OnInit {
   ) {
   }
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   selectedGroup: BehaviorSubject<Option<string>> = new BehaviorSubject<Option<string>>(None);
+
+  voteSource: MatTableDataSource<object> = new MatTableDataSource<object>();
 
   getDisplayedColumns(): string[] {
     return ['id', 'candidate', 'sponsor', 'group'];
@@ -58,7 +64,21 @@ export class VotesComponent implements OnInit {
     return new MatTableDataSource<object>(this.getFilteredVotes().map(v => VoteJsonSerializer.instance.toJsonImpl(v)).toArray());
   }
 
+  ngAfterViewInit(): void {
+    this.voteSource.paginator = this.paginator;
+  }
+
   ngOnInit(): void {
+    combineLatest(
+      this.selectedGroup,
+      this.voteService.asObs()
+    )
+      .pipe(map(([g, votes]) => votes.filter(v => v.getPromotionGroupName().equals(g))))
+      .pipe(map(v => VoteJsonSerializer.instance.toJsonArray(v.toArray())))
+      .subscribe(votes => {
+        this.voteSource = new MatTableDataSource<object>(votes);
+        this.voteSource.paginator = this.paginator;
+      });
   }
 
   setAndNavigateToVote(voteId: number): void {
