@@ -8,13 +8,13 @@ resource "azurerm_app_service" "panel" {
 resource "azurerm_app_service" "api" {
   app_service_plan_id = var.app_service_plan_id
   location = var.resource_group_location
-  name = "api"
+  name = "api-microservice"
   resource_group_name = var.resource_group_name
 }
 
 resource "azurerm_app_service" "onboarding" {
   app_service_plan_id = var.app_service_plan_id
   location = var.resource_group_location
-  name = "onboarding"
+  name = "onboarding-microservice"
   resource_group_name = var.resource_group_name
 }
