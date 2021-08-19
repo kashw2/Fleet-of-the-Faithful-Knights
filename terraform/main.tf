@@ -1,32 +1,42 @@
+module "application" {
+  source = "./modules/application"
+}
+
+module "service_principal" {
+  source         = "./modules/servicePrincipal"
+  application_id = module.application.id
+  depends_on     = [module.application]
+}
+
 module "resource_group" {
   source = "./modules/resourceGroup"
 }
 
-module "storage_account" {
-  source = "./modules/storageAccount"
-  resource_group_name = module.resource_group.name
-  resource_group_location = module.resource_group.location
-  depends_on = [module.resource_group]
-}
+//module "storage_account" {
+//  source = "./modules/storageAccount"
+//  resource_group_name = module.resource_group.name
+//  resource_group_location = module.resource_group.location
+//  depends_on = [module.resource_group]
+//}
 
 module "container_registry" {
-  source = "./modules/containerRegistry"
-  resource_group_name = module.resource_group.name
+  source                  = "./modules/containerRegistry"
+  resource_group_name     = module.resource_group.name
   resource_group_location = module.resource_group.location
-  depends_on = [module.resource_group]
+  depends_on              = [module.resource_group]
 }
 
 module "app_service_plan" {
-  source = "./modules/appServicePlan"
+  source                  = "./modules/appServicePlan"
   resource_group_location = module.resource_group.location
-  resource_group_name = module.resource_group.name
-  depends_on = [module.resource_group]
+  resource_group_name     = module.resource_group.name
+  depends_on              = [module.resource_group]
 }
 
 module "app_service" {
-  source = "./modules/appService"
-  app_service_plan_id = module.app_service_plan.id
-  resource_group_name = module.resource_group.name
+  source                  = "./modules/appService"
+  app_service_plan_id     = module.app_service_plan.id
+  resource_group_name     = module.resource_group.name
   resource_group_location = module.resource_group.location
-  depends_on = [module.resource_group, module.app_service_plan]
+  depends_on              = [module.resource_group, module.app_service_plan]
 }
