@@ -28,5 +28,6 @@ module "app_service" {
   app_service_plan_id     = module.app_service_plan.id
   resource_group_name     = module.resource_group.name
   resource_group_location = module.resource_group.location
-  depends_on              = [module.resource_group, module.app_service_plan]
+  container_registry_login_server = module.container_registry.login_server
+  depends_on              = [module.resource_group, module.app_service_plan, module.container_registry]
 }
