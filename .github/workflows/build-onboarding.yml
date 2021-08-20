@@ -73,7 +73,7 @@ jobs:
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
       - run: |
-          docker build -t ffkcontainerregistry.azurecr.io/onboarding:${{ github.sha }} -t ffkcontainerregistry.azurecr.io/onboarding:latest -f Dockerfile .
-          docker push ffkcontainerregistry.azurecr.io/onboarding:${{ github.sha }}
-          docker push ffkcontainerregistry.azurecr.io/onboarding:latest
+          docker build -t ffkcontainerregistry.azurecr.io/onboarding.faithfulknights.com:${{ github.sha }} -t ffkcontainerregistry.azurecr.io/onboarding.faithfulknights.com:latest -f Dockerfile .
+          docker push ffkcontainerregistry.azurecr.io/onboarding.faithfulknights.com:${{ github.sha }}
+          docker push ffkcontainerregistry.azurecr.io/onboarding.faithfulknights.com:latest
         working-directory: onboarding

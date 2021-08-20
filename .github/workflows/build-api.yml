@@ -73,7 +73,7 @@ jobs:
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
       - run: |
-          docker build -t ffkcontainerregistry.azurecr.io/api:${{ github.sha }} -t ffkcontainerregistry.azurecr.io/api:latest -f Dockerfile .
-          docker push ffkcontainerregistry.azurecr.io/api:${{ github.sha }}
-          docker push ffkcontainerregistry.azurecr.io/api:latest
+          docker build -t ffkcontainerregistry.azurecr.io/api.faithfulknights.com:${{ github.sha }} -t ffkcontainerregistry.azurecr.io/api.faithfulknights.com:latest -f Dockerfile .
+          docker push ffkcontainerregistry.azurecr.io/api.faithfulknights.com:${{ github.sha }}
+          docker push ffkcontainerregistry.azurecr.io/api.faithfulknights.com:latest
         working-directory: api
