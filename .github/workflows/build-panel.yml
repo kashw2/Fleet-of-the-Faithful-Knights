@@ -65,15 +65,15 @@ jobs:
           lerna exec npm install --scope=@ffk/panel
 
       - name: build panel
-        run: lerna run build:prod --scope=@ffk/panel
+        run: lerna run build --scope=@ffk/panel
         working-directory: panel
 
       - name: deploy
         uses: docker/login-action@v1
         with:
-          registry: gcr.io
-          username: _json_key
-          password: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+          registry: ffkcontainerregistry.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
       - run: |
           docker build -t ffkcontainerregistry.azurecr.io/panel.faithfulknights.com:${{ github.sha }} -t ffkcontainerregistry.azurecr.io/panel.faithfulknights.com:latest -f Dockerfile .
           docker push ffkcontainerregistry.azurecr.io/panel.faithfulknights.com:${{ github.sha }}
