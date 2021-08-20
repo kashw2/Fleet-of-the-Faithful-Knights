@@ -9,9 +9,9 @@
     "build:watch": "webpack --stats-error-details true --watch --config ./webpack/webpack.dev.config.ts",
     "start:watch": "nodemon --inspect ./dist/onboarding.js",
     "start": "nodemon --inspect ./dist/onboarding.js",
-    "docker-build": "docker build -t gcr.io/the-sandbox-311907/onboarding:$(git rev-parse --verify HEAD) -t gcr.io/the-sandbox-311907/onboarding:latest -f Dockerfile .",
-    "docker-run": "docker run -i --net='host' gcr.io/the-sandbox-311907/onboarding:$(git rev-parse --verify HEAD)",
-    "docker-publish": "docker push gcr.io/the-sandbox-311907/onboarding:$(git rev-parse --verify HEAD) && docker push gcr.io/the-sandbox-311907/onboarding:latest"
+    "docker-build": "docker build -t ffkcontainerregistry.azurecr.io/onboarding.faithfulknights.com:$(git rev-parse --verify HEAD) -t ffkcontainerregistry.azurecr.io/onboarding.faithfulknights.com:latest -f Dockerfile .",
+    "docker-run": "docker run -i --net='host' ffkcontainerregistry.azurecr.io/onboarding.faithfulknights.com:$(git rev-parse --verify HEAD)",
+    "docker-publish": "docker push ffkcontainerregistry.azurecr.io/onboarding.faithfulknights.com:$(git rev-parse --verify HEAD) && docker push ffkcontainerregistry.azurecr.io/onboarding.faithfulknights.com:latest"
   },
   "repository": {
     "type": "git",

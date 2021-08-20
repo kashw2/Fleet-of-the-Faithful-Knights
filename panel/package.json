@@ -9,9 +9,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "docker-build": "docker build -t gcr.io/the-sandbox-311907/panel:$(git rev-parse --verify HEAD) -t gcr.io/the-sandbox-311907/panel:latest -f Dockerfile .",
-    "docker-run": "docker run -p 4200:80 gcr.io/the-sandbox-311907/panel:$(git rev-parse --verify HEAD)",
-    "docker-publish": "docker push gcr.io/the-sandbox-311907/panel:$(git rev-parse --verify HEAD) && docker push gcr.io/the-sandbox-311907/panel:latest"
+    "docker-build": "docker build -t ffkcontainerregistry.azurecr.io/panel.faithfulknights.com:$(git rev-parse --verify HEAD) -t ffkcontainerregistry.azurecr.io/panel.faithfulknights.com:latest -f Dockerfile .",
+    "docker-run": "docker run -p 4200:80 ffkcontainerregistry.azurecr.io/panel.faithfulknights.com:$(git rev-parse --verify HEAD)",
+    "docker-publish": "docker push ffkcontainerregistry.azurecr.io/panel.faithfulknights.com:$(git rev-parse --verify HEAD) && docker push ffkcontainerregistry.azurecr.io/panel.faithfulknights.com:latest"
   },
   "private": true,
   "dependencies": {

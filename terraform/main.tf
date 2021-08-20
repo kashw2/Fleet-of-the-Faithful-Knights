@@ -1,18 +1,32 @@
-module "cloud_run" {
-  source = "./cloud-run"
-  region = var.region
-  project = var.project
-  FFK_DATABASE_SERVER = var.FFK_DATABASE_SERVER
-  FFK_DATABASE_PORT = var.FFK_DATABASE_PORT
-  FFK_DATABASE_NAME = var.FFK_DATABASE_NAME
-  FFK_DATABASE_USERNAME = var.FFK_DATABASE_USERNAME
-  FFK_DATABASE_PASSWORD = var.FFK_DATABASE_PASSWORD
+module "resource_group" {
+  source = "./modules/resourceGroup"
 }
 
-module "domain_mapping" {
-  source = "./domain-mapping"
-  project_name = var.project
-  api_name = module.cloud_run.api_name
-  panel_name = module.cloud_run.panel_name
-  depends_on = [module.cloud_run]
+//modules "storage_account" {
+//  source = "./modules/storageAccount"
+//  resource_group_name = modules.resource_group.name
+//  resource_group_location = modules.resource_group.location
+//  depends_on = [modules.resource_group]
+//}
+
+module "container_registry" {
+  source                  = "./modules/containerRegistry"
+  resource_group_name     = module.resource_group.name
+  resource_group_location = module.resource_group.location
+  depends_on              = [module.resource_group]
+}
+
+module "app_service_plan" {
+  source                  = "./modules/appServicePlan"
+  resource_group_location = module.resource_group.location
+  resource_group_name     = module.resource_group.name
+  depends_on              = [module.resource_group]
+}
+
+module "app_service" {
+  source                  = "./modules/appService"
+  app_service_plan_id     = module.app_service_plan.id
+  resource_group_name     = module.resource_group.name
+  resource_group_location = module.resource_group.location
+  depends_on              = [module.resource_group, module.app_service_plan]
 }

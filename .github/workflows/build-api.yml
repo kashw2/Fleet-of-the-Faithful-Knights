@@ -64,16 +64,16 @@ jobs:
           lerna exec npm install --scope=@ffk/api
 
       - name: build api
-        run: lerna run build --scope=@ffk/api
+        run: lerna run build:dev --scope=@ffk/api
 
       - name: deploy
         uses: docker/login-action@v1
         with:
-          registry: gcr.io
-          username: _json_key
-          password: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+          registry: ffkcontainerregistry.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
       - run: |
-          docker build -t gcr.io/the-sandbox-311907/api:${{ github.sha }} -t gcr.io/the-sandbox-311907/api:latest -f Dockerfile .
-          docker push gcr.io/the-sandbox-311907/api:${{ github.sha }}
-          docker push gcr.io/the-sandbox-311907/api:latest
+          docker build -t ffkcontainerregistry.azurecr.io/api.faithfulknights.com:${{ github.sha }} -t ffkcontainerregistry.azurecr.io/api.faithfulknights.com:latest -f Dockerfile .
+          docker push ffkcontainerregistry.azurecr.io/api.faithfulknights.com:${{ github.sha }}
+          docker push ffkcontainerregistry.azurecr.io/api.faithfulknights.com:latest
         working-directory: api

@@ -2,11 +2,42 @@
   "extends": [
     "config:base"
   ],
+  "packageRules": [
+    {
+      "matchPackagePatterns": [
+        "^@angular"
+      ],
+      "matchUpdateTypes": [
+        "pin",
+        "major"
+      ],
+      "labels": [
+        "triage"
+      ]
+    },
+    {
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "matchUpdateTypes": [
+        "pin",
+        "major",
+        "minor",
+        "patch",
+        "bump",
+        "rollback"
+      ]
+    }
+  ],
+  "pruneStaleBranches": true,
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": ["security", "triage"]
+  },
+  "labels": [
+    "dependencies"
+  ],
   "reviewers": [
     "kashw2"
-  ],
-  "encrypted": {
-    "npmToken": "oSrj1+fjBZiZ9BPz1nVEe5PfKRetQE4GZNUYODctFrJqL6KvZbHwZRAZV0LUBVcOPBu3GdQWAD2bjXNGq/Xy3yTHCBAMZ2sfSwwE505FWZrAgE7hm8tgq67MOQIVuYFFpzdGZnvDsnUykoy3vD6lozxlFGylKr6YkS6QCuosDrPMx/LKAEG4DefWfu6+Vlr2dDehjEeuWLP3Wpl186U0uCwOYpLKYKwo2kmAyGXhCFQLOgS7zVahyJdDiXfspyo5sVrE8aRSbcTFcyVtS3OFqBM17PlSFhGznFxAcYUbOM+ixJ7t6sG/KGeQZ78eBgZKzBk+zPrMeOnF1TuDhKvtoA=="
-  },
-  "npmrc": "@kashw2:registry=https://npm.pkg.github.com/\n//npm.pkg.github.com/:_authToken=${NPM_TOKEN}"
+  ]
 }
