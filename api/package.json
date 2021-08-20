@@ -9,9 +9,9 @@
     "build:watch": "webpack --stats-error-details true --watch --config ./webpack/webpack.dev.config.ts",
     "start:watch": "nodemon --inspect ./dist/api.js",
     "start": "nodemon --inspect ./dist/api.js",
-    "docker-build": "docker build -t ffkcontainerregistry.azurecr.io/api:$(git rev-parse --verify HEAD) -t ffkcontainerregistry.azurecr.io/api:latest -f Dockerfile .",
-    "docker-run": "docker run -i --net='host' -e FFK_DATABASE_SERVER=$FFK_DATABASE_SERVER -e FFK_DATABASE_PORT=$FFK_DATABASE_PORT -e FFK_DATABASE_NAME=$FFK_DATABASE_NAME -e FFK_DATABASE_USERNAME=$FFK_DATABASE_USERNAME -e FFK_DATABASE_PASSWORD=$FFK_DATABASE_PASSWORD ffkcontainerregistry.azurecr.io/api:$(git rev-parse --verify HEAD)",
-    "docker-publish": "docker push ffkcontainerregistry.azurecr.io/api:$(git rev-parse --verify HEAD) && docker push ffkcontainerregistry.azurecr.io/api:latest"
+    "docker-build": "docker build -t ffkcontainerregistry.azurecr.io/api.faithfulknights.com:$(git rev-parse --verify HEAD) -t ffkcontainerregistry.azurecr.io/api.faithfulknights.com:latest -f Dockerfile .",
+    "docker-run": "docker run -i --net='host' -e FFK_DATABASE_SERVER=$FFK_DATABASE_SERVER -e FFK_DATABASE_PORT=$FFK_DATABASE_PORT -e FFK_DATABASE_NAME=$FFK_DATABASE_NAME -e FFK_DATABASE_USERNAME=$FFK_DATABASE_USERNAME -e FFK_DATABASE_PASSWORD=$FFK_DATABASE_PASSWORD ffkcontainerregistry.azurecr.io/api.faithfulknights.com:$(git rev-parse --verify HEAD)",
+    "docker-publish": "docker push ffkcontainerregistry.azurecr.io/api.faithfulknights.com:$(git rev-parse --verify HEAD) && docker push ffkcontainerregistry.azurecr.io/api.faithfulknights.com:latest"
   },
   "repository": {
     "type": "git",
