@@ -39,5 +39,6 @@ module "app_service" {
   FFK_DISCORD_REDIRECT      = var.FFK_DISCORD_REDIRECT
   FFK_DISCORD_BOT_TOKEN     = var.FFK_DISCORD_BOT_TOKEN
   FFK_DISCORD_CLIENT_SECRET = var.FFK_DISCORD_CLIENT_SECRET
+  FFK_API_SERVER            = var.FFK_API_SERVER
   depends_on                = [module.resource_group, module.app_service_plan, module.container_registry]
 }

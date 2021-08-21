@@ -68,7 +68,7 @@ resource "azurerm_app_service" "onboarding" {
     DOCKER_REGISTRY_SERVER_URL          = var.login_server
     DOCKER_REGISTRY_SERVER_USERNAME     = var.username
     DOCKER_REGISTRY_SERVER_PASSWORD     = var.password
-    FFK_API_SERVER                      = azurerm_app_service.api.default_site_hostname
+    FFK_API_SERVER                      = var.FFK_API_SERVER
     FFK_DISCORD_CLIENT_SECRET           = var.FFK_DISCORD_CLIENT_SECRET
     FFK_DISCORD_REDIRECT                = var.FFK_DISCORD_REDIRECT
     FFK_DISCORD_BOT_TOKEN               = var.FFK_DISCORD_BOT_TOKEN

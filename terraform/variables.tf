@@ -33,3 +33,7 @@ variable "FFK_DISCORD_REDIRECT" {
 variable "FFK_DISCORD_BOT_TOKEN" {
   type = string
 }
+
+variable "FFK_API_SERVER" {
+  type = string
+}
