@@ -10,7 +10,7 @@ resource "azuread_service_principal" "principal" {
 }
 
 resource "random_string" "string" {
-  length = 32
+  length  = 32
   special = false
 }
 
