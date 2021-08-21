@@ -25,3 +25,5 @@ variable "FFK_DISCORD_CLIENT_SECRET" {}
 variable "FFK_DISCORD_REDIRECT" {}
 
 variable "FFK_DISCORD_BOT_TOKEN" {}
+
+variable "FFK_API_SERVER" {}
