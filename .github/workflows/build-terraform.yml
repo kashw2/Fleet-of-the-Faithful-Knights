@@ -4,6 +4,16 @@ defaults:
   run:
     working-directory: terraform
 
+env:
+  TF_VAR_FFK_DATABASE_USERNAME: ${{ secrets.FFK_DATABASE_USERNAME }}
+  TF_VAR_FFK_DATABASE_PASSWORD: ${{ secrets.FFK_DATABASE_PASSWORD }}
+  TF_VAR_FFK_DATABASE_NAME: ${{ secrets.FFK_DATABASE_NAME }}
+  TF_VAR_FFK_DATABASE_SERVER: ${{ secrets.FFK_DATABASE_SERVER }}
+  TF_VAR_FFK_DATABASE_PORT: ${{ secrets.FFK_DATABASE_PORT }}
+  TF_VAR_FFK_DISCORD_CLIENT_SECRET: ${{ secrets.FFK_DATABASE_PORT }}
+  TF_VAR_FFK_DISCORD_REDIRECT: ${{ secrets.FFK_DISCORD_REDIRECT }}
+  TF_VAR_FFK_DISCORD_BOT_TOKEN: ${{ secrets.FFK_DISCORD_BOT_TOKEN }}
+
 on:
   workflow_dispatch:
   pull_request:

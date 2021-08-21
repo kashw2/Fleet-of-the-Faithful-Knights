@@ -28,10 +28,7 @@ router.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use((req: Request, res: Response, next: NextFunction) => {
-    if (!req.route)
-        res.status(404);
-    else
-        res.json({message: 'Welcome to the Fleet of the Faithful Knights Onboarding Server'});
+    res.json({message: 'Welcome to the Fleet of the Faithful Knights Onboarding Server'});
     next();
 });
 
