@@ -39,7 +39,8 @@ export class FfkApiService {
         .sendReadRequestList(
           BallotJsonSerializer.instance,
           {
-            'Discord-Id': did
+            'Discord-Id': did,
+            'Access-Control-Allow-Origin': '*'
           },
           {},
         )));
@@ -51,7 +52,8 @@ export class FfkApiService {
         .sendReadRequestList(
           CandidateJsonSerializer.instance,
           {
-            'Discord-Id': did
+            'Discord-Id': did,
+            'Access-Control-Allow-Origin': '*'
           },
           {},
         )));
@@ -67,7 +69,8 @@ export class FfkApiService {
         .sendReadRequestList(
           GroupJsonSerializer.instance,
           {
-            'Discord-Id': did
+            'Discord-Id': did,
+            'Access-Control-Allow-Origin': '*'
           },
           {},
         )));
@@ -79,6 +82,7 @@ export class FfkApiService {
         UserJsonSerializer.instance,
         {
           'Discord-Id': did,
+          'Access-Control-Allow-Origin': '*'
         },
         {},
       )));
@@ -90,7 +94,8 @@ export class FfkApiService {
         .sendReadRequestList(
           VoteJsonSerializer.instance,
           {
-            'Discord-Id': did
+            'Discord-Id': did,
+            'Access-Control-Allow-Origin': '*'
           },
           {},
         )));
@@ -107,6 +112,7 @@ export class FfkApiService {
           BallotJsonSerializer.instance,
           {
             'Discord-Id': did,
+            'Access-Control-Allow-Origin': '*'
           },
           {
             ballot: BallotJsonSerializer.instance.toJsonImpl(ballot)
@@ -116,7 +122,7 @@ export class FfkApiService {
 
   writeUser(code: string): Promise<Either<string, User>> {
     return this.user(code, true)
-      .sendCreateRequest(UserJsonSerializer.instance);
+      .sendCreateRequest(UserJsonSerializer.instance, {'Access-Control-Allow-Origin': '*'});
   }
 
   writeVote(vote: Vote): Promise<Either<string, Vote>> {
@@ -126,6 +132,7 @@ export class FfkApiService {
           VoteJsonSerializer.instance,
           {
             'Discord-Id': did,
+            'Access-Control-Allow-Origin': '*'
           },
           {
             vote: VoteJsonSerializer.instance.toJsonImpl(vote)

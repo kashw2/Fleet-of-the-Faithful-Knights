@@ -27,6 +27,7 @@ router.use((req: Request, res: Response, next: NextFunction) => {
     res.header('Access-Control-Allow-Headers', '*');
     if (req.method.includes('OPTIONS')) {
         res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE');
+        res.header('Access-Control-Allow-Origin', '*');
         return res.status(200).json({});
     }
     next();

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NavigationService} from "../../service/navigation.service";
 import {UserService} from "../../service/user.service";
 import {Option} from "funfix-core";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-sidebar',
@@ -25,7 +26,7 @@ export class SidebarComponent implements OnInit {
   }
 
   signIn(): void {
-    window.location.href = `https://discord.com/api/oauth2/authorize?client_id=607005043043860521&permissions=0&redirect_uri=http%3A%2F%2Flocalhost%3A4200&response_type=code&scope=identify%20guilds%20bot`;
+    window.location.href = `https://discord.com/api/oauth2/authorize?client_id=607005043043860521&permissions=0&redirect_uri=${encodeURIComponent(environment.DISCORD_REDIRECT_URI)}&response_type=code&scope=identify%20guilds%20bot`;
   }
 
 }
