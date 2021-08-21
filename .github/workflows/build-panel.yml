@@ -65,7 +65,7 @@ jobs:
           lerna exec npm install --scope=@ffk/panel
 
       - name: build panel
-        run: lerna run build --scope=@ffk/panel
+        run: lerna run build:prod --scope=@ffk/panel
         working-directory: panel
 
       - name: deploy
