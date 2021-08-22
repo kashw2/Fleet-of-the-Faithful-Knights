@@ -2,13 +2,6 @@ module "resource_group" {
   source = "./modules/resourceGroup"
 }
 
-//modules "storage_account" {
-//  source = "./modules/storageAccount"
-//  resource_group_name = modules.resource_group.name
-//  resource_group_location = modules.resource_group.location
-//  depends_on = [modules.resource_group]
-//}
-
 module "container_registry" {
   source                  = "./modules/containerRegistry"
   resource_group_name     = module.resource_group.name
@@ -41,4 +34,21 @@ module "app_service" {
   FFK_DISCORD_CLIENT_SECRET = var.FFK_DISCORD_CLIENT_SECRET
   FFK_API_SERVER            = var.FFK_API_SERVER
   depends_on                = [module.resource_group, module.app_service_plan, module.container_registry]
+}
+
+module "dns" {
+  source = "./modules/dns"
+  resource_group_name = module.resource_group.name
+  api_name = module.app_service.api_name
+  onboarding_name = module.app_service.onboarding_name
+  panel_name = module.app_service.panel_name
+  depends_on = [module.resource_group, module.app_service]
+}
+
+module "ssl" {
+  source = "./modules/ssl"
+  api_binding_id = module.dns.api_id
+  onboarding_binding_id = module.dns.onboarding_id
+  panel_binding_id = module.dns.panel_id
+  depends_on = [module.dns]
 }
