@@ -2,13 +2,6 @@ module "resource_group" {
   source = "./modules/resourceGroup"
 }
 
-//modules "storage_account" {
-//  source = "./modules/storageAccount"
-//  resource_group_name = modules.resource_group.name
-//  resource_group_location = modules.resource_group.location
-//  depends_on = [modules.resource_group]
-//}
-
 module "container_registry" {
   source                  = "./modules/containerRegistry"
   resource_group_name     = module.resource_group.name
