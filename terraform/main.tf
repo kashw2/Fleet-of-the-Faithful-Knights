@@ -35,3 +35,12 @@ module "app_service" {
   FFK_API_SERVER            = var.FFK_API_SERVER
   depends_on                = [module.resource_group, module.app_service_plan, module.container_registry]
 }
+
+module "domain_name_system" {
+  source = "./modules/domainNameSystem"
+  resource_group_name = module.resource_group.name
+  api_name = module.app_service.api_name
+  onboarding_name = module.app_service.onboarding_name
+  panel_name = module.app_service.panel_name
+  depends_on = [module.resource_group, module.app_service]
+}
