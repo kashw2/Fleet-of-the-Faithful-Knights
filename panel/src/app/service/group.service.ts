@@ -2,20 +2,13 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
 import {List} from "immutable";
 import {Group} from "@kashw2/lib-ts";
-import {ToastService} from "./toast.service";
-import {FfkApiService} from "./ffk-api.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GroupService {
 
-  constructor(
-    private ffkApiService: FfkApiService,
-    private toastService: ToastService,
-  ) {
-    this.ffkApiService.getGroups()
-      .then(g => this.setGroups(this.toastService.showAndRecoverList(g, `Loaded ${g.getOrElse(List()).size} Groups`)));
+  constructor() {
   }
 
   private groups: BehaviorSubject<List<Group>> = new BehaviorSubject<List<Group>>(List());

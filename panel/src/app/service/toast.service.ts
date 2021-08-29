@@ -69,11 +69,16 @@ export class ToastService {
 
   showEither<A>(
     input: Either<string, A>,
-    success: string,
+    success: string = '',
   ): void {
     input.fold(
       (left) => this.show(left, 'Error'),
-      (right) => this.show(success, "Success")
+      (right) => {
+        if (success.length > 0) {
+          return this.show(success, "Success");
+        }
+        return;
+      }
     );
   }
 
