@@ -3,20 +3,13 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {Candidate} from '@kashw2/lib-ts';
 import {List} from 'immutable';
 import {Option} from 'funfix-core';
-import {ToastService} from "./toast.service";
-import {FfkApiService} from "./ffk-api.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CandidateService {
 
-  constructor(
-    private toastService: ToastService,
-    private ffkApiService: FfkApiService,
-    ) {
-    this.ffkApiService.getCandidates()
-      .then(g => this.setCandidates(this.toastService.showAndRecoverList(g, `Loaded ${g.getOrElse(List()).size} Candidates`)));
+  constructor() {
   }
 
   private candidates: BehaviorSubject<List<Candidate>> = new BehaviorSubject<List<Candidate>>(List());
@@ -34,7 +27,7 @@ export class CandidateService {
   }
 
   getCandidates(): List<Candidate> {
-    return this.candidates.getValue()
+    return this.candidates.getValue();
   }
 
   setCandidates(candidates: List<Candidate>): List<Candidate> {

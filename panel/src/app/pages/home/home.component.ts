@@ -2,12 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {Option} from "funfix-core";
 import {ActivatedRoute} from "@angular/router";
 import {FfkApiService} from "../../service/ffk-api.service";
-import {filter, from, map, switchMap, tap} from "rxjs";
+import {distinctUntilChanged, filter, from, map, switchMap, takeUntil, takeWhile, tap} from "rxjs";
 import {CrudService} from "../../service/crud.service";
 import {UserService} from "../../service/user.service";
 import {ToastService} from "../../service/toast.service";
 import {List} from "immutable";
 import {GroupService} from "../../service/group.service";
+import {CandidateService} from "../../service/candidate.service";
 
 @Component({
   selector: 'app-home',
@@ -22,6 +23,7 @@ export class HomeComponent implements OnInit {
     private crudService: CrudService,
     private userService: UserService,
     private groupService: GroupService,
+    private candidateService: CandidateService,
     private toastService: ToastService,
   ) {
   }
@@ -43,13 +45,26 @@ export class HomeComponent implements OnInit {
         // Get Groups
         .pipe(switchMap(_ => from(this.ffkApiService.getGroups())))
         .pipe(tap(gs => this.groupService.setGroups(this.toastService.showAndRecoverList(gs))))
+        // Get Candidates
+        .pipe(switchMap(_ => from(this.ffkApiService.getCandidates())))
+        .pipe(tap(cs => this.candidateService.setCandidates(this.toastService.showAndRecoverList(cs, `Loaded ${cs.getOrElse(List()).size} Candidates`))))
         .subscribe();
     } else {
-      if (this.userService.isLoggedIn()) {
-        from(this.ffkApiService.getGroups())
-          .pipe(tap(gs => this.groupService.setGroups(this.toastService.showAndRecoverList(gs))))
-          .subscribe();
-      }
+      this.userService.asObs()
+        .pipe(tap((v) => {
+            if (v.nonEmpty()) {
+              return from(this.ffkApiService.getGroups())
+                // Get Groups
+                .pipe(switchMap(_ => from(this.ffkApiService.getGroups())))
+                .pipe(switchMap(_ => from(this.ffkApiService.getGroups())))
+                .pipe(tap(gs => this.groupService.setGroups(this.toastService.showAndRecoverList(gs))))
+                // Get Candidates
+                .pipe(switchMap(_ => from(this.ffkApiService.getCandidates())))
+                .pipe(tap(cs => this.candidateService.setCandidates(this.toastService.showAndRecoverList(cs, `Loaded ${cs.getOrElse(List()).size} Candidates`))));
+            }
+          }
+        ))
+        .subscribe();
     }
   }
 
