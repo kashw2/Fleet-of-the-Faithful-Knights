@@ -40,6 +40,11 @@ export class UserService {
     return this.user.getValue();
   }
 
+  isLoggedIn(): boolean {
+    return this.getUser()
+      .nonEmpty();
+  }
+
   setUser(user: Option<User>): Option<User> {
     if (user.isEmpty() || this.getUser().equals(user)) {
       return this.getUser();
