@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Option} from "funfix-core";
 import {ActivatedRoute} from "@angular/router";
 import {FfkApiService} from "../../service/ffk-api.service";
-import {distinctUntilChanged, filter, from, map, pipe, switchMap, takeUntil, takeWhile, tap} from "rxjs";
+import {distinctUntilChanged, filter, from, map, of, pipe, switchMap, takeUntil, takeWhile, tap} from "rxjs";
 import {CrudService} from "../../service/crud.service";
 import {UserService} from "../../service/user.service";
 import {ToastService} from "../../service/toast.service";
@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
         .subscribe();
     } else {
       this.userService.asObs()
-        .pipe(tap((v) => {
+        .pipe(switchMap((v) => {
             if (v.nonEmpty()) {
               return from(this.ffkApiService.getGroups())
                 // Get Groups
@@ -70,9 +70,10 @@ export class HomeComponent implements OnInit {
                 .pipe(switchMap(_ => from(this.ffkApiService.getVotes())))
                 .pipe(tap(vs => this.voteService.setVotes(this.toastService.showAndRecoverList(vs, `Loaded ${vs.getOrElse(List()).size} Votes`))));
             }
+            return of();
           }
         ))
-        .subscribe();
+        .subscribe(console.warn);
     }
   }
 
