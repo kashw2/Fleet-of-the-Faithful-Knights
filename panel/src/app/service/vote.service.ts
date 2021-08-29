@@ -7,7 +7,6 @@ import {UserService} from "./user.service";
 import {ToastService} from "./toast.service";
 import {FfkApiService} from "./ffk-api.service";
 import {None, Option} from "funfix-core";
-import {OptionUtils} from "@kashw2/lib-util";
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +19,6 @@ export class VoteService {
     private userService: UserService,
     private toastService: ToastService,
   ) {
-    this.ffkApiService.getVotes()
-      .then(v => this.setVotes(this.toastService.showAndRecoverList(v, `Loaded ${v.getOrElse(List()).size} Votes`)));
   }
 
   private selectedVote: BehaviorSubject<Option<Vote>> = new BehaviorSubject<Option<Vote>>(None);
