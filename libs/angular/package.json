@@ -30,8 +30,8 @@
   "dependencies": {
     "@angular-devkit/build-angular": "12.2.4",
     "@angular-devkit/build-ng-packagr": "0.1002.0",
-    "@angular/compiler": "12.2.3",
-    "@angular/compiler-cli": "12.2.3",
+    "@angular/compiler": "12.2.4",
+    "@angular/compiler-cli": "12.2.4",
     "@types/estree": "0.0.50",
     "ng-packagr": "12.2.1"
   },
