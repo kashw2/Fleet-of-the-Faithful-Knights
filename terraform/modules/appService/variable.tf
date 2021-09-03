@@ -10,6 +10,12 @@ variable "username" {}
 
 variable "password" {}
 
+variable "panel_instrumentation_key" {}
+
+variable "api_instrumentation_key" {}
+
+variable "onboarding_instrumentation_key" {}
+
 variable "FFK_DATABASE_USERNAME" {}
 
 variable "FFK_DATABASE_PASSWORD" {}
