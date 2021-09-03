@@ -4,6 +4,8 @@ import {HomeComponent} from "./pages/home/home.component";
 import {VotesComponent} from "./pages/votes/votes.component";
 import {CreateVoteComponent} from "./pages/create-vote/create-vote.component";
 import {VoteComponent} from "./pages/vote/vote.component";
+import {CandidateGuard} from "./guards/candidate.guard";
+import {VoteGuard} from "./guards/vote.guard";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -19,10 +21,12 @@ import {VoteComponent} from "./pages/vote/vote.component";
     {
       path: 'votes',
       component: VotesComponent,
+      canActivate: [VoteGuard],
     },
     {
       path: 'votes/create',
       component: CreateVoteComponent,
+      canActivate: [CandidateGuard],
     },
     {
       path: 'vote/:id',
