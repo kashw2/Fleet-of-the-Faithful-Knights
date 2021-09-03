@@ -7,6 +7,7 @@ resource "azurerm_app_service" "panel" {
 
 
   app_settings = {
+    APPINSIGHTS_INSTRUMENTATIONKEY      = var.panel_instrumentation_key
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
     DOCKER_ENABLE_CI                    = true
     DOCKER_REGISTRY_SERVER_URL          = var.login_server
@@ -31,6 +32,7 @@ resource "azurerm_app_service" "api" {
 
 
   app_settings = {
+    APPINSIGHTS_INSTRUMENTATIONKEY      = var.api_instrumentation_key
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
     DOCKER_ENABLE_CI                    = true
     DOCKER_REGISTRY_SERVER_URL          = var.login_server
@@ -63,6 +65,7 @@ resource "azurerm_app_service" "onboarding" {
 
 
   app_settings = {
+    APPINSIGHTS_INSTRUMENTATIONKEY      = var.onboarding_instrumentation_key
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
     DOCKER_ENABLE_CI                    = true
     DOCKER_REGISTRY_SERVER_URL          = var.login_server
