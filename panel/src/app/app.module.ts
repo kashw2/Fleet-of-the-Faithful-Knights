@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {ToastrModule} from 'ngx-toastr';
@@ -18,6 +18,7 @@ import {MatDividerModule} from "@angular/material/divider";
 import {BallotDialogComponent} from './dialogs/ballot-dialog/ballot-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import {AzureApplicationInsightsService} from "./service/azure-application-insights.service";
 
 @NgModule({
   declarations: [
@@ -44,6 +45,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
   ],
   providers: [
     {provide: 'ffkApiServer', useValue: environment.FFK_API_SERVER},
+    {provide: 'applicationInsightsKey', useValue: environment.applicationInsightsKey},
+    {provide: ErrorHandler, useClass: AzureApplicationInsightsService},
   ],
   bootstrap: [AppComponent]
 })
