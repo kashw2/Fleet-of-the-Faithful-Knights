@@ -27,11 +27,6 @@ router.use((req: Request, res: Response, next: NextFunction) => {
     next();
 });
 
-app.use((req: Request, res: Response, next: NextFunction) => {
-    res.json({message: 'Welcome to the Fleet of the Faithful Knights Onboarding Server'});
-    next();
-});
-
 AllEndpoints.initialiseEndpoints(router);
 
 app.listen(process.env.PORT || 3002, () => console.log(`Listening on port 3002`));
