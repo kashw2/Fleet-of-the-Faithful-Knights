@@ -64,7 +64,7 @@ jobs:
           lerna exec npm install --scope=@ffk/onboarding
 
       - name: build onboarding
-        run: lerna run build --scope=@ffk/onboarding
+        run: lerna run build:dev --scope=@ffk/onboarding
 
       - name: deploy
         uses: docker/login-action@v1
