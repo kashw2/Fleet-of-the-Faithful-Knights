@@ -113,7 +113,6 @@ export class UserEndpoint extends CrudEndpoint {
                 process.env.FFK_DISCORD_BOT_TOKEN!,
             );
             return lastValueFrom(discordApi.getOAuth(this.getDiscordAuthToken(req).get())
-                .pipe(tap(v => console.log(v)))
                 .pipe(map(v => v.toOption().flatMap(dt => dt.getAccessToken())))
                 .pipe(filter(v => v.nonEmpty()))
                 .pipe(map(v => v.get()))
