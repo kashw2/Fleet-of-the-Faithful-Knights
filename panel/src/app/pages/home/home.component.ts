@@ -82,7 +82,7 @@ export class HomeComponent implements OnInit {
             return of<Either<string, List<Vote>>>(Right(List()));
           }
         ))
-        .subscribe(console.warn);
+        .subscribe();
     }
   }
 
