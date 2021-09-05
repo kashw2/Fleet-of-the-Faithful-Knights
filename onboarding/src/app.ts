@@ -1,6 +1,8 @@
 import express, {NextFunction, Request, Response} from "express";
 import bodyParser from "body-parser";
 import {AllEndpoints} from "./endpoints/all-endpoints";
+import {EitherUtils} from "@kashw2/lib-util";
+import {Option} from "funfix-core";
 
 const app = express();
 const router = express.Router();
@@ -29,4 +31,17 @@ router.use((req: Request, res: Response, next: NextFunction) => {
 
 AllEndpoints.initialiseEndpoints(router);
 
-app.listen(process.env.PORT || 3002, () => console.log(`Listening on port 3002`));
+app.listen(process.env.PORT || 3002, () => {
+
+    EitherUtils.liftEither(process.env.FFK_DISCORD_CLIENT_SECRET, `Missing environment variables FFK_DISCORD_CLIENT_SECRET`)
+        .filterOrElse(_ => Option.of(process.env.FFK_DISCORD_RECIRECT).nonEmpty(), () =>`Missing environment variable FFK_DISCORD_RECIRECT`)
+        .filterOrElse(_ => Option.of(process.env.FFK_DISCORD_BOT_TOKEN).nonEmpty(), () => `Missing environment variable FFK_DISCORD_BOT_TOKEN`)
+        .filterOrElse(_ => Option.of(process.env.FFK_API_SERVER).nonEmpty(), () => `Missing environment variable FFK_API_SERVER`)
+        .fold(
+            (error) => {
+                throw error;
+            },
+            () => console.log(`Listening on port 3002`)
+        );
+
+});

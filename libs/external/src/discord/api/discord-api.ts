@@ -90,13 +90,6 @@ export class DiscordApi extends SerializedApiBase {
         ));
     }
 
-    getHeaders(): object {
-        return {
-            Authorization: `Bot ${this.clientSecret}`,
-            "Content-Type": "application/x-www-form-urlencoded",
-        };
-    }
-
     /**
      * Used to return an OAuthResponse containing the Access Code for other requests.
      * Creates the foundation for usage of the Discord API
@@ -111,19 +104,21 @@ export class DiscordApi extends SerializedApiBase {
             'oauth2/token',
             "POST",
             DiscordTokenJsonSerializer.instance,
-            this.getHeaders(),
+            {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
             this.getOAuthPayload(code),
         ));
     }
 
-    private getOAuthPayload(code: string): string {
-        return querystring.encode({
-            client_id: this.clientId,
-            client_secret: this.clientSecret,
-            grant_type: "authorization_code",
-            code,
-            redirect_uri: this.redirectUrl,
-            scope: "bot identify guilds",
+    private getOAuthPayload(code: string): URLSearchParams {
+        return new URLSearchParams({
+            'client_id': this.clientId,
+            'client_secret': this.clientSecret,
+            'grant_type': 'authorization_code',
+            'code': code,
+            'redirect_uri': this.redirectUrl,
+            'scope': 'bot identify guilds',
         });
     }
 
