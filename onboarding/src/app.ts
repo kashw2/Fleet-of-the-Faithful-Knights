@@ -34,7 +34,7 @@ AllEndpoints.initialiseEndpoints(router);
 app.listen(process.env.PORT || 3002, () => {
 
     EitherUtils.liftEither(process.env.FFK_DISCORD_CLIENT_SECRET, `Missing environment variables FFK_DISCORD_CLIENT_SECRET`)
-        .filterOrElse(_ => Option.of(process.env.FFK_DISCORD_RECIRECT).nonEmpty(), () =>`Missing environment variable FFK_DISCORD_RECIRECT`)
+        .filterOrElse(_ => Option.of(process.env.FFK_DISCORD_REDIRECT).nonEmpty(), () =>`Missing environment variable FFK_DISCORD_REDIRECT`)
         .filterOrElse(_ => Option.of(process.env.FFK_DISCORD_BOT_TOKEN).nonEmpty(), () => `Missing environment variable FFK_DISCORD_BOT_TOKEN`)
         .filterOrElse(_ => Option.of(process.env.FFK_API_SERVER).nonEmpty(), () => `Missing environment variable FFK_API_SERVER`)
         .fold(
