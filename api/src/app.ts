@@ -3,7 +3,8 @@ import {Database} from "./db/database";
 import {AllEndpoints} from "./endpoints/all-endpoints";
 import bodyParser from "body-parser";
 import {UserJsonSerializer} from "@kashw2/lib-ts";
-import {Option} from "funfix-core";
+import {Option, Right} from "funfix-core";
+import {EitherUtils} from "@kashw2/lib-util";
 
 const app = express();
 const router = express.Router();
@@ -65,4 +66,20 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 // Initialise all the endpoints
 AllEndpoints.initialiseEndpoints(router, db);
 
-app.listen(process.env.PORT || 3000, () => console.log(`Listening on port 3000`));
+app.listen(process.env.PORT || 3000, () => {
+
+    EitherUtils.liftEither(process.env.FFK_DATABASE_SERVER, `Missing environment variables FFK_DATABASE_SERVER`)
+        .filterOrElse(_ => Option.of(process.env.FFK_DATABASE_PORT).nonEmpty(), () =>`Missing environment variable FFK_DATABASE_PORT`)
+        .filterOrElse(_ => Option.of(process.env.FFK_DATABASE_NAME).nonEmpty(), () => `Missing environment variable FFK_DATABASE_NAME`)
+        .filterOrElse(_ => Option.of(process.env.FFK_DATABASE_USERNAME).nonEmpty(), () => `Missing environment variable FFK_DATABASE_USERNAME`)
+        .filterOrElse(_ => Option.of(process.env.FFK_DATABASE_PASSWORD).nonEmpty(), () => `Missing environment variable FFK_DATABASE_PASSWORD`)
+        .filterOrElse(_ => Option.of(process.env.FFK_DISCORD_CLIENT_SECRET).nonEmpty(), () => `Missing environment variable FFK_DISCORD_CLIENT_SECRET`)
+        .filterOrElse(_ => Option.of(process.env.FFK_DISCORD_REDIRECT).nonEmpty(), () => `Missing environment variable FFK_DISCORD_REDIRECT`)
+        .filterOrElse(_ => Option.of(process.env.FFK_DISCORD_BOT_TOKEN).nonEmpty(), () => `Missing environment variable FFK_DISCORD_BOT_TOKEN`)
+        .fold(
+            (error) => {
+                throw error;
+            },
+            () => console.log(`Listening on port 3000`)
+        );
+});
