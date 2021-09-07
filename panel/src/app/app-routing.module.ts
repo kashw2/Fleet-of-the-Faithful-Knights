@@ -21,7 +21,6 @@ import {VoteGuard} from "./guards/vote.guard";
     {
       path: 'votes',
       component: VotesComponent,
-      canActivate: [VoteGuard],
     },
     {
       path: 'votes/create',
@@ -31,6 +30,7 @@ import {VoteGuard} from "./guards/vote.guard";
     {
       path: 'vote/:id',
       component: VoteComponent,
+      canActivate: [VoteGuard]
     },
     {
       path: '**',

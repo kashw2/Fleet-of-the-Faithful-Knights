@@ -71,8 +71,10 @@ export class VoteService {
 
   setVotes(votes: List<Vote>): List<Vote> {
     if (votes.isEmpty() || this.getVotes().equals(votes)) {
+      console.warn(`Votes equal or empty: ${votes.size}`);
       return this.getVotes();
     }
+    console.log(`Setting ${votes.size} Votes`);
     this.votes.next(votes);
     return votes;
   }

@@ -27,8 +27,10 @@ export class GroupService {
 
   setGroups(groups: List<Group>): List<Group> {
     if (groups.isEmpty() || this.getGroups().equals(groups)) {
+      console.warn(`Groups equal or empty: ${groups.size}`);
       return this.getGroups();
     }
+    console.log(`Setting ${groups.size} Groups`);
     this.groups.next(groups);
     return groups;
   }

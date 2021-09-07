@@ -1,16 +1,16 @@
-name: Build lib-ts
+name: lib-util
 
 on:
   workflow_dispatch:
   pull_request:
     paths:
       - package.json
-      - libs/typescript/**
+      - libs/util/**
     branches:
       - main
 
 jobs:
-  build-lib-ts:
+  build-lib-util:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -30,7 +30,7 @@ jobs:
       - name: npm install
         run: |
           npm install
-          lerna exec npm install --scope=@kashw2/lib-ts
+          lerna exec npm install --scope=@kashw2/lib-util
 
       - name: build
-        run: lerna run build --scope=@kashw2/lib-ts
+        run: lerna run build --scope=@kashw2/lib-util
