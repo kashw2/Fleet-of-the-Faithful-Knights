@@ -1,15 +1,15 @@
 # Fleet of the Faithful Knights
 
-[![Terraform](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-terraform.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-terraform.yml)
+[![Terraform](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/terraform.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/terraform.yml)
 
-[![api.faithfulknights.com](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-api.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-api.yml)
-[![panel.faithfulknights.com](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-panel.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-panel.yml)
+[![api.faithfulknights.com](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/api.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/api.yml)
+[![onboarding.faithfulknights.com](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/onboarding.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/onboarding.yml)
+[![panel.faithfulknights.com](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/panel.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/panel.yml)
 
-[![TypeScript Library](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-lib-ts.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-lib-ts.yml)
-[![Utility Library](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-lib-util.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-lib-util.yml)
-[![Server Library](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-lib-server.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-lib-server.yml)
-[![Externals Library](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-lib-external.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-lib-external.yml)
-[![Angular Library](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-lib-angular.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/build-lib-angular.yml)
+[![Externals Library](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/lib-external.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/lib-external.yml)
+[![Utility Library](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/lib-util.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/lib-util.yml)
+[![Server Library](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/lib-server.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/lib-server.yml)
+[![TypeScript Library](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/lib-ts.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/lib-ts.yml)
 
 Fleet of the Faithful Knights (FFK) is a Star Citizen organisation that seeks to be a beacon of light in a dark universe.
 
