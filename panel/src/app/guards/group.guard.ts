@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from '@angular/router';
-import {map, Observable, of, switchMap, tap} from 'rxjs';
+import {filter, from, map, mergeMap, Observable, of, switchMap, tap} from 'rxjs';
 import {GroupService} from "../service/group.service";
 import {NavigationService} from "../service/navigation.service";
+import {FfkApiService} from "../service/ffk-api.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class GroupGuard implements CanActivate {
   constructor(
     private groupService: GroupService,
     private navigationService: NavigationService,
+    private ffkApiService: FfkApiService,
     ) {
   }
 
@@ -21,7 +23,14 @@ export class GroupGuard implements CanActivate {
     ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return of(false)
       .pipe(switchMap(_ => this.groupService.asObs()))
-      .pipe(map(gs => !gs.isEmpty()))
+      .pipe(mergeMap(groups => {
+        return from(this.ffkApiService.getGroups())
+          .pipe(filter(v => v.isRight()))
+          .pipe(map(v => v.get()))
+          .pipe(map(g => g.isEmpty() ? groups.concat(g) : g))
+          .pipe(tap(g => this.groupService.setGroups(g)));
+      }))
+      .pipe(map(groups => !groups.isEmpty()))
       .pipe(tap(v => {
         if (!v) {
           this.navigationService.home();
