@@ -14,21 +14,23 @@ export class GroupGuard implements CanActivate {
     private groupService: GroupService,
     private navigationService: NavigationService,
     private ffkApiService: FfkApiService,
-    ) {
+  ) {
   }
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
-    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return of(false)
       .pipe(switchMap(_ => this.groupService.asObs()))
       .pipe(mergeMap(groups => {
-        return from(this.ffkApiService.getGroups())
-          .pipe(filter(v => v.isRight()))
-          .pipe(map(v => v.get()))
-          .pipe(map(g => g.isEmpty() ? groups.concat(g) : g))
-          .pipe(tap(g => this.groupService.setGroups(g)));
+        if (groups.isEmpty()) {
+          return from(this.ffkApiService.getGroups())
+            .pipe(filter(v => v.isRight()))
+            .pipe(map(v => v.get()))
+            .pipe(tap(g => this.groupService.setGroups(g)));
+        }
+        return of(groups);
       }))
       .pipe(map(groups => !groups.isEmpty()))
       .pipe(tap(v => {

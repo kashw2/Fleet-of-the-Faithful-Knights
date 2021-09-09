@@ -24,11 +24,13 @@ export class CandidateGuard implements CanActivate {
     return of(false)
       .pipe(switchMap(_ => this.candidateService.asObs()))
       .pipe(mergeMap(candidates => {
-        return from(this.ffkApiService.getCandidates())
-          .pipe(filter(v => v.isRight()))
-          .pipe(map(v => v.get()))
-          .pipe(map(c => c.isEmpty() ? candidates.concat(c) : c))
-          .pipe(tap(c => this.candidateService.setCandidates(c)));
+        if (candidates.isEmpty()) {
+          return from(this.ffkApiService.getCandidates())
+            .pipe(filter(v => v.isRight()))
+            .pipe(map(v => v.get()))
+            .pipe(tap(c => this.candidateService.setCandidates(c)));
+        }
+        return of(candidates);
       }))
       .pipe(map(candidates => !candidates.isEmpty()))
       .pipe(tap(v => {
