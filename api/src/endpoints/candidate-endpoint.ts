@@ -23,7 +23,7 @@ export class CandidateEndpoint extends AuthenticatedCrudEndpoint {
             ).then(v => {
                 // Caching bug
                 this.db.cache.cacheCandidates();
-                return v.map(x => CandidateJsonSerializer.instance.toJsonImpl(x))
+                return v.map(x => CandidateJsonSerializer.instance.toJsonImpl(x));
             });
         }
         return EitherUtils.sequence(
@@ -35,7 +35,7 @@ export class CandidateEndpoint extends AuthenticatedCrudEndpoint {
         ).then(v => {
             // Caching bug
             this.db.cache.cacheCandidates();
-            return v.map(x => CandidateJsonSerializer.instance.toJsonArray(x.toArray()))
+            return v.map(x => CandidateJsonSerializer.instance.toJsonArray(x.toArray()));
         });
     }
 
@@ -49,6 +49,9 @@ export class CandidateEndpoint extends AuthenticatedCrudEndpoint {
         switch (this.getHTTPMethod(req)) {
             case 'POST':
             case 'GET':
+                if (this.isForSingle(req)) {
+                    return true;
+                }
                 return false;
             default:
                 return true;
