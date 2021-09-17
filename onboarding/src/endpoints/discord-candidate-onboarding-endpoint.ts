@@ -11,10 +11,6 @@ export class DiscordCandidateOnboardingEndpoint extends ApiEndpoint {
         super('/candidate');
     }
 
-    doesRequireAuthentication(): boolean {
-        return false;
-    }
-
     private getApiTemplate(req: Request): Either<string, ApiTemplate> {
         return ApiUtils.parseBodyParamSerialized(req, 'template', ApiTemplateJsonSerializer.instance);
     }

@@ -1,4 +1,4 @@
-import {CrudEndpoint} from "@kashw2/lib-server";
+import {AuthenticatedCrudEndpoint} from "@kashw2/lib-server";
 import {Candidate, CandidateJsonSerializer, User} from "@kashw2/lib-ts";
 import {Request, Response} from 'express';
 import {Either} from "funfix-core";
@@ -6,7 +6,7 @@ import {ApiUtils, EitherUtils} from "@kashw2/lib-util";
 import {List} from "immutable";
 import {Database} from "../db/database";
 
-export class CandidateEndpoint extends CrudEndpoint {
+export class CandidateEndpoint extends AuthenticatedCrudEndpoint {
 
     constructor(private db: Database) {
         super('/candidate');
@@ -23,7 +23,7 @@ export class CandidateEndpoint extends CrudEndpoint {
             ).then(v => {
                 // Caching bug
                 this.db.cache.cacheCandidates();
-                return v.map(x => CandidateJsonSerializer.instance.toJsonImpl(x))
+                return v.map(x => CandidateJsonSerializer.instance.toJsonImpl(x));
             });
         }
         return EitherUtils.sequence(
@@ -35,7 +35,7 @@ export class CandidateEndpoint extends CrudEndpoint {
         ).then(v => {
             // Caching bug
             this.db.cache.cacheCandidates();
-            return v.map(x => CandidateJsonSerializer.instance.toJsonArray(x.toArray()))
+            return v.map(x => CandidateJsonSerializer.instance.toJsonArray(x.toArray()));
         });
     }
 
@@ -49,6 +49,9 @@ export class CandidateEndpoint extends CrudEndpoint {
         switch (this.getHTTPMethod(req)) {
             case 'POST':
             case 'GET':
+                if (this.isForSingle(req)) {
+                    return true;
+                }
                 return false;
             default:
                 return true;

@@ -30,7 +30,7 @@ export class DiscordOnboardingTemplate extends OnboardingTemplate {
             .pipe(filter(v => v.isRight()))
             .pipe(map(v => v.get()))
             .pipe(switchMap(discordCandidates => {
-                return from(ffkApi.candidate().sendReadRequestList(CandidateJsonSerializer.instance, {}))
+                return from(ffkApi.candidate().sendReadRequestList(CandidateJsonSerializer.instance))
                     .pipe(filter(v => v.isRight()))
                     .pipe(map(v => v.get()))
                     .pipe(map(cachedCandidates => discordCandidates.filter(dc => cachedCandidates.every(cc => cc.getDiscordId().equals(dc.getDiscordId())))));

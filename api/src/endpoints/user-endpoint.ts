@@ -1,4 +1,4 @@
-import {CrudEndpoint} from "@kashw2/lib-server";
+import {AuthenticatedCrudEndpoint} from "@kashw2/lib-server";
 import {Group, User, UserJsonSerializer} from "@kashw2/lib-ts";
 import {Request, Response} from "express";
 import {ApiUtils, EitherUtils, OptionUtils} from "@kashw2/lib-util";
@@ -98,7 +98,7 @@ const discordRoleIdToGroupMap: Map<string, Group> = Map(
     },
 );
 
-export class UserEndpoint extends CrudEndpoint {
+export class UserEndpoint extends AuthenticatedCrudEndpoint {
 
     constructor(private db: Database) {
         super('/user');

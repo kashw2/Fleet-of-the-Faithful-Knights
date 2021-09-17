@@ -1,11 +1,11 @@
-import {CrudEndpoint} from "@kashw2/lib-server";
+import {AuthenticatedCrudEndpoint} from "@kashw2/lib-server";
 import {Permission, PermissionJsonSerializer, User} from "@kashw2/lib-ts";
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {ApiUtils, EitherUtils} from "@kashw2/lib-util";
 import {Database} from "../db/database";
 
-export class PermissionsEndpoint extends CrudEndpoint {
+export class PermissionsEndpoint extends AuthenticatedCrudEndpoint {
 
     constructor(private db: Database) {
         super('/permission');
