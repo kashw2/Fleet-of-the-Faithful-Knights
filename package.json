@@ -4,7 +4,7 @@
   "description": "FFK Monorepo",
   "scripts": {
     "build": "echo \"$(tput setaf 2)Running Build Script$(tput srg0)\"",
-    "build-dev": "echo \"$(tput setaf 2)Running Development Build Script$(tput srg0)\"",
+    "build:dev": "echo \"$(tput setaf 2)Running Development Build Script$(tput srg0)\"",
     "build-lib": "echo \"$(tput setaf 2)Running Library Build Script$(tput srg0)\" && npm run build-util && npm run build-external && npm run build-ts && npm run build-server && npm run build-angular",
     "build-util": "lerna run build --scope=@kashw2/lib-util",
     "build-external": "lerna run build --scope=@kashw2/lib-external",
@@ -24,7 +24,7 @@
   "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights#readme",
   "dependencies": {
     "@kashw2/lib-external": "3.1.2",
-    "@kashw2/lib-server": "2.1.0",
+    "@kashw2/lib-server": "3.0.1",
     "@kashw2/lib-ts": "3.6.3",
     "@kashw2/lib-util": "2.4.0",
     "@types/cors": "2.8.12",

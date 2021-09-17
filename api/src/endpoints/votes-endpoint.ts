@@ -1,11 +1,11 @@
-import {CrudEndpoint} from "@kashw2/lib-server";
+import {AuthenticatedCrudEndpoint} from "@kashw2/lib-server";
 import {Database} from "../db/database";
 import {User, Vote, VoteJsonSerializer} from "@kashw2/lib-ts";
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {ApiUtils, EitherUtils} from "@kashw2/lib-util";
 
-export class VotesEndpoint extends CrudEndpoint {
+export class VotesEndpoint extends AuthenticatedCrudEndpoint {
 
     constructor(private db: Database) {
         super('/vote');
