@@ -37,7 +37,7 @@
     "cors": "2.8.5",
     "express": "4.17.1",
     "funfix-core": "7.0.1",
-    "immutable": "4.0.0-rc.12",
+    "immutable": "4.0.0-rc.15",
     "lerna": "4.0.0",
     "moment": "2.29.1",
     "mssql": "7.2.1",
