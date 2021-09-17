@@ -68,11 +68,9 @@ export class HomeComponent implements OnInit {
             // If we're logged in and we haven't got data in the respective states
             if (
               v.nonEmpty() &&
-              (
-                this.groupService.getGroups().isEmpty()
+              (this.groupService.getGroups().isEmpty()
                 || this.candidateService.getCandidates().isEmpty()
-                || this.voteService.getVotes().isEmpty()
-              )
+                || this.voteService.getVotes().isEmpty())
             ) {
               return zip(
                 this.ffkApiService.getGroups(),
