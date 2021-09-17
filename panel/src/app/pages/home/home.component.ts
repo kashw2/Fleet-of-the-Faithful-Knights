@@ -51,9 +51,15 @@ export class HomeComponent implements OnInit {
           this.ffkApiService.getVotes(),
         )))
         .pipe(tap(([groups, candidates, votes]) => {
-          this.groupService.setGroups(this.toastService.showAndRecoverList(groups));
-          this.candidateService.setCandidates(this.toastService.showAndRecoverList(candidates, `Loaded ${candidates.getOrElse(List()).size} Candidates`));
-          this.voteService.setVotes(this.toastService.showAndRecoverList(votes, `Loaded ${votes.getOrElse(List()).size} Votes`));
+          if (this.groupService.getGroups().isEmpty()) {
+            this.groupService.setGroups(this.toastService.showAndRecoverList(groups));
+          }
+          if (this.candidateService.getCandidates().isEmpty()) {
+            this.candidateService.setCandidates(this.toastService.showAndRecoverList(candidates, `Loaded ${candidates.getOrElse(List()).size} Candidates`));
+          }
+          if (this.voteService.getVotes().isEmpty()) {
+            this.voteService.setVotes(this.toastService.showAndRecoverList(votes, `Loaded ${votes.getOrElse(List()).size} Votes`));
+          }
         }))
         .subscribe();
     } else {
@@ -62,11 +68,9 @@ export class HomeComponent implements OnInit {
             // If we're logged in and we haven't got data in the respective states
             if (
               v.nonEmpty() &&
-              (
-                this.groupService.getGroups().isEmpty()
+              (this.groupService.getGroups().isEmpty()
                 || this.candidateService.getCandidates().isEmpty()
-                || this.voteService.getVotes().isEmpty()
-              )
+                || this.voteService.getVotes().isEmpty())
             ) {
               return zip(
                 this.ffkApiService.getGroups(),
@@ -74,9 +78,15 @@ export class HomeComponent implements OnInit {
                 this.ffkApiService.getVotes(),
               )
                 .pipe(tap(([groups, candidates, votes]) => {
-                  this.groupService.setGroups(this.toastService.showAndRecoverList(groups));
-                  this.candidateService.setCandidates(this.toastService.showAndRecoverList(candidates, `Loaded ${candidates.getOrElse(List()).size} Candidates`));
-                  this.voteService.setVotes(this.toastService.showAndRecoverList(votes, `Loaded ${votes.getOrElse(List()).size} Votes`));
+                  if (this.groupService.getGroups().isEmpty()) {
+                    this.groupService.setGroups(this.toastService.showAndRecoverList(groups));
+                  }
+                  if (this.candidateService.getCandidates().isEmpty()) {
+                    this.candidateService.setCandidates(this.toastService.showAndRecoverList(candidates, `Loaded ${candidates.getOrElse(List()).size} Candidates`));
+                  }
+                  if (this.voteService.getVotes().isEmpty()) {
+                    this.voteService.setVotes(this.toastService.showAndRecoverList(votes, `Loaded ${votes.getOrElse(List()).size} Votes`));
+                  }
                 }));
             }
             return of<Either<string, List<Vote>>>(Right(List()));

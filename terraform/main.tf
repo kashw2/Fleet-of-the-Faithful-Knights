@@ -46,6 +46,14 @@ module "app_service" {
   depends_on                     = [module.resource_group, module.app_service_plan, module.container_registry, module.application_insights]
 }
 
+module "container_registry_webhook" {
+  source = "./modules/containerRegistryWebhook"
+  registry_name = module.container_registry.name
+  resource_group_location = module.resource_group.location
+  resource_group_name = module.resource_group.name
+  depends_on = [module.resource_group, module.app_service, module.app_service_plan, module.container_registry]
+}
+
 module "dns" {
   source              = "./modules/dns"
   resource_group_name = module.resource_group.name
@@ -60,5 +68,5 @@ module "ssl" {
   api_binding_id        = module.dns.api_id
   onboarding_binding_id = module.dns.onboarding_id
   panel_binding_id      = module.dns.panel_id
-  depends_on            = [module.dns]
+  depends_on            = [module.app_service, module.dns]
 }
