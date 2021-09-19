@@ -25,20 +25,19 @@ I want to say that most of this stuff will just be plug and play but who knows, 
 
 Name                                                 | Version
 ---------------------------------------------------- | -------
-TypeScript                                           | 4.0.x
-Concurrently                                         | 5.3.0
+TypeScript                                           | 4.x.x
 Nodemon                                              | 2.0.6
 Node                                                 | 12.x.x
-Lerna                                                | 3.22.1
+Lerna                                                | 4.0.0
 Webpack                                              | 5.10.1
-[Terraform](https://www.terraform.io/downloads.html) | 0.15.0
+[Terraform](https://www.terraform.io/downloads.html) | 1.0.0
 Docker                                               | 20.10.6
 
 This ensures that you will be able to compile, build, run and deploy all projects in the repo.
 
 Here's a one line install for all node packages. Do note that it is a global install.
 
-```npm i typescript concurrently nodemon node lerna webpack -g```
+```npm i typescript nodemon node lerna webpack -g```
 
 These packages can be located at the default locations at either ```AppData/npm/node_modules``` on Windows machines
 or ```usr/local/lib/node_modules``` on Linux.
@@ -50,6 +49,8 @@ An optional installation is eslint for linting. At the time of writing the versi
 
 #### Environment Variables
 
+For ease of use in terraform, also set up TF_VAR versions of these variables.
+
 Variable                        | Description
 --------------------------------|------
 FFK_DATABASE_USERNAME           | The database login username.
@@ -57,6 +58,10 @@ FFK_DATABASE_PASSWORD           | The database login password.
 FFK_DATABASE_NAME               | The name of the database.
 FFK_DATABASE_SERVER             | The ip or dns that the database is stored on.
 FFK_DATABASE_PORT               | The port used to connect via UDP or TCP.
+FFK_API_SERVER                  | The url for the API
+FFK_DISCORD_CLIENT_SECRET       | The discord bots client secret
+FFK_DISCORD_BOT_TOKEN           | The discord bots token
+FFK_DISCORD_REDIRECT            | A valid discord bot oauth2 redirect url
 
 #### Debugging Workflows:
 
