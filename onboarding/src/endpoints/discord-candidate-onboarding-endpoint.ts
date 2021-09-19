@@ -23,13 +23,13 @@ export class DiscordCandidateOnboardingEndpoint extends ApiEndpoint {
         router.post('/candidate', (req: Request, res: Response, next: NextFunction) => {
             this.getApiTemplate(req)
                 .fold(
-                    (left) => ApiUtils.sendError(res, left),
+                    (left) => ApiUtils.sendError(res, left, 400),
                     async (template) => {
                         const importedCandidate = await EitherUtils.sequence(EitherUtils.toEither(template.getCode(), 'Unable to get Template code')
                             .flatMap(code => AllOnboardingTemplates.getOnbboardingTemplate(code))
                             .map(temp => temp.importCandidate()));
                         importedCandidate.fold(
-                            (left) => ApiUtils.sendError(res, left),
+                            (left) => ApiUtils.sendError(res, left, 400),
                             (candidate) => {
                                 ApiUtils.sendSerializedListResponse(res, candidate.toArray(), CandidateJsonSerializer.instance);
                             },
