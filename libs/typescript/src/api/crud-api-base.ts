@@ -1,5 +1,5 @@
 import {SerializedApiBase} from "./serialized-api-base";
-import {Either} from "funfix-core";
+import {Either, Left} from "funfix-core";
 import {List} from "immutable";
 import {JsonSerializer} from "@kashw2/lib-util";
 
@@ -35,7 +35,8 @@ export class CrudApiBase extends SerializedApiBase {
             serializer,
             headers,
             body,
-        );
+        )
+            .catch(err => Left(err));
     }
 
     sendCreateRequestList<A>(
@@ -49,7 +50,8 @@ export class CrudApiBase extends SerializedApiBase {
             serializer,
             headers,
             body,
-        );
+        )
+            .catch(err => Left(err));
     }
 
     sendDeleteRequest<A>(
@@ -63,7 +65,8 @@ export class CrudApiBase extends SerializedApiBase {
             serializer,
             headers,
             body,
-        );
+        )
+            .catch(err => Left(err));
     }
 
     sendDeleteRequestList<A>(
@@ -77,7 +80,8 @@ export class CrudApiBase extends SerializedApiBase {
             serializer,
             headers,
             body,
-        );
+        )
+            .catch(err => Left(err));
     }
 
     sendReadRequest<A>(
@@ -91,7 +95,8 @@ export class CrudApiBase extends SerializedApiBase {
             serializer,
             headers,
             body,
-        );
+        )
+            .catch(err => Left(err));
     }
 
     sendReadRequestList<A>(
@@ -105,7 +110,8 @@ export class CrudApiBase extends SerializedApiBase {
             serializer,
             headers,
             body,
-        );
+        )
+            .catch(err => Left(err));
     }
 
     sendUpdateRequest<A>(
@@ -119,7 +125,8 @@ export class CrudApiBase extends SerializedApiBase {
             serializer,
             headers,
             body,
-        );
+        )
+            .catch(err => Left(err));
     }
 
     sendUpdateRequestList<A>(
@@ -133,7 +140,8 @@ export class CrudApiBase extends SerializedApiBase {
             serializer,
             headers,
             body,
-        );
+        )
+            .catch(err => Left(err));
     }
 
 }

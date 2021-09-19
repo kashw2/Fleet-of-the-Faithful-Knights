@@ -22,7 +22,12 @@ export class SerializedApiBase extends ApiBase {
         body?: any,
     ): Promise<Either<string, List<A>>> {
         return this.sendRequest(endpoint, method, headers, body)
-            .then(v => v.map(x => serializer.fromJsonArray(x)))
+            .then(v => {
+                if (v.isLeft()) {
+                    return Left(v.value);
+                }
+                return v.map(x => serializer.fromJsonArray(x));
+            })
             .catch(err => Left(err));
     }
 
@@ -34,7 +39,12 @@ export class SerializedApiBase extends ApiBase {
         body?: any,
     ): Promise<Either<string, A>> {
         return this.sendRequest(endpoint, method, headers, body)
-            .then(v => v.map(x => serializer.fromJson(x)))
+            .then(v => {
+                if (v.isLeft()) {
+                    return Left(v.value);
+                }
+                return v.map(x => serializer.fromJson(x));
+            })
             .catch(err => Left(err));
     }
 

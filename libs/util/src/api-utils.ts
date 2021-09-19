@@ -43,8 +43,9 @@ export class ApiUtils {
         res.sendStatus(505);
     }
 
-    static sendError(res: Response, error: string): void {
-        res.json({error});
+    static sendError(res: Response, error: string, code: number): void {
+        res.status(code)
+            .json({error});
     }
 
     static sendSerializedListResponse<A>(res: Response, data: A[], serializer: JsonSerializer<A>): void {

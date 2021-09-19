@@ -1,7 +1,7 @@
 import {Request, Response, Router} from "express";
 import {User} from "@kashw2/lib-ts";
 import {ApiUtils} from "@kashw2/lib-util";
-import {Either, Left, None} from "funfix-core";
+import {Either} from "funfix-core";
 import {AuthenticatedEndpoint} from "./authenticated-endpoint";
 
 export abstract class AuthenticatedCrudEndpoint extends AuthenticatedEndpoint {
@@ -14,14 +14,14 @@ export abstract class AuthenticatedCrudEndpoint extends AuthenticatedEndpoint {
      * Provides functionality for Creation of data
      */
     async create(req: Request): Promise<Either<string, any>> {
-        return Promise.resolve(Left(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`));
+        return Promise.reject(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`);
     }
 
     /**
      * Provides functionality for Deletion of data
      */
     async delete(req: Request): Promise<Either<string, any>> {
-        return Promise.resolve(Left(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`));
+        return Promise.reject(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`);
     }
 
     /**
@@ -32,7 +32,7 @@ export abstract class AuthenticatedCrudEndpoint extends AuthenticatedEndpoint {
         router.post(this.getEndpoint(), (req: Request, res: Response) => {
             if (this.doesRequireAuthentication(req)) {
                 this.getRequestUser(req)
-                    .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user));
+                    .fold((error) => ApiUtils.sendError(res, error, 500), (user) => this.runImpl(req, res, user));
             } else {
                 this.runImpl(req, res, new User());
             }
@@ -41,7 +41,7 @@ export abstract class AuthenticatedCrudEndpoint extends AuthenticatedEndpoint {
         router.get(this.getEndpoint(), (req: Request, res: Response) => {
             if (this.doesRequireAuthentication(req)) {
                 this.getRequestUser(req)
-                    .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user));
+                    .fold((error) => ApiUtils.sendError(res, error, 500), (user) => this.runImpl(req, res, user));
             } else {
                 this.runImpl(req, res, new User());
             }
@@ -50,7 +50,7 @@ export abstract class AuthenticatedCrudEndpoint extends AuthenticatedEndpoint {
         router.put(this.getEndpoint(), (req: Request, res: Response) => {
             if (this.doesRequireAuthentication(req)) {
                 this.getRequestUser(req)
-                    .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user));
+                    .fold((error) => ApiUtils.sendError(res, error, 500), (user) => this.runImpl(req, res, user));
             } else {
                 this.runImpl(req, res, new User());
             }
@@ -59,7 +59,7 @@ export abstract class AuthenticatedCrudEndpoint extends AuthenticatedEndpoint {
         router.delete(this.getEndpoint(), (req: Request, res: Response) => {
             if (this.doesRequireAuthentication(req)) {
                 this.getRequestUser(req)
-                    .fold((error) => ApiUtils.sendError(res, error), (user) => this.runImpl(req, res, user));
+                    .fold((error) => ApiUtils.sendError(res, error, 500), (user) => this.runImpl(req, res, user));
             } else {
                 this.runImpl(req, res, new User());
             }
@@ -70,7 +70,7 @@ export abstract class AuthenticatedCrudEndpoint extends AuthenticatedEndpoint {
      * Provides functionality for Reading/Retrieval of data
      */
     async read(req: Request): Promise<Either<string, any>> {
-        return Promise.resolve(Left(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`));
+        return Promise.reject(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`);
     }
 
     runImpl(req: Request, res: Response, user: User): void {
@@ -79,19 +79,23 @@ export abstract class AuthenticatedCrudEndpoint extends AuthenticatedEndpoint {
                 switch (this.getHTTPMethod(req)) {
                     case 'POST':
                         this.create(req)
-                            .then(x => x.fold((error) => ApiUtils.sendError(res, error), (v) => res.send(v)));
+                            .then(x => x.fold((error) => ApiUtils.sendError(res, error, 500), (v) => res.send(v)))
+                            .catch(err => ApiUtils.sendError(res, err, 500));
                         break;
                     case 'GET':
                         this.read(req)
-                            .then(x => x.fold((error) => ApiUtils.sendError(res, error), (v) => res.send(v)));
+                            .then(x => x.fold((error) => ApiUtils.sendError(res, error, 500), (v) => res.send(v)))
+                            .catch(err => ApiUtils.sendError(res, err, 500));
                         break;
                     case 'PUT':
                         this.update(req)
-                            .then(x => x.fold((error) => ApiUtils.sendError(res, error), (v) => res.send(v)));
+                            .then(x => x.fold((error) => ApiUtils.sendError(res, error, 500), (v) => res.send(v)))
+                            .catch(err => ApiUtils.sendError(res, err, 500));
                         break;
                     case 'DELETE':
                         this.delete(req)
-                            .then(x => x.fold((error) => ApiUtils.sendError(res, error), (v) => res.send(v)));
+                            .then(x => x.fold((error) => ApiUtils.sendError(res, error, 500), (v) => res.send(v)))
+                            .catch(err => ApiUtils.sendError(res, err, 500));
                         break;
                     default:
                         return ApiUtils.send505(res);
@@ -110,7 +114,7 @@ export abstract class AuthenticatedCrudEndpoint extends AuthenticatedEndpoint {
      * Provides functionality for Updating of data
      */
     async update(req: Request): Promise<Either<string, any>> {
-        return Promise.resolve(Left(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`));
+        return Promise.reject(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`);
     }
 
 }
