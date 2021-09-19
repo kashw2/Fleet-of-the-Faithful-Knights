@@ -1,4 +1,4 @@
-import {Either, Left, Right} from "funfix-core";
+import {Either, Left, Option, Right} from "funfix-core";
 import {default as axios} from 'axios';
 
 export class ApiBase {
@@ -20,6 +20,17 @@ export class ApiBase {
         return this.uri;
     }
 
+    private hasError(status: number): boolean {
+        switch (status.toString().charAt(0)) {
+            case '3':
+            case '4':
+            case '5':
+                return true;
+            default:
+                return false;
+        }
+    }
+
     public sendRequest(
         endpoint: string,
         method: 'GET' | 'POST' | 'PUT' | 'DELETE',
@@ -32,7 +43,14 @@ export class ApiBase {
             headers,
             data: body,
             url: this.getFullUrl(endpoint)
-        }).then(v => Right(v.data))
+        }).then(v => {
+            if (this.hasError(v.status)) {
+                console.error(v.statusText);
+                console.info(`${this.getFullUrl(endpoint)} - ${v.data}`);
+                return Left(v.data);
+            }
+            return Right(v.data);
+        })
             .catch(err => Left(err));
     }
 

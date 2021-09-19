@@ -1,12 +1,13 @@
 {
   "name": "@kashw2/lib-util",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "Fleet of the Faithful Knights Utility Library",
   "main": "./dist/lib-util.js",
   "typings": "./dist/src/index.d.ts",
   "scripts": {
     "build": "webpack --config webpack/webpack.config.ts",
-    "build:dev": "webpack --config webpack/webpack.dev.config.ts"
+    "build:dev": "webpack --config webpack/webpack.dev.config.ts",
+    "build:watch": "webpack --watch --config webpack/webpack.dev.config.ts"
   },
   "files": [
     "dist"

@@ -1,7 +1,9 @@
 import {Inject, Injectable} from '@angular/core';
 import {
   Ballot,
-  BallotJsonSerializer, Candidate, CandidateJsonSerializer,
+  BallotJsonSerializer,
+  Candidate,
+  CandidateJsonSerializer,
   CrudApiBase,
   Group,
   GroupJsonSerializer,
