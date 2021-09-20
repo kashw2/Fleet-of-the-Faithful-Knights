@@ -79,7 +79,6 @@ export class VotesEndpoint extends AuthenticatedCrudEndpoint {
                 return this.getVote(req)
                     .filterOrElse(v => v.getCandidate().flatMap(c => c.getId()).nonEmpty(), () => 'Candidate must have an Id')
                     .filterOrElse(v => v.getSponsorId().nonEmpty(), () => 'Sponsor must have an Id');
-
             default:
                 return this.getVote(req);
         }

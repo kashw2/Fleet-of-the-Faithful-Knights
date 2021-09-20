@@ -27,7 +27,7 @@ import {GroupGuard} from "./guards/group.guard";
     {
       path: 'votes/create',
       component: CreateVoteComponent,
-      canActivate: [CandidateGuard],
+      canActivate: [CandidateGuard, GroupGuard],
     },
     {
       path: 'vote/:id',
