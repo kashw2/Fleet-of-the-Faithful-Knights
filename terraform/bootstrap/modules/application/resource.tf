@@ -1,5 +1,5 @@
 resource "azuread_application" "application" {
-  name = "Terraform - ${random_string.string.result}"
+  display_name = "Terraform - ${random_string.string.result}"
   lifecycle {
     prevent_destroy = true
   }
