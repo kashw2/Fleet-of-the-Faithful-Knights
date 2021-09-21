@@ -29,7 +29,33 @@ on:
       - main
 
 jobs:
-  plan:
+  plan-bootstrap:
+    if: github.event_name != 'push'
+    defaults:
+      run:
+        working-directory: terraform/bootstrap
+    runs-on: ubuntu-latest
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZ_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZ_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZ_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZ_TENANT_ID }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hashicorp/setup-terraform@v1
+
+      - name: format
+        run: terraform fmt -recursive
+
+      - name: init
+        run: terraform init
+
+      - name: validate
+        run: terraform validate
+
+      - name: plan
+        run: terraform plan -refresh=false
+  plan-infrastructure:
     if: github.event_name != 'push'
     runs-on: ubuntu-latest
     env:
