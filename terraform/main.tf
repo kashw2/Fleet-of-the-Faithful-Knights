@@ -46,19 +46,12 @@ module "app_service" {
   depends_on                     = [module.resource_group, module.app_service_plan, module.container_registry, module.application_insights]
 }
 
-module "api_management" {
-    source = "./modules/apiManagement"
-    resource_group_name = module.resource_group.name
-    resource_group_location = module.resource_group.location
-    depends_on = [module.resource_group, module.app_service_plan, module.app_service]
-}
-
 module "container_registry_webhook" {
-  source = "./modules/containerRegistryWebhook"
-  registry_name = module.container_registry.name
+  source                  = "./modules/containerRegistryWebhook"
+  registry_name           = module.container_registry.name
   resource_group_location = module.resource_group.location
-  resource_group_name = module.resource_group.name
-  depends_on = [module.resource_group, module.app_service, module.app_service_plan, module.container_registry]
+  resource_group_name     = module.resource_group.name
+  depends_on              = [module.resource_group, module.app_service, module.app_service_plan, module.container_registry]
 }
 
 module "dns" {

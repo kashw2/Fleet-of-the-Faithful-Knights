@@ -1,6 +1,4 @@
 import {List} from "immutable";
-import {match} from "assert";
-import {VoteJsonSerializer} from "@kashw2/lib-ts";
 
 export class Cache<A> {
 

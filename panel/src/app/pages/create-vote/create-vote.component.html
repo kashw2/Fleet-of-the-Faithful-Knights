@@ -20,7 +20,7 @@
                       <mat-select [disabled]="getSelectableCandidateNames().isEmpty()">
                         <mat-option *ngFor="let candidate of getSelectableCandidateNames(); let idx = index"
                                     [value]="candidate"
-                                    (onSelectionChange)="setSelectedCandidate(candidateService.getCandidate(idx))">
+                                    (click)="setSelectedCandidate(candidateService.getCandidate(idx))">
                           {{candidate}}
                         </mat-option>
                       </mat-select>
