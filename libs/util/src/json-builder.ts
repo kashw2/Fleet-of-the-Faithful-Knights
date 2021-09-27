@@ -32,7 +32,7 @@ export class JsonBuilder {
     }
 
     public addOptionalDate(value: Option<moment.Moment>, key: string): JsonBuilder {
-        return value.map(m => m.isValid())
+        return value.filter(m => m.isValid())
             .map(m => this.add(m, key))
             .getOrElse(this);
     }
