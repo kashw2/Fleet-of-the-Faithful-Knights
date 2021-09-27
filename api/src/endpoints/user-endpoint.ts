@@ -1,5 +1,5 @@
 import {AuthenticatedCrudEndpoint} from "@kashw2/lib-server";
-import {Group, User, UserJsonSerializer} from "@kashw2/lib-ts";
+import {Group, PermissionJsonSerializer, User, UserJsonSerializer} from "@kashw2/lib-ts";
 import {Request, Response} from "express";
 import {ApiUtils, EitherUtils, OptionUtils} from "@kashw2/lib-util";
 import {Either, None, Option, Right, Some} from "funfix-core";
@@ -199,11 +199,14 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
         if (this.shouldReadCurrentUser(req)) {
             return Right(req.user);
         }
-        // TODO: I don't like this, i think some utility functions could make it look better
-        // Maybe in the future we should parse the serializer into the method that sends the result or something like that.
-        return Promise.resolve(this.getUserId(req)
-            .flatMap(uid => this.db.cache.users.getByDiscordId(uid))
-            .map(v => UserJsonSerializer.instance.toJsonImpl(v)));
+        if (this.getUserId(req).isRight()) {
+            // TODO: I don't like this, i think some utility functions could make it look better
+            // Maybe in the future we should parse the serializer into the method that sends the result or something like that.
+            return Promise.resolve(this.getUserId(req)
+                .flatMap(uid => this.db.cache.users.getByDiscordId(uid))
+                .map(v => UserJsonSerializer.instance.toJsonImpl(v)));
+        }
+        return Promise.resolve(EitherUtils.liftEither(UserJsonSerializer.instance.toJsonArray(this.db.cache.users.getUsers().toArray()), "Users cache is empty"));
     }
 
     private shouldReadCurrentUser(req: Request): boolean {
