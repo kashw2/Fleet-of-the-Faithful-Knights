@@ -1,0 +1,60 @@
+<div class="d-flex container-fluid flex-column h-100">
+  <div class="row flex-grow-1">
+    <app-sidebar id="sidebar" class="p-0 ffk-white-bg align-items-center">
+    </app-sidebar>
+    <div class="d-flex col flex-grow-1 flex-column mb-2">
+      <div class="row flex-grow-1">
+        <div class="d-flex container-fluid flex-column">
+          <div class="row">
+            <div class="col-3">
+              <h2 class="font-weight-bold mt-2">Users</h2>
+            </div>
+          </div>
+          <div class="row flex-grow-1">
+            <div class="d-flex col">
+              <div class="d-flex container-fluid flex-column h-100 ffk-content-bg px-0">
+                <table mat-table [dataSource]="usersSource">
+                  <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef>Id</th>
+                    <td mat-cell *matCellDef="let user">{{user.id}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="username">
+                    <th mat-header-cell *matHeaderCellDef>Username</th>
+                    <td mat-cell *matCellDef="let user">{{user.username}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="discordId">
+                    <th mat-header-cell *matHeaderCellDef>Discord Id</th>
+                    <td mat-cell *matCellDef="let user">{{user.discord_id}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="discordDiscriminator">
+                    <th mat-header-cell *matHeaderCellDef>Discriminator</th>
+                    <td mat-cell *matCellDef="let user">#{{user.discord_discriminator}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="group">
+                    <th mat-header-cell *matHeaderCellDef>Group</th>
+                    <td mat-cell *matCellDef="let user">{{user.group.label}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="memberSince">
+                    <th mat-header-cell *matHeaderCellDef>Member Since</th>
+                    <td mat-cell *matCellDef="let user">{{user.member_since | date:"fullDate"}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="locale">
+                    <th mat-header-cell *matHeaderCellDef>Locale</th>
+                    <td mat-cell *matCellDef="let user">{{user.locale}}</td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
+                  <tr mat-row
+                      class="c-pointer"
+                      *matRowDef="let row; columns: getDisplayedColumns();"></tr>
+                </table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 15]"
+                               showFirstLastButtons>
+                </mat-paginator>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

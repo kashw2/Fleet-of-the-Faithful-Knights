@@ -19,6 +19,8 @@ import {BallotDialogComponent} from './dialogs/ballot-dialog/ballot-dialog.compo
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {AzureApplicationInsightsService} from "./service/azure-application-insights.service";
+import { UsersComponent } from './pages/users/users.component';
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import {AzureApplicationInsightsService} from "./service/azure-application-insig
     CreateVoteComponent,
     VoteComponent,
     BallotDialogComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +45,7 @@ import {AzureApplicationInsightsService} from "./service/azure-application-insig
     MatDividerModule,
     MatDialogModule,
     MatPaginatorModule,
+    MatTabsModule,
   ],
   providers: [
     {provide: 'ffkApiServer', useValue: environment.FFK_API_SERVER},

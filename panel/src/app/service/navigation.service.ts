@@ -29,6 +29,10 @@ export class NavigationService {
     return;
   }
 
+  users(): void {
+    return this.navigate('users');
+  }
+
   vote(id: number): void {
     return this.navigate(`vote/${id}`);
   }
