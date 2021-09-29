@@ -185,6 +185,15 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
             case 'POST':
                 return true;
             case 'GET':
+                // Check to see if user is listing all users
+                if (this.getUserId(req).isLeft() && !this.shouldReadCurrentUser(req)) {
+                    // TODO: Remove need for the discordRoleIdToGroupMap
+                    return OptionUtils.exists2(
+                        user.getGroup(),
+                        Option.of(discordRoleIdToGroupMap.get('541839842435137577')),
+                        (uG, dG) => uG.isHigherOrEqual(dG),
+                    );
+                }
                 return true;
             case 'PUT':
                 return true;
