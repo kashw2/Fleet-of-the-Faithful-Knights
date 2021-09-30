@@ -110,6 +110,11 @@ export class User {
         return permissionIds.some(pid => this.getPermissionIds().contains(pid));
     }
 
+    public hasPermission(permissionId: string): boolean {
+        return this.getPermissionIds()
+            .contains(permissionId);
+    }
+
     public withGroup(group: Group): User {
         return new User(
             this.getId(),
