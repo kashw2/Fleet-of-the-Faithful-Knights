@@ -49,6 +49,10 @@ export class FfkApi {
         return new CrudApiBase(this.uri, `user?discord_token?=${discordToken}`);
     }
 
+    userCurrent(): CrudApiBase {
+        return new CrudApiBase(this.uri, `user?current=true`);
+    }
+
     userPermissionMapping(uid: number): CrudApiBase {
         return new CrudApiBase(this.uri, `user/${uid}/permission/mapping`);
     }
