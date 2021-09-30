@@ -1,0 +1,19 @@
+<div class="d-flex flex-column">
+  <div class="row">
+    <div class="col-auto">
+      <img [src]="getAvatar().getOrElse('./assets/images/discord.jpg')"
+           height="200"
+           width="200">
+    </div>
+    <div class="col">
+      <h2 *ngIf="getUsername().nonEmpty()" class="mb-0">{{getUsername().get()}}</h2>
+      <h3 *ngIf="getGroupName().nonEmpty()" class="mb-0">{{getGroupName().get()}}</h3>
+      <h3 *ngIf="getMemberSince().nonEmpty()" class="mb-0">{{getMemberSince().get() | date:'short'}}</h3>
+    </div>
+    <div class="d-flex col-auto flex-column">
+      <button mat-button color="error">Delete</button>
+      <button mat-button color="light">Permissions</button>
+      <button mat-button color="light">Groups</button>
+    </div>
+  </div>
+</div>

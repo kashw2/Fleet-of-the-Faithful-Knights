@@ -4,7 +4,9 @@ import {MatPaginator} from "@angular/material/paginator";
 import {FfkApiService} from "../../service/ffk-api.service";
 import {filter, from} from "rxjs";
 import {map} from "rxjs/operators";
-import {UserJsonSerializer} from "@kashw2/lib-ts";
+import {User, UserJsonSerializer} from "@kashw2/lib-ts";
+import {MatDialog} from "@angular/material/dialog";
+import {ProfileDialogComponent} from "../../dialogs/profile-dialog/profile-dialog.component";
 
 @Component({
   selector: 'app-users',
@@ -13,7 +15,10 @@ import {UserJsonSerializer} from "@kashw2/lib-ts";
 })
 export class UsersComponent implements OnInit, AfterViewInit {
 
-  constructor(private ffkApiService: FfkApiService) {
+  constructor(
+    private ffkApiService: FfkApiService,
+    private dialog: MatDialog,
+  ) {
   }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -37,6 +42,17 @@ export class UsersComponent implements OnInit, AfterViewInit {
         this.usersSource = new MatTableDataSource<object>(users);
         this.usersSource.paginator = this.paginator;
       });
+  }
+
+  openProfile(user: User): void {
+    this.dialog.open(ProfileDialogComponent,
+      {
+        height: '70%',
+        width: '70%',
+        autoFocus: true,
+        data: user,
+      }
+    );
   }
 
 }

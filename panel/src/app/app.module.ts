@@ -19,8 +19,9 @@ import {BallotDialogComponent} from './dialogs/ballot-dialog/ballot-dialog.compo
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {AzureApplicationInsightsService} from "./service/azure-application-insights.service";
-import { UsersComponent } from './pages/users/users.component';
+import {UsersComponent} from './pages/users/users.component';
 import {MatTabsModule} from "@angular/material/tabs";
+import {ProfileDialogComponent} from './dialogs/profile-dialog/profile-dialog.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {MatTabsModule} from "@angular/material/tabs";
     VoteComponent,
     BallotDialogComponent,
     UsersComponent,
+    ProfileDialogComponent,
   ],
   imports: [
     BrowserModule,
