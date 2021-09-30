@@ -2,7 +2,7 @@ import {AuthenticatedCrudEndpoint} from "@kashw2/lib-server";
 import {Database} from "../db/database";
 import {Group, GroupJsonSerializer, User} from "@kashw2/lib-ts";
 import {Request, Response} from "express";
-import {Either, Left} from "funfix-core";
+import {Either} from "funfix-core";
 import {ApiUtils, EitherUtils} from "@kashw2/lib-util";
 
 export class GroupEndpoint extends AuthenticatedCrudEndpoint {

@@ -63,7 +63,7 @@ export class CandidateEndpoint extends AuthenticatedCrudEndpoint {
     }
 
     private getCandidateId(req: Request): Either<string, string> {
-        return ApiUtils.parseUrlStringParam(req, 'candidate_id');
+        return ApiUtils.parseStringQueryParam(req, 'candidate_id');
     }
 
     getCandidates(req: Request): Either<string, List<Candidate>> {
