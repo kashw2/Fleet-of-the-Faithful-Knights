@@ -7,6 +7,7 @@ import {VoteComponent} from "./pages/vote/vote.component";
 import {CandidateGuard} from "./guards/candidate.guard";
 import {VoteGuard} from "./guards/vote.guard";
 import {GroupGuard} from "./guards/group.guard";
+import {UsersComponent} from "./pages/users/users.component";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -33,6 +34,10 @@ import {GroupGuard} from "./guards/group.guard";
       path: 'vote/:id',
       component: VoteComponent,
       canActivate: [VoteGuard],
+    },
+    {
+      path: 'users',
+      component: UsersComponent,
     },
     {
       path: '**',

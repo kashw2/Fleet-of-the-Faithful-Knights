@@ -90,6 +90,18 @@ export class FfkApiService {
       )));
   }
 
+  getUsers(): Promise<Either<string, List<User>>> {
+    return EitherUtils.sequence(this.getDiscordId()
+      .map(did => this.user().sendReadRequestList(
+        UserJsonSerializer.instance,
+        {
+          'Discord-Id': did,
+          'Access-Control-Allow-Origin': '*'
+        },
+        {},
+      )));
+  }
+
   getVotes(): Promise<Either<string, List<Vote>>> {
     return EitherUtils.sequence(this.getDiscordId()
       .map(did => this.vote

@@ -86,7 +86,7 @@ export function parseDate(v: unknown): Option<moment.Moment> {
                 default:
                     return None;
             }
-        })
+        });
 }
 
 export function parseBoolean(v: unknown): Option<boolean> {

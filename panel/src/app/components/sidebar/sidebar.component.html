@@ -27,7 +27,8 @@
   <mat-icon class="ffk-content-shade ffk-icon-fg">how_to_vote</mat-icon>
 </div>
 <div matTooltip="Users"
-     class="d-flex container-fluid align-items-center justify-content-center nav-action ffk-content-bg c-pointer ffk-icon-shade hover rounded my-2">
+     class="d-flex container-fluid align-items-center justify-content-center nav-action ffk-content-bg c-pointer ffk-icon-shade hover rounded my-2"
+     (click)="navigationService.users()">
   <mat-icon class="ffk-content-shade ffk-icon-fg">people</mat-icon>
 </div>
 <div matTooltip="Permissions"
