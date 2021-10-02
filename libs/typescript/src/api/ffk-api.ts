@@ -9,6 +9,10 @@ export class FfkApi {
         return new CrudApiBase(this.uri, 'ballot');
     }
 
+    ballotCreate(vid: string): CrudApiBase {
+        return new CrudApiBase(this.uri, `ballot?vote_id=${vid}`);
+    }
+
     candidate(): CrudApiBase {
         return new CrudApiBase(this.uri, 'candidate');
     }
@@ -41,12 +45,12 @@ export class FfkApi {
         return new CrudApiBase(this.uri, 'user');
     }
 
-    userById(uid: number): CrudApiBase {
-        return new CrudApiBase(this.uri, `user?user_id=${uid}`);
+    userByDiscordId(discordToken: string): CrudApiBase {
+        return new CrudApiBase(this.uri, `user?discord_token=${discordToken}`);
     }
 
-    userCreate(discordToken: string): CrudApiBase {
-        return new CrudApiBase(this.uri, `user?discord_token?=${discordToken}`);
+    userById(uid: number): CrudApiBase {
+        return new CrudApiBase(this.uri, `user?user_id=${uid}`);
     }
 
     userCurrent(): CrudApiBase {
