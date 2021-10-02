@@ -28,6 +28,10 @@ export class Group {
 		return this.label;
 	}
 
+	public is(group: Group): boolean {
+		return OptionUtils.exists2(this.getHierarchy(), group.getHierarchy(), (cGid, oGid) => cGid > oGid);
+	}
+
 	public isHigher(group: Group): boolean {
 		return OptionUtils.exists2(this.getHierarchy(), group.getHierarchy(), (cGhid: number, oGhid: number) => {
 			return cGhid > oGhid;

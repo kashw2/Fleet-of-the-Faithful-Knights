@@ -1,5 +1,5 @@
 import {AuthenticatedCrudEndpoint} from "@kashw2/lib-server";
-import {Group, PermissionJsonSerializer, User, UserJsonSerializer} from "@kashw2/lib-ts";
+import {Group, User, UserJsonSerializer} from "@kashw2/lib-ts";
 import {Request, Response} from "express";
 import {ApiUtils, EitherUtils, OptionUtils} from "@kashw2/lib-util";
 import {Either, None, Option, Right, Some} from "funfix-core";
