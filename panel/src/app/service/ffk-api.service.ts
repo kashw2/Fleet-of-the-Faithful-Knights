@@ -28,12 +28,26 @@ export class FfkApiService {
     private crudLocalStorageService: CrudLocalStorageService,
   ) {
   }
+
   candidate: CrudApiBase = new CrudApiBase(this.apiServer, 'candidate');
 
   permission: CrudApiBase = new CrudApiBase(this.apiServer, 'permission');
   vote: CrudApiBase = new CrudApiBase(this.apiServer, 'vote');
 
   ballot: (vid?: string) => CrudApiBase = (vid?: string) => new CrudApiBase(this.apiServer, `ballot?vote_id=${vid}`);
+
+  deleteUser(uid: string): Promise<Either<any, User>> {
+    return EitherUtils.sequence(this.getDiscordId()
+      .map(did => this.user(did, true)
+        .sendDeleteRequest(
+          UserJsonSerializer.instance,
+          {
+            'Discord-Id': did,
+            'Access-Control-Allow-Origin': '*'
+          },
+          {},
+        )));
+  }
 
   getBallots(): Promise<Either<string, List<Ballot>>> {
     return EitherUtils.sequence(this.getDiscordId()
