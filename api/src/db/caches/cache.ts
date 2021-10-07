@@ -41,6 +41,20 @@ export class Cache<A> {
         return this.values;
     }
 
+    remove(id: number): List<A> {
+        console.time('Cache (Remove)');
+        this.values = this.values.delete(id);
+        console.timeEnd('Cache (Remove)');
+        return this.values;
+    }
+
+    removeIn(matcher: (v: A) => boolean): List<A> {
+        console.time('Cache (RemoveIn)');
+        this.values = this.values.remove(this.values.findIndex(v => matcher(v)));
+        console.timeEnd('Cache (RemoveIn)');
+        return this.values;
+    }
+
     /**
      * Sets the value at a given index in the List
      *

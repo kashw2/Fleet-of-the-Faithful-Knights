@@ -148,9 +148,21 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
     }
 
     async delete(req: Request): Promise<Either<string, any>> {
+        if (this.getDiscordAuthToken(req).isRight()) {
+            return EitherUtils.sequence(this.getDiscordAuthToken(req)
+                .map(did => this.db.procedures.delete.deleteUser(did)))
+                .then(v => v.map(u => {
+                    // To delete a user, you must have a user.. this .get should be safe
+                    this.db.cache.users.removeIn(ru => ru.getDiscordId().equals(u.getDiscordId()));
+                    return UserJsonSerializer.instance.toJsonImpl(u);
+                }));
+        }
         return EitherUtils.sequence(this.getUserId(req)
             .map(uid => this.db.procedures.delete.deleteUser(uid)))
-            .then(v => v.map(u => UserJsonSerializer.instance.toJsonImpl(u)));
+            .then(v => v.map(u => {
+                this.db.cache.users.removeIn(ru => ru.getId().equals(u.getId()));
+                return UserJsonSerializer.instance.toJsonImpl(u);
+            }));
     }
 
     doesRequireAuthentication(req: Request): boolean {
