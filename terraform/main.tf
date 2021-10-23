@@ -16,11 +16,21 @@ module "app_service_plan" {
   depends_on              = [module.resource_group]
 }
 
+module "log_analytics" {
+  source                  = "./modules/logAnalyticsWorkspace"
+  resource_group_name     = module.resource_group.name
+  resource_group_location = module.resource_group.location
+  depends_on              = [module.resource_group]
+}
+
 module "application_insights" {
   source                  = "./modules/applicationInsights"
   resource_group_name     = module.resource_group.name
   resource_group_location = module.resource_group.location
-  depends_on              = [module.resource_group]
+  api_id                  = module.log_analytics.api_id
+  onboarding_id           = module.log_analytics.onboarding_id
+  panel_id                = module.log_analytics.panel_id
+  depends_on              = [module.resource_group, module.log_analytics]
 }
 
 module "app_service" {
