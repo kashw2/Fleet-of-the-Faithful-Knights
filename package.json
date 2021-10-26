@@ -44,19 +44,23 @@
     "rxjs": "7.4.0",
     "screenfull": "5.1.0",
     "ts-mixer": "6.0.0",
-    "ts-node": "10.4.0",
     "tslib": "2.3.1",
     "zone.js": "0.11.4"
   },
   "devDependencies": {
-    "browserify-zlib": "0.2.0",
-    "os-browserify": "0.3.0",
-    "stream-browserify": "3.0.0",
-    "tty-browserify": "0.0.1",
+    "@types/jasmine": "3.10.1",
     "assert-browserify": "2.0.0",
-    "util-browser": "0.0.2",
+    "browserify-zlib": "0.2.0",
+    "jasmine": "3.10.0",
+    "jasmine-spec-reporter": "7.0.0",
+    "jasmine-ts": "0.4.0",
+    "os-browserify": "0.3.0",
+    "querystring-browser": "1.0.4",
+    "stream-browserify": "3.0.0",
+    "ts-node": "10.4.0",
+    "tty-browserify": "0.0.1",
     "url-browser": "0.1.7",
-    "querystring-browser": "1.0.4"
+    "util-browser": "0.0.2"
   },
   "workspaces": [
     "./",
