@@ -4,6 +4,7 @@
   "description": "Fleet of the Faithful Knights API",
   "main": "index.js",
   "scripts": {
+    "test": "jasmine-ts --config=jasmine.json",
     "build": "webpack --config ./webpack/webpack.config.ts",
     "build:dev": "webpack --config ./webpack/webpack.dev.config.ts",
     "build:watch": "webpack --stats-error-details true --watch --config ./webpack/webpack.dev.config.ts",
@@ -32,6 +33,11 @@
     "typescript": "4.3.5"
   },
   "devDependencies": {
+    "@types/jasmine": "3.10.1",
+    "jasmine": "3.10.0",
+    "jasmine-spec-reporter": "7.0.0",
+    "jasmine-ts": "0.4.0",
+    "ts-node": "10.4.0",
     "ts-loader": "9.2.6",
     "webpack": "5.60.0",
     "webpack-cli": "4.9.1"

@@ -19,7 +19,7 @@ export class UserCache extends Cache<User> {
     }
 
     getByUserId(userId: string): Either<string, User> {
-        return EitherUtils.toEither(Option.of(this.byDiscordId.get(userId)), `User with id ${userId} does not exist`);
+        return EitherUtils.toEither(Option.of(this.byUserId.get(userId)), `User with id ${userId} does not exist`);
     }
 
     getUsers(): List<User> {

@@ -23,6 +23,13 @@ export class Cache<A> {
         return this.values;
     }
 
+    clear(): List<A> {
+        console.time('Cache (Clear)');
+        this.values = this.values.clear();
+        console.timeEnd('Cache (Clear)');
+        return this.values;
+    }
+
     /**
      * Allows for the concatination of values into the cache.
      *
