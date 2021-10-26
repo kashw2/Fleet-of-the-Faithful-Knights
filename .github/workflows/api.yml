@@ -38,7 +38,7 @@ jobs:
           npm install
           lerna exec npm install --scope=@ffk/api
 
-      - name: build api
+      - name: test api
         run: lerna run test --scope=@ffk/api
   build-api:
     if: github.event_name != 'push'

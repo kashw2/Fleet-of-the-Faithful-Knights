@@ -48,12 +48,8 @@
     "zone.js": "0.11.4"
   },
   "devDependencies": {
-    "@types/jasmine": "3.10.1",
     "assert-browserify": "2.0.0",
     "browserify-zlib": "0.2.0",
-    "jasmine": "3.10.0",
-    "jasmine-spec-reporter": "7.0.0",
-    "jasmine-ts": "0.4.0",
     "os-browserify": "0.3.0",
     "querystring-browser": "1.0.4",
     "stream-browserify": "3.0.0",
