@@ -221,8 +221,6 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
             return Right(req.user);
         }
         if (this.getUserId(req).isRight()) {
-            // TODO: I don't like this, i think some utility functions could make it look better
-            // Maybe in the future we should parse the serializer into the method that sends the result or something like that.
             return Promise.resolve(this.getUserId(req)
                 .flatMap(uid => this.db.cache.users.getByDiscordId(uid))
                 .map(v => UserJsonSerializer.instance.toJsonImpl(v)));
