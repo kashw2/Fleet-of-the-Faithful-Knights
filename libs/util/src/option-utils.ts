@@ -53,4 +53,11 @@ export class OptionUtils {
             .toSet();
     }
 
+    static when<A>(predicate: () => boolean, f: () => A): Option<A> {
+        if (predicate()) {
+            return Option.of(f());
+        }
+        return None;
+    }
+
 }
