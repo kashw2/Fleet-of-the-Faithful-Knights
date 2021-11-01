@@ -24,15 +24,14 @@ export class CollectionUtils {
         return collection.filter(v => f(v).nonEmpty())
             .groupBy(v => f(v).get())
             .map(v => v.toList())
-            .toMap()
+            .toMap();
     }
 
     /**
      * Takes a given collection (assumes a functor) and transforms the contents into a Monad inside of a HKT
      */
     static optionify<A>(collection: Collection<any, A>): Collection<any, Option<A>> {
-        return collection.map(v => Option.of(v))
-            .filter(v => v.nonEmpty());
+        return collection.map(v => Option.of(v));
     }
 
 }

@@ -56,7 +56,6 @@ export class UserPermissionMappingEndpoint extends AuthenticatedCrudEndpoint {
     }
 
     read(req: Request): Promise<Either<string, any>> {
-        // TODO: See if we can make this a bit more readable
         return EitherUtils.sequence(this.getUserId(req)
             .map(uid => this.db.procedures.read.readUserPermissionMappings(uid)))
             .then(v => v.map(x => OptionUtils.flattenList(x.map(q => q.getId()))));

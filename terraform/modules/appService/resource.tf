@@ -17,7 +17,7 @@ resource "azurerm_app_service" "panel" {
 
   site_config {
     linux_fx_version  = "DOCKER|${var.login_server}/panel.faithfulknights.com:latest"
-    health_check_path = "/"
+#    health_check_path = "/"
     always_on         = true
   }
 
@@ -50,7 +50,7 @@ resource "azurerm_app_service" "api" {
 
   site_config {
     linux_fx_version  = "DOCKER|${var.login_server}/api.faithfulknights.com:latest"
-    health_check_path = "/"
+#    health_check_path = "/"
     always_on         = true
   }
 
@@ -79,7 +79,7 @@ resource "azurerm_app_service" "onboarding" {
 
   site_config {
     linux_fx_version  = "DOCKER|${var.login_server}/onboarding.faithfulknights.com:latest"
-    health_check_path = "/"
+#    health_check_path = "/"
     always_on         = true
   }
 

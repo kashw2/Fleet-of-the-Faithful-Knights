@@ -29,18 +29,18 @@ export class OptionUtils {
             .map(v => v.get());
     }
 
-    static liftEither<T>(opt: Option<T>, left: string): Either<string, T> {
-        if (opt.nonEmpty()) {
-            return Right(opt.get());
-        }
-        return Left(left);
-    }
-
     static sequence<A>(op: Option<Promise<Option<A>>>): Promise<Option<A>> {
         if (op.isEmpty()) {
             return Promise.resolve(None);
         }
         return op.get();
+    }
+
+    static toEither<T>(opt: Option<T>, left: string): Either<string, T> {
+        if (opt.nonEmpty()) {
+            return Right(opt.get());
+        }
+        return Left(left);
     }
 
     static toList<T>(...items: Option<T>[]): List<T> {
@@ -51,6 +51,13 @@ export class OptionUtils {
     static toSet<T>(...items: Option<T>[]): Set<T> {
         return OptionUtils.flattenCollection(Set<Option<T>>(items))
             .toSet();
+    }
+
+    static when<A>(predicate: boolean, f: () => A): Option<A> {
+        if (predicate) {
+            return Option.of(f());
+        }
+        return None;
     }
 
 }

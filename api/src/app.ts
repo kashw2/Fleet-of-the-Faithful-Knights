@@ -22,7 +22,6 @@ router.use(bodyParser.json({limit: '100mb'}));
  * each with their own router.
  */
 
-// TODO: When we have DNS setup, specify correct origins
 router.use((req: Request, res: Response, next: NextFunction) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', '*');

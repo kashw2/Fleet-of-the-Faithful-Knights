@@ -19,4 +19,4 @@ module.exports = {
         extensions: [".ts", ".js"],
         modules: ['src', 'node_modules']
     }
-}
+};
