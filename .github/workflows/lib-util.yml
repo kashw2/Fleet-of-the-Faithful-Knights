@@ -10,6 +10,31 @@ on:
       - main
 
 jobs:
+  test-lib-util:
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          node-version: 12
+
+      - name: npm auth
+        run: |
+          npm config set @kashw2:registry https://npm.pkg.github.com/
+          npm config set //npm.pkg.github.com/:_authToken=${{ secrets.NPM_PACKAGE_TOKEN }}
+          npm config set registry https://registry.npmjs.org/
+
+      - name: install globals
+        run: npm install -g lerna
+
+      - name: npm install
+        run: |
+          npm install
+          lerna exec npm install --scope=@kashw2/lib-util
+
+      - name: test api
+        run: lerna run test --scope=@kashw2/lib-util
   build-lib-util:
     runs-on: ubuntu-latest
     steps:
