@@ -33,7 +33,7 @@
     "typescript": "4.3.5"
   },
   "devDependencies": {
-    "@types/jasmine": "3.10.1",
+    "@types/jasmine": "3.10.2",
     "jasmine": "3.10.0",
     "jasmine-spec-reporter": "7.0.0",
     "jasmine-ts": "0.4.0",
