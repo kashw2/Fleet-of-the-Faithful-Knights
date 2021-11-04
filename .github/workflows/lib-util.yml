@@ -33,7 +33,7 @@ jobs:
           npm install
           lerna exec npm install --scope=@kashw2/lib-util
 
-      - name: test api
+      - name: test util
         run: lerna run test --scope=@kashw2/lib-util
   build-lib-util:
     runs-on: ubuntu-latest

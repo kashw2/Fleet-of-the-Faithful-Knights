@@ -1,10 +1,9 @@
 import {config, ConnectionPool} from "mssql";
-import {from, of} from "rxjs";
-import {mergeMap, map, tap} from "rxjs/operators";
+import {firstValueFrom, of, switchMap} from "rxjs";
+import {map, tap} from "rxjs/operators";
 import {DbCache} from "./db-cache";
 import {DbRequest} from "./db-request";
 import {DbProcedures} from "./procedures/db-procedures";
-import {firstValueFrom} from "rxjs";
 
 export class Database {
 
@@ -39,7 +38,7 @@ export class Database {
 
     getConnection(): Promise<ConnectionPool> {
         return firstValueFrom(of(this.getConnectionPool())
-            .pipe(mergeMap(x => from(x.connect())))
+            .pipe(switchMap(x => x.connect()))
             .pipe(map(x => {
                 if (x.connecting) {
                     console.log(`Attempting to connect to ${this.dbConfig.database}`);
