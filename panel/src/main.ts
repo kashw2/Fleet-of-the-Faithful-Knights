@@ -4,6 +4,10 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
+// Fixed Angular 13 upgrade issue
+// https://github.com/manfredsteyer/ngx-build-plus/issues/4
+import 'zone.js';
+
 if (environment.production) {
   enableProdMode();
 }
