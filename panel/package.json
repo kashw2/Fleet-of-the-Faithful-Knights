@@ -33,7 +33,7 @@
     "rxjs": "7.4.0",
     "tslib": "2.3.1",
     "zone.js": "0.11.4",
-    "@microsoft/applicationinsights-web": "2.7.0"
+    "@microsoft/applicationinsights-web": "2.7.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "12.2.13",
