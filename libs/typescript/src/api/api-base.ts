@@ -1,5 +1,5 @@
 import {Either, Left, Option, Right} from "funfix-core";
-import {default as axios} from 'axios';
+import {AxiosRequestConfig, default as axios} from 'axios';
 
 export class ApiBase {
 
@@ -43,7 +43,7 @@ export class ApiBase {
             headers,
             data: body,
             url: this.getFullUrl(endpoint)
-        }).then(v => {
+        } as AxiosRequestConfig).then(v => {
             if (this.hasError(v.status)) {
                 console.error(v.statusText);
                 console.info(`${this.getFullUrl(endpoint)} - ${v.data}`);
