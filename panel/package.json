@@ -27,7 +27,7 @@
     "@angular/router": "13.0.1",
     "@fortawesome/fontawesome-free": "5.15.4",
     "animate.css": "4.1.1",
-    "ngx-toastr": "14.1.4",
+    "ngx-toastr": "14.2.0",
     "easy-pie-chart": "2.1.7",
     "screenfull": "5.2.0",
     "rxjs": "7.4.0",
