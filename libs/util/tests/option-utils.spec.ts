@@ -48,8 +48,8 @@ describe('Option Utils', () => {
     });
     it('should create option if predicate is true', () => {
         const result = OptionUtils.when(Some(1).nonEmpty(), () => {
-            return 1;
+            return 2;
         });
-        expect(result).toEqual(Some(1));
+        expect(result).toEqual(Some(2));
     });
 });
