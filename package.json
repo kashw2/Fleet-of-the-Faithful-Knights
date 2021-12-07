@@ -5,12 +5,11 @@
   "scripts": {
     "build": "echo \"$(tput setaf 2)Running Build Script$(tput srg0)\"",
     "build:dev": "echo \"$(tput setaf 2)Running Development Build Script$(tput srg0)\"",
-    "build-lib": "echo \"$(tput setaf 2)Running Library Build Script$(tput srg0)\" && npm run build-util && npm run build-external && npm run build-ts && npm run build-server && npm run build-angular",
+    "build-libs": "echo \"$(tput setaf 2)Running Library Build Script$(tput srg0)\" && npm run build-util && npm run build-external && npm run build-ts && npm run build-server",
     "build-util": "lerna run build --scope=@kashw2/lib-util",
     "build-external": "lerna run build --scope=@kashw2/lib-external",
     "build-server": "lerna run build --scope=@kashw2/lib-server",
-    "build-ts": "lerna run build --scope=@kashw2/lib-ts",
-    "build-angular": "lerna run build --scope=@kashw2/lib-angular"
+    "build-ts": "lerna run build --scope=@kashw2/lib-ts"
   },
   "private": true,
   "repository": {
