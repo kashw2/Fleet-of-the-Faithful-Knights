@@ -1,4 +1,4 @@
-import {StringUtils} from "@kashw2/lib-util";
+import {StringUtils} from "../src";
 
 describe('String Utils', () => {
     it('should transform text to titlecase', () => {
