@@ -1,6 +1,6 @@
-import {MomentUtils} from "@kashw2/lib-util";
 import moment from "moment";
 import {Some} from "funfix-core";
+import {MomentUtils} from "../src";
 
 describe('Moment Utils', () => {
     it('should format', () => {

@@ -13,7 +13,6 @@
     "docker-run": "docker run -p 4200:80 ffkcontainerregistry.azurecr.io/panel.faithfulknights.com:$(git rev-parse --verify HEAD)",
     "docker-publish": "docker push ffkcontainerregistry.azurecr.io/panel.faithfulknights.com:$(git rev-parse --verify HEAD) && docker push ffkcontainerregistry.azurecr.io/panel.faithfulknights.com:latest"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "13.0.3",
     "@angular/cdk": "13.0.3",
