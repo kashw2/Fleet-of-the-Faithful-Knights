@@ -35,8 +35,8 @@
     "@microsoft/applicationinsights-web": "2.7.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "13.1.0",
-    "@angular/cli": "13.1.0",
+    "@angular-devkit/build-angular": "13.1.1",
+    "@angular/cli": "13.1.1",
     "@angular/compiler-cli": "13.1.0",
     "@types/jasmine": "3.10.2",
     "@types/node": "16.11.12",
