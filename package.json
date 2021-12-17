@@ -35,7 +35,7 @@
     "axios": "0.24.0",
     "body-parser": "1.19.1",
     "cors": "2.8.5",
-    "express": "4.17.1",
+    "express": "4.17.2",
     "funfix-core": "7.0.1",
     "immutable": "4.0.0",
     "lerna": "4.0.0",
