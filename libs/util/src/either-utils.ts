@@ -2,11 +2,11 @@ import {Either, Left, Option, Right} from "funfix-core";
 
 export class EitherUtils {
 
-    static flatMap2<LEFT, B, C, D>(
-        e1: Either<LEFT, B>,
-        e2: Either<LEFT, C>,
-        f: (a: B, b: C) => Either<LEFT, D>,
-    ): Either<LEFT, D> {
+    static flatMap2<LEFT, A, B, C>(
+        e1: Either<LEFT, A>,
+        e2: Either<LEFT, B>,
+        f: (a: A, b: B) => Either<LEFT, C>,
+    ): Either<LEFT, C> {
         if (e1.isLeft()) {
             return e1;
         } else if (e2.isLeft()) {
@@ -15,12 +15,12 @@ export class EitherUtils {
         return f(e1.get(), e2.get());
     }
 
-    static flatMap3<LEFT, B, C, D, E>(
-        e1: Either<LEFT, B>,
-        e2: Either<LEFT, C>,
-        e3: Either<LEFT, D>,
-        f: (a: B, b: C, c: D) => Either<LEFT, E>,
-    ): Either<LEFT, E> {
+    static flatMap3<LEFT, A, B, C, D>(
+        e1: Either<LEFT, A>,
+        e2: Either<LEFT, B>,
+        e3: Either<LEFT, C>,
+        f: (a: A, b: B, c: C) => Either<LEFT, D>,
+    ): Either<LEFT, D> {
         if (e1.isLeft()) {
             return e1;
         } else if (e2.isLeft()) {
@@ -31,13 +31,13 @@ export class EitherUtils {
         return f(e1.get(), e2.get(), e3.get());
     }
 
-    static flatMap4<LEFT, B, C, D, E, F>(
-        e1: Either<LEFT, B>,
-        e2: Either<LEFT, C>,
-        e3: Either<LEFT, D>,
-        e4: Either<LEFT, E>,
-        f: (a: B, b: C, d: D, e: E) => Either<LEFT, F>,
-    ): Either<LEFT, F> {
+    static flatMap4<LEFT, A, B, C, D, E>(
+        e1: Either<LEFT, A>,
+        e2: Either<LEFT, B>,
+        e3: Either<LEFT, C>,
+        e4: Either<LEFT, D>,
+        f: (a: A, b: B, d: C, e: D) => Either<LEFT, E>,
+    ): Either<LEFT, E> {
         if (e1.isLeft()) {
             return e1;
         } else if (e2.isLeft()) {
@@ -50,14 +50,14 @@ export class EitherUtils {
         return f(e1.get(), e2.get(), e3.get(), e4.get());
     }
 
-    static flatMap5<LEFT, B, C, D, E, F, G>(
-        e1: Either<LEFT, B>,
-        e2: Either<LEFT, C>,
-        e3: Either<LEFT, D>,
-        e4: Either<LEFT, E>,
-        e5: Either<LEFT, F>,
-        f: (a: B, b: C, c: D, d: E, e: F) => Either<LEFT, G>,
-    ): Either<LEFT, G> {
+    static flatMap5<LEFT, A, B, C, D, E, F>(
+        e1: Either<LEFT, A>,
+        e2: Either<LEFT, B>,
+        e3: Either<LEFT, C>,
+        e4: Either<LEFT, D>,
+        e5: Either<LEFT, E>,
+        f: (a: A, b: B, c: C, d: D, e: E) => Either<LEFT, F>,
+    ): Either<LEFT, F> {
         if (e1.isLeft()) {
             return e1;
         } else if (e2.isLeft()) {
@@ -72,15 +72,15 @@ export class EitherUtils {
         return f(e1.get(), e2.get(), e3.get(), e4.get(), e5.get());
     }
 
-    static flatMap6<LEFT, B, C, D, E, F, G, H>(
-        e1: Either<LEFT, B>,
-        e2: Either<LEFT, C>,
-        e3: Either<LEFT, D>,
-        e4: Either<LEFT, E>,
-        e5: Either<LEFT, F>,
-        e6: Either<LEFT, G>,
-        f: (a: B, b: C, c: D, d: E, e: F, f: G) => Either<LEFT, H>,
-    ): Either<LEFT, H> {
+    static flatMap6<LEFT, A, B, C, D, E, F, G>(
+        e1: Either<LEFT, A>,
+        e2: Either<LEFT, B>,
+        e3: Either<LEFT, C>,
+        e4: Either<LEFT, D>,
+        e5: Either<LEFT, E>,
+        e6: Either<LEFT, F>,
+        f: (a: A, b: B, c: C, d: D, e: E, f: F) => Either<LEFT, G>,
+    ): Either<LEFT, G> {
         if (e1.isLeft()) {
             return e1;
         } else if (e2.isLeft()) {
@@ -97,16 +97,16 @@ export class EitherUtils {
         return f(e1.get(), e2.get(), e3.get(), e4.get(), e5.get(), e6.get());
     }
 
-    static flatMap7<LEFT, B, C, D, E, F, G, H, I>(
-        e1: Either<LEFT, B>,
-        e2: Either<LEFT, C>,
-        e3: Either<LEFT, D>,
-        e4: Either<LEFT, E>,
-        e5: Either<LEFT, F>,
-        e6: Either<LEFT, G>,
-        e7: Either<LEFT, H>,
-        f: (a: B, b: C, c: D, d: E, e: F, f: G, g: H) => Either<LEFT, I>,
-    ): Either<LEFT, I> {
+    static flatMap7<LEFT, A, B, C, D, E, F, G, H>(
+        e1: Either<LEFT, A>,
+        e2: Either<LEFT, B>,
+        e3: Either<LEFT, C>,
+        e4: Either<LEFT, D>,
+        e5: Either<LEFT, E>,
+        e6: Either<LEFT, F>,
+        e7: Either<LEFT, G>,
+        f: (a: A, b: B, c: C, d: D, e: E, f: F, g: G) => Either<LEFT, H>,
+    ): Either<LEFT, H> {
         if (e1.isLeft()) {
             return e1;
         } else if (e2.isLeft()) {
@@ -125,17 +125,17 @@ export class EitherUtils {
         return f(e1.get(), e2.get(), e3.get(), e4.get(), e5.get(), e6.get(), e7.get());
     }
 
-    static flatMap8<LEFT, B, C, D, E, F, G, H, I, J>(
-        e1: Either<LEFT, B>,
-        e2: Either<LEFT, C>,
-        e3: Either<LEFT, D>,
-        e4: Either<LEFT, E>,
-        e5: Either<LEFT, F>,
-        e6: Either<LEFT, G>,
-        e7: Either<LEFT, H>,
-        e8: Either<LEFT, I>,
-        f: (a: B, b: C, c: D, d: E, e: F, f: G, g: H, h: I) => Either<LEFT, J>,
-    ): Either<LEFT, J> {
+    static flatMap8<LEFT, A, B, C, D, E, F, G, H, I>(
+        e1: Either<LEFT, A>,
+        e2: Either<LEFT, B>,
+        e3: Either<LEFT, C>,
+        e4: Either<LEFT, D>,
+        e5: Either<LEFT, E>,
+        e6: Either<LEFT, F>,
+        e7: Either<LEFT, G>,
+        e8: Either<LEFT, H>,
+        f: (a: A, b: B, c: C, d: D, e: E, f: F, g: G, h: H) => Either<LEFT, I>,
+    ): Either<LEFT, I> {
         if (e1.isLeft()) {
             return e1;
         } else if (e2.isLeft()) {
