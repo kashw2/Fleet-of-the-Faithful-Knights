@@ -1,6 +1,6 @@
 resource "azurerm_app_service" "panel" {
   app_service_plan_id = var.app_service_plan_id
-  location            = var.resource_group_location
+  location            = var.location
   name                = "ffk-panel"
   resource_group_name = var.resource_group_name
   https_only          = true
@@ -10,13 +10,13 @@ resource "azurerm_app_service" "panel" {
     APPINSIGHTS_INSTRUMENTATIONKEY      = var.panel_instrumentation_key
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
     DOCKER_ENABLE_CI                    = true
-    DOCKER_REGISTRY_SERVER_URL          = var.login_server
+    DOCKER_REGISTRY_SERVER_URL          = var.server
     DOCKER_REGISTRY_SERVER_USERNAME     = var.username
     DOCKER_REGISTRY_SERVER_PASSWORD     = var.password
   }
 
   site_config {
-    linux_fx_version  = "DOCKER|${var.login_server}/panel.faithfulknights.com:latest"
+    linux_fx_version  = "DOCKER|${var.server}/panel.faithfulknights.com:latest"
     health_check_path = "/"
     always_on         = false
   }
@@ -25,7 +25,7 @@ resource "azurerm_app_service" "panel" {
 
 resource "azurerm_app_service" "api" {
   app_service_plan_id = var.app_service_plan_id
-  location            = var.resource_group_location
+  location            = var.location
   name                = "ffk-api"
   resource_group_name = var.resource_group_name
   https_only          = true
@@ -35,7 +35,7 @@ resource "azurerm_app_service" "api" {
     APPINSIGHTS_INSTRUMENTATIONKEY      = var.api_instrumentation_key
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
     DOCKER_ENABLE_CI                    = true
-    DOCKER_REGISTRY_SERVER_URL          = var.login_server
+    DOCKER_REGISTRY_SERVER_URL          = var.server
     DOCKER_REGISTRY_SERVER_USERNAME     = var.username
     DOCKER_REGISTRY_SERVER_PASSWORD     = var.password
     FFK_DATABASE_SERVER                 = var.FFK_DATABASE_SERVER
@@ -49,7 +49,7 @@ resource "azurerm_app_service" "api" {
   }
 
   site_config {
-    linux_fx_version  = "DOCKER|${var.login_server}/api.faithfulknights.com:latest"
+    linux_fx_version  = "DOCKER|${var.server}/api.faithfulknights.com:latest"
     health_check_path = "/"
     always_on         = false
   }
@@ -58,7 +58,7 @@ resource "azurerm_app_service" "api" {
 
 resource "azurerm_app_service" "onboarding" {
   app_service_plan_id = var.app_service_plan_id
-  location            = var.resource_group_location
+  location            = var.location
   name                = "ffk-onboarding"
   resource_group_name = var.resource_group_name
   https_only          = true
@@ -68,7 +68,7 @@ resource "azurerm_app_service" "onboarding" {
     APPINSIGHTS_INSTRUMENTATIONKEY      = var.onboarding_instrumentation_key
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
     DOCKER_ENABLE_CI                    = true
-    DOCKER_REGISTRY_SERVER_URL          = var.login_server
+    DOCKER_REGISTRY_SERVER_URL          = var.server
     DOCKER_REGISTRY_SERVER_USERNAME     = var.username
     DOCKER_REGISTRY_SERVER_PASSWORD     = var.password
     FFK_API_SERVER                      = var.FFK_API_SERVER
@@ -78,7 +78,7 @@ resource "azurerm_app_service" "onboarding" {
   }
 
   site_config {
-    linux_fx_version  = "DOCKER|${var.login_server}/onboarding.faithfulknights.com:latest"
+    linux_fx_version  = "DOCKER|${var.server}/onboarding.faithfulknights.com:latest"
     health_check_path = "/"
     always_on         = false
   }

@@ -1,4 +1,4 @@
-output "login_server" {
+output "server" {
   value = azurerm_container_registry.registry.login_server
 }
 
