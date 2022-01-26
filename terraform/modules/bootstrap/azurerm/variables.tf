@@ -1,0 +1,1 @@
+variable "service_principal_id" {}
