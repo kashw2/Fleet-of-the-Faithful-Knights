@@ -1,10 +1,10 @@
 resource "azurerm_app_service" "panel" {
-  app_service_plan_id = var.app_service_plan_id
+  app_service_plan_id = var.basic_app_service_plan_id
   location            = var.location
   name                = "ffk-panel"
   resource_group_name = var.resource_group_name
   https_only          = true
-
+  enabled             = true
 
   app_settings = {
     APPINSIGHTS_INSTRUMENTATIONKEY      = var.panel_instrumentation_key
@@ -16,20 +16,19 @@ resource "azurerm_app_service" "panel" {
   }
 
   site_config {
-    linux_fx_version  = "DOCKER|${var.server}/panel.faithfulknights.com:latest"
-    health_check_path = "/"
-    always_on         = false
+    linux_fx_version = "DOCKER|${var.server}/panel.faithfulknights.com:latest"
+    always_on        = false
   }
 
 }
 
 resource "azurerm_app_service" "api" {
-  app_service_plan_id = var.app_service_plan_id
+  app_service_plan_id = var.free_app_service_plan_id
   location            = var.location
   name                = "ffk-api"
   resource_group_name = var.resource_group_name
   https_only          = true
-
+  enabled             = true
 
   app_settings = {
     APPINSIGHTS_INSTRUMENTATIONKEY      = var.api_instrumentation_key
@@ -49,20 +48,20 @@ resource "azurerm_app_service" "api" {
   }
 
   site_config {
-    linux_fx_version  = "DOCKER|${var.server}/api.faithfulknights.com:latest"
-    health_check_path = "/"
-    always_on         = false
+    linux_fx_version          = "DOCKER|${var.server}/api.faithfulknights.com:latest"
+    always_on                 = false
+    use_32_bit_worker_process = true
   }
 
 }
 
 resource "azurerm_app_service" "onboarding" {
-  app_service_plan_id = var.app_service_plan_id
+  app_service_plan_id = var.free_app_service_plan_id
   location            = var.location
   name                = "ffk-onboarding"
   resource_group_name = var.resource_group_name
   https_only          = true
-
+  enabled             = true
 
   app_settings = {
     APPINSIGHTS_INSTRUMENTATIONKEY      = var.onboarding_instrumentation_key
@@ -78,9 +77,9 @@ resource "azurerm_app_service" "onboarding" {
   }
 
   site_config {
-    linux_fx_version  = "DOCKER|${var.server}/onboarding.faithfulknights.com:latest"
-    health_check_path = "/"
-    always_on         = false
+    linux_fx_version          = "DOCKER|${var.server}/onboarding.faithfulknights.com:latest"
+    always_on                 = false
+    use_32_bit_worker_process = true
   }
 
 }
