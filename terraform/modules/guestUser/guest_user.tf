@@ -4,9 +4,10 @@ resource "azuread_invitation" "spindizzy" {
   user_display_name  = "Spindizzy"
   user_type          = "Guest"
 
-  lifecycle {
-    create_before_destroy = true
+  message {
+    language = "en-US"
   }
+
 }
 
 resource "azuread_invitation" "grandmaster_flash" {
@@ -15,9 +16,10 @@ resource "azuread_invitation" "grandmaster_flash" {
   user_display_name  = "Grandmaster Flash"
   user_type          = "Guest"
 
-  lifecycle {
-    create_before_destroy = true
+  message {
+    language = "en-US"
   }
+
 }
 
 resource "azuread_invitation" "bship" {
@@ -26,7 +28,8 @@ resource "azuread_invitation" "bship" {
   user_display_name  = "Bship"
   user_type          = "Guest"
 
-  lifecycle {
-    create_before_destroy = true
+  message {
+    language = "en-US"
   }
+
 }

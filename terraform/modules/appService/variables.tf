@@ -1,4 +1,6 @@
-variable "app_service_plan_id" {}
+variable "basic_app_service_plan_id" {}
+
+variable "free_app_service_plan_id" {}
 
 variable "location" {}
 

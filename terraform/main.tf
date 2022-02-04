@@ -42,7 +42,8 @@ module "application_insights" {
 
 module "app_service" {
   source                         = "./modules/appService"
-  app_service_plan_id            = module.app_service_plan.id
+  basic_app_service_plan_id      = module.app_service_plan.basic_id
+  free_app_service_plan_id       = module.app_service_plan.free_id
   FFK_API_SERVER                 = var.FFK_API_SERVER
   FFK_DATABASE_NAME              = var.FFK_DATABASE_NAME
   FFK_DATABASE_PASSWORD          = var.FFK_DATABASE_PASSWORD
