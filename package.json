@@ -52,7 +52,7 @@
     "os-browserify": "0.3.0",
     "querystring-browser": "1.0.4",
     "stream-browserify": "3.0.0",
-    "ts-node": "10.6.0",
+    "ts-node": "10.7.0",
     "tty-browserify": "0.0.1",
     "url-browser": "0.1.7",
     "util-browser": "0.0.2"
