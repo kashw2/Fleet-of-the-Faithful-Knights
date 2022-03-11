@@ -31,7 +31,7 @@
   "dependencies": {
     "typescript": "4.5.5",
     "webpack": "5.70.0",
-    "ts-loader": "9.2.7"
+    "ts-loader": "9.2.8"
   },
   "devDependencies": {
     "@types/jasmine": "3.10.3",
