@@ -38,7 +38,7 @@
     "@angular-devkit/build-angular": "13.2.6",
     "@angular/cli": "13.2.6",
     "@angular/compiler-cli": "13.2.6",
-    "@types/jasmine": "3.10.4",
+    "@types/jasmine": "4.0.0",
     "@types/node": "16.11.26",
     "codelyzer": "6.0.2",
     "jasmine-core": "3.99.1",
