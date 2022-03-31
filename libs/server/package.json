@@ -34,7 +34,7 @@
     "ts-loader": "9.2.8"
   },
   "devDependencies": {
-    "@types/jasmine": "4.0.1",
+    "@types/jasmine": "4.0.2",
     "jasmine": "3.99.0",
     "jasmine-spec-reporter": "7.0.0",
     "jasmine-ts": "0.4.0",
