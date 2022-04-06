@@ -40,7 +40,7 @@
     "immutable": "4.0.0",
     "lerna": "4.0.0",
     "moment": "2.29.2",
-    "mssql": "8.0.2",
+    "mssql": "8.1.0",
     "rxjs": "7.5.5",
     "screenfull": "5.2.0",
     "ts-mixer": "6.0.1",
