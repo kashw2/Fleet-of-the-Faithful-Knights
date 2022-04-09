@@ -43,7 +43,8 @@
     "typescript": {
       "rewritePaths": {
         "src/": "dist/main/"
-      }
+      },
+      "compile": false
     },
     "configurableModuleFormat": true,
     "nodeArguments": [
