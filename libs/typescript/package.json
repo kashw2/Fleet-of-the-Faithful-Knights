@@ -1,43 +1,35 @@
 {
   "name": "@kashw2/lib-ts",
-  "version": "3.9.3",
-  "description": "Fleet of the Faithful Knights Utility Library",
-  "main": "./dist/lib-ts.js",
-  "typings": "./dist/src/index.d.ts",
-  "scripts": {
-    "build": "webpack --config webpack/webpack.config.ts",
-    "build:dev": "webpack --config webpack/webpack.dev.config.ts",
-    "build:watch": "webpack --watch --config webpack/webpack.dev.config.ts"
+  "version": "4.0.0",
+  "description": "Fleet of the Faithful Knights Models, Base and Json Key Library",
+  "main": "./dist/main/index.js",
+  "typings": "./dist/main/index.d.ts",
+  "module": "./dist/module/index.js",
+  "repository": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights.git",
+  "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights#readme",
+  "bugs": {
+    "url": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights/issues"
   },
   "files": [
     "dist"
   ],
-  "repository": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights.git",
-  "author": "Keanu Ashwell",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights/issues"
-  },
-  "browser": {
-    "http": false,
-    "https": false,
-    "net": false,
-    "path": false,
-    "stream": false,
-    "tls": false
-  },
-  "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights#readme",
-  "dependencies": {
-    "typescript": "4.6.3",
-    "webpack": "5.72.0",
-    "ts-loader": "9.2.8"
-  },
-  "devDependencies": {
-    "webpack-cli": "4.9.2"
-  },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/kashw2",
     "access": "restricted",
     "directory": "dist"
+  },
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "run-p build:*",
+    "build:main": "tsc -p tsconfig.json",
+    "build:module": "tsc -p tsconfig.module.json",
+    "watch:build": "tsc -p tsconfig.json -w",
+    "doc": "npm run doc:html && open-cli dist/docs/index.html",
+    "doc:html": "typedoc src/ --exclude **/*.spec.ts --target ES6 --mode file --out dist/docs",
+    "doc:json": "typedoc src/ --exclude **/*.spec.ts --target ES6 --mode file --json dist/docs/typedoc.json",
+    "doc:publish": "gh-pages -m \"docs: update\" -d dist/docs"
+  },
+  "engines": {
+    "node": ">=14"
   }
 }

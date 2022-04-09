@@ -1,3 +1,4 @@
+import test from "ava";
 import {UnauthenticatedCrudEndpoint} from "../src";
 import {Router} from "express";
 
@@ -8,13 +9,15 @@ class TestEndpoint extends UnauthenticatedCrudEndpoint {
     }
 
     mount(router: Router): void {
+        /**
+         * Only needed otherwise Ava will report that router is unused.
+         */
+        router.arguments;
     }
 
 }
 
-describe('Api Endpoint', () => {
-    it('should create endpoint', () => {
-        const endpoint = new TestEndpoint('test');
-        expect(endpoint.getEndpointName()).toBe('test');
-    });
+test('UnauthenticatedCrudEndpoint should create endpoint', t => {
+    const endpoint = new TestEndpoint('test');
+    t.is(endpoint.getEndpointName(), 'test');
 });

@@ -1,5 +1,6 @@
+import test from "ava";
 import {UnauthenticatedEndpoint} from "../src";
-import {Router, Request, Response} from "express";
+import {Request, Response, Router} from "express";
 
 class TestEndpoint extends UnauthenticatedEndpoint {
 
@@ -8,16 +9,24 @@ class TestEndpoint extends UnauthenticatedEndpoint {
     }
 
     mount(router: Router): void {
+        /**
+         * Only needed otherwise Ava will report that router is unused.
+         */
+        router.arguments;
+        return;
     }
 
     runImpl(req: Request, res: Response): void {
+        /**
+         * Only needed otherwise Ava will report that router is unused.
+         */
+        req.rawHeaders;
+        res.statusCode;
     }
 
 }
 
-describe('Unauthenticated Endpoint', () => {
-    it('should create endpoint', () => {
-        const endpoint = new TestEndpoint('test');
-        expect(endpoint.getEndpointName()).toBe('test');
-    });
+test('UnauthenticatedEndpoint should create endpoint', t => {
+    const endpoint = new TestEndpoint('test');
+    t.is(endpoint.getEndpointName(), 'test');
 });

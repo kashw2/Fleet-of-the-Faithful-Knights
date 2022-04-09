@@ -1,7 +1,7 @@
 import {ApiBase} from "./api-base";
 import {Either, Left} from "funfix-core";
 import {JsonSerializer} from "@kashw2/lib-util";
-import {List, Set} from "immutable";
+import {List} from "immutable";
 
 export class SerializedApiBase extends ApiBase {
 

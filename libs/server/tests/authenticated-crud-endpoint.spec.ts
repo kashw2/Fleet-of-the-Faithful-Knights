@@ -1,5 +1,6 @@
+import test from "ava";
 import {AuthenticatedCrudEndpoint} from "../src";
-import {Router, Request, Response} from "express";
+import {Request, Response, Router} from "express";
 import {User} from "@kashw2/lib-ts";
 
 class TestEndpoint extends AuthenticatedCrudEndpoint {
@@ -9,21 +10,34 @@ class TestEndpoint extends AuthenticatedCrudEndpoint {
     }
 
     doesRequireAuthentication(req: Request): boolean {
+        /**
+         * Only needed otherwise Ava will report that router is unused.
+         */
+        req.rawHeaders;
         return false;
     }
 
     hasPermission(req: Request, res: Response, user: User): boolean {
+        /**
+         * Only needed otherwise Ava will report that router is unused.
+         */
+        req.rawHeaders;
+        res.statusCode;
+        user.getId();
         return false;
     }
 
     mount(router: Router): void {
+        /**
+         * Only needed otherwise Ava will report that router is unused.
+         */
+        router.arguments;
+        return;
     }
 
 }
 
-describe('Authenticated Crud Endpoint', () => {
-    it('should create endpoint', () => {
-        const endpoint = new TestEndpoint('test');
-        expect(endpoint.getEndpointName()).toBe('test');
-    });
+test('AuthenticatedCrudEndpoint should create endpoint', t => {
+    const endpoint = new TestEndpoint('test');
+    t.is(endpoint.getEndpointName(), 'test');
 });
