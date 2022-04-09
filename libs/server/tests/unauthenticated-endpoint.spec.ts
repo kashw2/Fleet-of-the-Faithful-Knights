@@ -9,9 +9,19 @@ class TestEndpoint extends UnauthenticatedEndpoint {
     }
 
     mount(router: Router): void {
+        /**
+         * Only needed otherwise Ava will report that router is unused.
+         */
+        router.arguments;
+        return;
     }
 
     runImpl(req: Request, res: Response): void {
+        /**
+         * Only needed otherwise Ava will report that router is unused.
+         */
+        req.rawHeaders;
+        res.statusCode;
     }
 
 }

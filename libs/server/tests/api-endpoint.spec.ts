@@ -10,6 +10,11 @@ class TestEndpoint extends ApiEndpoint {
     }
 
     mount(router: Router): void {
+        /**
+         * Only needed otherwise Ava will report that router is unused.
+         */
+        router.arguments;
+        return;
     }
 
 }
