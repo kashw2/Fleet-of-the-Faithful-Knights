@@ -22,7 +22,7 @@ class TestEndpoint extends AuthenticatedCrudEndpoint {
 
 }
 
-test('ApiEndpoint should create endpoint', t => {
+test('AuthenticatedCrudEndpoint should create endpoint', t => {
     const endpoint = new TestEndpoint('test');
     t.is(endpoint.getEndpointName(), 'test');
 });

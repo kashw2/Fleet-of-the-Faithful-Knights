@@ -16,7 +16,7 @@ class TestEndpoint extends UnauthenticatedEndpoint {
 
 }
 
-test('ApiEndpoint should create endpoint', t => {
+test('UnauthenticatedEndpoint should create endpoint', t => {
     const endpoint = new TestEndpoint('test');
     t.is(endpoint.getEndpointName(), 'test');
 });
