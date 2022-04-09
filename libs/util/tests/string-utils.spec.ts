@@ -1,8 +1,7 @@
+import test from "ava";
 import {StringUtils} from "../src";
 
-describe('String Utils', () => {
-    it('should transform text to titlecase', () => {
-        const result = StringUtils.toTitleCase('this is a test');
-        expect(result).toBe('This Is A Test');
-    });
+test('StringUtils should transform text to titlecase', t => {
+    const result = StringUtils.toTitleCase('hello world');
+    t.deepEqual(result, 'Hello World');
 });

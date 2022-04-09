@@ -22,7 +22,7 @@ export abstract class AuthenticatedEndpoint extends ApiEndpoint {
     }
 
     getRequestUser(req: Request): Either<string, User> {
-        return EitherUtils.toEither(UserJsonSerializer.instance.fromJsonImpl(req.user), "Unable to Serialize User");
+        return EitherUtils.toEither(UserJsonSerializer.instance.fromJsonImpl(req['user']), "Unable to Serialize User");
     }
 
     getRequestUsername(req: Request): string {

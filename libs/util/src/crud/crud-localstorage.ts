@@ -16,7 +16,7 @@ export class CrudLocalStorage extends Crud {
 		return Option.of(localStorage.getItem(key)).isEmpty();
 	}
 
-	public read<T>(key: string): Option<string> {
+	public read(key: string): Option<string> {
 		return Option.of(localStorage.getItem(key));
 	}
 

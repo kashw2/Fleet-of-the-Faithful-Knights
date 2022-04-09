@@ -1,6 +1,7 @@
+import test from "ava";
 import {AuthenticatedCrudEndpoint} from "../src";
 import {Router, Request, Response} from "express";
-import {User} from "@kashw2/lib-ts";
+import { User } from "@kashw2/lib-ts";
 
 class TestEndpoint extends AuthenticatedCrudEndpoint {
 
@@ -21,9 +22,7 @@ class TestEndpoint extends AuthenticatedCrudEndpoint {
 
 }
 
-describe('Authenticated Crud Endpoint', () => {
-    it('should create endpoint', () => {
-        const endpoint = new TestEndpoint('test');
-        expect(endpoint.getEndpointName()).toBe('test');
-    });
+test('ApiEndpoint should create endpoint', t => {
+    const endpoint = new TestEndpoint('test');
+    t.is(endpoint.getEndpointName(), 'test');
 });
