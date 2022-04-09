@@ -45,9 +45,7 @@
         "src/": "dist/main/"
       }
     },
-    "nonSemVerExperiments": {
-      "configurableModuleFormat": true
-    },
+    "configurableModuleFormat": true,
     "nodeArguments": [
       "--loader=ts-node/esm",
       "--experimental-specifier-resolution=node"
