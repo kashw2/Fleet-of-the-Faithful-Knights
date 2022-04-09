@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "ava": "4.1.0",
-    "@ava/typescript": "1.1.1"
+    "@ava/typescript": "3.0.1"
   },
   "ava": {
     "failFast": true,
@@ -43,7 +43,8 @@
     "typescript": {
       "rewritePaths": {
         "src/": "dist/main/"
-      }
+      },
+      "compile": false
     },
     "configurableModuleFormat": true,
     "nodeArguments": [
