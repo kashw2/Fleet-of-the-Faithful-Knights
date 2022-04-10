@@ -1,0 +1,18 @@
+{
+  "name": "docs",
+  "private": true,
+  "repository": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights.git",
+  "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights#readme",
+  "bugs": {
+    "url": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights/issues"
+  },
+  "scripts": {
+    "doc": "npm run doc:html && open-cli dist/docs/index.html",
+    "doc:html": "typedoc src/ --exclude **/*.spec.ts --out dist/docs",
+    "doc:json": "typedoc src/ --exclude **/*.spec.ts --json dist/docs/typedoc.json",
+    "doc:publish": "gh-pages -m \"docs: update\" -d dist/docs"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}
