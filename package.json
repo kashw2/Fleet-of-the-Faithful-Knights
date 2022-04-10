@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights#readme",
   "dependencies": {
-    "@kashw2/lib-external": "4.0.0",
+    "@kashw2/lib-external": "4.0.1",
     "@kashw2/lib-server": "4.0.0",
     "@kashw2/lib-ts": "4.0.1",
     "@kashw2/lib-util": "3.0.0",
