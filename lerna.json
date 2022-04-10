@@ -12,8 +12,8 @@
     "./libs/util",
     "./libs/typescript",
     "./libs/server",
-    "./libs/angular",
     "./libs/external",
+    "./libs/docs",
     "./panel",
     "./api",
     "./onboarding"

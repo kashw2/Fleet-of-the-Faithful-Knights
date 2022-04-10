@@ -2,7 +2,6 @@ export * from './api/api-base';
 export * from './api/serialized-api-base';
 export * from './api/crud-api-base';
 export * from './api/ffk-api';
-export * from './misc/json-keys';
 export * from './models/user';
 export * from './models/news';
 export * from './models/group';

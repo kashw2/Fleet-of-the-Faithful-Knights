@@ -1,6 +1,6 @@
 {
   "name": "@kashw2/lib-ts",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Fleet of the Faithful Knights Models, Base and Json Key Library",
   "main": "./dist/main/index.js",
   "typings": "./dist/main/index.d.ts",
@@ -25,8 +25,8 @@
     "build:module": "tsc -p tsconfig.module.json",
     "watch:build": "tsc -p tsconfig.json -w",
     "doc": "npm run doc:html && open-cli dist/docs/index.html",
-    "doc:html": "typedoc src/ --exclude **/*.spec.ts --target ES6 --mode file --out dist/docs",
-    "doc:json": "typedoc src/ --exclude **/*.spec.ts --target ES6 --mode file --json dist/docs/typedoc.json",
+    "doc:html": "typedoc src/ --exclude **/*.spec.ts --out dist/docs",
+    "doc:json": "typedoc src/ --exclude **/*.spec.ts --json dist/docs/typedoc.json",
     "doc:publish": "gh-pages -m \"docs: update\" -d dist/docs"
   },
   "engines": {

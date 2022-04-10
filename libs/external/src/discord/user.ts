@@ -12,9 +12,9 @@ import {
 	publicFlagsKey,
 	systemKey,
 	usernameKey,
-	verifiedKey
+	verifiedKey,
+	avatarKey
 } from './json-keys';
-import {avatarKey} from "@kashw2/lib-ts";
 
 export class DiscordUser {
 

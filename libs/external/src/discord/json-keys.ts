@@ -125,3 +125,4 @@ export const tokenTypeKey = 'token_type';
 export const expiresInKey = 'expires_in';
 export const refreshTokenKey = 'refresh_token';
 export const scopeKey = 'scope';
+export const avatarKey = 'avatar';
