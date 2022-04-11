@@ -66,13 +66,13 @@
   },
   "workspaces": [
     "./",
-    "./api",
-    "./onboarding",
-    "./panel",
-    "./libs/angular",
-    "./libs/external",
-    "./libs/server",
+    "./libs/util",
     "./libs/typescript",
-    "./libs/util"
+    "./libs/server",
+    "./libs/external",
+    "./libs/docs",
+    "./panel",
+    "./api",
+    "./onboarding"
   ]
 }
