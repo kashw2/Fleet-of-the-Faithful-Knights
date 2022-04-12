@@ -33,10 +33,6 @@
   "engines": {
     "node": ">=14"
   },
-  "devDependencies": {
-    "ava": "4.2.0",
-    "@ava/typescript": "3.0.1"
-  },
   "ava": {
     "failFast": true,
     "timeout": "60s",
