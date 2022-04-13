@@ -44,7 +44,7 @@ jobs:
           lerna run cov:ci --scope=@kashw2/lib-util
 
       - name: setup codecov
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: libs/util
