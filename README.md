@@ -1,5 +1,7 @@
 # Fleet of the Faithful Knights
 
+[![codecov](https://codecov.io/gh/kashw2/Fleet-of-the-Faithful-Knights/branch/main/graph/badge.svg?token=LQ5NNKW5WX)](https://codecov.io/gh/kashw2/Fleet-of-the-Faithful-Knights)
+
 [![Terraform](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/terraform.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/terraform.yml)
 
 [![api.faithfulknights.com](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/api.yml/badge.svg)](https://github.com/kashw2/Fleet-of-the-Faithful-Knights/actions/workflows/api.yml)
