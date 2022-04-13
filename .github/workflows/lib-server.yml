@@ -42,6 +42,7 @@ jobs:
       - name: setup codecov
         uses: codecov/codecov-action@v2
   build-lib-server:
+    if: github.event_name != 'push'
     runs-on: ubuntu-latest
     steps:
       - name: checkout

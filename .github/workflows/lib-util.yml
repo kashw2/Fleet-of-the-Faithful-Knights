@@ -38,7 +38,11 @@ jobs:
 
       - name: test util
         run: lerna run test --scope=@kashw2/lib-util
+
+      - name: setup codecov
+        uses: codecov/codecov-action@v2
   build-lib-util:
+    if: github.event_name != 'push'
     runs-on: ubuntu-latest
     steps:
       - name: checkout
