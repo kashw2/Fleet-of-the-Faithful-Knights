@@ -37,11 +37,19 @@ jobs:
           lerna exec npm install --scope=@kashw2/lib-server
 
       - name: test server
-        run: lerna run test:cov --scope=@kashw2/lib-server
+        run: lerna run test --scope=@kashw2/lib-server
+
+      - name: generate coverage
+        run: |
+          lerna run cov:ci --scope=@kashw2/lib-server
 
       - name: setup codecov
         uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: libs/server
   build-lib-server:
+    if: github.event_name != 'push'
     runs-on: ubuntu-latest
     steps:
       - name: checkout

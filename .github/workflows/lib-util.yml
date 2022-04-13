@@ -38,7 +38,18 @@ jobs:
 
       - name: test util
         run: lerna run test --scope=@kashw2/lib-util
+
+      - name: generate coverage
+        run: |
+          lerna run cov:ci --scope=@kashw2/lib-util
+
+      - name: setup codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: libs/util
   build-lib-util:
+    if: github.event_name != 'push'
     runs-on: ubuntu-latest
     steps:
       - name: checkout
