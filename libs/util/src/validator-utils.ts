@@ -7,7 +7,7 @@ export function validateString(s: string, f: (s: string) => boolean): Either<str
 export function validateMaxLength(s: unknown, maxLength: number): Either<string, string> {
 	switch (typeof s) {
 	case 'number':
-		return s.toString().length < maxLength ? Right(s.toString()) : Left('String is over max length');
+		return s.toString().length < maxLength ? Right(s.toString()) : Left('Number is over max length');
 	case 'string':
 		return s.length < maxLength ? Right(s) : Left('String is over max length');
 	default:

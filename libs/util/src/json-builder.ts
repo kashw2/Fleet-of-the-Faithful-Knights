@@ -14,7 +14,7 @@ export class JsonBuilder {
 
     public addIterable<A>(values: Collection<any, A>, key: string): JsonBuilder {
         if (!values.isEmpty()) {
-            this.jsonObject[key] = values;
+            this.jsonObject[key] = values.toArray();
         }
         return this;
     }
