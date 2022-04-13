@@ -37,7 +37,10 @@ jobs:
           lerna exec npm install --scope=@kashw2/lib-server
 
       - name: test server
-        run: lerna run test --scope=@kashw2/lib-server
+        run: lerna run test:cov --scope=@kashw2/lib-server
+
+      - name: setup codecov
+        uses: codecov/codecov-action@v2
   build-lib-server:
     runs-on: ubuntu-latest
     steps:
