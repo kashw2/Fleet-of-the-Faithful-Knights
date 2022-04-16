@@ -1,4 +1,4 @@
-import {None, Option} from "funfix-core";
+import {None, Option} from "funfix";
 import {List} from "immutable";
 import {JsonBuilder, JsonSerializer, parseList, parseNumber, parseString} from "@kashw2/lib-util";
 import {accessTokenKey, expiresInKey, refreshTokenKey, scopeKey, tokenTypeKey} from "./json-keys";

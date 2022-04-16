@@ -1,5 +1,5 @@
 import test from "ava";
-import {None, Option, Some} from "funfix-core";
+import {None, Option, Some} from "funfix";
 import {JsonBuilder, JsonSerializer, parseString} from "../src";
 
 class TestUser {

@@ -3,7 +3,7 @@ import {Database} from "./db/database";
 import {AllEndpoints} from "./endpoints/all-endpoints";
 import bodyParser from "body-parser";
 import {UserJsonSerializer} from "@kashw2/lib-ts";
-import {Option} from "funfix-core";
+import {Option} from "funfix";
 import {EitherUtils} from "@kashw2/lib-util";
 
 const app = express();

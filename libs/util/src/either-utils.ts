@@ -1,4 +1,4 @@
-import {Either, Left, Option, Right} from "funfix-core";
+import {Either, Left, Option, Right} from "funfix";
 
 export class EitherUtils {
 

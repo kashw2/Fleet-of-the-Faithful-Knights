@@ -1,6 +1,6 @@
 import {Group} from "@kashw2/lib-ts";
 import {List} from "immutable";
-import {Option} from "funfix-core";
+import {Option} from "funfix";
 import {GroupCache} from "../src/db/caches/group-cache";
 
 describe('Group Cache', () => {

@@ -1,5 +1,5 @@
 import {OptionUtils} from "../src";
-import {Left, None, Option, Right, Some} from "funfix-core";
+import {Left, None, Option, Right, Some} from "funfix";
 import {List, Set} from "immutable";
 import test from "ava";
 

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NavigationService} from "../../service/navigation.service";
 import {UserService} from "../../service/user.service";
-import {Option} from "funfix-core";
+import {Option} from "funfix";
 import {environment} from "../../../environments/environment";
 
 @Component({

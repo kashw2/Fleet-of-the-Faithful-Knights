@@ -1,6 +1,6 @@
 import {Ballot, Permission} from "@kashw2/lib-ts";
 import {List} from "immutable";
-import {Option} from "funfix-core";
+import {Option} from "funfix";
 import {PermissionCache} from "../src/db/caches/permission-cache";
 
 describe('Permission Cache', () => {

@@ -2,7 +2,7 @@ import {Cache} from "./cache";
 import {Ballot} from "@kashw2/lib-ts";
 import {List, Map} from "immutable";
 import {CollectionUtils, EitherUtils} from "@kashw2/lib-util";
-import {Either, Option} from "funfix-core";
+import {Either, Option} from "funfix";
 
 export class BallotCache extends Cache<Ballot> {
 

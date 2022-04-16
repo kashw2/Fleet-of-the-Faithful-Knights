@@ -1,4 +1,4 @@
-import {Either, Left, Option, Right} from "funfix-core";
+import {Either, Left, Option, Right} from "funfix";
 import {List, Set} from "immutable";
 import {ConnectionPool, IRecordSet} from "mssql";
 import {EitherUtils, getJsonFromRecordSet, JsonSerializer} from "@kashw2/lib-util";

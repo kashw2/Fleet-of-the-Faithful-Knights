@@ -1,6 +1,6 @@
 import {Candidate} from "@kashw2/lib-ts";
 import {List} from "immutable";
-import {Option} from "funfix-core";
+import {Option} from "funfix";
 import {CandidateCache} from "../src/db/caches/candidate-cache";
 
 describe('Candidate Cache', () => {

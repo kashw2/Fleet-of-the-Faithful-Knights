@@ -1,6 +1,6 @@
 import test from "ava";
 import moment from "moment";
-import {Some} from "funfix-core";
+import {Some} from "funfix";
 import {MomentUtils} from "../src";
 
 test('MomentUtils should format', t => {

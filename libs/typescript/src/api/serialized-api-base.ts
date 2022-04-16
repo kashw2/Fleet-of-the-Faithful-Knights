@@ -1,5 +1,5 @@
 import {ApiBase} from "./api-base";
-import {Either, Left} from "funfix-core";
+import {Either, Left} from "funfix";
 import {JsonSerializer} from "@kashw2/lib-util";
 import {List} from "immutable";
 

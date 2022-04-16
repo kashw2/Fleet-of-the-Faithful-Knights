@@ -1,6 +1,6 @@
 import {OnboardingTemplate} from "../onboarding-template";
 import {Candidate, CandidateJsonSerializer, FfkApi} from "@kashw2/lib-ts";
-import {Either} from "funfix-core";
+import {Either} from "funfix";
 import {DiscordApi, DiscordGuildMember} from "@kashw2/lib-external";
 import {filter, map, switchMap, tap} from "rxjs/operators";
 import {List} from "immutable";

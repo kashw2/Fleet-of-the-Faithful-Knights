@@ -1,7 +1,7 @@
 import {Ballot} from "@kashw2/lib-ts";
 import {BallotCache} from "../src/db/caches/ballot-cache";
 import {List} from "immutable";
-import {Option} from "funfix-core";
+import {Option} from "funfix";
 
 describe('Ballot Cache', () => {
     it('should add', () => {

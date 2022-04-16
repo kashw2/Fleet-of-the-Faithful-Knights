@@ -6,7 +6,7 @@ import {CandidateService} from "./candidate.service";
 import {UserService} from "./user.service";
 import {ToastService} from "./toast.service";
 import {FfkApiService} from "./ffk-api.service";
-import {None, Option} from "funfix-core";
+import {None, Option} from "funfix";
 
 @Injectable({
   providedIn: 'root'

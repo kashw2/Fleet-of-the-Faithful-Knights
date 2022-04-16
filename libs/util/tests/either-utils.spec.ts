@@ -1,5 +1,5 @@
 import test from "ava";
-import {Left, Option, Right} from "funfix-core";
+import {Left, Option, Right} from "funfix";
 import {EitherUtils} from "../src";
 
 test('EitherUtils should flatMap2 succeed', t => {

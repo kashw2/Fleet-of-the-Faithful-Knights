@@ -1,4 +1,4 @@
-import {Either} from "funfix-core";
+import {Either} from "funfix";
 import {DiscordToken, DiscordTokenJsonSerializer} from "../token";
 import {SerializedApiBase} from "@kashw2/lib-ts";
 import {DiscordUser, DiscordUserJsonSerializer} from "../user";

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {VoteService} from "../../service/vote.service";
-import {Option} from "funfix-core";
+import {Option} from "funfix";
 import {Ballot} from "@kashw2/lib-ts";
 import {Set} from 'immutable';
 import {MatDialog} from "@angular/material/dialog";

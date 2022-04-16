@@ -3,7 +3,7 @@ import {CandidateService} from "../../service/candidate.service";
 import {List, Set} from "immutable";
 import {OptionUtils} from "@kashw2/lib-util";
 import {Candidate, Group, Vote} from "@kashw2/lib-ts";
-import {None, Option, Some} from "funfix-core";
+import {None, Option, Some} from "funfix";
 import {UserService} from "../../service/user.service";
 import {BehaviorSubject} from "rxjs";
 import * as moment from "moment";

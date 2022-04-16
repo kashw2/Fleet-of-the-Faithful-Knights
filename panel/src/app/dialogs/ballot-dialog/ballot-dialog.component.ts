@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {None, Option, Some} from "funfix-core";
+import {None, Option, Some} from "funfix";
 import {Ballot, Vote} from "@kashw2/lib-ts";
 import {OptionUtils} from "@kashw2/lib-util";
 import {UserService} from "../../service/user.service";

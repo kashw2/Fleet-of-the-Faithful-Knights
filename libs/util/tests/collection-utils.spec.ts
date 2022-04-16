@@ -1,7 +1,7 @@
 import test from "ava";
 import {CollectionUtils} from "../src";
 import {List} from "immutable";
-import {Some} from "funfix-core";
+import {Some} from "funfix";
 
 test('CollectionUtils should build a Map from a Collection', t => {
     const result = CollectionUtils.buildKeyedMap(List.of('H', 'e', 'l', 'l', 'o'), v => Some(v.toUpperCase())).toArray();

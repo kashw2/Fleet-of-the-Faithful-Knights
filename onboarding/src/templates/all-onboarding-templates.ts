@@ -1,4 +1,4 @@
-import {Either} from "funfix-core";
+import {Either} from "funfix";
 import {OnboardingTemplate} from "./onboarding-template";
 import {Map} from 'immutable';
 import {DiscordOnboardingTemplate} from "./discord/discord-onboarding-template";

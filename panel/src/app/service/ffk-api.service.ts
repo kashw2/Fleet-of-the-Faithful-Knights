@@ -12,7 +12,7 @@ import {
   Vote,
   VoteJsonSerializer
 } from "@kashw2/lib-ts";
-import {Either} from "funfix-core";
+import {Either} from "funfix";
 import {List} from "immutable";
 import {CrudLocalStorageService} from "./crud.service";
 import {EitherUtils} from "@kashw2/lib-util";

@@ -2,7 +2,7 @@ import {Cache} from "./cache";
 import {Permission} from "@kashw2/lib-ts";
 import {List, Map} from "immutable";
 import {CollectionUtils, EitherUtils} from "@kashw2/lib-util";
-import {Either, Option} from "funfix-core";
+import {Either, Option} from "funfix";
 
 export class PermissionCache extends Cache<Permission> {
 

@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {List} from "immutable";
-import {None, Option} from "funfix-core";
+import {None, Option} from "funfix";
 import {BehaviorSubject, combineAll, combineLatest, zip} from "rxjs";
 import {Group, Vote, VoteJsonSerializer} from "@kashw2/lib-ts";
 import {NavigationService} from "../../service/navigation.service";

@@ -2,7 +2,7 @@ import {AuthenticatedCrudEndpoint} from "@kashw2/lib-server";
 import {Group, User, UserJsonSerializer} from "@kashw2/lib-ts";
 import {Request, Response} from "express";
 import {ApiUtils, EitherUtils, OptionUtils} from "@kashw2/lib-util";
-import {Either, None, Option, Right, Some} from "funfix-core";
+import {Either, None, Option, Right, Some} from "funfix";
 import {Database} from "../db/database";
 import {DiscordApi} from "@kashw2/lib-external";
 import {filter, map, switchMap, tap} from "rxjs/operators";

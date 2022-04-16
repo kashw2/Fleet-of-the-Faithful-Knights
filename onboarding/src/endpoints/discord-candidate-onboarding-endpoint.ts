@@ -1,6 +1,6 @@
 import {ApiEndpoint} from "@kashw2/lib-server";
 import {NextFunction, Request, Response, Router} from "express";
-import {Either} from "funfix-core";
+import {Either} from "funfix";
 import {ApiUtils, EitherUtils} from "@kashw2/lib-util";
 import {ApiTemplate, ApiTemplateJsonSerializer, CandidateJsonSerializer} from "@kashw2/lib-ts";
 import {AllOnboardingTemplates} from "../templates/all-onboarding-templates";

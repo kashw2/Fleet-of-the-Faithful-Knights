@@ -1,5 +1,5 @@
 import {DbRequest} from "../db-request";
-import {Either} from "funfix-core";
+import {Either} from "funfix";
 import {
     Candidate, CandidateJsonSerializer,
     Group,

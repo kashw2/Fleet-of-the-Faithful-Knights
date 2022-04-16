@@ -1,7 +1,7 @@
 import {AuthenticatedCrudEndpoint} from "@kashw2/lib-server";
 import {Permission, PermissionJsonSerializer, User} from "@kashw2/lib-ts";
 import {Request, Response} from "express";
-import {Either} from "funfix-core";
+import {Either} from "funfix";
 import {ApiUtils, EitherUtils} from "@kashw2/lib-util";
 import {Database} from "../db/database";
 

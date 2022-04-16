@@ -1,5 +1,5 @@
 import {Candidate, Group} from "@kashw2/lib-ts";
-import {None, Option, Some} from "funfix-core";
+import {None, Option, Some} from "funfix";
 import {DiscordGuildMember} from "@kashw2/lib-external";
 import {Map} from "immutable";
 import {OptionUtils} from "@kashw2/lib-util";

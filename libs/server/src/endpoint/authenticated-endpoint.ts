@@ -1,7 +1,7 @@
 import {ApiEndpoint} from "./api-endpoint";
 import {User, UserJsonSerializer} from "@kashw2/lib-ts";
 import {Request, Response} from "express";
-import {Either} from "funfix-core";
+import {Either} from "funfix";
 import {EitherUtils} from "@kashw2/lib-util";
 
 export abstract class AuthenticatedEndpoint extends ApiEndpoint {

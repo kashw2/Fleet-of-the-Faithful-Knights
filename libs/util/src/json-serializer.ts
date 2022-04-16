@@ -1,7 +1,7 @@
 import {JsonBuilder} from './json-builder';
-import {Option} from "funfix-core";
 import {OptionUtils} from "./option-utils";
 import {List} from "immutable";
+import {Option} from "funfix";
 
 export abstract class JsonSerializer<A> {
 

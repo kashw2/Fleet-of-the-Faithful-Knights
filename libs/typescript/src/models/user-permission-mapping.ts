@@ -1,4 +1,4 @@
-import {None, Option} from "funfix-core";
+import {None, Option} from "funfix";
 import {JsonBuilder, JsonSerializer, parseString} from "@kashw2/lib-util";
 import {idKey, userIdKey, permissionIdKey} from "../misc/json-keys";
 

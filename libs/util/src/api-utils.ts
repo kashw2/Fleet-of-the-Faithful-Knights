@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import {Either} from "funfix-core";
+import {Either} from "funfix";
 import {EitherUtils} from "./either-utils";
 import {JsonSerializer} from "./json-serializer";
 import {List} from "immutable";

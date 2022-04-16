@@ -1,5 +1,5 @@
 import test from "ava";
-import {Left, Right} from "funfix-core";
+import {Left, Right} from "funfix";
 import {validateMaxLength} from '../src/validator-utils';
 
 test('validateMaxLength (string) should validate max length', t => {

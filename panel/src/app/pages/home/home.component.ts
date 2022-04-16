@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Either, Left, Option, Right} from "funfix-core";
+import {Either, Left, Option, Right} from "funfix";
 import {ActivatedRoute} from "@angular/router";
 import {FfkApiService} from "../../service/ffk-api.service";
 import {distinctUntilChanged, filter, from, map, of, pipe, switchMap, takeUntil, takeWhile, tap, zip} from "rxjs";

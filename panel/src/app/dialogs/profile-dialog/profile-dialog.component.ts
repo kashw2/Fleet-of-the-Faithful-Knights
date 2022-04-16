@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {Option} from "funfix-core";
+import {Option} from "funfix";
 import {User, UserJsonSerializer} from "@kashw2/lib-ts";
 import {FfkApiService} from "../../service/ffk-api.service";
 import {UserService} from "../../service/user.service";

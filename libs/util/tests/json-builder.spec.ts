@@ -1,6 +1,6 @@
 import test from "ava";
 import {JsonBuilder, JsonSerializer, parseString} from "../src";
-import {None, Option, Some} from "funfix-core";
+import {None, Option, Some} from "funfix";
 import moment from "moment";
 import {List} from "immutable";
 

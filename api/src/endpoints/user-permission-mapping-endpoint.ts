@@ -2,7 +2,7 @@ import {AuthenticatedCrudEndpoint} from "@kashw2/lib-server";
 import {Database} from "../db/database";
 import {Request, Response} from "express";
 import {User, UserPermissionMapping, UserPermissionMappingJsonSerializer} from "@kashw2/lib-ts";
-import {Either} from "funfix-core";
+import {Either} from "funfix";
 import {ApiUtils, EitherUtils, OptionUtils} from "@kashw2/lib-util";
 
 export class UserPermissionMappingEndpoint extends AuthenticatedCrudEndpoint {

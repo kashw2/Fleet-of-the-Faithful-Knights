@@ -2,7 +2,7 @@ import express, {NextFunction, Request, Response} from "express";
 import bodyParser from "body-parser";
 import {AllEndpoints} from "./endpoints/all-endpoints";
 import {EitherUtils} from "@kashw2/lib-util";
-import {Option} from "funfix-core";
+import {Option} from "funfix";
 
 const app = express();
 const router = express.Router();

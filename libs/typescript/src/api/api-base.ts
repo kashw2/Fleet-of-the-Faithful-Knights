@@ -1,4 +1,4 @@
-import {Either, Left, Right} from "funfix-core";
+import {Either, Left, Right} from "funfix";
 import {AxiosRequestConfig, default as axios} from 'axios';
 
 export class ApiBase {

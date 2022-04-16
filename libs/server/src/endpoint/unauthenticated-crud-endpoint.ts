@@ -1,6 +1,6 @@
 import {Request, Response, Router} from "express";
 import {ApiUtils} from "@kashw2/lib-util";
-import {Either} from "funfix-core";
+import {Either} from "funfix";
 import {UnauthenticatedEndpoint} from "./unauthenticated-endpoint";
 
 export abstract class UnauthenticatedCrudEndpoint extends UnauthenticatedEndpoint {
