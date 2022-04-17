@@ -39,7 +39,7 @@
     "funfix-core": "7.0.1",
     "immutable": "4.0.0",
     "lerna": "4.0.0",
-    "moment": "2.29.2",
+    "moment": "2.29.3",
     "mssql": "8.1.0",
     "rxjs": "7.5.5",
     "screenfull": "5.2.0",
