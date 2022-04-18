@@ -28,7 +28,7 @@ jobs:
           npm config set registry https://registry.npmjs.org/
 
       - name: install globals
-        run: npm install -g lerna
+        run: npm install -g lerna rimraf typescript
 
       - name: npm install
         run: |
