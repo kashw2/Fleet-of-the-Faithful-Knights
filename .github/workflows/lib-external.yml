@@ -28,15 +28,15 @@ jobs:
           npm config set registry https://registry.npmjs.org/
 
       - name: install globals
-        run: npm install -g lerna
+        run: npm install -g lerna rimraf typescript
 
       - name: npm install
         run: |
-          npm install
+          lerna exec npm install --scope=fleet-of-the-faithful-knights
           lerna exec npm install --scope=@kashw2/lib-external
 
       - name: build
-        run: lerna run build:dev --scope=@kashw2/lib-external
+        run: lerna run build --scope=@kashw2/lib-external
   publish:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
@@ -56,11 +56,11 @@ jobs:
           npm config set registry https://registry.npmjs.org/
 
       - name: install globals
-        run: npm install -g lerna
+        run: npm install -g lerna rimraf typescript
 
       - name: npm install
         run: |
-          npm install
+          lerna exec npm install --scope=fleet-of-the-faithful-knights
           lerna exec npm install --scope=@kashw2/lib-external
 
       - name: build
@@ -70,3 +70,5 @@ jobs:
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_PACKAGE_TOKEN }}
+          package: ./libs/external/package.json
+          registry: https://npm.pkg.github.com/
