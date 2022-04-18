@@ -32,7 +32,7 @@ jobs:
 
       - name: npm install
         run: |
-          npm install
+          lerna exec npm install --scope=fleet-of-the-faithful-knights
           lerna exec npm install --scope=@kashw2/lib-ts
 
       - name: build
