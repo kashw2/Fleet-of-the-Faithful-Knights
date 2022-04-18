@@ -39,5 +39,6 @@
   ],
   "reviewers": [
     "kashw2"
-  ]
+  ],
+  "npmrc": "@kashw2:registry=https://npm.pkg.github.com/"
 }
