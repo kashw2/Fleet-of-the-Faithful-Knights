@@ -32,7 +32,10 @@
   "pruneStaleBranches": true,
   "vulnerabilityAlerts": {
     "enabled": true,
-    "labels": ["security", "triage"]
+    "labels": [
+      "security",
+      "triage"
+    ]
   },
   "labels": [
     "dependencies"
@@ -40,5 +43,10 @@
   "reviewers": [
     "kashw2"
   ],
-  "npmrc": "@kashw2:registry=https://npm.pkg.github.com/"
+  "hostRules": [
+    {
+      "hostName": "npm.pkg.github.com",
+      "hostType": "npm"
+    }
+  ]
 }
