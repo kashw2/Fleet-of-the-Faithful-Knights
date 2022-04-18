@@ -1,6 +1,6 @@
 {
   "name": "@kashw2/lib-ts",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Fleet of the Faithful Knights Models, Base and Json Key Library",
   "main": "./dist/main/index.js",
   "typings": "./dist/main/index.d.ts",
