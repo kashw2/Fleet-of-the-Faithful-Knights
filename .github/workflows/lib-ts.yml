@@ -56,7 +56,7 @@ jobs:
           npm config set registry https://registry.npmjs.org/
 
       - name: install globals
-        run: npm install -g lerna
+        run: npm install -g lerna rimraf
 
       - name: npm install
         run: |
@@ -70,3 +70,4 @@ jobs:
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_PACKAGE_TOKEN }}
+          package: libs/typescript
