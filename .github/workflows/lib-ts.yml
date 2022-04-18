@@ -28,7 +28,7 @@ jobs:
           npm config set registry https://registry.npmjs.org/
 
       - name: install globals
-        run:  npm install -g lerna
+        run: npm install -g lerna
 
       - name: npm install
         run: |
@@ -37,3 +37,36 @@ jobs:
 
       - name: build
         run: lerna run build:dev --scope=@kashw2/lib-ts
+  publish:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - name: npm auth
+        run: |
+          npm config set @kashw2:registry https://npm.pkg.github.com/
+          npm config set //npm.pkg.github.com/:_authToken=${{ secrets.NPM_PACKAGE_TOKEN }}
+          npm config set registry https://registry.npmjs.org/
+
+      - name: install globals
+        run: npm install -g lerna
+
+      - name: npm install
+        run: |
+          npm install
+          lerna exec npm install --scope=@kashw2/lib-ts
+
+      - name: build
+        run: lerna run build --scope=@kashw2/lib-ts
+
+      - name: publish
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_PACKAGE_TOKEN }}
