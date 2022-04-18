@@ -36,7 +36,7 @@ jobs:
           lerna exec npm install --scope=@kashw2/lib-external
 
       - name: build
-        run: lerna run build:dev --scope=@kashw2/lib-external
+        run: lerna run build --scope=@kashw2/lib-external
   publish:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest

@@ -75,7 +75,7 @@ jobs:
           lerna exec npm install --scope=@kashw2/lib-server
 
       - name: build
-        run: lerna run build:dev --scope=@kashw2/lib-server
+        run: lerna run build --scope=@kashw2/lib-server
   publish:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
