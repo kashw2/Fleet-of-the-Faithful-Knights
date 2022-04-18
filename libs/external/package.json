@@ -24,7 +24,6 @@
     "build:main": "tsc -p tsconfig.json",
     "build:module": "tsc -p tsconfig.module.json",
     "watch:build": "tsc -p tsconfig.json -w",
-    "test": "ava",
     "doc": "npm run doc:html && open-cli dist/docs/index.html",
     "doc:html": "typedoc src/ --exclude **/*.spec.ts --out dist/docs",
     "doc:json": "typedoc src/ --exclude **/*.spec.ts --json dist/docs/typedoc.json",
@@ -32,24 +31,5 @@
   },
   "engines": {
     "node": ">=14"
-  },
-  "ava": {
-    "failFast": true,
-    "timeout": "60s",
-    "typescript": {
-      "rewritePaths": {
-        "src/": "dist/main/"
-      }
-    },
-    "nonSemVerExperiments": {
-      "configurableModuleFormat": true
-    },
-    "nodeArguments": [
-      "--loader=ts-node/esm",
-      "--experimental-specifier-resolution=node"
-    ],
-    "files": [
-      "!dist/module/**"
-    ]
   }
 }
