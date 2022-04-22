@@ -1,4 +1,4 @@
-name: lib-util
+name: Utility Library
 
 on:
   workflow_dispatch:
