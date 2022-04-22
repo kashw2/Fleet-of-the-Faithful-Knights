@@ -48,6 +48,38 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: libs/util
+  e2e-lib-util:
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - name: npm auth
+        run: |
+          npm config set @kashw2:registry https://npm.pkg.github.com/
+          npm config set //npm.pkg.github.com/:_authToken=${{ secrets.NPM_PACKAGE_TOKEN }}
+          npm config set registry https://registry.npmjs.org/
+
+      - name: install globals
+        run: npm install -g lerna rimraf typescript
+
+      - name: npm install
+        run: |
+          lerna exec npm install --scope=fleet-of-the-faithful-knights
+          lerna exec npm install --scope=@kashw2/lib-util
+          lerna exec npm install --scope=@ffk/lib-util-e2e
+
+      - name: build
+        run: lerna run build --scope=@kashw2/lib-util
+
+      - name: e2e
+        run: lerna run build --scope=@ffk/lib-util-e2e
   build-lib-util:
     if: github.event_name != 'push'
     runs-on: ubuntu-latest

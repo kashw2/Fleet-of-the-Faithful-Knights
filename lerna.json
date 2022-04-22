@@ -17,6 +17,7 @@
     "./libs/server",
     "./libs/external",
     "./libs/docs",
+    "./libs/util/e2e/ng",
     "./panel",
     "./api",
     "./onboarding"

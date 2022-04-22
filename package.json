@@ -70,8 +70,9 @@
     "./libs/util",
     "./libs/typescript",
     "./libs/server",
-    "./libs/external",
     "./libs/docs",
+    "./libs/external",
+    "./libs/util/e2e/ng",
     "./panel",
     "./api",
     "./onboarding"

@@ -32,7 +32,8 @@
     "rxjs": "7.5.5",
     "tslib": "2.3.1",
     "zone.js": "0.11.5",
-    "@microsoft/applicationinsights-web": "2.8.0"
+    "@microsoft/applicationinsights-web": "2.8.0",
+    "@kashw2/lib-util": "file:../../dist"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "13.3.3",
