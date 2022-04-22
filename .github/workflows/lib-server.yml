@@ -8,6 +8,12 @@ on:
       - libs/server/**
     branches:
       - main
+  push:
+    paths:
+      - package.json
+      - libs/server/**
+    branches:
+      - main
 
 jobs:
   test-lib-server:

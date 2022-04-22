@@ -8,6 +8,12 @@ on:
       - libs/external/**
     branches:
       - main
+  push:
+    paths:
+      - package.json
+      - libs/external/**
+    branches:
+      - main
 
 jobs:
   build-lib-external:
