@@ -10,7 +10,6 @@ on:
       - main
   push:
     paths:
-      - package.json
       - libs/util/**
     branches:
       - main

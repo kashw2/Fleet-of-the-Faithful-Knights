@@ -10,7 +10,6 @@ on:
       - main
   push:
     paths:
-      - package.json
       - libs/external/**
     branches:
       - main
