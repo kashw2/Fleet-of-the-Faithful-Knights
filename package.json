@@ -3,13 +3,11 @@
   "version": "1.0.0",
   "description": "FFK Monorepo",
   "scripts": {
-    "build": "echo \"$(tput setaf 2)Running Build Script$(tput srg0)\"",
-    "build:dev": "echo \"$(tput setaf 2)Running Development Build Script$(tput srg0)\"",
-    "build-libs": "echo \"$(tput setaf 2)Running Library Build Script$(tput srg0)\" && npm run build-util && npm run build-external && npm run build-ts && npm run build-server",
-    "build-util": "lerna run build --scope=@kashw2/lib-util",
-    "build-external": "lerna run build --scope=@kashw2/lib-external",
-    "build-server": "lerna run build --scope=@kashw2/lib-server",
-    "build-ts": "lerna run build --scope=@kashw2/lib-ts"
+    "build": "run-p build:*",
+    "build:util": "lerna run build --scope=@kashw2/lib-util",
+    "build:external": "lerna run build --scope=@kashw2/lib-external",
+    "build:server": "lerna run build --scope=@kashw2/lib-server",
+    "build:ts": "lerna run build --scope=@kashw2/lib-ts"
   },
   "private": true,
   "repository": {

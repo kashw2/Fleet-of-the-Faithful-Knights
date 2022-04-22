@@ -1,4 +1,4 @@
-name: lib-ts
+name: TypeScript Library
 
 on:
   workflow_dispatch:

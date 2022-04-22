@@ -1,4 +1,4 @@
-name: lib-external
+name: Externals Library
 
 on:
   workflow_dispatch:

@@ -1,4 +1,4 @@
-name: lib-server
+name: Server Library
 
 on:
   workflow_dispatch:
