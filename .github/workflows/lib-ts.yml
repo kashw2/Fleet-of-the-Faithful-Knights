@@ -8,6 +8,11 @@ on:
       - libs/typescript/**
     branches:
       - main
+  push:
+    paths:
+      - libs/typescript/**
+    branches:
+      - main
 
 jobs:
   build-lib-ts:

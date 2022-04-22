@@ -30,10 +30,7 @@ export class OptionUtils {
     }
 
     static sequence<A>(op: Option<Promise<Option<A>>>): Promise<Option<A>> {
-        if (op.isEmpty()) {
-            return Promise.resolve(None);
-        }
-        return op.get();
+        return op.isEmpty() ? Promise.resolve(None) : op.get();
     }
 
     static toEither<T>(opt: Option<T>, left: string): Either<string, T> {
@@ -54,10 +51,7 @@ export class OptionUtils {
     }
 
     static when<A>(predicate: boolean, f: () => A): Option<A> {
-        if (predicate) {
-            return Option.of(f());
-        }
-        return None;
+        return predicate ? Option.of(f()) : None;
     }
 
 }

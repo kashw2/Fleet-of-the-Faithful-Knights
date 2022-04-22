@@ -51,6 +51,11 @@ test('JsonSerializer should convert from type to object', t => {
     t.deepEqual(result, testUserObject['test_user']);
 });
 
+test('JsonSerializer should convert from type to object (impl)', t => {
+    const result = TestUserJsonSerializer.instance.toJsonImpl(new TestUser(Some('hello'), Some('world')));
+    t.deepEqual(result, testUserObject['test_user']);
+});
+
 test('JsonSerializer should convert from array to array of type', t => {
     const result = TestUserJsonSerializer.instance.fromJsonArray([testUserObject['test_user'], testUserObject['test_user']]).toArray();
     t.deepEqual(result, [new TestUser(Some('hello'), Some('world')), new TestUser(Some('hello'), Some('world'))]);
@@ -70,3 +75,8 @@ test('JsonSerializer should convert from type to json string array', t => {
     const result = TestUserJsonSerializer.instance.toJsonStringArray([new TestUser(Some('hello'), Some('world')), new TestUser(Some('hello'), Some('world'))]).replace(/(\r\n|\n|\r)/gm, "");
     t.deepEqual(result, '[  {    "id": "hello",    "name": "world"  },  {    "id": "hello",    "name": "world"  }]');
 });
+
+test('JsonSerializer should convert from object string to type', t => {
+    const result = TestUserJsonSerializer.instance.fromJsonString(TestUserJsonSerializer.instance.toJsonString(new TestUser(Some('hello'), Some('world'))));
+    t.deepEqual(result, Some(new TestUser(Some('hello'), Some('world'))));
+})

@@ -62,3 +62,8 @@ test('when should create option if predicate is true', t => {
     });
     t.deepEqual(result, Some(2));
 });
+
+test('sequence should unwrap an Option of a Promise and return a Promise of an Option', async t => {
+    const result = await OptionUtils.sequence(Some(Promise.resolve(Some("Hello World"))));
+    t.deepEqual(result, Some("Hello World"));
+});
