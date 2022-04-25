@@ -7,10 +7,6 @@ export function parseString(s: unknown): Option<string> {
     return Option.of(s)
         .flatMap(v => {
             switch (typeof v) {
-                case 'bigint':
-                    return Option.of(v)
-                        .filter(x => isNaN(Number(x)) && isFinite(Number(x)))
-                        .map(x => x.toString());
                 case 'number':
                     return Option.of(v)
                         .filter(x => !isNaN(x) && isFinite(x))
@@ -76,8 +72,6 @@ export function parseBoolean(v: unknown): Option<boolean> {
             switch (typeof b) {
                 case 'number':
                     return Option.of(b).contains(1) ? Option.of(true) : Option.of(false);
-                case 'bigint':
-                    return Option.of(Number(b)).contains(1) ? Some(true) : Some(false);
                 case 'string':
                     return Option.of(b).exists(x => x === 'true' || x === 'false')
                         ? Option.of(b).contains('true') ? Some(true) : Some(false)
@@ -101,8 +95,6 @@ export function parseNumber(v: unknown): Option<number> {
                 case 'number':
                     return Option.of(n)
                         .filter(x => !isNaN(x));
-                case 'bigint':
-                    return Option.of(Number(n));
                 case 'boolean':
                     return Option.of(n).contains(true) ? Some(1) : Some(0);
                 default:
