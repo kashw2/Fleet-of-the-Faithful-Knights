@@ -1,6 +1,6 @@
 import test from "ava";
-import {parseString, parseNumber, parseBoolean} from "../src";
-import {None, Right, Some} from "funfix-core";
+import {parseBoolean, parseNumber, parseString} from "../src";
+import {None, Some} from "funfix-core";
 
 test('parseString should succeed with a string>', t => {
     const result = parseString('Hello World');
