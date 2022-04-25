@@ -8,7 +8,7 @@
   },
   "scripts": {
     "doc": "npm run doc:html && open-cli dist/docs/index.html",
-    "doc:ci": "run-s doc:html doc:json && doc:publish",
+    "doc:ci": "run-s doc:html doc:json && npm run doc:publish",
     "doc:html": "typedoc src/ --exclude **/*.spec.ts --out dist/docs",
     "doc:json": "typedoc src/ --exclude **/*.spec.ts --json dist/docs/typedoc.json",
     "doc:publish": "gh-pages -m \"docs: update\" -d dist/docs"
