@@ -1,5 +1,5 @@
 import test from "ava";
-import {parseString, parseNumber, parseBoolean, getJsonFromRecordSet} from "../src";
+import {parseString, parseNumber, parseBoolean} from "../src";
 import {None, Right, Some} from "funfix-core";
 
 test('parseString should succeed with a string>', t => {
@@ -60,9 +60,4 @@ test('parseBoolean should succeed with string', t => {
 test('parseBoolean should fail with default', t => {
     const result = parseBoolean(new Date());
     t.deepEqual(result, None);
-});
-
-test('getJsonFromRecordSet should parse from first item', t => {
-    const result = getJsonFromRecordSet(["Hello World"]);
-    t.deepEqual(result, Right('Hello World'));
 });

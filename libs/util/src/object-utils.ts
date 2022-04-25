@@ -1,26 +1,7 @@
-import {Either, Left, None, Option, Right, Some} from 'funfix-core';
+import {None, Option, Some} from 'funfix-core';
 import moment from 'moment';
 import {List, Set} from 'immutable';
 import {JsonSerializer} from './json-serializer';
-import {IRecordSet} from "mssql";
-
-/**
- * getJsonFromRecordSet()
- *
- * Given a Recordset probably returned from a Db query/procedure
- * Return an object that doesn't have to be manipulated to access data correctly
- * Function will probably evolve overtime, this is it in it's barebones state
- *
- */
-export function getJsonFromRecordSet(rs: any): Either<string, IRecordSet<any>> {
-    if (!rs || rs === "{}" || rs === []) {
-        return Left("Database returned empty resultset");
-    }
-    if (typeof rs[0][''] === "string") {
-        return Right(JSON.parse(rs[0]['']));
-    }
-    return Right(rs[0]);
-}
 
 export function parseString(s: unknown): Option<string> {
     return Option.of(s)
