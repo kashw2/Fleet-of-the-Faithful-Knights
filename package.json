@@ -59,7 +59,6 @@
     "ts-node": "10.7.0",
     "tslint": "6.1.3",
     "tty-browserify": "0.0.1",
-    "typedoc": "0.22.15",
     "url-browser": "0.1.7",
     "util-browser": "0.0.2"
   },
