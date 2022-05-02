@@ -15,7 +15,7 @@ on:
       - main
 
 jobs:
-  build-lib-external:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: checkout

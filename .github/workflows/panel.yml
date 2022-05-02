@@ -15,7 +15,7 @@ on:
       - main
 
 jobs:
-  build-panel:
+  build:
     if: github.event_name != 'push'
     runs-on: ubuntu-latest
     steps:
@@ -43,7 +43,7 @@ jobs:
 
       - name: build panel
         run: lerna run build --scope=@ffk/panel
-  deploy-panel:
+  deploy:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
