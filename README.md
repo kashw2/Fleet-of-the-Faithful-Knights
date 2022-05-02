@@ -31,18 +31,17 @@ thing or two.
 Name                                                 | Version
 ---------------------------------------------------- | -------
 TypeScript                                           | 4.x.x
-Nodemon                                              | 2.0.6
-Node                                                 | 12.x.x
+Node                                                 | 14.x.x
 Lerna                                                | 4.0.0
-Webpack                                              | 5.10.1
+Webpack                                              | 5.x.x
 [Terraform](https://www.terraform.io/downloads.html) | 1.0.0
-Docker                                               | 20.10.6
+Docker                                               | 20.x.x
 
 This ensures that you will be able to compile, build, run and deploy all projects in the repo.
 
 Here's a one line install for all node packages. Do note that it is a global install.
 
-```npm i typescript nodemon node lerna webpack -g```
+```npm i typescript lerna webpack -g```
 
 These packages can be located at the default locations at either ```AppData/npm/node_modules``` on Windows machines
 or ```usr/local/lib/node_modules``` on Linux.
