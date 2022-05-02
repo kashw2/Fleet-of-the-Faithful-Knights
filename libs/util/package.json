@@ -25,9 +25,9 @@
     "build:module": "tsc -p tsconfig.module.json",
     "watch:build": "tsc -p tsconfig.json -w",
     "test": "nyc --silent ava",
-    "cov": "run-s build test && run-s cov:send",
+    "cov": "run-s build test",
+    "cov:ci": "npm run test && codecov -t $CODECOV_TOKEN",
     "cov:show": "run-s build test && open-cli coverage/index.html",
-    "cov:send": "run-s cov && codecov -t $CODECOV_TOKEN",
     "cov:check": "nyc report && nyc check-coverage --lines 100 --functions 100 --branches 100",
     "doc": "npm run doc:html && open-cli dist/docs/index.html",
     "doc:html": "typedoc src/ --exclude **/*.spec.ts --out dist/docs",
@@ -41,7 +41,8 @@
     "ava": "4.2.0",
     "@ava/typescript": "3.0.1",
     "npm-run-all": "4.1.5",
-    "nyc": "15.1.0"
+    "nyc": "15.1.0",
+    "codecov": "3.8.3"
   },
   "ava": {
     "failFast": true,
