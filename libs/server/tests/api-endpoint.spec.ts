@@ -23,3 +23,8 @@ test('ApiEndpoint should create endpoint', t => {
     const endpoint = new TestEndpoint('test');
     t.is(endpoint.getEndpointName(), 'test');
 });
+
+test('ApiEndpoint should return endpoint name without /', t => {
+    const endpoint = new TestEndpoint('/test');
+    t.is(endpoint.getEndpointName(), 'test');
+});
