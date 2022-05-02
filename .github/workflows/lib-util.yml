@@ -46,7 +46,7 @@ jobs:
 
       - name: generate coverage
         run: |
-          lerna run cov:ci --scope=@kashw2/lib-util
+          lerna run cov --scope=@kashw2/lib-util
 
       - name: setup codecov
         uses: codecov/codecov-action@v3
