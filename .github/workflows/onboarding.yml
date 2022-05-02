@@ -15,7 +15,7 @@ on:
       - main
 
 jobs:
-  build-onboarding:
+  build:
     if: github.event_name != 'push'
     runs-on: ubuntu-latest
     steps:
@@ -43,7 +43,7 @@ jobs:
 
       - name: build onboarding
         run: lerna run build:dev --scope=@ffk/onboarding
-  deploy-onboarding:
+  deploy:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:

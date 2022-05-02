@@ -15,7 +15,7 @@ on:
       - main
 
 jobs:
-  test-lib-server:
+  test:
     if: github.event_name != 'push'
     runs-on: ubuntu-latest
     steps:
@@ -53,7 +53,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: libs/server
-  build-lib-server:
+  build:
     if: github.event_name != 'push'
     runs-on: ubuntu-latest
     steps:
