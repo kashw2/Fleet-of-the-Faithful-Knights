@@ -13,7 +13,7 @@ router.use(bodyParser.urlencoded({extended: false}));
 router.use(bodyParser.json());
 
 /**
- * We want to be initialising the endpoints with the same Router, as such we create an immutable variable for it
+ * We want to be initialising the endpoints with the same Router, as such we create an immutable variable for it,
  * and we just pass it around to all endpoints for usage this way we aren't creating multiple instances of endpoints
  * each with their own router.
  */
@@ -34,11 +34,11 @@ AllEndpoints.initialiseEndpoints(router);
 app.listen(process.env.PORT || 3002, () => {
 
     EitherUtils.liftEither(process.env.FFK_DISCORD_CLIENT_SECRET, `Missing environment variables FFK_DISCORD_CLIENT_SECRET`)
-        .filterOrElse(_ => Option.of(process.env.FFK_DISCORD_REDIRECT).nonEmpty(), () =>`Missing environment variable FFK_DISCORD_REDIRECT`)
-        .filterOrElse(_ => Option.of(process.env.FFK_DISCORD_BOT_TOKEN).nonEmpty(), () => `Missing environment variable FFK_DISCORD_BOT_TOKEN`)
-        .filterOrElse(_ => Option.of(process.env.FFK_API_SERVER).nonEmpty(), () => `Missing environment variable FFK_API_SERVER`)
+        .filterOrElse((_: string) => Option.of(process.env.FFK_DISCORD_REDIRECT).nonEmpty(), () => `Missing environment variable FFK_DISCORD_REDIRECT`)
+        .filterOrElse((_: string) => Option.of(process.env.FFK_DISCORD_BOT_TOKEN).nonEmpty(), () => `Missing environment variable FFK_DISCORD_BOT_TOKEN`)
+        .filterOrElse((_: string) => Option.of(process.env.FFK_API_SERVER).nonEmpty(), () => `Missing environment variable FFK_API_SERVER`)
         .fold(
-            (error) => {
+            (error: string) => {
                 throw error;
             },
             () => console.log(`Listening on port 3002`)
