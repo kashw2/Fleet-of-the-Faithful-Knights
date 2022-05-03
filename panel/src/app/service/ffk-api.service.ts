@@ -4,7 +4,6 @@ import {
   BallotJsonSerializer,
   Candidate,
   CandidateJsonSerializer,
-  CrudApiBase,
   Group,
   GroupJsonSerializer,
   User,
@@ -15,7 +14,7 @@ import {
 import {Either} from "funfix-core";
 import {List} from "immutable";
 import {CrudLocalStorageService} from "./crud.service";
-import {EitherUtils} from "@kashw2/lib-util";
+import {CrudApiBase, EitherUtils} from "@kashw2/lib-util";
 
 
 @Injectable({
