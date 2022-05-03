@@ -1,4 +1,4 @@
-import {CrudApiBase} from "./crud-api-base";
+import {CrudApiBase} from "@kashw2/lib-util";
 
 export class FfkApi {
 
