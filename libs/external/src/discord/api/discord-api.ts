@@ -1,11 +1,11 @@
 import {Either} from "funfix-core";
 import {DiscordToken, DiscordTokenJsonSerializer} from "../token";
-import {SerializedApiBase} from "@kashw2/lib-ts";
 import {DiscordUser, DiscordUserJsonSerializer} from "../user";
 import {DiscordGuild, DiscordGuildJsonSerializer} from "../guild";
 import {DiscordGuildMember, DiscordGuildMemberJsonSerializer} from "../guild-member";
 import {from, Observable} from "rxjs";
 import {List} from "immutable";
+import {SerializedApiBase} from "@kashw2/lib-util";
 
 export class DiscordApi extends SerializedApiBase {
 
