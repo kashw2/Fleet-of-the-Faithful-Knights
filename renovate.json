@@ -45,8 +45,9 @@
   ],
   "hostRules": [
     {
-      "hostName": "npm.pkg.github.com",
+      "matchHost": "https://npm.pkg.github.com/",
       "hostType": "npm"
     }
-  ]
+  ],
+  "npmrc": "@kashw2:registry=https://npm.pkg.github.com/"
 }
