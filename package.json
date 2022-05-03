@@ -61,16 +61,5 @@
     "@istanbuljs/nyc-config-typescript": "1.0.2",
     "run-p": "0.0.0",
     "ts-node": "10.7.0"
-  },
-  "workspaces": [
-    "./",
-    "./libs/util",
-    "./libs/typescript",
-    "./libs/server",
-    "./libs/external",
-    "./libs/docs",
-    "./panel",
-    "./api",
-    "./onboarding"
-  ]
+  }
 }
