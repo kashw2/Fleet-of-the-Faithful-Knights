@@ -13,14 +13,14 @@ export abstract class AuthenticatedCrudEndpoint extends AuthenticatedEndpoint {
     /**
      * Provides functionality for Creation of data
      */
-    create<A>(req: Request): Future<A | string> {
+    create(req: Request): Future<object | string> {
         return Future.of(() => `${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`);
     }
 
     /**
      * Provides functionality for Deletion of data
      */
-    delete<A>(req: Request): Future<A | string> {
+    delete(req: Request): Future<object | string> {
         return Future.of(() => `${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`);
     }
 
@@ -69,7 +69,7 @@ export abstract class AuthenticatedCrudEndpoint extends AuthenticatedEndpoint {
     /**
      * Provides functionality for Reading/Retrieval of data
      */
-    read<A>(req: Request): Future<A | string> {
+    read(req: Request): Future<object | string> {
         return Future.of(() => `${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`);
     }
 
@@ -113,7 +113,7 @@ export abstract class AuthenticatedCrudEndpoint extends AuthenticatedEndpoint {
     /**
      * Provides functionality for Updating of data
      */
-    update<A>(req: Request): Future<A | string> {
+    update(req: Request): Future<object | string> {
         return Future.of(() => `${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`);
     }
 
