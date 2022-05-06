@@ -101,7 +101,7 @@ jobs:
         run: lerna run build:dev --scope=@ffk/api
 
       - name: deploy
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: ffkcontainerregistry.azurecr.io
           username: ${{ secrets.ACR_USERNAME }}
