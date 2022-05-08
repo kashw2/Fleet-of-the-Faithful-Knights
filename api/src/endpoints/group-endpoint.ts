@@ -4,6 +4,7 @@ import {Group, GroupJsonSerializer, User} from "@kashw2/lib-ts";
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {ApiUtils, EitherUtils} from "@kashw2/lib-util";
+import {Future} from "funfix";
 
 export class GroupEndpoint extends AuthenticatedCrudEndpoint {
 
@@ -11,24 +12,24 @@ export class GroupEndpoint extends AuthenticatedCrudEndpoint {
         super('/group');
     }
 
-    create(req: Request): Promise<Either<string, any>> {
-        return EitherUtils.sequence(this.validate(req)
-            .map(g => {
-                this.db.cache.groups.add(g);
-                return this.db.procedures.insert.insertGroup(g)(this.getModifiedBy(req));
-            }))
-            .then(v => v.map(u => GroupJsonSerializer.instance.toJsonImpl(u)));
+    create(req: Request): Future<object | string> {
+        return Future.of(() => {
+            return EitherUtils.sequence(this.validate(req)
+                .map(v => {
+                    this.db.cache.groups.add(v);
+                    return this.db.procedures.insert.insertGroup(v)(this.getRequestUsername(req));
+                }));
+        }).flatMap(v => Future.fromPromise(v))
+            .map(v => v.isRight() ? GroupJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
-    delete(req: Request): Promise<Either<string, any>> {
-        return EitherUtils.sequence(this.getGroupId(req)
-            .map(gid => this.db.procedures.delete.deleteGroup(gid)))
-            .then(v => v.map(u => GroupJsonSerializer.instance.toJsonImpl(u)));
+    delete(req: Request): Future<object | string> {
+        return Future.of(() => EitherUtils.sequence(this.getGroupId(req).map(gid => this.db.procedures.delete.deleteGroup(gid))))
+            .flatMap(v => Future.fromPromise(v))
+            .map(v => v.isRight() ? GroupJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
-    doesRequireAuthentication(req: Request): boolean {
-        return true;
-    }
+    doesRequireAuthentication = (req: Request) => true;
 
     private getGroup(req: Request): Either<string, Group> {
         return ApiUtils.parseBodyParamSerialized(req, 'group', GroupJsonSerializer.instance);
@@ -53,19 +54,19 @@ export class GroupEndpoint extends AuthenticatedCrudEndpoint {
         }
     }
 
-    read(req: Request): Promise<Either<string, any>> {
-        if (this.getGroupId(req).isLeft()) {
-            return Promise.resolve(EitherUtils.liftEither(GroupJsonSerializer.instance.toJsonArray(this.db.cache.groups.getGroups().toArray()), "Groups cache is empty"));
+    read(req: Request): Future<object | string> {
+        if (this.getGroupId(req)) {
+            return Future.of(() => this.getGroupId(req).flatMap(gid => this.db.cache.groups.getGroupsById(gid)))
+                .map(v => v.isRight() ? GroupJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
         }
-        return Promise.resolve(this.getGroupId(req)
-            .flatMap(gid => this.db.cache.groups.getGroupsById(gid)))
-            .then(v => v.map(x => GroupJsonSerializer.instance.toJsonImpl(x)));
+        return Future.of(() => EitherUtils.liftEither(this.db.cache.groups.getGroups(), "Group cache is empty"))
+            .map(v => v.isRight() ? GroupJsonSerializer.instance.toJsonArray(v.get().toArray()) : v.value);
     }
 
-    update(req: Request): Promise<Either<string, any>> {
-        return EitherUtils.sequence(this.validate(req)
-            .map(g => this.db.procedures.update.updateGroup(g)(this.getModifiedBy(req))))
-            .then(v => v.map(x => GroupJsonSerializer.instance.toJsonImpl(x)));
+    update(req: Request): Future<object | string> {
+        return Future.of(() => EitherUtils.sequence(this.validate(req).map(g => this.db.procedures.update.updateGroup(g)(this.getRequestUsername(req)))))
+            .flatMap(v => Future.fromPromise(v))
+            .map(v => v.isRight() ? GroupJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
     private validate(req: Request): Either<string, Group> {

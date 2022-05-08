@@ -3,7 +3,8 @@ import {Database} from "../db/database";
 import {Request, Response} from "express";
 import {User, UserPermissionMapping, UserPermissionMappingJsonSerializer} from "@kashw2/lib-ts";
 import {Either} from "funfix-core";
-import {ApiUtils, EitherUtils, OptionUtils} from "@kashw2/lib-util";
+import {ApiUtils, EitherUtils} from "@kashw2/lib-util";
+import {Future} from "funfix";
 
 export class UserPermissionMappingEndpoint extends AuthenticatedCrudEndpoint {
 
@@ -11,21 +12,20 @@ export class UserPermissionMappingEndpoint extends AuthenticatedCrudEndpoint {
         super('/user/:id/permission/mapping');
     }
 
-    create(req: Request): Promise<Either<string, any>> {
-        return EitherUtils.sequence(this.validate(req)
-            .map(upm => this.db.procedures.insert.insertUserPermissionMapping(upm)(this.getModifiedBy(req))))
-            .then(v => v.map(u => UserPermissionMappingJsonSerializer.instance.toJsonImpl(u)));
+    create(req: Request): Future<object | string> {
+        return Future.of(() => EitherUtils.sequence(this.validate(req).map(upm => this.db.procedures.insert.insertUserPermissionMapping(upm)(this.getRequestUsername(req)))))
+            .flatMap(v => Future.fromPromise(v))
+            .map(v => v.isRight() ? UserPermissionMappingJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
+
     }
 
-    delete(req: Request): Promise<Either<string, any>> {
-        return EitherUtils.sequence(this.getMappingId(req)
-            .map(mid => this.db.procedures.delete.deleteUserPermissionMapping(mid)))
-            .then(v => v.map(u => UserPermissionMappingJsonSerializer.instance.toJsonImpl(u)));
+    delete(req: Request): Future<object | string> {
+        return Future.of(() => EitherUtils.sequence(this.getMappingId(req).map(mid => this.db.procedures.delete.deleteUserPermissionMapping(mid))))
+            .flatMap(v => Future.fromPromise(v))
+            .map(v => v.isRight() ? UserPermissionMappingJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
-    doesRequireAuthentication(req: Request): boolean {
-        return true;
-    }
+    doesRequireAuthentication = (req: Request) => true;
 
     private getMapping(req: Request): Either<string, UserPermissionMapping> {
         return ApiUtils.parseBodyParamSerialized(req, 'mapping', UserPermissionMappingJsonSerializer.instance);
@@ -55,16 +55,16 @@ export class UserPermissionMappingEndpoint extends AuthenticatedCrudEndpoint {
         }
     }
 
-    read(req: Request): Promise<Either<string, any>> {
-        return EitherUtils.sequence(this.getUserId(req)
-            .map(uid => this.db.procedures.read.readUserPermissionMappings(uid)))
-            .then(v => v.map(x => OptionUtils.flattenList(x.map(q => q.getId()))));
+    read(req: Request): Future<object | string> {
+        return Future.of(() => EitherUtils.sequence(this.getUserId(req).map(uid => this.db.procedures.read.readUserPermissionMappings(uid))))
+            .flatMap(v => Future.fromPromise(v))
+            .map(v => v.isRight() ? UserPermissionMappingJsonSerializer.instance.toJsonArray(v.get().toArray()) : v.value);
     }
 
-    update(req: Request): Promise<Either<string, any>> {
-        return EitherUtils.sequence(this.validate(req)
-            .map(upm => this.db.procedures.update.updateUserPermissionMapping(upm)(this.getModifiedBy(req))))
-            .then(v => v.map(x => UserPermissionMappingJsonSerializer.instance.toJsonImpl(x)));
+    update(req: Request): Future<object | string> {
+        return Future.of(() => EitherUtils.sequence(this.validate(req).map(upm => this.db.procedures.update.updateUserPermissionMapping(upm)(this.getRequestUsername(req)))))
+            .flatMap(v => Future.fromPromise(v))
+            .map(v => v.isRight() ? UserPermissionMappingJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
     private validate(req: Request): Either<string, UserPermissionMapping> {
