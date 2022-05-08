@@ -4,6 +4,7 @@ import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {ApiUtils, EitherUtils} from "@kashw2/lib-util";
 import {Database} from "../db/database";
+import {Future} from "funfix";
 
 export class PermissionsEndpoint extends AuthenticatedCrudEndpoint {
 
@@ -11,24 +12,24 @@ export class PermissionsEndpoint extends AuthenticatedCrudEndpoint {
         super('/permission');
     }
 
-    create(req: Request): Promise<Either<string, any>> {
-        return EitherUtils.sequence(this.validate(req)
-            .map(p => {
-                this.db.cache.permissions.add(p);
-                return this.db.procedures.insert.insertPermission(p)(this.getModifiedBy(req));
-            }))
-            .then(v => v.map(u => PermissionJsonSerializer.instance.toJsonImpl(u)));
+    create(req: Request): Future<object | string> {
+        return Future.of(() => {
+            return EitherUtils.sequence(this.validate(req)
+                .map(v => {
+                    this.db.cache.permissions.add(v);
+                    return this.db.procedures.insert.insertPermission(v)(this.getRequestUsername(req));
+                }));
+        }).flatMap(v => Future.fromPromise(v))
+            .map(v => v.isRight() ? PermissionJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
-    delete(req: Request): Promise<Either<string, any>> {
-        return EitherUtils.sequence(this.getPermissionId(req)
-            .map(pid => this.db.procedures.delete.deletePermission(pid)))
-            .then(v => v.map(x => PermissionJsonSerializer.instance.toJsonImpl(x)));
+    delete(req: Request): Future<object | string> {
+        return Future.of(() => EitherUtils.sequence(this.getPermissionId(req).map(pid => this.db.procedures.delete.deletePermission(pid))))
+            .flatMap(v => Future.fromPromise(v))
+            .map(v => v.isRight() ? PermissionJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
-    doesRequireAuthentication(req: Request): boolean {
-        return true;
-    }
+    doesRequireAuthentication = (req: Request) => true;
 
     private getPermission(req: Request): Either<string, Permission> {
         return ApiUtils.parseBodyParamSerialized(req, 'permission', PermissionJsonSerializer.instance);
@@ -53,19 +54,19 @@ export class PermissionsEndpoint extends AuthenticatedCrudEndpoint {
         }
     }
 
-    read(req: Request): Promise<Either<string, any>> {
-        if (this.getPermissionId(req).isLeft()) {
-            return Promise.resolve(EitherUtils.liftEither(PermissionJsonSerializer.instance.toJsonArray(this.db.cache.permissions.getPermissions().toArray()), "Permission cache is empty"));
+    read(req: Request): Future<object | string> {
+        if (this.getPermissionId(req)) {
+            return Future.of(() => this.getPermissionId(req).flatMap(pid => this.db.cache.permissions.getByPermissionId(pid)))
+                .map(v => v.isRight() ? PermissionJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
         }
-        return Promise.resolve(this.getPermissionId(req)
-            .flatMap(pid => this.db.cache.permissions.getByPermissionId(pid)))
-            .then(v => v.map(x => PermissionJsonSerializer.instance.toJsonImpl(x)));
+        return Future.of(() => EitherUtils.liftEither(this.db.cache.permissions.getPermissions(), "Permissions cache is empty"))
+            .map(v => v.isRight() ? PermissionJsonSerializer.instance.toJsonArray(v.get().toArray()) : v.value);
     }
 
-    update(req: Request): Promise<Either<string, any>> {
-        return EitherUtils.sequence(this.validate(req)
-            .map(p => this.db.procedures.update.updatePermission(p)(this.getModifiedBy(req))))
-            .then(v => v.map(x => PermissionJsonSerializer.instance.toJsonImpl(x)));
+    update(req: Request): Future<object | string> {
+        return Future.of(() => EitherUtils.sequence(this.validate(req).map(p => this.db.procedures.update.updatePermission(p)(this.getRequestUsername(req)))))
+            .flatMap(v => Future.fromPromise(v))
+            .map(v => v.isRight() ? PermissionJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
     private validate(req: Request): Either<string, Permission> {

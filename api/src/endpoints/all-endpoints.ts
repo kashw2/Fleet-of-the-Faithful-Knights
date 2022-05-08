@@ -1,12 +1,12 @@
 import {Router} from "express";
-import {UserEndpoint} from "./user-endpoint";
 import {Database} from "../db/database";
-import {GroupEndpoint} from "./group-endpoint";
-import {PermissionsEndpoint} from "./permission-endpoint";
-import {UserPermissionMappingEndpoint} from "./user-permission-mapping-endpoint";
-import {VotesEndpoint} from "./votes-endpoint";
 import {BallotEndpoint} from "./ballot-endpoint";
 import {CandidateEndpoint} from "./candidate-endpoint";
+import {UserPermissionMappingEndpoint} from "./user-permission-mapping-endpoint";
+import {PermissionsEndpoint} from "./permission-endpoint";
+import {GroupEndpoint} from "./group-endpoint";
+import {VotesEndpoint} from "./votes-endpoint";
+import {UserEndpoint} from "./user-endpoint";
 
 export class AllEndpoints {
 

@@ -5,6 +5,7 @@ import {Either} from "funfix-core";
 import {ApiUtils, EitherUtils} from "@kashw2/lib-util";
 import {List} from "immutable";
 import {Database} from "../db/database";
+import {Future} from "funfix";
 
 export class CandidateEndpoint extends AuthenticatedCrudEndpoint {
 
@@ -12,47 +13,44 @@ export class CandidateEndpoint extends AuthenticatedCrudEndpoint {
         super('/candidate');
     }
 
-    create(req: Request): Promise<Either<string, any>> {
+    create(req: Request): Future<object | string> {
         if (this.isForSingle(req)) {
-            return EitherUtils.sequence(
-                this.getCandidate(req)
-                    .map(c => {
-                        this.db.cache.candidates.add(c);
-                        return this.db.procedures.insert.insertCandidate(c)(this.getRequestUsername(req));
-                    })
-            ).then(v => {
-                // Caching bug
-                this.db.cache.cacheCandidates();
-                return v.map(x => CandidateJsonSerializer.instance.toJsonImpl(x));
-            });
+            return Future.of(() => {
+                return EitherUtils.sequence(this.getCandidate(req)
+                    .map(v => {
+                        this.db.cache.candidates.add(v);
+                        return this.db.procedures.insert.insertCandidate(v)(this.getRequestUsername(req));
+                    }));
+            }).flatMap(v => Future.fromPromise(v))
+                .map(v => {
+                    this.db.cache.cacheCandidates();
+                    return v.isRight() ? CandidateJsonSerializer.instance.toJsonImpl(v.get()) : v.value;
+                });
         }
-        return EitherUtils.sequence(
-            this.getCandidates(req)
-                .map(c => {
-                    this.db.cache.candidates.update(c);
-                    return this.db.procedures.insert.insertCandidates(c)(this.getRequestUsername(req));
-                })
-        ).then(v => {
-            // Caching bug
-            this.db.cache.cacheCandidates();
-            return v.map(x => CandidateJsonSerializer.instance.toJsonArray(x.toArray()));
-        });
+        return Future.of(() => {
+            return EitherUtils.sequence(this.getCandidates(req)
+                .map(v => {
+                    this.db.cache.candidates.update(v);
+                    return this.db.procedures.insert.insertCandidates(v)(this.getRequestUsername(req));
+                }));
+        }).flatMap(v => Future.fromPromise(v))
+            .map(v => {
+                this.db.cache.cacheCandidates();
+                return v.isRight() ? CandidateJsonSerializer.instance.toJsonArray(v.get().toArray()) : v.value;
+            });
     }
 
-    delete(req: Request): Promise<Either<string, any>> {
-        return EitherUtils.sequence(this.getCandidateId(req)
-            .map(cid => this.db.procedures.delete.deleteCandidate(cid)))
-            .then(v => v.map(x => CandidateJsonSerializer.instance.toJsonImpl(x)));
+    delete(req: Request): Future<object | string> {
+        return Future.of(() => EitherUtils.sequence(this.getCandidateId(req).map(cid => this.db.procedures.delete.deleteCandidate(cid))))
+            .flatMap(v => Future.fromPromise(v))
+            .map(v => v.isRight() ? CandidateJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
     doesRequireAuthentication(req: Request): boolean {
         switch (this.getHTTPMethod(req)) {
             case 'POST':
             case 'GET':
-                if (this.isForSingle(req)) {
-                    return true;
-                }
-                return false;
+                return this.isForSingle(req);
             default:
                 return true;
         }
@@ -79,24 +77,22 @@ export class CandidateEndpoint extends AuthenticatedCrudEndpoint {
             .contains(true);
     }
 
-    read(req: Request): Promise<Either<string, any>> {
+    read(req: Request): Future<object | string> {
         if (this.getCandidateId(req).isLeft()) {
-            return Promise.resolve(EitherUtils.liftEither(CandidateJsonSerializer.instance.toJsonArray(this.db.cache.candidates.getCandidates().toArray()), "Candidates cache is empty"));
+            return Future.of(() => EitherUtils.liftEither(this.db.cache.candidates.getCandidates(), "Candidates cache is empty"))
+                .map(v => v.isRight() ? CandidateJsonSerializer.instance.toJsonArray(v.get().toArray()) : v.value);
         }
-        return Promise.resolve(this.getCandidateId(req)
-            .flatMap(cid => this.db.cache.candidates.getCandidateById(cid)))
-            .then(v => v.map(x => CandidateJsonSerializer.instance.toJsonImpl(x)));
+        return Future.of(() => this.getCandidateId(req).flatMap(cid => this.db.cache.candidates.getCandidateById(cid)))
+            .map(v => v.isRight() ? CandidateJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
-    update(req: Request): Promise<Either<string, any>> {
-        return EitherUtils.sequence(Either.map2(
-            this.getCandidate(req),
+    update(req: Request): Future<object | string> {
+        return Future.of(() => EitherUtils.sequence(EitherUtils.map2(
+            this.validate(req),
             this.getCandidateId(req),
-            (candidate, cid) => EitherUtils.sequence(this.validate(req)
-                .map(c => {
-                    return this.db.procedures.update.updateCandidate(c, cid)(this.getRequestUsername(req));
-                })
-            )));
+            (c, cid) => this.db.procedures.update.updateCandidate(c, cid)(this.getRequestUsername(req)))))
+            .flatMap(v => Future.fromPromise(v))
+            .map(v => v.isRight() ? CandidateJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
     private validate(req: Request): Either<string, Candidate> {

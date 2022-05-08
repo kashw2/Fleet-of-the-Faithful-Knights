@@ -4,6 +4,7 @@ import {Ballot, BallotJsonSerializer, User} from "@kashw2/lib-ts";
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {ApiUtils, EitherUtils} from "@kashw2/lib-util";
+import {Future} from "funfix";
 
 export class BallotEndpoint extends AuthenticatedCrudEndpoint {
 
@@ -11,25 +12,21 @@ export class BallotEndpoint extends AuthenticatedCrudEndpoint {
         super('/ballot');
     }
 
-    create(req: Request): Promise<Either<string, any>> {
-        return EitherUtils.sequence(Either.map2(
-            this.validate(req),
-            this.getVoteId(req),
-            (b, vid) => {
-                return EitherUtils.sequence(this.db.cache.votes.getByVoteId(vid)
+    create(req: Request): Future<object | string> {
+        return Future.of(() => {
+            return EitherUtils.sequence(EitherUtils.flatMap2(this.validate(req), this.getVoteId(req), (b, vid) => {
+                return this.db.cache.votes.getByVoteId(vid)
                     .map(v => {
                         this.db.cache.votes.setIn(v.withBallot(b), x => x.getId().contains(vid));
                         return this.db.procedures.insert.insertBallot(b, vid)(this.getModifiedBy(req));
-                    }));
-            }
-        ))
-            .then(v => v.map(b => BallotJsonSerializer.instance.toJsonImpl(b)));
+                    });
+            }));
+        }).flatMap(v => Future.fromPromise(v))
+            .map(v => v.isRight() ? BallotJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
 
-    doesRequireAuthentication(req: Request): boolean {
-        return true;
-    }
+    doesRequireAuthentication = (req: Request) => true
 
     private getBallot(req: Request): Either<string, Ballot> {
         return ApiUtils.parseBodyParamSerialized(req, 'ballot', BallotJsonSerializer.instance);
@@ -54,10 +51,9 @@ export class BallotEndpoint extends AuthenticatedCrudEndpoint {
         }
     }
 
-    read(req: Request): Promise<Either<string, any>> {
-        return Promise.resolve(this.getVoteId(req)
-            .flatMap(bid => this.db.cache.ballots.getBallotById(bid)))
-            .then(v => v.map(x => BallotJsonSerializer.instance.toJsonImpl(x)));
+    read(req: Request): Future<object | string> {
+        return Future.of(() => this.getVoteId(req).flatMap(vid => this.db.cache.ballots.getBallotById(vid)))
+            .map(v => v.isRight() ? BallotJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
     private validate(req: Request): Either<string, Ballot> {
