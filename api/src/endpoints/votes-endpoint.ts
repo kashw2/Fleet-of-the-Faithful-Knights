@@ -1,9 +1,10 @@
 import {AuthenticatedCrudEndpoint} from "@kashw2/lib-server";
 import {Database} from "../db/database";
-import {User, Vote, VoteJsonSerializer} from "@kashw2/lib-ts";
+import {GroupJsonSerializer, User, Vote, VoteJsonSerializer} from "@kashw2/lib-ts";
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {ApiUtils, EitherUtils} from "@kashw2/lib-util";
+import {Future} from "funfix";
 
 export class VotesEndpoint extends AuthenticatedCrudEndpoint {
 
@@ -11,24 +12,24 @@ export class VotesEndpoint extends AuthenticatedCrudEndpoint {
         super('/vote');
     }
 
-    create(req: Request): Promise<Either<string, any>> {
-        return EitherUtils.sequence(this.validate(req)
-            .map(v => {
-                this.db.cache.votes.add(v);
-                return this.db.procedures.insert.insertVote(v)(this.getModifiedBy(req));
-            }))
-            .then(v => v.map(u => VoteJsonSerializer.instance.toJsonImpl(u)));
+    create(req: Request): Future<object> {
+        return Future.of(() => {
+            return EitherUtils.sequence(this.validate(req)
+                .map(v => {
+                    this.db.cache.votes.add(v);
+                    return this.db.procedures.insert.insertVote(v)(this.getRequestUsername(req));
+                }));
+        }).flatMap(v => Future.fromPromise(v))
+            .map(v => v.isRight() ? VoteJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
-    delete(req: Request): Promise<Either<string, any>> {
-        return EitherUtils.sequence(this.getVoteId(req)
-            .map(vid => this.db.procedures.delete.deleteVote(vid)))
-            .then(v => v.map(x => VoteJsonSerializer.instance.toJsonImpl(x)));
+    delete(req: Request): Future<object> {
+        return Future.of(() => EitherUtils.sequence(this.getVoteId(req).map(vid => this.db.procedures.delete.deleteVote(vid))))
+            .flatMap(v => Future.fromPromise(v))
+            .map(v => v.isRight() ? VoteJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
-    doesRequireAuthentication(req: Request): boolean {
-        return true;
-    }
+    doesRequireAuthentication = (req: Request) => true;
 
     private getVote(req: Request): Either<string, Vote> {
         return ApiUtils.parseBodyParamSerialized(req, 'vote', VoteJsonSerializer.instance);
@@ -53,19 +54,19 @@ export class VotesEndpoint extends AuthenticatedCrudEndpoint {
         }
     }
 
-    read(req: Request): Promise<Either<string, any>> {
-        if (this.getVoteId(req).isLeft()) {
-            return Promise.resolve(EitherUtils.liftEither(VoteJsonSerializer.instance.toJsonArray(this.db.cache.votes.getVotes().toArray()), "Groups cache is empty"));
+    read(req: Request): Future<object | string> {
+        if (this.getVoteId(req)) {
+            return Future.of(() => this.getVoteId(req).flatMap(vid => this.db.cache.votes.getByVoteId(vid)))
+                .map(v => v.isRight() ? VoteJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
         }
-        return Promise.resolve(this.getVoteId(req)
-            .flatMap(vid => this.db.cache.votes.getByVoteId(vid)))
-            .then(v => v.map(x => VoteJsonSerializer.instance.toJsonImpl(x)));
+        return Future.of(() => EitherUtils.liftEither(this.db.cache.votes.getVotes(), "Vote cache is empty"))
+            .map(v => v.isRight() ? VoteJsonSerializer.instance.toJsonArray(v.get().toArray()) : v.value);
     }
 
-    update(req: Request): Promise<Either<string, any>> {
-        return Promise.resolve(this.getVote(req)
-            .flatMap(v => this.validate(req))
-            .map(v => this.db.procedures.update.updateVote(v)(this.getRequestUsername(req))));
+    update(req: Request): Future<object> {
+        return Future.of(() => EitherUtils.sequence(this.validate(req).map(v => this.db.procedures.update.updateVote(v)(this.getRequestUsername(req)))))
+            .flatMap(v => Future.fromPromise(v))
+            .map(v => v.isRight() ? VoteJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
     private validate(req: Request): Either<string, Vote> {
