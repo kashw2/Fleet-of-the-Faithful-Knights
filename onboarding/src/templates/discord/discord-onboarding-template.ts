@@ -1,6 +1,5 @@
 import {OnboardingTemplate} from "../onboarding-template";
 import {Candidate, CandidateJsonSerializer, FfkApi} from "@kashw2/lib-ts";
-import {Either} from "funfix-core";
 import {DiscordApi, DiscordGuildMember} from "@kashw2/lib-external";
 import {filter, map, switchMap, tap} from "rxjs/operators";
 import {List} from "immutable";
@@ -14,7 +13,7 @@ export class DiscordOnboardingTemplate extends OnboardingTemplate {
         super();
     }
 
-    async importCandidate(): Promise<Either<string, List<Candidate>>> {
+    importCandidate(): Promise<List<Candidate>> {
         const discordApi: DiscordApi = new DiscordApi(
             '607005043043860521',
             process.env.FFK_DISCORD_CLIENT_SECRET!,
@@ -31,8 +30,6 @@ export class DiscordOnboardingTemplate extends OnboardingTemplate {
             .pipe(map(v => v.get()))
             .pipe(switchMap(discordCandidates => {
                 return from(ffkApi.candidate().sendReadRequestList(CandidateJsonSerializer.instance))
-                    .pipe(filter(v => v.isRight()))
-                    .pipe(map(v => v.get()))
                     .pipe(map(cachedCandidates => discordCandidates.filter(dc => cachedCandidates.every(cc => cc.getDiscordId().equals(dc.getDiscordId())))));
             }))
             .pipe(tap(v => console.log(`Ingested ${v.size} Candidates`)))

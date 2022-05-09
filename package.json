@@ -1,7 +1,7 @@
 {
   "name": "fleet-of-the-faithful-knights",
   "version": "1.0.0",
-  "description": "FFK Monorepo",
+  "description": "Fleet of the Faithful Knights Monorepo",
   "scripts": {
     "build": "run-p build:*",
     "build:util": "lerna run build --scope=@kashw2/lib-util",
@@ -23,7 +23,7 @@
     "@kashw2/lib-external": "4.1.0",
     "@kashw2/lib-server": "5.0.0-rc1",
     "@kashw2/lib-ts": "5.0.0",
-    "@kashw2/lib-util": "4.1.0",
+    "@kashw2/lib-util": "5.0.0",
     "@types/cors": "2.8.12",
     "@types/express": "4.17.13",
     "@types/mssql": "7.1.5",
