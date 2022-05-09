@@ -1,11 +1,11 @@
 import {OnboardingTemplate} from "../onboarding-template";
 import {Candidate, CandidateJsonSerializer, FfkApi} from "@kashw2/lib-ts";
-import {DiscordApi, DiscordGuildMember} from "@kashw2/lib-external";
-import {filter, map, switchMap, tap} from "rxjs/operators";
+import {DiscordApi} from "@kashw2/lib-external";
+import {map, switchMap, tap} from "rxjs/operators";
 import {List} from "immutable";
 import {DiscordOnboardingCandidate} from "./discord-onboarding-candidate";
 import {firstValueFrom, from} from "rxjs";
-import {EitherUtils, OptionUtils} from "@kashw2/lib-util";
+import {OptionUtils} from "@kashw2/lib-util";
 
 export class DiscordOnboardingTemplate extends OnboardingTemplate {
 
@@ -22,12 +22,8 @@ export class DiscordOnboardingTemplate extends OnboardingTemplate {
         );
         const ffkApi: FfkApi = new FfkApi(process.env.FFK_API_SERVER!);
         return firstValueFrom(discordApi.getGuildMembers('539188746114039818')
-            .pipe(map(v => v.getOrElse(List<DiscordGuildMember>())))
             .pipe(map(members => members.map(member => new DiscordOnboardingCandidate(member).buildCandidate())))
             .pipe(map(v => OptionUtils.flattenList(v)))
-            .pipe(map(candidates => EitherUtils.liftEither(candidates, 'Unable to transform Candidates')))
-            .pipe(filter(v => v.isRight()))
-            .pipe(map(v => v.get()))
             .pipe(switchMap(discordCandidates => {
                 return from(ffkApi.candidate().sendReadRequestList(CandidateJsonSerializer.instance))
                     .pipe(map(cachedCandidates => discordCandidates.filter(dc => cachedCandidates.every(cc => cc.getDiscordId().equals(dc.getDiscordId())))));
