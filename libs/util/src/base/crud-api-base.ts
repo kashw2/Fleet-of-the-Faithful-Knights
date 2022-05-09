@@ -1,7 +1,8 @@
 import {SerializedApiBase} from "./serialized-api-base";
-import {Either, Left} from "funfix-core";
+import {Either} from "funfix-core";
 import {List} from "immutable";
 import {JsonSerializer} from "../json-serializer";
+import {Future} from "funfix";
 
 export class CrudApiBase extends SerializedApiBase {
 
@@ -28,120 +29,112 @@ export class CrudApiBase extends SerializedApiBase {
         serializer: JsonSerializer<A>,
         headers: object = this.getHeaders(),
         body?: any,
-    ): Promise<Either<string, A>> {
+    ): Future<Either<string, A>> {
         return this.sendRequestSerialized(
             this.getEndpoint(),
             "POST",
             serializer,
             headers,
             body,
-        )
-            .catch(err => Left(err));
+        );
     }
 
     sendCreateRequestList<A>(
         serializer: JsonSerializer<A>,
         headers: object = this.getHeaders(),
         body?: any,
-    ): Promise<Either<string, List<A>>> {
+    ): Future<List<A>> {
         return this.sendRequestListSerialized(
             this.getEndpoint(),
             "POST",
             serializer,
             headers,
             body,
-        )
-            .catch(err => Left(err));
+        );
     }
 
     sendDeleteRequest<A>(
         serializer: JsonSerializer<A>,
         headers: object = this.getHeaders(),
         body?: any,
-    ): Promise<Either<string, A>> {
+    ): Future<Either<string, A>> {
         return this.sendRequestSerialized(
             this.getEndpoint(),
             "DELETE",
             serializer,
             headers,
             body,
-        )
-            .catch(err => Left(err));
+        );
     }
 
     sendDeleteRequestList<A>(
         serializer: JsonSerializer<A>,
         headers: object = this.getHeaders(),
         body?: any,
-    ): Promise<Either<string, List<A>>> {
+    ): Future<List<A>> {
         return this.sendRequestListSerialized(
             this.getEndpoint(),
             "DELETE",
             serializer,
             headers,
             body,
-        )
-            .catch(err => Left(err));
+        );
     }
 
     sendReadRequest<A>(
         serializer: JsonSerializer<A>,
         headers: object = this.getHeaders(),
         body?: any,
-    ): Promise<Either<string, A>> {
+    ): Future<Either<string, A>> {
         return this.sendRequestSerialized(
             this.getEndpoint(),
             "GET",
             serializer,
             headers,
             body,
-        )
-            .catch(err => Left(err));
+        );
     }
 
     sendReadRequestList<A>(
         serializer: JsonSerializer<A>,
         headers: object = this.getHeaders(),
         body?: any,
-    ): Promise<Either<string, List<A>>> {
+    ): Future<List<A>> {
         return this.sendRequestListSerialized(
             this.getEndpoint(),
             "GET",
             serializer,
             headers,
             body,
-        )
-            .catch(err => Left(err));
+        );
     }
 
     sendUpdateRequest<A>(
         serializer: JsonSerializer<A>,
         headers: object = this.getHeaders(),
         body?: any,
-    ): Promise<Either<string, A>> {
+    ): Future<Either<string, A>> {
         return this.sendRequestSerialized(
             this.getEndpoint(),
             "PUT",
             serializer,
             headers,
             body,
-        )
-            .catch(err => Left(err));
+        );
     }
 
     sendUpdateRequestList<A>(
         serializer: JsonSerializer<A>,
         headers: object = this.getHeaders(),
         body?: any,
-    ): Promise<Either<string, List<A>>> {
+    ): Future<List<A>> {
         return this.sendRequestListSerialized(
             this.getEndpoint(),
             "PUT",
             serializer,
             headers,
             body,
-        )
-            .catch(err => Left(err));
+        );
     }
 
 }

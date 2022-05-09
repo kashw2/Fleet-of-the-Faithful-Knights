@@ -1,5 +1,6 @@
 import {Either, Left, Right} from "funfix-core";
-import {AxiosRequestConfig, default as axios} from 'axios';
+import {Future} from "funfix";
+import axios, {AxiosRequestConfig} from "axios";
 
 export class ApiBase {
 
@@ -8,8 +9,8 @@ export class ApiBase {
 
     public getFullUrl(endpoint: string): string {
         return this.getUri().endsWith('/')
-            ? this.getUri().concat(endpoint)
-            : `${this.getUri()}/${endpoint}`;
+            ? this.getUri().concat(endpoint.startsWith('/') ? endpoint.slice(1, endpoint.length) : endpoint)
+            : `${this.getUri()}/${endpoint.startsWith('/') ? endpoint.slice(1, endpoint.length) : endpoint}`;
     }
 
     protected getHeaders(): object {
@@ -20,7 +21,7 @@ export class ApiBase {
         return this.uri;
     }
 
-    private hasError(status: number): boolean {
+    protected hasError(status: number): boolean {
         switch (status.toString().charAt(0)) {
             case '3':
             case '4':
@@ -36,22 +37,15 @@ export class ApiBase {
         method: 'GET' | 'POST' | 'PUT' | 'DELETE',
         headers: object = this.getHeaders(),
         body?: any,
-    ): Promise<Either<string, any>> {
-        console.info(`Sending ${method} Request to ${this.getFullUrl(endpoint)}`);
-        return axios({
+    ): Future<Either<string, any>> {
+        console.info(`Sending ${method} request to ${this.getFullUrl(endpoint)}`);
+        return Future.fromPromise(axios({
             method,
             headers,
             data: body,
             url: this.getFullUrl(endpoint)
-        } as AxiosRequestConfig).then(v => {
-            if (this.hasError(v.status)) {
-                console.error(v.statusText);
-                console.info(`${this.getFullUrl(endpoint)} - ${v.data}`);
-                return Left(v.data);
-            }
-            return Right(v.data);
-        })
-            .catch(err => Left(err));
+        } as AxiosRequestConfig)).map(v => Right(v.data))
+            .recover(v => Left(v as string));
     }
 
 }

@@ -28,14 +28,14 @@ thing or two.
 
 #### Dependencies:
 
-Name                                                 | Version
----------------------------------------------------- | -------
-TypeScript                                           | 4.x.x
-Node                                                 | 14.x.x
-Lerna                                                | 4.0.0
-Webpack                                              | 5.x.x
-[Terraform](https://www.terraform.io/downloads.html) | 1.0.0
-Docker                                               | 20.x.x
+| Name                                                  | Version  |
+|-------------------------------------------------------|----------|
+| TypeScript                                            | 4.x.x    |
+| Node                                                  | 14.x.x   |
+| Lerna                                                 | 4.0.0    |
+| Webpack                                               | 5.x.x    |
+| [Terraform](https://www.terraform.io/downloads.html)  | 1.0.0    |
+| [Docker](https://docs.docker.com/get-docker/)         | 20.x.x   |
 
 This ensures that you will be able to compile, build, run and deploy all projects in the repo.
 
@@ -56,17 +56,17 @@ An optional installation is eslint for linting. At the time of writing the versi
 
 For ease of use in terraform, also set up TF_VAR versions of these variables.
 
-Variable                        | Description
---------------------------------|------
-FFK_DATABASE_USERNAME           | The database login username.
-FFK_DATABASE_PASSWORD           | The database login password.
-FFK_DATABASE_NAME               | The name of the database.
-FFK_DATABASE_SERVER             | The ip or dns that the database is stored on.
-FFK_DATABASE_PORT               | The port used to connect via UDP or TCP.
-FFK_API_SERVER                  | The url for the API
-FFK_DISCORD_CLIENT_SECRET       | The discord bots client secret
-FFK_DISCORD_BOT_TOKEN           | The discord bots token
-FFK_DISCORD_REDIRECT            | A valid discord bot oauth2 redirect url
+|  Variable                       | Description                                   |
+|---------------------------------|-----------------------------------------------|
+|  FFK_DATABASE_USERNAME          | The database login username.                  |
+|  FFK_DATABASE_PASSWORD          | The database login password.                  |
+|  FFK_DATABASE_NAME              | The name of the database.                     |
+|  FFK_DATABASE_SERVER            | The ip or dns that the database is stored on. |
+|  FFK_DATABASE_PORT              | The port used to connect via UDP or TCP.      |
+|  FFK_API_SERVER                 | The url for the API                           |
+|  FFK_DISCORD_CLIENT_SECRET      | The discord bots client secret                |
+|  FFK_DISCORD_BOT_TOKEN          | The discord bots token                        |
+|  FFK_DISCORD_REDIRECT           | A valid discord bot oauth2 redirect url       |
 
 #### Debugging Workflows:
 

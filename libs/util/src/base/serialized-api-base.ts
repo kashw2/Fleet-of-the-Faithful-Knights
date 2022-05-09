@@ -1,7 +1,8 @@
 import {ApiBase} from "./api-base";
-import {Either, Left} from "funfix-core";
+import {Either} from "funfix-core";
 import {List} from "immutable";
 import {JsonSerializer} from "../json-serializer";
+import {Future} from "funfix";
 
 export class SerializedApiBase extends ApiBase {
 
@@ -20,15 +21,9 @@ export class SerializedApiBase extends ApiBase {
         serializer: JsonSerializer<A>,
         headers: object = this.getHeaders(),
         body?: any,
-    ): Promise<Either<string, List<A>>> {
+    ): Future<List<A>> {
         return this.sendRequest(endpoint, method, headers, body)
-            .then(v => {
-                if (v.isLeft()) {
-                    return Left(v.value);
-                }
-                return v.map(x => serializer.fromJsonArray(x));
-            })
-            .catch(err => Left(err));
+            .map(v => serializer.fromJsonArray(v.getOrElse(List<A>())));
     }
 
     sendRequestSerialized<A>(
@@ -37,15 +32,9 @@ export class SerializedApiBase extends ApiBase {
         serializer: JsonSerializer<A>,
         headers: object = this.getHeaders(),
         body?: any,
-    ): Promise<Either<string, A>> {
+    ): Future<Either<string, A>> {
         return this.sendRequest(endpoint, method, headers, body)
-            .then(v => {
-                if (v.isLeft()) {
-                    return Left(v.value);
-                }
-                return v.map(x => serializer.fromJson(x));
-            })
-            .catch(err => Left(err));
+            .map(v => v.map(x => serializer.fromJson(x)));
     }
 
 }
