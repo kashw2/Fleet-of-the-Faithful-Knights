@@ -78,7 +78,7 @@ export class DiscordApi extends SerializedApiBase {
      *
      * @returns List<DiscordGuildMember>
      */
-    getGuildMembers(guildId: string, limit: number = 1000): Observable<Either<string, List<DiscordGuildMember>>> {
+    getGuildMembers(guildId: string, limit: number = 1000): Observable<List<DiscordGuildMember>> {
         return from(this.sendRequestListSerialized(
             `guilds/${guildId}/members?limit=${limit}`,
             "GET",
