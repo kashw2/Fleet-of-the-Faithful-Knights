@@ -54,7 +54,7 @@
     "tty-browserify": "0.0.1",
     "url-browser": "0.1.7",
     "util-browser": "0.0.2",
-    "gh-pages": "3.2.3",
+    "gh-pages": "4.0.0",
     "typedoc": "0.22.15",
     "open-cli": "7.0.1",
     "tslint": "6.1.3",
