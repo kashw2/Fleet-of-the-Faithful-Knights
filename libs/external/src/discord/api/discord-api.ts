@@ -3,9 +3,9 @@ import {DiscordToken, DiscordTokenJsonSerializer} from "../token";
 import {DiscordUser, DiscordUserJsonSerializer} from "../user";
 import {DiscordGuild, DiscordGuildJsonSerializer} from "../guild";
 import {DiscordGuildMember, DiscordGuildMemberJsonSerializer} from "../guild-member";
-import {from, Observable} from "rxjs";
 import {List} from "immutable";
 import {SerializedApiBase} from "@kashw2/lib-util";
+import {Future} from "funfix";
 
 export class DiscordApi extends SerializedApiBase {
 
@@ -27,8 +27,8 @@ export class DiscordApi extends SerializedApiBase {
      *
      * @returns DiscordUser
      */
-    getCurrentUser(accessToken: string): Observable<Either<string, DiscordUser>> {
-        return from(this.sendRequestSerialized(
+    getCurrentUser(accessToken: string): Future<Either<string, DiscordUser>> {
+        return Future.fromPromise(this.sendRequestSerialized(
             'users/@me',
             "GET",
             DiscordUserJsonSerializer.instance,
@@ -43,8 +43,8 @@ export class DiscordApi extends SerializedApiBase {
      *
      * @returns DiscordGuild
      */
-    getGuild(guildId: string, shouldCount: boolean = true): Observable<Either<string, DiscordGuild>> {
-        return from(this.sendRequestSerialized(
+    getGuild(guildId: string, shouldCount: boolean = true): Future<Either<string, DiscordGuild>> {
+        return Future.fromPromise(this.sendRequestSerialized(
             `guilds/${guildId}?with_counts=${shouldCount}`,
             "GET",
             DiscordGuildJsonSerializer.instance,
@@ -60,8 +60,8 @@ export class DiscordApi extends SerializedApiBase {
      *
      * @returns DiscordGuildMember
      */
-    getGuildMember(memberId: string, guildId: string): Observable<Either<string, DiscordGuildMember>> {
-        return from(this.sendRequestSerialized(
+    getGuildMember(memberId: string, guildId: string): Future<Either<string, DiscordGuildMember>> {
+        return  Future.fromPromise(this.sendRequestSerialized(
             `guilds/${guildId}/members/${memberId}`,
             "GET",
             DiscordGuildMemberJsonSerializer.instance,
@@ -78,8 +78,8 @@ export class DiscordApi extends SerializedApiBase {
      *
      * @returns List<DiscordGuildMember>
      */
-    getGuildMembers(guildId: string, limit: number = 1000): Observable<Either<string, List<DiscordGuildMember>>> {
-        return from(this.sendRequestListSerialized(
+    getGuildMembers(guildId: string, limit: number = 1000): Future<List<DiscordGuildMember>> {
+        return  Future.fromPromise(this.sendRequestListSerialized(
             `guilds/${guildId}/members?limit=${limit}`,
             "GET",
             DiscordGuildMemberJsonSerializer.instance,
@@ -98,8 +98,8 @@ export class DiscordApi extends SerializedApiBase {
      *
      * @returns DiscordToken
      */
-    getOAuth(code: string): Observable<Either<string, DiscordToken>> {
-        return from(this.sendRequestSerialized(
+    getOAuth(code: string): Future<Either<string, DiscordToken>> {
+        return  Future.fromPromise(this.sendRequestSerialized(
             'oauth2/token',
             "POST",
             DiscordTokenJsonSerializer.instance,

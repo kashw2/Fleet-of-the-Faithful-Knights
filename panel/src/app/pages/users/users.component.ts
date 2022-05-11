@@ -35,8 +35,6 @@ export class UsersComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     from(this.ffkApiService.getUsers())
-      .pipe(filter(v => v.isRight()))
-      .pipe(map(v => v.get()))
       .pipe(map(v => UserJsonSerializer.instance.toJsonArray(v.toArray())))
       .subscribe(users => {
         this.usersSource = new MatTableDataSource<object>(users);

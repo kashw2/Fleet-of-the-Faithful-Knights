@@ -26,8 +26,6 @@ export class GroupGuard implements CanActivate {
       .pipe(mergeMap(groups => {
         if (groups.isEmpty()) {
           return from(this.ffkApiService.getGroups())
-            .pipe(filter(v => v.isRight()))
-            .pipe(map(v => v.get()))
             .pipe(tap(g => this.groupService.setGroups(g)));
         }
         return of(groups);

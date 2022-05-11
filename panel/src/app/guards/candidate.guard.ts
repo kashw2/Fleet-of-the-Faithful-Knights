@@ -26,8 +26,6 @@ export class CandidateGuard implements CanActivate {
       .pipe(mergeMap(candidates => {
         if (candidates.isEmpty()) {
           return from(this.ffkApiService.getCandidates())
-            .pipe(filter(v => v.isRight()))
-            .pipe(map(v => v.get()))
             .pipe(tap(c => this.candidateService.setCandidates(c)));
         }
         return of(candidates);

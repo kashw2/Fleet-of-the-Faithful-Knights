@@ -7,14 +7,19 @@ test('should remove endpoint / from base with ending /', t => {
     t.is(result, 'https://www.example.com/endpoint');
 });
 
-test('should add/ to endpoint where base with not ending with /', t => {
+test('should add / to endpoint where base with not ending with /', t => {
     const result = new ApiBase('https://www.example.com').getFullUrl('endpoint');
     t.is(result, 'https://www.example.com/endpoint');
 });
 
-test('should add/ to endpoint where base with not ending with / when endpoint starts with /', t => {
+test('should add / to endpoint where base with not ending with / when endpoint starts with /', t => {
     const result = new ApiBase('https://www.example.com').getFullUrl('/endpoint');
     t.is(result, 'https://www.example.com/endpoint');
+});
+
+test('should remove whitespace in url', t => {
+    const result = new ApiBase('http://localhost:3000  ').getFullUrl('/endpoint');
+    t.is(result, 'http://localhost:3000/endpoint');
 });
 
 test('should map over Future value', async t => {

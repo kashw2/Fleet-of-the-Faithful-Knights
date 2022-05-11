@@ -9,8 +9,8 @@ export class ApiBase {
 
     public getFullUrl(endpoint: string): string {
         return this.getUri().endsWith('/')
-            ? this.getUri().concat(endpoint.startsWith('/') ? endpoint.slice(1, endpoint.length) : endpoint)
-            : `${this.getUri()}/${endpoint.startsWith('/') ? endpoint.slice(1, endpoint.length) : endpoint}`;
+            ? this.getUri().trim().concat(endpoint.startsWith('/') ? endpoint.slice(1, endpoint.length).trim() : endpoint.trim())
+            : `${this.getUri().trim()}/${endpoint.startsWith('/') ? endpoint.slice(1, endpoint.length).trim() : endpoint.trim()}`;
     }
 
     protected getHeaders(): object {

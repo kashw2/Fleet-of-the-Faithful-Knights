@@ -54,7 +54,7 @@ export class BallotDialogComponent implements OnInit {
       Some(moment()),
     );
     this.getVoteId()
-      .map(vid => this.toastService.showSequencePromise(
+      .map(vid => this.toastService.showSequenceFuture(
         this.ffkApiService.writeBallot(ballot, vid),
         'Ballot Submitted',
         'Error',

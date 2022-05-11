@@ -2,8 +2,9 @@ import {ApiEndpoint} from "@kashw2/lib-server";
 import {NextFunction, Request, Response, Router} from "express";
 import {Either} from "funfix-core";
 import {ApiUtils, EitherUtils} from "@kashw2/lib-util";
-import {ApiTemplate, ApiTemplateJsonSerializer, CandidateJsonSerializer} from "@kashw2/lib-ts";
+import {ApiTemplate, ApiTemplateJsonSerializer, Candidate, CandidateJsonSerializer} from "@kashw2/lib-ts";
 import {AllOnboardingTemplates} from "../templates/all-onboarding-templates";
+import {List} from "immutable";
 
 export class DiscordCandidateOnboardingEndpoint extends ApiEndpoint {
 
@@ -25,15 +26,11 @@ export class DiscordCandidateOnboardingEndpoint extends ApiEndpoint {
                 .fold(
                     (left) => ApiUtils.sendError(res, left, 400),
                     async (template) => {
-                        const importedCandidate = await EitherUtils.sequence(EitherUtils.toEither(template.getCode(), 'Unable to get Template code')
+                        const candidates = EitherUtils.toEither(template.getCode(), 'Unable to get template code')
                             .flatMap(code => AllOnboardingTemplates.getOnbboardingTemplate(code))
-                            .map(temp => temp.importCandidate()));
-                        importedCandidate.fold(
-                            (left) => ApiUtils.sendError(res, left, 400),
-                            (candidate) => {
-                                ApiUtils.sendSerializedListResponse(res, candidate.toArray(), CandidateJsonSerializer.instance);
-                            },
-                        );
+                            .map(tmpl => tmpl.importCandidate())
+                            .getOrElse(Promise.resolve(List<Candidate>()));
+                        candidates.then(v => ApiUtils.sendSerializedListResponse(res, v.toArray(), CandidateJsonSerializer.instance));
                     }
                 );
         });
