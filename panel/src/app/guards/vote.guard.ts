@@ -26,8 +26,6 @@ export class VoteGuard implements CanActivate {
       .pipe(mergeMap(votes => {
         if (votes.isEmpty()) {
           return from(this.ffkApiService.getVotes())
-            .pipe(filter(v => v.isRight()))
-            .pipe(map(v => v.get()))
             .pipe(tap(v => this.voteService.setVotes(v)));
         }
         return of(votes);

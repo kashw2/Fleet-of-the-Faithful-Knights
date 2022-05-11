@@ -80,7 +80,7 @@ export class VoteService {
   }
 
   writeVote(vote: Vote): Vote {
-    this.toastService.showSequencePromise(this.ffkApiService.writeVote(vote), 'Created Vote', 'Error', 'Success')
+    this.toastService.showSequenceFuture(this.ffkApiService.writeVote(vote), 'Created Vote', 'Error', 'Success')
       .then(v => this.addVote(vote));
     return vote;
   }

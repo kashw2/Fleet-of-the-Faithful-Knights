@@ -5,6 +5,7 @@ import {List} from "immutable";
 import {EitherUtils} from "@kashw2/lib-util";
 import {Observable, zip} from "rxjs";
 import {map} from "rxjs/operators";
+import {Future} from "funfix";
 
 @Injectable({
   providedIn: 'root'
@@ -97,6 +98,24 @@ export class ToastService {
       progressBar: true,
       enableHtml: true,
       newestOnTop: true,
+    });
+  }
+
+  /**
+   * Allows error display based off of Left unit however is non pure and returns Future<void>
+   */
+  showSequenceFuture<A>(
+    input: Future<Either<string, A>>,
+    success: string = '',
+    lType: 'Error' | 'Warning' = 'Error',
+    rType: 'Success' | 'Info' = 'Info',
+    title: Future<string> = input.map(v => v.isRight() ? rType : lType),
+  ): Future<void> {
+    return input.map(i => {
+      if (i.isRight()) {
+        this.show(success, rType);
+      }
+      EitherUtils.leftTap(i, v => this.show(v, lType));
     });
   }
 

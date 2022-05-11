@@ -11,6 +11,7 @@ import {GroupService} from "../../service/group.service";
 import {CandidateService} from "../../service/candidate.service";
 import {VoteService} from "../../service/vote.service";
 import {Vote} from "@kashw2/lib-ts";
+import {EitherUtils} from "@kashw2/lib-util";
 
 @Component({
   selector: 'app-home',
@@ -52,13 +53,13 @@ export class HomeComponent implements OnInit {
         )))
         .pipe(tap(([groups, candidates, votes]) => {
           if (this.groupService.getGroups().isEmpty()) {
-            this.groupService.setGroups(this.toastService.showAndRecoverList(groups));
+            this.groupService.setGroups(groups);
           }
           if (this.candidateService.getCandidates().isEmpty()) {
-            this.candidateService.setCandidates(this.toastService.showAndRecoverList(candidates, `Loaded ${candidates.getOrElse(List()).size} Candidates`));
+            this.candidateService.setCandidates(this.toastService.showAndRecoverList(EitherUtils.liftEither(candidates, 'Unable to load Candidates'), `Loaded ${candidates.size} Candidates`));
           }
           if (this.voteService.getVotes().isEmpty()) {
-            this.voteService.setVotes(this.toastService.showAndRecoverList(votes, `Loaded ${votes.getOrElse(List()).size} Votes`));
+            this.voteService.setVotes(this.toastService.showAndRecoverList(EitherUtils.liftEither(votes, 'Unable to load Votes'), `Loaded ${votes.size} Votes`));
           }
         }))
         .subscribe();
@@ -79,13 +80,13 @@ export class HomeComponent implements OnInit {
               )
                 .pipe(tap(([groups, candidates, votes]) => {
                   if (this.groupService.getGroups().isEmpty()) {
-                    this.groupService.setGroups(this.toastService.showAndRecoverList(groups));
+                    this.groupService.setGroups(groups);
                   }
                   if (this.candidateService.getCandidates().isEmpty()) {
-                    this.candidateService.setCandidates(this.toastService.showAndRecoverList(candidates, `Loaded ${candidates.getOrElse(List()).size} Candidates`));
+                    this.candidateService.setCandidates(this.toastService.showAndRecoverList(EitherUtils.liftEither(candidates, 'Unable to load Candidates'), `Loaded ${candidates.size} Candidates`));
                   }
                   if (this.voteService.getVotes().isEmpty()) {
-                    this.voteService.setVotes(this.toastService.showAndRecoverList(votes, `Loaded ${votes.getOrElse(List()).size} Votes`));
+                    this.voteService.setVotes(this.toastService.showAndRecoverList(EitherUtils.liftEither(votes, 'Unable to load Votes'), `Loaded ${votes.size} Votes`));
                   }
                 }));
             }
