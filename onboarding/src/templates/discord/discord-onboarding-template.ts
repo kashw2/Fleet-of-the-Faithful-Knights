@@ -21,7 +21,7 @@ export class DiscordOnboardingTemplate extends OnboardingTemplate {
             process.env.FFK_DISCORD_BOT_TOKEN!,
         );
         const ffkApi: FfkApi = new FfkApi(process.env.FFK_API_SERVER!);
-        return firstValueFrom(discordApi.getGuildMembers('539188746114039818')
+        return firstValueFrom(from(discordApi.getGuildMembers('539188746114039818'))
             .pipe(map(members => members.map(member => new DiscordOnboardingCandidate(member).buildCandidate())))
             .pipe(map(v => OptionUtils.flattenList(v)))
             .pipe(switchMap(discordCandidates => {
