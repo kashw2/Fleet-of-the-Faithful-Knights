@@ -55,7 +55,7 @@ export class GroupEndpoint extends AuthenticatedCrudEndpoint {
     }
 
     read(req: Request): Future<object | string> {
-        if (this.getGroupId(req)) {
+        if (this.getGroupId(req).isRight()) {
             return Future.of(() => this.getGroupId(req).flatMap(gid => this.db.cache.groups.getGroupsById(gid)))
                 .map(v => v.isRight() ? GroupJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
         }

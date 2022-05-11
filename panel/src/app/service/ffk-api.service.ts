@@ -71,15 +71,17 @@ export class FfkApiService {
 
   getGroups(): Future<List<Group>> {
     return this.getDiscordId()
-      .map(did => this.group()
-        .sendReadRequestList(
-          GroupJsonSerializer.instance,
-          {
-            'Discord-Id': did,
-            'Access-Control-Allow-Origin': '*'
-          },
-          {},
-        )).getOrElse(Future.pure(List<Group>()));
+      .map(did => {
+        return this.group()
+          .sendReadRequestList(
+            GroupJsonSerializer.instance,
+            {
+              'Discord-Id': did,
+              'Access-Control-Allow-Origin': '*'
+            },
+            {},
+          );
+      }).getOrElse(Future.pure(List<Group>()));
   }
 
   getUser(): Future<Either<string, User>> {

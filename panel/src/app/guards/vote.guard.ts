@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from '@angular/router';
-import {every, filter, from, map, mergeMap, Observable, of, switchMap, tap} from 'rxjs';
+import {from, map, mergeMap, Observable, of, switchMap, tap} from 'rxjs';
 import {VoteService} from "../service/vote.service";
 import {NavigationService} from "../service/navigation.service";
 import {FfkApiService} from "../service/ffk-api.service";
