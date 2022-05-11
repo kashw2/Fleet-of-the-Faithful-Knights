@@ -7,7 +7,7 @@ import {Database} from "../db/database";
 import {DiscordApi} from "@kashw2/lib-external";
 import {filter, map, switchMap, tap} from "rxjs/operators";
 import {List, Map} from "immutable";
-import {lastValueFrom, of} from "rxjs";
+import {from, lastValueFrom, of} from "rxjs";
 import {Future} from "funfix";
 
 const discordRoleIdToGroupMap: Map<string, Group> = Map(
@@ -113,12 +113,12 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
                 process.env.FFK_DISCORD_REDIRECT!,
                 process.env.FFK_DISCORD_BOT_TOKEN!,
             );
-            return Future.fromPromise(lastValueFrom(discordApi.getOAuth(this.getDiscordAuthToken(req).get())
+            return Future.fromPromise(lastValueFrom(from(discordApi.getOAuth(this.getDiscordAuthToken(req).get()))
                 .pipe(map(v => v.toOption().flatMap(dt => dt.getAccessToken())))
                 .pipe(filter(v => v.nonEmpty()))
                 .pipe(map(v => v.get()))
                 .pipe(switchMap(token => {
-                    return discordApi.getCurrentUser(token)
+                    return from(discordApi.getCurrentUser(token))
                         .pipe(switchMap(du => {
                             return of(du)
                                 .pipe(map(v => v.toOption().flatMap(du2 => du2.getId())))
