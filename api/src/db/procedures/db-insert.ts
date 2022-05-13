@@ -67,6 +67,7 @@ export class DbInsert {
                 'ssp_json_InsertGroup',
                 List.of(
                     `@Json = '${GroupJsonSerializer.instance.toJsonString(group)}'`,
+                    `@ModifiedBy = '${modifiedBy}'`,
                 ),
                 GroupJsonSerializer.instance,
             );
