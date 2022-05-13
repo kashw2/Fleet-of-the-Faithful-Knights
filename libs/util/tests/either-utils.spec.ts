@@ -1,6 +1,8 @@
 import test from "ava";
 import {Left, Option, Right} from "funfix-core";
 import {EitherUtils} from "../src";
+import {List} from "immutable";
+import {Future} from "funfix";
 
 test('EitherUtils should flatMap2 succeed', t => {
     const result = EitherUtils.flatMap2(
@@ -343,4 +345,30 @@ test('EitherUtils should fail to sequence', async t => {
 test('EitherUtils should convert to either', t => {
     const result = EitherUtils.toEither(Option.of(1), 'Error');
     t.deepEqual(result, Right(1));
+});
+
+test('EitherUtils should sequence future', async t => {
+    const result = await EitherUtils.sequenceFuture(EitherUtils.liftEither(Future.pure(Right(1)), 'Error'));
+    t.deepEqual(result, Right(1));
+});
+
+test('EitherUtils should fail to sequence future', async t => {
+    const result = await EitherUtils.sequenceFuture(EitherUtils.liftEither(Future.pure(Left(1)), 'Error'));
+    t.deepEqual(result, Left(1));
+});
+
+test('flattenCollection should naturally transform to collection', t => {
+    const collection = List.of(Right(1));
+    const result = EitherUtils.flattenCollection(collection).toArray();
+    t.deepEqual(result, [1]);
+});
+
+test('toList should transform varargs to list', t => {
+    const result = EitherUtils.toList(Right(1), Right(2), Right(3)).toArray();
+    t.deepEqual(result, [1, 2, 3]);
+});
+
+test('toSet should transform varargs to set', t => {
+    const result = EitherUtils.toSet(Right(1), Right(2), Right(3)).toArray();
+    t.deepEqual(result, [1, 2, 3]);
 });

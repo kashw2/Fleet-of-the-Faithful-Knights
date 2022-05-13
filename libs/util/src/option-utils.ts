@@ -1,5 +1,6 @@
 import {Collection, List, Set} from 'immutable';
 import {Either, Left, None, Option, Right} from 'funfix-core';
+import {Future} from "funfix";
 
 export class OptionUtils {
 
@@ -31,6 +32,10 @@ export class OptionUtils {
 
     static sequence<A>(op: Option<Promise<Option<A>>>): Promise<Option<A>> {
         return op.isEmpty() ? Promise.resolve(None) : op.get();
+    }
+
+    static sequenceFuture<A>(of: Option<Future<Option<A>>>): Future<Option<A>> {
+        return of.isEmpty() ? Future.raise(None) : of.get();
     }
 
     static toEither<T>(opt: Option<T>, left: string): Either<string, T> {

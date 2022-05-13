@@ -1,4 +1,6 @@
 import {Either, Left, Option, Right} from "funfix-core";
+import {Future} from "funfix";
+import {Collection, List, Set} from "immutable";
 
 export class EitherUtils {
 
@@ -98,6 +100,11 @@ export class EitherUtils {
             return Left(e1.flatMap(_ => e2).flatMap(_ => e3).flatMap(_ => e4).flatMap(_ => e5).flatMap(_ => e6).flatMap(_ => e7).flatMap(_ => e8).value as LEFT);
         }
         return f(e1.get(), e2.get(), e3.get(), e4.get(), e5.get(), e6.get(), e7.get(), e8.get());
+    }
+
+    static flattenCollection<T>(collection: Collection<any, Either<any, T>>): Collection<any, T> {
+        return collection.filter(v => v.isRight())
+            .map(v => v.get());
     }
 
     static leftMap<A, B, C>(e: Either<B, A>, f: (b: B) => C): Either<C, A> {
@@ -223,9 +230,26 @@ export class EitherUtils {
         return ep.get();
     }
 
+    static sequenceFuture<A>(ef: Either<any, Future<Either<any, A>>>): Future<Either<any, A>> {
+        if (ef.isLeft()) {
+            return Future.raise(Left(ef.value));
+        }
+        return ef.get();
+    }
+
     static toEither<A>(value: Option<A>, left: string): Either<string, A> {
         return value.map(v => Right(v))
             .getOrElse(Left(left));
+    }
+
+    static toList<T>(...items: Either<any, T>[]): List<T> {
+        return this.flattenCollection(List.of(...items))
+            .toList();
+    }
+
+    static toSet<T>(...items: Either<any, T>[]): Set<T> {
+        return this.flattenCollection(Set<Either<any, T>>(items))
+            .toSet();
     }
 
 }
