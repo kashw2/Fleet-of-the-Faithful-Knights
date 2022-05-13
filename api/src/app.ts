@@ -37,11 +37,11 @@ router.use((req: Request, res: Response, next: NextFunction) => {
     const discordId = Option.of(req.header('Discord-Id'));
     discordId.map(id => {
         db.procedures.read.readUserByDiscordId(id)
-            .then(u => {
+            .map(u => {
                 u.isLeft() ? req.user = undefined : req.user = UserJsonSerializer.instance.toJsonImpl(u.get());
                 next();
             })
-            .catch(e => {
+            .recover(e => {
                 req.user = undefined;
                 next();
             });

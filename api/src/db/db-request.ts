@@ -1,17 +1,22 @@
-import {Either, Left, Option, Right} from "funfix-core";
+import {Either, Left, Right} from "funfix-core";
 import {List, Set} from "immutable";
 import {ConnectionPool, IRecordSet} from "mssql";
 import {EitherUtils, JsonSerializer} from "@kashw2/lib-util";
 import {Database} from "./database";
+import {Future} from "funfix";
 
 export class DbRequest {
 
     constructor(private db: Database) {
-        this.connection = this.db.getConnection();
+        this.connection = this.db.getConnection(3)
+            .run();
     }
 
-    private connection: Promise<ConnectionPool>;
+    private connection: Future<ConnectionPool>;
 
+    private getConnection(): Future<ConnectionPool> {
+        return this.connection;
+    }
 
     /**
      * getJsonFromRecordSet()
@@ -21,8 +26,9 @@ export class DbRequest {
      * Function will probably evolve overtime, this is it in it's bare-bones state
      *
      */
-    private getJsonFromRecordSet(rs: any): Either<string, IRecordSet<any>> {
-        if (!rs || rs === "{}" || rs === []) {
+    private getJsonFromRecordSet(rs: IRecordSet<any>): Either<string, IRecordSet<any>> {
+        // recordsets always exists whereas recordset only exists if a dataset is returned
+        if (!rs || !rs[0] || rs.length < 1) {
             return Left("Database returned empty resultset");
         }
         if (typeof rs[0][''] === "string") {
@@ -31,70 +37,54 @@ export class DbRequest {
         return Right(rs[0]);
     }
 
-    async sendRequest(
+    sendRequest(
         procedure: string,
         params: List<string>,
-    ): Promise<Either<string, IRecordSet<any>>> {
-        const connection = await this.connection;
-        console.debug(`EXEC ${procedure} ${params.join(",").trim()}`);
-        const result = await connection.request()
-            .query(`${procedure} ${params.join(",").trim()}`);
-        // recordsets always exists whereas recordset only exists if a dataset is returned
-        if (result.recordsets.length < 1 || Option.of(result.recordset[0]).isEmpty()) {
-            console.error(`Error running: ${procedure} ${params.join(",").trim()}`);
-            return Left(`Error running: ${procedure} ${params.join(",").trim()}`);
-        }
-        return this.getJsonFromRecordSet(result.recordset);
+    ): Future<Either<string, IRecordSet<any>>> {
+        return this.getConnection()
+            .map(connection => connection.query(`${procedure} ${params.join(',').trim()}`))
+            .flatMap(v => Future.fromPromise(v))
+            .map(result => this.getJsonFromRecordSet(result.recordset));
     }
 
-    async sendRequestList(
+    sendRequestList(
         procedure: string,
         params: List<string>,
-    ): Promise<Either<string, List<any>>> {
-        const connection = await this.connection;
-        const result = await connection.request()
-            .query(`${procedure} ${params.join(", ").trim()}`);
-        if (Option.of(result.recordset[0]).isEmpty()) {
-            return Right(List());
-        }
-        return this.getJsonFromRecordSet(result.recordset)
-            .map((x: IRecordSet<any>) => List(x));
+    ): Future<Either<string, List<any>>> {
+        return this.getConnection()
+            .map(connection => connection.query(`${procedure} ${params.join(',').trim()}`))
+            .flatMap(v => Future.fromPromise(v))
+            .map(result => this.getJsonFromRecordSet(result.recordset))
+            .map(v => v.map(List));
     }
 
-    async sendRequestListSerialized<A>(
+    sendRequestListSerialized<A>(
         procedure: string,
         params: List<string>,
         serializer: JsonSerializer<A>,
-    ): Promise<Either<string, List<A>>> {
-        const result = await this.sendRequestList(procedure, params);
-        if (result.isLeft()) {
-            return Left(result.value);
-        }
-        return result.map(x => serializer.fromJsonArray(x.toArray()));
+    ): Future<Either<string, List<A>>> {
+        return this.sendRequestList(procedure, params)
+            .map(result => result.map(v => serializer.fromJsonArray(v.toArray())));
     }
 
-    async sendRequestSerialized<A>(
+    sendRequestSerialized<A>(
         procedure: string,
         params: List<string>,
         serializer: JsonSerializer<A>,
-    ): Promise<Either<string, A>> {
-        const response = await this.sendRequest(procedure, params);
-        return response.flatMap(x => EitherUtils.toEither(serializer.fromJsonImpl(x), 'Error serializing response from Database'));
+    ): Future<Either<string, A>> {
+        return this.sendRequest(procedure, params)
+            .map(result => result.flatMap(v => EitherUtils.toEither(serializer.fromJsonImpl(v), 'Error serializing response from Database')));
     }
 
-    async sendRequestSet<A>(
+    sendRequestSet<A>(
         procedure: string,
         params: List<string>,
-    ): Promise<Either<string, Set<any>>> {
-        const connection = await this.connection;
-        const result = await connection.request()
-            .query(`${procedure} ${params.join(", ").trim()}`);
-        if (result.recordsets.length < 1 || Option.of(result.recordset[0]).isEmpty()) {
-            console.error(`Error running: ${procedure} ${params.join(",").trim()}`);
-            return Right(Set());
-        }
-        return this.getJsonFromRecordSet(result.recordset)
-            .map((x: IRecordSet<any>) => Set(x));
+    ): Future<Either<string, Set<any>>> {
+        return this.getConnection()
+            .map(connection => connection.query(`${procedure} ${params.join(',').trim()}`))
+            .flatMap(v => Future.fromPromise(v))
+            .map(result => this.getJsonFromRecordSet(result.recordset))
+            .map(v => v.map(Set));
     }
 
 }

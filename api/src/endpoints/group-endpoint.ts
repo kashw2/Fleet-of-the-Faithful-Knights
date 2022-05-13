@@ -13,19 +13,19 @@ export class GroupEndpoint extends AuthenticatedCrudEndpoint {
     }
 
     create(req: Request): Future<object | string> {
-        return Future.of(() => {
-            return EitherUtils.sequence(this.validate(req)
-                .map(v => {
-                    this.db.cache.groups.add(v);
-                    return this.db.procedures.insert.insertGroup(v)(this.getRequestUsername(req));
-                }));
-        }).flatMap(v => Future.fromPromise(v))
+        return this.validate(req)
+            .map(v => {
+                this.db.cache.groups.add(v);
+                return this.db.procedures.insert.insertGroup(v)(this.getRequestUsername(req));
+            })
+            .getOrElse(Future.raise(`Failure running ${this.getEndpointName()}`))
             .map(v => v.isRight() ? GroupJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
     delete(req: Request): Future<object | string> {
-        return Future.of(() => EitherUtils.sequence(this.getGroupId(req).map(gid => this.db.procedures.delete.deleteGroup(gid))))
-            .flatMap(v => Future.fromPromise(v))
+        return this.getGroupId(req)
+            .map(gid => this.db.procedures.delete.deleteGroup(gid))
+            .getOrElse(Future.raise(`Failure running ${this.getEndpointName()}`))
             .map(v => v.isRight() ? GroupJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
@@ -64,8 +64,9 @@ export class GroupEndpoint extends AuthenticatedCrudEndpoint {
     }
 
     update(req: Request): Future<object | string> {
-        return Future.of(() => EitherUtils.sequence(this.validate(req).map(g => this.db.procedures.update.updateGroup(g)(this.getRequestUsername(req)))))
-            .flatMap(v => Future.fromPromise(v))
+        return this.validate(req)
+            .map(g => this.db.procedures.update.updateGroup(g)(this.getRequestUsername(req)))
+            .getOrElse(Future.raise(`Failure running ${this.getEndpointName()}`))
             .map(v => v.isRight() ? GroupJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 

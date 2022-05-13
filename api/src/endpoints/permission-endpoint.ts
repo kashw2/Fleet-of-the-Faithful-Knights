@@ -13,19 +13,19 @@ export class PermissionsEndpoint extends AuthenticatedCrudEndpoint {
     }
 
     create(req: Request): Future<object | string> {
-        return Future.of(() => {
-            return EitherUtils.sequence(this.validate(req)
-                .map(v => {
-                    this.db.cache.permissions.add(v);
-                    return this.db.procedures.insert.insertPermission(v)(this.getRequestUsername(req));
-                }));
-        }).flatMap(v => Future.fromPromise(v))
+        return this.validate(req)
+            .map(v => {
+                this.db.cache.permissions.add(v);
+                return this.db.procedures.insert.insertPermission(v)(this.getRequestUsername(req));
+            })
+            .getOrElse(Future.raise(`Failure running ${this.getEndpointName()}`))
             .map(v => v.isRight() ? PermissionJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
     delete(req: Request): Future<object | string> {
-        return Future.of(() => EitherUtils.sequence(this.getPermissionId(req).map(pid => this.db.procedures.delete.deletePermission(pid))))
-            .flatMap(v => Future.fromPromise(v))
+        return this.getPermissionId(req)
+            .map(pid => this.db.procedures.delete.deletePermission(pid))
+            .getOrElse(Future.raise(`Failure running ${this.getEndpointName()}`))
             .map(v => v.isRight() ? PermissionJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
@@ -64,8 +64,9 @@ export class PermissionsEndpoint extends AuthenticatedCrudEndpoint {
     }
 
     update(req: Request): Future<object | string> {
-        return Future.of(() => EitherUtils.sequence(this.validate(req).map(p => this.db.procedures.update.updatePermission(p)(this.getRequestUsername(req)))))
-            .flatMap(v => Future.fromPromise(v))
+        return this.validate(req)
+            .map(p => this.db.procedures.update.updatePermission(p)(this.getRequestUsername(req)))
+            .getOrElse(Future.raise(`Failure running ${this.getEndpointName()}`))
             .map(v => v.isRight() ? PermissionJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 

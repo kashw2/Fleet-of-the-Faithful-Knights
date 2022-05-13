@@ -1,7 +1,9 @@
 import {DbRequest} from "../db-request";
 import {
     Ballot,
-    BallotJsonSerializer, Candidate, CandidateJsonSerializer,
+    BallotJsonSerializer,
+    Candidate,
+    CandidateJsonSerializer,
     Group,
     GroupJsonSerializer,
     Permission,
@@ -15,13 +17,14 @@ import {
 } from "@kashw2/lib-ts";
 import {Either} from "funfix-core";
 import {List} from "immutable";
+import {Future} from "funfix";
 
 export class DbInsert {
 
     constructor(private requests: DbRequest) {
     }
 
-    insertBallot(ballot: Ballot, voteId: string): (modifiedBy: string) => Promise<Either<string, Ballot>> {
+    insertBallot(ballot: Ballot, voteId: string): (modifiedBy: string) => Future<Either<string, Ballot>> {
         return (modifiedBy: string) => {
             return this.requests.sendRequestSerialized(
                 'ssp_json_InsertBallot',
@@ -35,8 +38,8 @@ export class DbInsert {
         };
     }
 
-    insertCandidate(candidates: Candidate): (modifiedBy: string) => Promise<Either<string, Candidate>> {
-        return (modifiedBy: string): Promise<Either<string, Candidate>> => {
+    insertCandidate(candidates: Candidate): (modifiedBy: string) => Future<Either<string, Candidate>> {
+        return (modifiedBy: string): Future<Either<string, Candidate>> => {
             return this.requests.sendRequestSerialized(
                 'ssp_json_InsertCandidate',
                 List.of(
@@ -48,8 +51,8 @@ export class DbInsert {
         };
     }
 
-    insertCandidates(candidates: List<Candidate>): (modifiedBy: string) => Promise<Either<string, List<Candidate>>> {
-        return (modifiedBy: string): Promise<Either<string, List<Candidate>>> => {
+    insertCandidates(candidates: List<Candidate>): (modifiedBy: string) => Future<Either<string, List<Candidate>>> {
+        return (modifiedBy: string): Future<Either<string, List<Candidate>>> => {
             return this.requests.sendRequestListSerialized(
                 'ssp_json_InsertCandidates',
                 List.of(
@@ -61,20 +64,21 @@ export class DbInsert {
         };
     }
 
-    insertGroup(group: Group): (modifiedBy: string) => Promise<Either<string, Group>> {
-        return (modifiedBy: string): Promise<Either<string, Group>> => {
+    insertGroup(group: Group): (modifiedBy: string) => Future<Either<string, Group>> {
+        return (modifiedBy: string): Future<Either<string, Group>> => {
             return this.requests.sendRequestSerialized(
                 'ssp_json_InsertGroup',
                 List.of(
                     `@Json = '${GroupJsonSerializer.instance.toJsonString(group)}'`,
+                    `@ModifiedBy = '${modifiedBy}'`,
                 ),
                 GroupJsonSerializer.instance,
             );
         };
     }
 
-    insertPermission(permission: Permission): (modifiedBy: string) => Promise<Either<string, Permission>> {
-        return (modifiedBy: string): Promise<Either<string, Permission>> => {
+    insertPermission(permission: Permission): (modifiedBy: string) => Future<Either<string, Permission>> {
+        return (modifiedBy: string): Future<Either<string, Permission>> => {
             return this.requests.sendRequestSerialized(
                 'ssp_json_InsertPermission',
                 List.of(
@@ -85,8 +89,8 @@ export class DbInsert {
         };
     }
 
-    insertUser(user: User): (modifiedBy: string) => Promise<Either<string, User>> {
-        return (modifiedBy: string): Promise<Either<string, User>> => {
+    insertUser(user: User): (modifiedBy: string) => Future<Either<string, User>> {
+        return (modifiedBy: string): Future<Either<string, User>> => {
             return this.requests.sendRequestSerialized(
                 'ssp_json_InsertUser',
                 List.of(
@@ -97,8 +101,8 @@ export class DbInsert {
         };
     }
 
-    insertUserPermissionMapping(userPermissionMapping: UserPermissionMapping): (modifiedBy: string) => Promise<Either<string, UserPermissionMapping>> {
-        return (modifiedBy: string): Promise<Either<string, UserPermissionMapping>> => {
+    insertUserPermissionMapping(userPermissionMapping: UserPermissionMapping): (modifiedBy: string) => Future<Either<string, UserPermissionMapping>> {
+        return (modifiedBy: string): Future<Either<string, UserPermissionMapping>> => {
             return this.requests.sendRequestSerialized(
                 'ssp_json_InsertUserPermissionMapping',
                 List.of(
@@ -110,8 +114,8 @@ export class DbInsert {
         };
     }
 
-    insertVote(vote: Vote): (modifiedBy: string) => Promise<Either<string, Vote>> {
-        return (modifiedBy: string): Promise<Either<string, Vote>> => {
+    insertVote(vote: Vote): (modifiedBy: string) => Future<Either<string, Vote>> {
+        return (modifiedBy: string): Future<Either<string, Vote>> => {
             return this.requests.sendRequestSerialized(
                 'ssp_json_InsertVote',
                 List.of(

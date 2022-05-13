@@ -15,25 +15,23 @@ export class CandidateEndpoint extends AuthenticatedCrudEndpoint {
 
     create(req: Request): Future<object | string> {
         if (this.isForSingle(req)) {
-            return Future.of(() => {
-                return EitherUtils.sequence(this.getCandidate(req)
-                    .map(v => {
-                        this.db.cache.candidates.add(v);
-                        return this.db.procedures.insert.insertCandidate(v)(this.getRequestUsername(req));
-                    }));
-            }).flatMap(v => Future.fromPromise(v))
+            return this.getCandidate(req)
+                .map(v => {
+                    this.db.cache.candidates.add(v);
+                    return this.db.procedures.insert.insertCandidate(v)(this.getRequestUsername(req));
+                })
+                .getOrElse(Future.raise(`Failure running ${this.getEndpointName()}`))
                 .map(v => {
                     this.db.cache.cacheCandidates();
                     return v.isRight() ? CandidateJsonSerializer.instance.toJsonImpl(v.get()) : v.value;
                 });
         }
-        return Future.of(() => {
-            return EitherUtils.sequence(this.getCandidates(req)
-                .map(v => {
-                    this.db.cache.candidates.update(v);
-                    return this.db.procedures.insert.insertCandidates(v)(this.getRequestUsername(req));
-                }));
-        }).flatMap(v => Future.fromPromise(v))
+        return this.getCandidates(req)
+            .map(v => {
+                this.db.cache.candidates.update(v);
+                return this.db.procedures.insert.insertCandidates(v)(this.getRequestUsername(req));
+            })
+            .getOrElse(Future.raise(`Failure running ${this.getEndpointName()}`))
             .map(v => {
                 this.db.cache.cacheCandidates();
                 return v.isRight() ? CandidateJsonSerializer.instance.toJsonArray(v.get().toArray()) : v.value;
@@ -41,8 +39,9 @@ export class CandidateEndpoint extends AuthenticatedCrudEndpoint {
     }
 
     delete(req: Request): Future<object | string> {
-        return Future.of(() => EitherUtils.sequence(this.getCandidateId(req).map(cid => this.db.procedures.delete.deleteCandidate(cid))))
-            .flatMap(v => Future.fromPromise(v))
+        return this.getCandidateId(req)
+            .map(mid => this.db.procedures.delete.deleteCandidate(mid))
+            .getOrElse(Future.raise(`Failure running ${this.getEndpointName()}`))
             .map(v => v.isRight() ? CandidateJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
@@ -87,11 +86,12 @@ export class CandidateEndpoint extends AuthenticatedCrudEndpoint {
     }
 
     update(req: Request): Future<object | string> {
-        return Future.of(() => EitherUtils.sequence(EitherUtils.map2(
+        return Either.map2(
             this.validate(req),
             this.getCandidateId(req),
-            (c, cid) => this.db.procedures.update.updateCandidate(c, cid)(this.getRequestUsername(req)))))
-            .flatMap(v => Future.fromPromise(v))
+            (c, cid) => this.db.procedures.update.updateCandidate(c, cid)(this.getRequestUsername(req))
+        )
+            .getOrElse(Future.raise(`Failure running ${this.getEndpointName()}`))
             .map(v => v.isRight() ? CandidateJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
