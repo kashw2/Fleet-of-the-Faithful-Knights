@@ -2,6 +2,7 @@ import {OptionUtils} from "../src";
 import {Left, None, Option, Right, Some} from "funfix-core";
 import {List, Set} from "immutable";
 import test from "ava";
+import {Future} from "funfix";
 
 
 test('exists2 should pass exists2', t => {
@@ -66,4 +67,14 @@ test('when should create option if predicate is true', t => {
 test('sequence should unwrap an Option of a Promise and return a Promise of an Option', async t => {
     const result = await OptionUtils.sequence(Some(Promise.resolve(Some("Hello World"))));
     t.deepEqual(result, Some("Hello World"));
+});
+
+test('EitherUtils should sequence future', async t => {
+    const result = await OptionUtils.sequenceFuture(Option.of(Future.pure(Some(1))));
+    t.deepEqual(result, Some(1));
+});
+
+test('EitherUtils should fail to sequence future', async t => {
+    const result = await OptionUtils.sequenceFuture(Option.of(Future.pure(None)));
+    t.deepEqual(result, None);
 });
