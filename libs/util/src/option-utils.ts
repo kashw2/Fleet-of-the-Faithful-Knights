@@ -33,6 +33,10 @@ export class OptionUtils {
         return op.isEmpty() ? Promise.resolve(None) : op.get();
     }
 
+    static sequenceFuture<A>(of: Option<Future<Option<A>>>): Future<Option<A>> {
+        return of.isEmpty() ? Future.raise(None) : of.get();
+    }
+
     static toEither<T>(opt: Option<T>, left: string): Either<string, T> {
         if (opt.nonEmpty()) {
             return Right(opt.get());

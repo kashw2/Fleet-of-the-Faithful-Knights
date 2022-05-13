@@ -230,6 +230,13 @@ export class EitherUtils {
         return ep.get();
     }
 
+    static sequenceFuture<A>(ef: Either<any, Future<Either<any, A>>>): Future<Either<any, A>> {
+        if (ef.isLeft()) {
+            return Future.raise(Left(ef.value));
+        }
+        return ef.get();
+    }
+
     static toEither<A>(value: Option<A>, left: string): Either<string, A> {
         return value.map(v => Right(v))
             .getOrElse(Left(left));
