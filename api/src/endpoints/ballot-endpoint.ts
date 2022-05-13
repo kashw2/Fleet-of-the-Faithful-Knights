@@ -13,20 +13,22 @@ export class BallotEndpoint extends AuthenticatedCrudEndpoint {
     }
 
     create(req: Request): Future<object | string> {
-        return Future.of(() => {
-            return EitherUtils.sequence(EitherUtils.flatMap2(this.validate(req), this.getVoteId(req), (b, vid) => {
+        return EitherUtils.flatMap2(
+            this.validate(req),
+            this.getVoteId(req),
+            (b, vid) => {
                 return this.db.cache.votes.getByVoteId(vid)
                     .map(v => {
                         this.db.cache.votes.setIn(v.withBallot(b), x => x.getId().contains(vid));
                         return this.db.procedures.insert.insertBallot(b, vid)(this.getModifiedBy(req));
                     });
-            }));
-        }).flatMap(v => Future.fromPromise(v))
+            })
+            .getOrElse(Future.raise(`Failure running ${this.getEndpointName()}`))
             .map(v => v.isRight() ? BallotJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
 
-    doesRequireAuthentication = (req: Request) => true
+    doesRequireAuthentication = (req: Request) => true;
 
     private getBallot(req: Request): Either<string, Ballot> {
         return ApiUtils.parseBodyParamSerialized(req, 'ballot', BallotJsonSerializer.instance);

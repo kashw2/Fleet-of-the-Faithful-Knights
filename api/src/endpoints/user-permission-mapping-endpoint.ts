@@ -13,15 +13,17 @@ export class UserPermissionMappingEndpoint extends AuthenticatedCrudEndpoint {
     }
 
     create(req: Request): Future<object | string> {
-        return Future.of(() => EitherUtils.sequence(this.validate(req).map(upm => this.db.procedures.insert.insertUserPermissionMapping(upm)(this.getRequestUsername(req)))))
-            .flatMap(v => Future.fromPromise(v))
+        return this.validate(req)
+            .map(upm => this.db.procedures.insert.insertUserPermissionMapping(upm)(this.getRequestUsername(req)))
+            .getOrElse(Future.raise(`Failure running ${this.getEndpointName()}`))
             .map(v => v.isRight() ? UserPermissionMappingJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
 
     }
 
     delete(req: Request): Future<object | string> {
-        return Future.of(() => EitherUtils.sequence(this.getMappingId(req).map(mid => this.db.procedures.delete.deleteUserPermissionMapping(mid))))
-            .flatMap(v => Future.fromPromise(v))
+        return this.getMappingId(req)
+            .map(mid => this.db.procedures.delete.deleteUserPermissionMapping(mid))
+            .getOrElse(Future.raise(`Failure running ${this.getEndpointName()}`))
             .map(v => v.isRight() ? UserPermissionMappingJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
@@ -56,14 +58,16 @@ export class UserPermissionMappingEndpoint extends AuthenticatedCrudEndpoint {
     }
 
     read(req: Request): Future<object | string> {
-        return Future.of(() => EitherUtils.sequence(this.getUserId(req).map(uid => this.db.procedures.read.readUserPermissionMappings(uid))))
-            .flatMap(v => Future.fromPromise(v))
+        return this.getUserId(req)
+            .map(uid => this.db.procedures.read.readUserPermissionMappings(uid))
+            .getOrElse(Future.raise(`Failure running ${this.getEndpointName()}`))
             .map(v => v.isRight() ? UserPermissionMappingJsonSerializer.instance.toJsonArray(v.get().toArray()) : v.value);
     }
 
     update(req: Request): Future<object | string> {
-        return Future.of(() => EitherUtils.sequence(this.validate(req).map(upm => this.db.procedures.update.updateUserPermissionMapping(upm)(this.getRequestUsername(req)))))
-            .flatMap(v => Future.fromPromise(v))
+        return this.validate(req)
+            .map(upm => this.db.procedures.update.updateUserPermissionMapping(upm)(this.getRequestUsername(req)))
+            .getOrElse(Future.raise(`Failure running ${this.getEndpointName()}`))
             .map(v => v.isRight() ? UserPermissionMappingJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 

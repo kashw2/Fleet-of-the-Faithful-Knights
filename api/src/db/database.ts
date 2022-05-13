@@ -1,9 +1,8 @@
 import {config, ConnectionPool} from "mssql";
-import {firstValueFrom, of, switchMap} from "rxjs";
-import {map, tap} from "rxjs/operators";
 import {DbCache} from "./db-cache";
 import {DbRequest} from "./db-request";
 import {DbProcedures} from "./procedures/db-procedures";
+import {Future, IO} from "funfix";
 
 export class Database {
 
@@ -36,22 +35,26 @@ export class Database {
 
     requests: DbRequest;
 
-    getConnection(): Promise<ConnectionPool> {
-        return firstValueFrom(of(this.getConnectionPool())
-            .pipe(switchMap(x => x.connect()))
-            .pipe(map(x => {
-                if (x.connecting) {
-                    console.log(`Attempting to connect to ${this.dbConfig.database}`);
-                }
-                if (x.connected) {
+    getConnection(attempts: number): IO<ConnectionPool> {
+        return IO.of(() => this.getConnectionPool())
+            .flatMap(pool => IO.fromFuture(Future.fromPromise(pool.connect())))
+            .map(pool => {
+                if (pool.connected) {
                     console.log(`Connected to ${this.dbConfig.database}`);
-                } else {
-                    throw new Error(`Error connecting to ${this.dbConfig.database}`);
                 }
-                return x;
-            }))
-            .pipe(tap(_ => this.cache = new DbCache(this.procedures)))
-        );
+                this.cache = new DbCache(this.procedures);
+                return pool;
+            })
+            .recoverWith(_ => {
+                if (attempts < 0) {
+                    console.error(`Maximum number of retries exceeded`);
+                    // Can't throw inside an IO
+                    process.exit(1);
+                }
+                console.log(`Unable to connect to ${this.dbConfig.database}, ${attempts} retries remaining`);
+                return this.getConnection(attempts - 1)
+                    .delayExecution(3000);
+            });
     }
 
     private getConnectionPool(): ConnectionPool {

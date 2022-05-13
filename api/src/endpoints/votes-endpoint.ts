@@ -12,20 +12,20 @@ export class VotesEndpoint extends AuthenticatedCrudEndpoint {
         super('/vote');
     }
 
-    create(req: Request): Future<object> {
-        return Future.of(() => {
-            return EitherUtils.sequence(this.validate(req)
-                .map(v => {
-                    this.db.cache.votes.add(v);
-                    return this.db.procedures.insert.insertVote(v)(this.getRequestUsername(req));
-                }));
-        }).flatMap(v => Future.fromPromise(v))
+    create(req: Request): Future<object | string> {
+        return this.validate(req)
+            .map(v => {
+                this.db.cache.votes.add(v);
+                return this.db.procedures.insert.insertVote(v)(this.getRequestUsername(req));
+            })
+            .getOrElse(Future.raise(`Failure running ${this.getEndpointName()}`))
             .map(v => v.isRight() ? VoteJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
-    delete(req: Request): Future<object> {
-        return Future.of(() => EitherUtils.sequence(this.getVoteId(req).map(vid => this.db.procedures.delete.deleteVote(vid))))
-            .flatMap(v => Future.fromPromise(v))
+    delete(req: Request): Future<object | string> {
+        return this.getVoteId(req)
+            .map(vid => this.db.procedures.delete.deleteVote(vid))
+            .getOrElse(Future.raise(`Failure running ${this.getEndpointName()}`))
             .map(v => v.isRight() ? VoteJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 
@@ -63,9 +63,10 @@ export class VotesEndpoint extends AuthenticatedCrudEndpoint {
             .map(v => v.isRight() ? VoteJsonSerializer.instance.toJsonArray(v.get().toArray()) : v.value);
     }
 
-    update(req: Request): Future<object> {
-        return Future.of(() => EitherUtils.sequence(this.validate(req).map(v => this.db.procedures.update.updateVote(v)(this.getRequestUsername(req)))))
-            .flatMap(v => Future.fromPromise(v))
+    update(req: Request): Future<object | string> {
+        return this.validate(req)
+            .map(v => this.db.procedures.update.updateVote(v)(this.getRequestUsername(req)))
+            .getOrElse(Future.raise(`Failure running ${this.getEndpointName()}`))
             .map(v => v.isRight() ? VoteJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
     }
 

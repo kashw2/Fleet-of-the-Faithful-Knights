@@ -9,13 +9,14 @@ import {VoteCache} from "./caches/vote-cache";
 import {BallotCache} from "./caches/ballot-cache";
 import {switchMap} from "rxjs/operators";
 import {CandidateCache} from "./caches/candidate-cache";
+import {IO} from "funfix";
 
 export class DbCache {
 
     constructor(private procedures: DbProcedures) {
-        of(this.cache())
+        of(this.cache().run())
             .pipe(switchMap(_ => interval(300000)))
-            .subscribe(_ => this.cache());
+            .subscribe(_ => this.cache().run());
     }
 
     ballots: BallotCache = new BallotCache(List());
@@ -32,64 +33,65 @@ export class DbCache {
 
     votes: VoteCache = new VoteCache(List());
 
-    cache(): void {
-        console.info('Starting Cache');
-        Promise.all([
-            this.cacheUsers(),
-            this.cacheGroups(),
-            this.cachePermissions(),
-            this.cacheVotes(),
-            this.cacheBallots(),
-            this.cacheCandidates(),
-        ]).then(_ => {
-            console.info('Cache Complete');
-            this.ready.next(true);
-        });
+    cache(): IO<void> {
+        return IO.always(() => console.info('Starting Cache'))
+            .flatMap(_ => IO.map6(
+                this.cacheUsers(),
+                this.cacheGroups(),
+                this.cachePermissions(),
+                this.cacheVotes(),
+                this.cacheBallots(),
+                this.cacheCandidates(),
+                (u, g, p, v, b, c) => {
+                    console.info('Cache Complete');
+                    this.ready.next(true);
+                }
+            ));
     }
 
-    async cacheBallots(): Promise<void> {
-        this.procedures.read.readBallots()
-            .then(b => {
+    cacheBallots(): IO<void> {
+        return IO.fromFuture(this.procedures.read.readBallots())
+            .forEach(b => {
                 this.ballots = new BallotCache(b.getOrElse(List<Ballot>()));
                 console.info(`Loaded ${this.ballots.size} Ballots`);
             });
     }
 
-    async cacheCandidates(): Promise<void> {
-        this.procedures.read.readCandidates()
-            .then(b => {
+    cacheCandidates(): IO<void> {
+        return IO.fromFuture(this.procedures.read.readCandidates())
+            .forEach(b => {
                 this.candidates = new CandidateCache(b.getOrElse(List<Candidate>()));
                 console.info(`Loaded ${this.candidates.size} Candidate`);
             });
     }
 
-    async cacheGroups(): Promise<void> {
-        this.procedures.read.readGroups()
-            .then(g => {
+    cacheGroups(): IO<void> {
+        return IO.fromFuture(this.procedures.read.readGroups())
+            .forEach(g => {
                 this.groups = new GroupCache(g.getOrElse(List<Group>()));
                 console.info(`Loaded ${this.groups.size} Groups`);
             });
     }
 
-    async cachePermissions(): Promise<void> {
-        this.procedures.read.readPermissions()
-            .then(p => {
+    cachePermissions(): IO<void> {
+        return IO.fromFuture(this.procedures.read.readPermissions())
+            .forEach(p => {
                 this.permissions = new PermissionCache(p.getOrElse(List<Permission>()));
                 console.log(`Loaded ${this.permissions.size} Permissions`);
             });
     }
 
-    async cacheUsers(): Promise<void> {
-        this.procedures.read.readUsers()
-            .then(u => {
+    cacheUsers(): IO<void> {
+        return IO.fromFuture(this.procedures.read.readUsers())
+            .forEach(u => {
                 this.users = new UserCache(u.getOrElse(List<User>()));
                 console.info(`Loaded ${this.users.size} Users`);
             });
     }
 
-    async cacheVotes(): Promise<void> {
-        this.procedures.read.readVotes()
-            .then(v => {
+    cacheVotes(): IO<void> {
+        return IO.fromFuture(this.procedures.read.readVotes())
+            .forEach(v => {
                 this.votes = new VoteCache(v.getOrElse(List<Vote>()));
                 console.log(`Loaded ${this.votes.size} Votes`);
             });
