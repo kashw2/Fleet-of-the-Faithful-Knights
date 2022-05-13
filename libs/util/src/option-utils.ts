@@ -1,5 +1,6 @@
 import {Collection, List, Set} from 'immutable';
 import {Either, Left, None, Option, Right} from 'funfix-core';
+import {Future} from "funfix";
 
 export class OptionUtils {
 

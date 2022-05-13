@@ -242,4 +242,14 @@ export class EitherUtils {
             .getOrElse(Left(left));
     }
 
+    static toList<T>(...items: Either<any, T>[]): List<T> {
+        return this.flattenCollection(List.of(...items))
+            .toList();
+    }
+
+    static toSet<T>(...items: Either<any, T>[]): Set<T> {
+        return this.flattenCollection(Set<Either<any, T>>(items))
+            .toSet();
+    }
+
 }
