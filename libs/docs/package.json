@@ -7,6 +7,7 @@
     "url": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights/issues"
   },
   "scripts": {
+    "predoc": "rimraf dist",
     "doc": "npm run doc:html && open-cli dist/docs/index.html",
     "doc:html": "typedoc src/ --exclude **/*.spec.ts --out dist/docs",
     "doc:json": "typedoc src/ --exclude **/*.spec.ts --json dist/docs/typedoc.json",
