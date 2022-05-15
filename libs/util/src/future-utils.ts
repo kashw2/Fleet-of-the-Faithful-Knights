@@ -1,6 +1,14 @@
 import {Future} from "funfix";
+import {Either} from "funfix-core";
 
 export class FutureUtils {
+
+    /**
+     * Given an Either, produce a Future that will raise an Error or return a Pure value
+     */
+    static fromEither<A>(either: Either<string, A>): Future<A> {
+        return either.isLeft() ? Future.raise(either.value) : Future.pure(either.get());
+    }
 
     /**
      * Given two Futures, combine the two values into one with the unwrapped value being a Tuple of the values the respective Futures would hold.
