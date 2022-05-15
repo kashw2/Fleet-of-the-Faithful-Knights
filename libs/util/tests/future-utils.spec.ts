@@ -1,7 +1,7 @@
 import test from "ava";
 import {FutureUtils} from "../src";
 import {Future} from "funfix";
-import {Left, Right} from "funfix-core";
+import {Left, None, Right, Some} from "funfix-core";
 
 test('should zip two futures', async t => {
     const result: number = await FutureUtils.zip(Future.pure(1), Future.pure(2))
@@ -36,6 +36,19 @@ test('should convert a right to a pure future', async t => {
 
 test('should convert a left to a future and raise an error', async t => {
     await FutureUtils.fromEither(Left('Error'))
+        .recover(v => {
+            t.deepEqual(v, 'Error');
+            return v;
+        });
+});
+
+test('should convert a some to a pure future', async t => {
+    const result = await FutureUtils.fromOption(Some(true), 'Error');
+    t.deepEqual(result, true);
+});
+
+test('should convert a none to a future and raise an error', async t => {
+    await FutureUtils.fromOption(None, 'Error')
         .recover(v => {
             t.deepEqual(v, 'Error');
             return v;
