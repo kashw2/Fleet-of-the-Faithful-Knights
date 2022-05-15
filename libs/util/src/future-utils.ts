@@ -1,5 +1,5 @@
-import {Future} from "funfix";
-import {Either} from "funfix-core";
+import {Future, Throwable} from "funfix";
+import {Either, Option} from "funfix-core";
 
 export class FutureUtils {
 
@@ -8,6 +8,13 @@ export class FutureUtils {
      */
     static fromEither<A>(either: Either<string, A>): Future<A> {
         return either.isLeft() ? Future.raise(either.value) : Future.pure(either.get());
+    }
+
+    /**
+     * Given an Option, produce a Future that will raise an Error or return a Pure value
+     */
+    static fromOption<A>(option: Option<A>, error: Throwable): Future<A> {
+        return option.isEmpty() ? Future.raise(error) : Future.pure(option.get());
     }
 
     /**
