@@ -108,10 +108,7 @@ export class EitherUtils {
     }
 
     static leftMap<A, B, C>(e: Either<B, A>, f: (b: B) => C): Either<C, A> {
-        if (e.isLeft()) {
-            return Left(f(e.value));
-        }
-        return Right(e.get());
+        return e.isLeft() ? Left(f(e.value)) : Right(e.get());
     }
 
     static leftTap<A, B>(e: Either<B, A>, f: (b: B) => void): Either<B, A> {
@@ -224,17 +221,11 @@ export class EitherUtils {
     }
 
     static sequence<A>(ep: Either<any, Promise<Either<any, A>>>): Promise<Either<any, A>> {
-        if (ep.isLeft()) {
-            return Promise.resolve(Left(ep.value));
-        }
-        return ep.get();
+        return ep.isLeft() ? Promise.resolve(Left(ep.value)) : ep.get();
     }
 
     static sequenceFuture<A>(ef: Either<any, Future<Either<any, A>>>): Future<Either<any, A>> {
-        if (ef.isLeft()) {
-            return Future.raise(Left(ef.value));
-        }
-        return ef.get();
+        return ef.isLeft() ? Future.raise(Left(ef.value)) : ef.get();
     }
 
     static toEither<A>(value: Option<A>, left: string): Either<string, A> {
