@@ -1,22 +1,23 @@
 import {Component, OnInit} from '@angular/core';
-import {Either, Left, Option, Right} from "funfix-core";
+import {Either, Option, Some} from "funfix-core";
 import {ActivatedRoute} from "@angular/router";
 import {FfkApiService} from "../../service/ffk-api.service";
-import {distinctUntilChanged, filter, from, map, of, pipe, switchMap, takeUntil, takeWhile, tap, zip} from "rxjs";
 import {CrudService} from "../../service/crud.service";
 import {UserService} from "../../service/user.service";
 import {ToastService} from "../../service/toast.service";
-import {List} from "immutable";
 import {GroupService} from "../../service/group.service";
 import {CandidateService} from "../../service/candidate.service";
 import {VoteService} from "../../service/vote.service";
-import {Vote} from "@kashw2/lib-ts";
-import {EitherUtils} from "@kashw2/lib-util";
+import {EitherUtils, FutureUtils, OptionUtils} from "@kashw2/lib-util";
+import {User, Vote} from "@kashw2/lib-ts";
+import {Future, Right} from "funfix";
+import {of, switchMap} from "rxjs";
+import {List} from "immutable";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
 
@@ -38,31 +39,30 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.getDiscordAuthCode().nonEmpty()) {
-      // Write User
-      from(this.ffkApiService.writeUser(this.getDiscordAuthCode().get()))
-        .pipe(tap(v => this.toastService.showEither(v, "Successfully Logged In")))
-        .pipe(tap(v => this.userService.setUser(v.toOption())))
-        .pipe(map(v => v.toOption().flatMap(u => u.getDiscordId())))
-        .pipe(filter(v => v.nonEmpty()))
-        .pipe(map(v => v.get()))
-        .pipe(tap(did => this.crudService.crudLocalStorageService.create('discordid', did)))
-        .pipe(switchMap(_ => zip(
+      this.ffkApiService.writeUser(this.getDiscordAuthCode().get())
+        .flatMap<User>(FutureUtils.fromEither)
+        .map(user => OptionUtils.tap(Some(user), () => this.toastService.show(`Welcome ${user.getUsername().getOrElse('User')}`, "Success")))
+        .map(user => this.userService.setUser(user))
+        // We're guaranteed to have a User at this point
+        .flatMap(user => FutureUtils.fromOption(user.get().getDiscordId(), `${user.get().getUsername().getOrElse('User')} does not have a Discord id`))
+        .map(did => this.crudService.crudLocalStorageService.create('discordid', did))
+        .flatMap(_ => Future.map3(
           this.ffkApiService.getGroups(),
           this.ffkApiService.getCandidates(),
           this.ffkApiService.getVotes(),
-        )))
-        .pipe(tap(([groups, candidates, votes]) => {
-          if (this.groupService.getGroups().isEmpty()) {
-            this.groupService.setGroups(groups);
+          (groups, candidates, votes) => {
+            if (this.groupService.getGroups().isEmpty()) {
+              this.groupService.setGroups(groups);
+            }
+            if (this.candidateService.getCandidates().isEmpty()) {
+              this.candidateService.setCandidates(this.toastService.showAndRecoverList(EitherUtils.liftEither(candidates, 'Unable to load Candidates'), `Loaded ${candidates.size} Candidates`));
+            }
+            if (this.voteService.getVotes().isEmpty()) {
+              this.voteService.setVotes(this.toastService.showAndRecoverList(EitherUtils.liftEither(votes, 'Unable to load Votes'), `Loaded ${votes.size} Votes`));
+            }
           }
-          if (this.candidateService.getCandidates().isEmpty()) {
-            this.candidateService.setCandidates(this.toastService.showAndRecoverList(EitherUtils.liftEither(candidates, 'Unable to load Candidates'), `Loaded ${candidates.size} Candidates`));
-          }
-          if (this.voteService.getVotes().isEmpty()) {
-            this.voteService.setVotes(this.toastService.showAndRecoverList(EitherUtils.liftEither(votes, 'Unable to load Votes'), `Loaded ${votes.size} Votes`));
-          }
-        }))
-        .subscribe();
+        ))
+        .recover((err: string) => this.toastService.show(err, "Error"));
     } else {
       this.userService.asObs()
         .pipe(switchMap((v) => {
@@ -73,12 +73,11 @@ export class HomeComponent implements OnInit {
                 || this.candidateService.getCandidates().isEmpty()
                 || this.voteService.getVotes().isEmpty())
             ) {
-              return zip(
+              Future.map3(
                 this.ffkApiService.getGroups(),
                 this.ffkApiService.getCandidates(),
                 this.ffkApiService.getVotes(),
-              )
-                .pipe(tap(([groups, candidates, votes]) => {
+                (groups, candidates, votes) => {
                   if (this.groupService.getGroups().isEmpty()) {
                     this.groupService.setGroups(groups);
                   }
@@ -88,7 +87,9 @@ export class HomeComponent implements OnInit {
                   if (this.voteService.getVotes().isEmpty()) {
                     this.voteService.setVotes(this.toastService.showAndRecoverList(EitherUtils.liftEither(votes, 'Unable to load Votes'), `Loaded ${votes.size} Votes`));
                   }
-                }));
+                }
+              )
+                .recover((err: string) => this.toastService.show(err, "Error"));
             }
             return of<Either<string, List<Vote>>>(Right(List()));
           }
