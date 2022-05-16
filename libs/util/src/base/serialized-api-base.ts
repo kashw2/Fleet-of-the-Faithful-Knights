@@ -1,19 +1,14 @@
 import {ApiBase} from "./api-base";
-import {Either} from "funfix-core";
 import {List} from "immutable";
 import {JsonSerializer} from "../json-serializer";
 import {Future} from "funfix";
+import {FutureUtils} from "../future-utils";
 
 export class SerializedApiBase extends ApiBase {
 
     constructor(uri: string) {
         super(uri);
     }
-
-    /**
-     * For now I think if we want anything other than a List, we can just call a transformation method.
-     * Although this would mean we have to unwrap the Either...
-     */
 
     sendRequestListSerialized<A>(
         endpoint: string,
@@ -23,7 +18,8 @@ export class SerializedApiBase extends ApiBase {
         body?: any,
     ): Future<List<A>> {
         return this.sendRequest(endpoint, method, headers, body)
-            .map(v => serializer.fromJsonArray(v.getOrElse(List<A>())));
+            .flatMap(FutureUtils.fromEither)
+            .map(v => serializer.fromJsonArray(v));
     }
 
     sendRequestSerialized<A>(
@@ -32,9 +28,10 @@ export class SerializedApiBase extends ApiBase {
         serializer: JsonSerializer<A>,
         headers: object = this.getHeaders(),
         body?: any,
-    ): Future<Either<string, A>> {
+    ): Future<A> {
         return this.sendRequest(endpoint, method, headers, body)
-            .map(v => v.map(x => serializer.fromJson(x)));
+            .flatMap(FutureUtils.fromEither)
+            .map(v => serializer.fromJson(v));
     }
 
 }
