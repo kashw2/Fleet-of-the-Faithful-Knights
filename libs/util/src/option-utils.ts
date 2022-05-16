@@ -38,6 +38,14 @@ export class OptionUtils {
         return of.isEmpty() ? Future.raise(None) : of.get();
     }
 
+    /**
+     * Idempotent function that allows us to execute an effect while returning the current state of the object being applied
+     */
+    static tap<A>(option: Option<A>, thunk: () => void): Option<A> {
+        thunk();
+        return option;
+    }
+
     static toEither<T>(opt: Option<T>, left: string): Either<string, T> {
         if (opt.nonEmpty()) {
             return Right(opt.get());

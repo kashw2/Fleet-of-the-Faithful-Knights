@@ -228,6 +228,14 @@ export class EitherUtils {
         return ef.isLeft() ? Future.raise(Left(ef.value)) : ef.get();
     }
 
+    /**
+     * Idempotent function that allows us to execute an effect while returning the current state of the object being applied
+     */
+    static tap<A>(either: Either<string ,A>, thunk: () => void): Either<string ,A> {
+        thunk();
+        return either;
+    }
+
     static toEither<A>(value: Option<A>, left: string): Either<string, A> {
         return value.map(v => Right(v))
             .getOrElse(Left(left));

@@ -54,3 +54,8 @@ test('should convert a none to a future and raise an error', async t => {
             return v;
         });
 });
+
+test('should show idempotency when tapping', async t => {
+    await FutureUtils.tap(Future.pure("Hello World"), () => 1 + 1)
+        .forEach(v => t.is(v, 'Hello World'));
+});
