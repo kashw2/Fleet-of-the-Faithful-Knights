@@ -1,8 +1,8 @@
 import {AuthenticatedCrudEndpoint} from "@kashw2/lib-server";
-import {Group, GroupJsonSerializer, User, UserJsonSerializer} from "@kashw2/lib-ts";
+import {Group, User, UserJsonSerializer} from "@kashw2/lib-ts";
 import {Request, Response} from "express";
-import {ApiUtils, EitherUtils, OptionUtils} from "@kashw2/lib-util";
-import {Either, None, Option, Right, Some} from "funfix-core";
+import {ApiUtils, EitherUtils, FutureUtils, OptionUtils} from "@kashw2/lib-util";
+import {Either, None, Option, Some} from "funfix-core";
 import {Database} from "../db/database";
 import {DiscordApi} from "@kashw2/lib-external";
 import {filter, map, switchMap, tap} from "rxjs/operators";
@@ -105,7 +105,7 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
         super('/user');
     }
 
-    create(req: Request): Future<object | string> {
+    create(req: Request): Future<object> {
         if (this.getDiscordAuthToken(req).isRight()) {
             const discordApi: DiscordApi = new DiscordApi(
                 '607005043043860521',
@@ -138,40 +138,36 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
                                 }));
                         }));
                 })))
-                .then(u => EitherUtils.liftEither(UserJsonSerializer.instance.toJsonImpl(u), "Unable to create User")));
+            )
+                .map(u => EitherUtils.liftEither(UserJsonSerializer.instance.toJsonImpl(u), "Unable to create User"))
+                .flatMap(FutureUtils.fromEither);
         }
-        return this.validate(req)
+        return EitherUtils.sequenceFuture(this.validate(req)
             .map(u => {
                 this.db.cache.users.add(u);
                 return this.db.procedures.insert.insertUser(u)(this.getModifiedBy(req));
-            })
-            .getOrElse(Future.raise(`Failure running ${this.getEndpointName()}`))
-            .map(v => v.map(u => UserJsonSerializer.instance.toJsonImpl(u)));
+            }))
+            .flatMap(FutureUtils.fromEither)
+            .map(v => UserJsonSerializer.instance.toJsonImpl(v));
     }
 
 
-    delete(req: Request): Future<object | string> {
+    delete(req: Request): Future<object> {
         if (this.getDiscordAuthToken(req).isRight()) {
-            this.getDiscordAuthToken(req)
-                .map(t => this.db.procedures.delete.deleteUser(t))
-                .getOrElse(Future.raise(`Failure running ${this.getEndpointName()}`))
+            EitherUtils.sequenceFuture(this.getDiscordAuthToken(req)
+                .map(t => this.db.procedures.delete.deleteUser(t)))
+                .flatMap(FutureUtils.fromEither)
                 .map(v => {
-                    if (v.isRight()) {
-                        this.db.cache.users.removeIn(ru => ru.getDiscordId().equals(v.get().getDiscordId()));
-                        return UserJsonSerializer.instance.toJsonImpl(v.get());
-                    }
-                    return v.value;
+                    this.db.cache.users.removeIn(ru => ru.getDiscordId().equals(v.getDiscordId()));
+                    return UserJsonSerializer.instance.toJsonImpl(v);
                 });
         }
-        return this.getUserId(req)
-            .map(uid => this.db.procedures.delete.deleteUser(uid))
-            .getOrElse(Future.raise(`Failure running ${this.getEndpointName()}`))
+        return EitherUtils.sequenceFuture(this.getUserId(req)
+            .map(uid => this.db.procedures.delete.deleteUser(uid)))
+            .flatMap(FutureUtils.fromEither)
             .map(v => {
-                if (v.isRight()) {
-                    this.db.cache.users.removeIn(ru => ru.getId().equals(v.get().getId()));
-                    return UserJsonSerializer.instance.toJsonImpl(v.get());
-                }
-                return v.value;
+                this.db.cache.users.removeIn(ru => ru.getId().equals(v.getId()));
+                return UserJsonSerializer.instance.toJsonImpl(v);
             });
     }
 
@@ -226,13 +222,14 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
         }
     }
 
-    read(req: Request): Future<object | string> {
+    read(req: Request): Future<object> {
         if (this.shouldReadCurrentUser(req)) {
             return Future.pure(() => req.user);
         }
         if (this.getUserId(req).isRight()) {
             return Future.of(() => this.db.cache.users.getByDiscordId(this.getUserId(req).get()))
-                .map(v => v.isRight() ? UserJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
+                .flatMap(FutureUtils.fromEither)
+                .map(v => UserJsonSerializer.instance.toJsonImpl(v));
         }
         return Future.of(() => EitherUtils.liftEither(UserJsonSerializer.instance.toJsonArray(this.db.cache.users.getUsers().toArray()), "Users cache is empty"));
     }
@@ -242,11 +239,11 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
             .getOrElse(false);
     }
 
-    update(req: Request): Future<object | string> {
-        return this.validate(req)
-            .map(u => this.db.procedures.update.updateUser(u)(this.getRequestUsername(req)))
-            .getOrElse(Future.raise(`Failure running ${this.getEndpointName()}`))
-            .map(v => v.isRight() ? UserJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
+    update(req: Request): Future<object> {
+        return EitherUtils.sequenceFuture(this.validate(req)
+            .map(u => this.db.procedures.update.updateUser(u)(this.getRequestUsername(req))))
+            .flatMap(FutureUtils.fromEither)
+            .map(v => UserJsonSerializer.instance.toJsonImpl(v));
     }
 
     private validate(req: Request): Either<string, User> {

@@ -1,5 +1,4 @@
 import {SerializedApiBase} from "./serialized-api-base";
-import {Either} from "funfix-core";
 import {List} from "immutable";
 import {JsonSerializer} from "../json-serializer";
 import {Future} from "funfix";
@@ -29,7 +28,7 @@ export class CrudApiBase extends SerializedApiBase {
         serializer: JsonSerializer<A>,
         headers: object = this.getHeaders(),
         body?: any,
-    ): Future<Either<string, A>> {
+    ): Future<A> {
         return this.sendRequestSerialized(
             this.getEndpoint(),
             "POST",
@@ -57,7 +56,7 @@ export class CrudApiBase extends SerializedApiBase {
         serializer: JsonSerializer<A>,
         headers: object = this.getHeaders(),
         body?: any,
-    ): Future<Either<string, A>> {
+    ): Future<A> {
         return this.sendRequestSerialized(
             this.getEndpoint(),
             "DELETE",
@@ -85,7 +84,7 @@ export class CrudApiBase extends SerializedApiBase {
         serializer: JsonSerializer<A>,
         headers: object = this.getHeaders(),
         body?: any,
-    ): Future<Either<string, A>> {
+    ): Future<A> {
         return this.sendRequestSerialized(
             this.getEndpoint(),
             "GET",
@@ -113,7 +112,7 @@ export class CrudApiBase extends SerializedApiBase {
         serializer: JsonSerializer<A>,
         headers: object = this.getHeaders(),
         body?: any,
-    ): Future<Either<string, A>> {
+    ): Future<A> {
         return this.sendRequestSerialized(
             this.getEndpoint(),
             "PUT",

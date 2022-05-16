@@ -3,7 +3,7 @@ import {Database} from "../db/database";
 import {Ballot, BallotJsonSerializer, User} from "@kashw2/lib-ts";
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
-import {ApiUtils, EitherUtils} from "@kashw2/lib-util";
+import {ApiUtils, EitherUtils, FutureUtils} from "@kashw2/lib-util";
 import {Future} from "funfix";
 
 export class BallotEndpoint extends AuthenticatedCrudEndpoint {
@@ -12,19 +12,18 @@ export class BallotEndpoint extends AuthenticatedCrudEndpoint {
         super('/ballot');
     }
 
-    create(req: Request): Future<object | string> {
-        return EitherUtils.flatMap2(
+    create(req: Request): Future<object> {
+        return EitherUtils.sequenceFuture(EitherUtils.flatMap2(
             this.validate(req),
             this.getVoteId(req),
-            (b, vid) => {
-                return this.db.cache.votes.getByVoteId(vid)
-                    .map(v => {
-                        this.db.cache.votes.setIn(v.withBallot(b), x => x.getId().contains(vid));
-                        return this.db.procedures.insert.insertBallot(b, vid)(this.getModifiedBy(req));
-                    });
-            })
-            .getOrElse(Future.raise(`Failure running ${this.getEndpointName()}`))
-            .map(v => v.isRight() ? BallotJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
+            (b, vid) => this.db.cache.votes.getByVoteId(vid)
+                .map(v => {
+                    this.db.cache.votes.setIn(v.withBallot(b), x => x.getId().contains(vid));
+                    return this.db.procedures.insert.insertBallot(b, vid)(this.getModifiedBy(req));
+                })
+        ))
+            .flatMap(FutureUtils.fromEither)
+            .map(v => BallotJsonSerializer.instance.toJsonImpl(v));
     }
 
 
@@ -53,9 +52,10 @@ export class BallotEndpoint extends AuthenticatedCrudEndpoint {
         }
     }
 
-    read(req: Request): Future<object | string> {
+    read(req: Request): Future<object> {
         return Future.of(() => this.getVoteId(req).flatMap(vid => this.db.cache.ballots.getBallotById(vid)))
-            .map(v => v.isRight() ? BallotJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
+            .flatMap(FutureUtils.fromEither)
+            .map(v => BallotJsonSerializer.instance.toJsonImpl(v));
     }
 
     private validate(req: Request): Either<string, Ballot> {
