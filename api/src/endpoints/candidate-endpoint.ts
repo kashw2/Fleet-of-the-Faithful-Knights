@@ -14,7 +14,7 @@ export class CandidateEndpoint extends AuthenticatedCrudEndpoint {
     }
 
     create(req: Request): Future<object | string> {
-        if (this.isForSingle(req)) {
+        if (this.getCandidateId(req).isRight()) {
             return this.getCandidate(req)
                 .map(v => {
                     this.db.cache.candidates.add(v);
@@ -49,7 +49,8 @@ export class CandidateEndpoint extends AuthenticatedCrudEndpoint {
         switch (this.getHTTPMethod(req)) {
             case 'POST':
             case 'GET':
-                return this.isForSingle(req);
+                return this.getCandidateId(req)
+                    .isRight();
             default:
                 return true;
         }
@@ -69,11 +70,6 @@ export class CandidateEndpoint extends AuthenticatedCrudEndpoint {
 
     hasPermission(req: Request, res: Response, user?: User): boolean {
         return true;
-    }
-
-    isForSingle(req: Request): boolean {
-        return ApiUtils.parseBooleanQueryParam(req, 'single')
-            .contains(true);
     }
 
     read(req: Request): Future<object | string> {

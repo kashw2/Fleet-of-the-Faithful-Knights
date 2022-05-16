@@ -4,7 +4,7 @@ import {AllEndpoints} from "./endpoints/all-endpoints";
 import bodyParser from "body-parser";
 import {UserJsonSerializer} from "@kashw2/lib-ts";
 import {Option} from "funfix-core";
-import {EitherUtils} from "@kashw2/lib-util";
+import {EitherUtils, FutureUtils} from "@kashw2/lib-util";
 
 const app = express();
 const router = express.Router();
@@ -37,8 +37,9 @@ router.use((req: Request, res: Response, next: NextFunction) => {
     const discordId = Option.of(req.header('Discord-Id'));
     discordId.map(id => {
         db.procedures.read.readUserByDiscordId(id)
+            .flatMap(FutureUtils.fromEither)
             .map(u => {
-                u.isLeft() ? req.user = undefined : req.user = UserJsonSerializer.instance.toJsonImpl(u.get());
+                req.user = UserJsonSerializer.instance.toJsonImpl(u);
                 next();
             })
             .recover(e => {
