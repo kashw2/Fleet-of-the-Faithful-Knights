@@ -1,6 +1,6 @@
 import {AuthenticatedCrudEndpoint} from "@kashw2/lib-server";
 import {Database} from "../db/database";
-import {GroupJsonSerializer, User, Vote, VoteJsonSerializer} from "@kashw2/lib-ts";
+import {User, Vote, VoteJsonSerializer} from "@kashw2/lib-ts";
 import {Request, Response} from "express";
 import {Either} from "funfix-core";
 import {ApiUtils, EitherUtils} from "@kashw2/lib-util";
@@ -55,7 +55,7 @@ export class VotesEndpoint extends AuthenticatedCrudEndpoint {
     }
 
     read(req: Request): Future<object | string> {
-        if (this.getVoteId(req)) {
+        if (this.getVoteId(req).isRight()) {
             return Future.of(() => this.getVoteId(req).flatMap(vid => this.db.cache.votes.getByVoteId(vid)))
                 .map(v => v.isRight() ? VoteJsonSerializer.instance.toJsonImpl(v.get()) : v.value);
         }
