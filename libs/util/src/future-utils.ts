@@ -18,6 +18,14 @@ export class FutureUtils {
     }
 
     /**
+     * Idempotent function that allows us to execute an effect while returning the current state of the object being applied
+     */
+    static tap<A>(future: Future<A>, thunk: () => void): Future<A> {
+        thunk();
+        return future;
+    }
+
+    /**
      * Given two Futures, combine the two values into one with the unwrapped value being a Tuple of the values the respective Futures would hold.
      *
      * Inspired by scala.concurrent.Future.zip

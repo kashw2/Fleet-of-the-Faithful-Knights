@@ -1,5 +1,5 @@
 import test from "ava";
-import {Left, Option, Right} from "funfix-core";
+import {Either, Left, Option, Right} from "funfix-core";
 import {EitherUtils} from "../src";
 import {List} from "immutable";
 import {Future} from "funfix";
@@ -371,4 +371,9 @@ test('toList should transform varargs to list', t => {
 test('toSet should transform varargs to set', t => {
     const result = EitherUtils.toSet(Right(1), Right(2), Right(3)).toArray();
     t.deepEqual(result, [1, 2, 3]);
+});
+
+test('should show idempotency when tapping', async t => {
+    await EitherUtils.tap(Either.pure("Hello World"), () => 1 + 1)
+        .forEach(v => t.is(v, 'Hello World'));
 });

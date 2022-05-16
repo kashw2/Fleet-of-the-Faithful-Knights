@@ -29,7 +29,7 @@ export class DbRequest {
     private getJsonFromRecordSet(rs: IRecordSet<any>): Either<string, IRecordSet<any>> {
         // recordsets always exists whereas recordset only exists if a dataset is returned
         if (!rs || !rs[0] || rs.length < 1) {
-            return Left("Database returned empty resultset");
+            return Left("Database returned empty recordset");
         }
         if (typeof rs[0][''] === "string") {
             return Right(JSON.parse(rs[0]['']));
@@ -43,7 +43,7 @@ export class DbRequest {
     ): Future<Either<string, IRecordSet<any>>> {
         return this.getConnection()
             .map(connection => connection.query(`${procedure} ${params.join(',').trim()}`))
-            .flatMap(v => Future.fromPromise(v))
+            .flatMap(Future.fromPromise)
             .map(result => this.getJsonFromRecordSet(result.recordset));
     }
 
@@ -53,7 +53,7 @@ export class DbRequest {
     ): Future<Either<string, List<any>>> {
         return this.getConnection()
             .map(connection => connection.query(`${procedure} ${params.join(',').trim()}`))
-            .flatMap(v => Future.fromPromise(v))
+            .flatMap(Future.fromPromise)
             .map(result => this.getJsonFromRecordSet(result.recordset))
             .map(v => v.map(List));
     }
@@ -82,9 +82,18 @@ export class DbRequest {
     ): Future<Either<string, Set<any>>> {
         return this.getConnection()
             .map(connection => connection.query(`${procedure} ${params.join(',').trim()}`))
-            .flatMap(v => Future.fromPromise(v))
+            .flatMap(Future.fromPromise)
             .map(result => this.getJsonFromRecordSet(result.recordset))
             .map(v => v.map(Set));
+    }
+
+    sendRequestSetSerialized<A>(
+        procedure: string,
+        params: List<string>,
+        serializer: JsonSerializer<A>,
+    ): Future<Either<string, Set<A>>> {
+        return this.sendRequestSet(procedure, params)
+            .map(result => result.map(v => serializer.fromJsonArray(v.toArray()).toSet()));
     }
 
 }

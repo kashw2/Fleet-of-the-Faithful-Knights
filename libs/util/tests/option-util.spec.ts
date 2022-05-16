@@ -78,3 +78,8 @@ test('EitherUtils should fail to sequence future', async t => {
     const result = await OptionUtils.sequenceFuture(Option.of(Future.pure(None)));
     t.deepEqual(result, None);
 });
+
+test('should show idempotency when tapping', async t => {
+    await OptionUtils.tap(Option.pure("Hello World"), () => 1 + 1)
+        .forEach(v => t.is(v, 'Hello World'));
+});
