@@ -44,8 +44,9 @@ export class ApiBase {
             headers,
             data: body,
             url: this.getFullUrl(endpoint)
-        } as AxiosRequestConfig)).map(v => Right(v.data))
-            .recover(v => Left(v as string));
+        } as AxiosRequestConfig))
+            .flatMap(v => this.hasError(v.status) ? Future.raise(Left(v.data)) : Future.pure(Right(v.data)))
+            .recover((error: string) => Left(error));
     }
 
 }

@@ -45,7 +45,7 @@ test('should map over Future value', async t => {
     }));
 });
 
-test('should fail when a Future value is returned', async t => {
+test('should fail when a future value is returned', async t => {
     const base = new ApiBase('https://jsonplaceholder.typicode.com');
     const result = await base.sendRequest('/albums/1', 'POST');
     /**
