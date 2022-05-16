@@ -1,9 +1,8 @@
 import {Request, Response, Router} from "express";
 import {User} from "@kashw2/lib-ts";
-import {ApiUtils, FutureUtils} from "@kashw2/lib-util";
+import {ApiUtils} from "@kashw2/lib-util";
 import {AuthenticatedEndpoint} from "./authenticated-endpoint";
-import {Future, Left} from "funfix";
-import {Either} from "funfix-core";
+import {Future} from "funfix";
 
 export abstract class AuthenticatedCrudEndpoint extends AuthenticatedEndpoint {
 
@@ -14,15 +13,15 @@ export abstract class AuthenticatedCrudEndpoint extends AuthenticatedEndpoint {
     /**
      * Provides functionality for Creation of data
      */
-    create(req: Request): Future<Either<string, object>> {
-        return Future.raise(Left(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`));
+    create(req: Request): Future<object> {
+        return Future.raise(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`);
     }
 
     /**
      * Provides functionality for Deletion of data
      */
-    delete(req: Request): Future<Either<string, object>> {
-        return Future.raise(Left(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`));
+    delete(req: Request): Future<object> {
+        return Future.raise(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`);
     }
 
     /**
@@ -70,8 +69,8 @@ export abstract class AuthenticatedCrudEndpoint extends AuthenticatedEndpoint {
     /**
      * Provides functionality for Reading/Retrieval of data
      */
-    read(req: Request): Future<Either<string, object>> {
-        return Future.raise(Left(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`));
+    read(req: Request): Future<object> {
+        return Future.raise(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`);
     }
 
     runImpl(req: Request, res: Response, user: User): void {
@@ -80,25 +79,21 @@ export abstract class AuthenticatedCrudEndpoint extends AuthenticatedEndpoint {
                 switch (this.getHTTPMethod(req)) {
                     case 'POST':
                         this.create(req)
-                            .flatMap(FutureUtils.fromEither)
                             .map(v => res.send(v))
                             .recover((err: string) => ApiUtils.sendError(res, err, 500));
                         break;
                     case 'GET':
                         this.read(req)
-                            .flatMap(FutureUtils.fromEither)
                             .map(v => res.send(v))
                             .recover((err: string) => ApiUtils.sendError(res, err, 500));
                         break;
                     case 'PUT':
                         this.update(req)
-                            .flatMap(FutureUtils.fromEither)
                             .map(v => res.send(v))
                             .recover((err: string) => ApiUtils.sendError(res, err, 500));
                         break;
                     case 'DELETE':
                         this.delete(req)
-                            .flatMap(FutureUtils.fromEither)
                             .map(v => res.send(v))
                             .recover((err: string) => ApiUtils.sendError(res, err, 500));
                         break;
@@ -118,8 +113,8 @@ export abstract class AuthenticatedCrudEndpoint extends AuthenticatedEndpoint {
     /**
      * Provides functionality for Updating of data
      */
-    update(req: Request): Future<Either<string, object>> {
-        return Future.raise(Left(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`));
+    update(req: Request): Future<object> {
+        return Future.raise(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`);
     }
 
 }
