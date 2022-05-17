@@ -18,7 +18,8 @@ export class BallotEndpoint extends AuthenticatedCrudEndpoint {
             this.getVoteId(req),
             (b, vid) => this.db.cache.votes.getByVoteId(vid)
                 .map(v => {
-                    this.db.cache.votes.setIn(v.withBallot(b), x => x.getId().contains(vid));
+                    this.db.cache.updateVotes(this.db.cache.votes.setIn(v.withBallot(b), x => x.getId().contains(vid)));
+                    this.db.cache.updateBallots(this.db.cache.ballots.add(b));
                     return this.db.procedures.insert.insertBallot(b, vid)(this.getModifiedBy(req));
                 })
         ))
