@@ -57,22 +57,22 @@ export abstract class UnauthenticatedCrudEndpoint extends UnauthenticatedEndpoin
             switch (this.getHTTPMethod(req)) {
                 case 'POST':
                     this.create(req)
-                        .map(v => res.send(v))
+                        .map(res.send)
                         .recover((err: string) => ApiUtils.sendError(res, err, 500));
                     break;
                 case 'GET':
                     this.read(req)
-                        .map(v => res.send(v))
+                        .map(res.send)
                         .recover((err: string) => ApiUtils.sendError(res, err, 500));
                     break;
                 case 'PUT':
                     this.update(req)
-                        .map(v => res.send(v))
+                        .map(res.send)
                         .recover((err: string) => ApiUtils.sendError(res, err, 500));
                     break;
                 case 'DELETE':
                     this.delete(req)
-                        .map(v => res.send(v))
+                        .map(res.send)
                         .recover((err: string) => ApiUtils.sendError(res, err, 500));
                     break;
                 default:
