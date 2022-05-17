@@ -2,12 +2,13 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {None, Option, Some} from "funfix-core";
 import {Ballot, Vote} from "@kashw2/lib-ts";
-import {OptionUtils} from "@kashw2/lib-util";
+import {FutureUtils, OptionUtils} from "@kashw2/lib-util";
 import {UserService} from "../../service/user.service";
 import moment from "moment";
 import {FfkApiService} from "../../service/ffk-api.service";
 import {ToastService} from "../../service/toast.service";
 import {VoteService} from "../../service/vote.service";
+import {Future} from "funfix";
 
 @Component({
   selector: 'app-ballot-dialog',
@@ -53,15 +54,15 @@ export class BallotDialogComponent implements OnInit {
       Some(moment()),
       Some(moment()),
     );
-    this.getVoteId()
-      .map(vid => this.toastService.showSequenceFuture(
-        this.ffkApiService.writeBallot(ballot, vid),
-        'Ballot Submitted',
-        'Error',
-        'Success',
-      ))
-      .forEach(() => this.voteService.setSelectedVote(this.voteService.getSelectedVote().map(v => v.withBallot(ballot))));
-    this.dialogRef.close();
+    FutureUtils.fromOption(this.getVoteId(), "Please select a vote")
+      .flatMap(vid => this.ffkApiService.writeBallot(ballot, vid))
+      .transformWith(
+        (error) => Future.of(() => this.toastService.show(error as string, "Error")),
+        success => {
+          this.voteService.setSelectedVote(this.voteService.getSelectedVote().map(v => v.withBallot(success)));
+          return Future.of(() => this.dialogRef.close())
+        }
+      );
   }
 
   getCandidateUsername(): Option<string> {

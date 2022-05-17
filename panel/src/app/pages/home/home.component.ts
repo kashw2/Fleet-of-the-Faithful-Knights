@@ -40,7 +40,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     if (this.getDiscordAuthCode().nonEmpty()) {
       this.ffkApiService.writeUser(this.getDiscordAuthCode().get())
-        .flatMap<User>(FutureUtils.fromEither)
         .map(user => OptionUtils.tap(Some(user), () => this.toastService.show(`Welcome ${user.getUsername().getOrElse('User')}`, "Success")))
         .map(user => this.userService.setUser(user))
         // We're guaranteed to have a User at this point

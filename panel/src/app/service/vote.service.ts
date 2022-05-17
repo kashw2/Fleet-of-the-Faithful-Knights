@@ -79,9 +79,17 @@ export class VoteService {
     return votes;
   }
 
+  private void(): void {
+    return;
+  }
+
   writeVote(vote: Vote): Vote {
-    this.toastService.showSequenceFuture(this.ffkApiService.writeVote(vote), 'Created Vote', 'Error', 'Success')
-      .then(v => this.addVote(vote));
+    this.ffkApiService.writeVote(vote)
+      .map(v => {
+        this.addVote(v);
+        this.toastService.show(`Created Vote for ${v.getCandidateUsername().getOrElse('User')}`, "Success");
+      })
+      .recover((error: string) => this.toastService.show(error, "Error"));
     return vote;
   }
 

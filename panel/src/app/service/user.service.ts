@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {None, Option} from 'funfix-core';
+import {None, Option, Some} from 'funfix-core';
 import {User} from '@kashw2/lib-ts';
 import {ToastService} from "./toast.service";
 import {FfkApiService} from "./ffk-api.service";
+import {Future} from "funfix";
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,13 @@ export class UserService {
   ) {
     if (this.ffkApiService.getDiscordId().isRight()) {
       this.ffkApiService.getUser()
-        .then(u => {
-          u.toOption()
-            .flatMap(v => v.getUsername())
-            .fold(
-              (left: void) => this.toastService.show("Authentication Error", "Error"),
-              (username) => this.setUser(u.toOption()));
-        });
+        .transformWith(
+          error => Future.of(() => this.toastService.show("Authentication Error", "Error")),
+          user => {
+            this.setUser(Some(user));
+            return Future.pure(this.void());
+          }
+        );
     }
   }
 
@@ -51,6 +52,10 @@ export class UserService {
     }
     this.user.next(user);
     return user;
+  }
+
+  private void(): void {
+    return;
   }
 
 }
