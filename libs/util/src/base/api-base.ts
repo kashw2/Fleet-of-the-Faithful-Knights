@@ -1,6 +1,6 @@
 import {Either, Left, Right} from "funfix-core";
 import {Future} from "funfix";
-import axios, {AxiosRequestConfig} from "axios";
+import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from "axios";
 
 export class ApiBase {
 
@@ -45,8 +45,8 @@ export class ApiBase {
             data: body,
             url: this.getFullUrl(endpoint)
         } as AxiosRequestConfig))
-            .flatMap(v => this.hasError(v.status) ? Future.raise(Left(v.data)) : Future.pure(Right(v.data)))
-            .recover((error: string) => Left(error));
+            .flatMap((v: AxiosResponse<any>) => this.hasError(v.status) ? Future.raise(Left(v.data)) : Future.pure(Right(v.data)))
+            .recover((error: AxiosError<any>) => Left(error.response?.data?.error ?? error.response?.data));
     }
 
 }
