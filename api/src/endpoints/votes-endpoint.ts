@@ -15,7 +15,7 @@ export class VotesEndpoint extends AuthenticatedCrudEndpoint {
     create(req: Request): Future<object> {
         return EitherUtils.sequenceFuture(this.validate(req)
             .map(v => {
-                this.db.cache.votes.add(v);
+                this.db.cache.updateVotes(this.db.cache.votes.add(v));
                 return this.db.procedures.insert.insertVote(v)(this.getRequestUsername(req));
             }))
             .flatMap(FutureUtils.fromEither)
@@ -24,7 +24,10 @@ export class VotesEndpoint extends AuthenticatedCrudEndpoint {
 
     delete(req: Request): Future<object> {
         return EitherUtils.sequenceFuture(this.getVoteId(req)
-            .map(vid => this.db.procedures.delete.deleteVote(vid)))
+            .map(vid => {
+                this.db.cache.updateVotes(this.db.cache.votes.removeIn(v => v.getId().contains(vid)));
+                return this.db.procedures.delete.deleteVote(vid);
+            }))
             .flatMap(FutureUtils.fromEither)
             .map(v => VoteJsonSerializer.instance.toJsonImpl(v));
     }
@@ -67,7 +70,10 @@ export class VotesEndpoint extends AuthenticatedCrudEndpoint {
 
     update(req: Request): Future<object> {
         return EitherUtils.sequenceFuture(this.validate(req)
-            .map(v => this.db.procedures.update.updateVote(v)(this.getRequestUsername(req))))
+            .map(v => {
+                this.db.cache.updateVotes(this.db.cache.votes.setIn(v, x => x.getId().equals(v.getId())));
+                return this.db.procedures.update.updateVote(v)(this.getRequestUsername(req));
+            }))
             .flatMap(FutureUtils.fromEither)
             .map(v => VoteJsonSerializer.instance.toJsonImpl(v));
     }

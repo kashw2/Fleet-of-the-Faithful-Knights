@@ -17,30 +17,27 @@ export class CandidateEndpoint extends AuthenticatedCrudEndpoint {
         if (this.getCandidateId(req).isRight()) {
             return EitherUtils.sequenceFuture(this.getCandidate(req)
                 .map(v => {
-                    this.db.cache.candidates.add(v);
+                    this.db.cache.updateCandidates(this.db.cache.candidates.add(v));
                     return this.db.procedures.insert.insertCandidate(v)(this.getRequestUsername(req));
                 }))
                 .flatMap(FutureUtils.fromEither)
-                .map(v => {
-                    this.db.cache.cacheCandidates();
-                    return CandidateJsonSerializer.instance.toJsonImpl(v);
-                });
+                .map(v => CandidateJsonSerializer.instance.toJsonImpl(v));
         }
         return EitherUtils.sequenceFuture(this.getCandidates(req)
             .map(v => {
-                this.db.cache.candidates.update(v);
+                this.db.cache.updateCandidates(this.db.cache.candidates.update(v));
                 return this.db.procedures.insert.insertCandidates(v)(this.getRequestUsername(req));
             }))
             .flatMap(FutureUtils.fromEither)
-            .map(v => {
-                this.db.cache.cacheCandidates();
-                return CandidateJsonSerializer.instance.toJsonArray(v.toArray());
-            });
+            .map(v => CandidateJsonSerializer.instance.toJsonArray(v.toArray()));
     }
 
     delete(req: Request): Future<object> {
         return EitherUtils.sequenceFuture(this.getCandidateId(req)
-            .map(mid => this.db.procedures.delete.deleteCandidate(mid)))
+            .map(cid => {
+                this.db.cache.updateCandidates(this.db.cache.candidates.removeIn(c => c.getId().contains(cid)));
+                return this.db.procedures.delete.deleteCandidate(cid);
+            }))
             .flatMap(FutureUtils.fromEither)
             .map(v => CandidateJsonSerializer.instance.toJsonImpl(v));
     }
@@ -76,7 +73,7 @@ export class CandidateEndpoint extends AuthenticatedCrudEndpoint {
         if (this.getCandidateId(req).isLeft()) {
             return Future.of(() => EitherUtils.liftEither(this.db.cache.candidates.getCandidates(), "Candidates cache is empty"))
                 .flatMap(FutureUtils.fromEither)
-                .map(v => CandidateJsonSerializer.instance.toJsonArray(v.toArray()))
+                .map(v => CandidateJsonSerializer.instance.toJsonArray(v.toArray()));
         }
         return Future.of(() => this.getCandidateId(req).flatMap(cid => this.db.cache.candidates.getCandidateById(cid)))
             .flatMap(FutureUtils.fromEither)
@@ -87,7 +84,10 @@ export class CandidateEndpoint extends AuthenticatedCrudEndpoint {
         return EitherUtils.sequenceFuture(Either.map2(
             this.validate(req),
             this.getCandidateId(req),
-            (c, cid) => this.db.procedures.update.updateCandidate(c, cid)(this.getRequestUsername(req))
+            (c, cid) => {
+                this.db.cache.updateCandidates(this.db.cache.candidates.setIn(c, v => v.getId().contains(cid)));
+                return this.db.procedures.update.updateCandidate(c, cid)(this.getRequestUsername(req));
+            }
         ))
             .flatMap(FutureUtils.fromEither)
             .map(v => CandidateJsonSerializer.instance.toJsonImpl(v));

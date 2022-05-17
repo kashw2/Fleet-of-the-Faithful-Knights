@@ -19,19 +19,19 @@ export class DbCache {
             .subscribe(_ => this.cache().run());
     }
 
-    ballots: BallotCache = new BallotCache(List());
+    ballots: BallotCache = new BallotCache(List<Ballot>());
 
-    candidates: CandidateCache = new CandidateCache(List());
+    candidates: CandidateCache = new CandidateCache(List<Candidate>());
 
-    groups: GroupCache = new GroupCache(List());
+    groups: GroupCache = new GroupCache(List<Group>());
 
-    permissions: PermissionCache = new PermissionCache(List());
+    permissions: PermissionCache = new PermissionCache(List<Permission>());
 
     ready: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-    users: UserCache = new UserCache(List());
+    users: UserCache = new UserCache(List<User>());
 
-    votes: VoteCache = new VoteCache(List());
+    votes: VoteCache = new VoteCache(List<Vote>());
 
     cache(): IO<void> {
         return IO.always(() => console.info('Starting Cache'))
@@ -100,6 +100,36 @@ export class DbCache {
     isReady(): boolean {
         return this.ready
             .getValue();
+    }
+
+    updateBallots(values: List<Ballot>): BallotCache {
+        this.ballots = new BallotCache(this.ballots.getBallots().concat(values));
+        return this.ballots;
+    }
+
+    updateCandidates(values: List<Candidate>): CandidateCache {
+        this.candidates = new CandidateCache(this.candidates.getCandidates().concat(values));
+        return this.candidates;
+    }
+
+    updateGroups(values: List<Group>): GroupCache {
+        this.groups = new GroupCache(this.groups.getGroups().concat(values));
+        return this.groups;
+    }
+
+    updatePermissions(values: List<Permission>): PermissionCache {
+        this.permissions = new PermissionCache(this.permissions.getPermissions().concat(values));
+        return this.permissions;
+    }
+
+    updateUsers(values: List<User>): UserCache {
+        this.users = new UserCache(this.users.getUsers().concat(values));
+        return this.users;
+    }
+
+    updateVotes(values: List<Vote>): VoteCache {
+        this.votes = new VoteCache(this.votes.getVotes().concat(values));
+        return this.votes;
     }
 
 }

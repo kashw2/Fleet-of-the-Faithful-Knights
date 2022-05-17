@@ -132,9 +132,8 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
                                 .pipe(map(groups => groups.sort((current, previous) => current.isLower(previous) ? 1 : -1).first<Group>()))
                                 .pipe(map(group => User.fromDiscordUser(du.get()).withGroup(group)))
                                 .pipe(tap(u => {
-                                    this.db.cache.users.add(u);
+                                    this.db.cache.updateUsers(this.db.cache.users.add(u));
                                     this.db.procedures.insert.insertUser(u)('System');
-                                    this.db.cache.cacheUsers();
                                 }));
                         }));
                 })))
@@ -144,7 +143,7 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
         }
         return EitherUtils.sequenceFuture(this.validate(req)
             .map(u => {
-                this.db.cache.users.add(u);
+                this.db.cache.updateUsers(this.db.cache.users.add(u));
                 return this.db.procedures.insert.insertUser(u)(this.getModifiedBy(req));
             }))
             .flatMap(FutureUtils.fromEither)
@@ -158,15 +157,17 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
                 .map(t => this.db.procedures.delete.deleteUser(t)))
                 .flatMap(FutureUtils.fromEither)
                 .map(v => {
-                    this.db.cache.users.removeIn(ru => ru.getDiscordId().equals(v.getDiscordId()));
+                    this.db.cache.updateUsers(this.db.cache.users.removeIn(ru => ru.getDiscordId().equals(v.getDiscordId())));
                     return UserJsonSerializer.instance.toJsonImpl(v);
                 });
         }
         return EitherUtils.sequenceFuture(this.getUserId(req)
-            .map(uid => this.db.procedures.delete.deleteUser(uid)))
+            .map(uid => {
+                this.db.cache.users.removeIn(u => u.getId().contains(uid));
+                return this.db.procedures.delete.deleteUser(uid);
+            }))
             .flatMap(FutureUtils.fromEither)
             .map(v => {
-                this.db.cache.users.removeIn(ru => ru.getId().equals(v.getId()));
                 return UserJsonSerializer.instance.toJsonImpl(v);
             });
     }
@@ -241,7 +242,10 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
 
     update(req: Request): Future<object> {
         return EitherUtils.sequenceFuture(this.validate(req)
-            .map(u => this.db.procedures.update.updateUser(u)(this.getRequestUsername(req))))
+            .map(u => {
+                this.db.cache.updateUsers(this.db.cache.users.add(u));
+                return this.db.procedures.update.updateUser(u)(this.getRequestUsername(req));
+            }))
             .flatMap(FutureUtils.fromEither)
             .map(v => UserJsonSerializer.instance.toJsonImpl(v));
     }
