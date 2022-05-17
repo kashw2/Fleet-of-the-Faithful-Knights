@@ -1,4 +1,3 @@
-import {Either} from "funfix-core";
 import {DiscordToken, DiscordTokenJsonSerializer} from "../token";
 import {DiscordUser, DiscordUserJsonSerializer} from "../user";
 import {DiscordGuild, DiscordGuildJsonSerializer} from "../guild";
@@ -27,7 +26,7 @@ export class DiscordApi extends SerializedApiBase {
      *
      * @returns DiscordUser
      */
-    getCurrentUser(accessToken: string): Future<Either<string, DiscordUser>> {
+    getCurrentUser(accessToken: string): Future<DiscordUser> {
         return Future.fromPromise(this.sendRequestSerialized(
             'users/@me',
             "GET",
@@ -43,7 +42,7 @@ export class DiscordApi extends SerializedApiBase {
      *
      * @returns DiscordGuild
      */
-    getGuild(guildId: string, shouldCount: boolean = true): Future<Either<string, DiscordGuild>> {
+    getGuild(guildId: string, shouldCount: boolean = true): Future<DiscordGuild> {
         return Future.fromPromise(this.sendRequestSerialized(
             `guilds/${guildId}?with_counts=${shouldCount}`,
             "GET",
@@ -60,7 +59,7 @@ export class DiscordApi extends SerializedApiBase {
      *
      * @returns DiscordGuildMember
      */
-    getGuildMember(memberId: string, guildId: string): Future<Either<string, DiscordGuildMember>> {
+    getGuildMember(memberId: string, guildId: string): Future<DiscordGuildMember> {
         return  Future.fromPromise(this.sendRequestSerialized(
             `guilds/${guildId}/members/${memberId}`,
             "GET",
@@ -98,7 +97,7 @@ export class DiscordApi extends SerializedApiBase {
      *
      * @returns DiscordToken
      */
-    getOAuth(code: string): Future<Either<string, DiscordToken>> {
+    getOAuth(code: string): Future<DiscordToken> {
         return  Future.fromPromise(this.sendRequestSerialized(
             'oauth2/token',
             "POST",
