@@ -10,6 +10,7 @@ mat-icon {
 #nav-profile {
   transform: initial;
   transition: 150ms ease-in-out;
+
   &:hover {
     transform: scale(1.2);
   }

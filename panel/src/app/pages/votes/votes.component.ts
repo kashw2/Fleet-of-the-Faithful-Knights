@@ -1,14 +1,14 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {List} from "immutable";
 import {None, Option} from "funfix-core";
-import {BehaviorSubject, combineAll, combineLatest, zip} from "rxjs";
+import {BehaviorSubject, combineLatest} from "rxjs";
 import {Group, Vote, VoteJsonSerializer} from "@kashw2/lib-ts";
 import {NavigationService} from "../../service/navigation.service";
 import {GroupService} from "../../service/group.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {UserService} from "../../service/user.service";
 import {VoteService} from "../../service/vote.service";
-import {map, tap} from "rxjs/operators";
+import {map} from "rxjs/operators";
 import {MatPaginator} from "@angular/material/paginator";
 
 @Component({

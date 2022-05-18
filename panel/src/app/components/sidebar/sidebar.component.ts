@@ -14,7 +14,8 @@ export class SidebarComponent implements OnInit {
   constructor(
     readonly navigationService: NavigationService,
     readonly userService: UserService,
-    ) { }
+  ) {
+  }
 
   getUserAvatar(): Option<string> {
     return this.userService

@@ -1,9 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {SidebarComponent} from "./sidebar/sidebar.component";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatIconModule} from "@angular/material/icon";
-
 
 
 @NgModule({
@@ -19,4 +18,5 @@ import {MatIconModule} from "@angular/material/icon";
     MatIconModule,
   ]
 })
-export class ComponentsModule { }
+export class ComponentsModule {
+}

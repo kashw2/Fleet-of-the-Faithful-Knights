@@ -3,8 +3,8 @@ import {DiscordCandidateOnboardingEndpoint} from "./discord-candidate-onboarding
 
 export class AllEndpoints {
 
-    static initialiseEndpoints(router: Router): void {
-        new DiscordCandidateOnboardingEndpoint().mount(router);
-    }
+  static initialiseEndpoints(router: Router): void {
+    new DiscordCandidateOnboardingEndpoint().mount(router);
+  }
 
 }

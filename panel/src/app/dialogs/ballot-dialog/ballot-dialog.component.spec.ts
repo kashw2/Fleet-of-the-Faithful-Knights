@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { BallotDialogComponent } from './ballot-dialog.component';
+import {BallotDialogComponent} from './ballot-dialog.component';
 
 describe('BallotDialogComponent', () => {
   let component: BallotDialogComponent;
@@ -8,9 +8,9 @@ describe('BallotDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BallotDialogComponent ]
+      declarations: [BallotDialogComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

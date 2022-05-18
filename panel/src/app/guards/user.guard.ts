@@ -12,13 +12,13 @@ export class UserGuard implements CanActivate {
   constructor(
     private userService: UserService,
     private navigationService: NavigationService,
-    ) {
+  ) {
   }
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
-    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return of(false)
       .pipe(switchMap(_ => this.userService.asObs()))
       .pipe(map(u => u.nonEmpty()))

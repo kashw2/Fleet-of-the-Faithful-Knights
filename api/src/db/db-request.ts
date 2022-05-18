@@ -7,93 +7,93 @@ import {Future} from "funfix";
 
 export class DbRequest {
 
-    constructor(private db: Database) {
-        this.connection = this.db.getConnection(3)
-            .run();
-    }
+  constructor(private db: Database) {
+    this.connection = this.db.getConnection(3)
+      .run();
+  }
 
-    private connection: Future<ConnectionPool>;
+  private readonly connection: Future<ConnectionPool>;
 
-    private getConnection(): Future<ConnectionPool> {
-        return this.connection;
-    }
+  private getConnection(): Future<ConnectionPool> {
+    return this.connection;
+  }
 
-    /**
-     * getJsonFromRecordSet()
-     *
-     * Given a Recordset probably returned from a Db query/procedure
-     * Return an object that doesn't have to be manipulated to access data correctly
-     * Function will probably evolve overtime, this is it in it's bare-bones state
-     *
-     */
-    private getJsonFromRecordSet(rs: IRecordSet<any>): Either<string, IRecordSet<any>> {
-        // recordsets always exists whereas recordset only exists if a dataset is returned
-        if (!rs || !rs[0] || rs.length < 1) {
-            return Left("Database returned empty recordset");
-        }
-        if (typeof rs[0][''] === "string") {
-            return Right(JSON.parse(rs[0]['']));
-        }
-        return Right(rs[0]);
+  /**
+   * getJsonFromRecordSet()
+   *
+   * Given a Recordset probably returned from a Db query/procedure
+   * Return an object that doesn't have to be manipulated to access data correctly
+   * Function will probably evolve overtime, this is it in it's bare-bones state
+   *
+   */
+  private getJsonFromRecordSet(rs: IRecordSet<any>): Either<string, IRecordSet<any>> {
+    // recordsets always exists whereas recordset only exists if a dataset is returned
+    if (!rs || !rs[0] || rs.length < 1) {
+      return Left("Database returned empty recordset");
     }
+    if (typeof rs[0][''] === "string") {
+      return Right(JSON.parse(rs[0]['']));
+    }
+    return Right(rs[0]);
+  }
 
-    sendRequest(
-        procedure: string,
-        params: List<string>,
-    ): Future<Either<string, IRecordSet<any>>> {
-        return this.getConnection()
-            .map(connection => connection.query(`${procedure} ${params.join(',').trim()}`))
-            .flatMap(Future.fromPromise)
-            .map(result => this.getJsonFromRecordSet(result.recordset));
-    }
+  sendRequest(
+    procedure: string,
+    params: List<string>,
+  ): Future<Either<string, IRecordSet<any>>> {
+    return this.getConnection()
+      .map(connection => connection.query(`${procedure} ${params.join(',').trim()}`))
+      .flatMap(Future.fromPromise)
+      .map(result => this.getJsonFromRecordSet(result.recordset));
+  }
 
-    sendRequestList(
-        procedure: string,
-        params: List<string>,
-    ): Future<Either<string, List<any>>> {
-        return this.getConnection()
-            .map(connection => connection.query(`${procedure} ${params.join(',').trim()}`))
-            .flatMap(Future.fromPromise)
-            .map(result => this.getJsonFromRecordSet(result.recordset))
-            .map(v => v.map(List));
-    }
+  sendRequestList(
+    procedure: string,
+    params: List<string>,
+  ): Future<Either<string, List<any>>> {
+    return this.getConnection()
+      .map(connection => connection.query(`${procedure} ${params.join(',').trim()}`))
+      .flatMap(Future.fromPromise)
+      .map(result => this.getJsonFromRecordSet(result.recordset))
+      .map(v => v.map(List));
+  }
 
-    sendRequestListSerialized<A>(
-        procedure: string,
-        params: List<string>,
-        serializer: JsonSerializer<A>,
-    ): Future<Either<string, List<A>>> {
-        return this.sendRequestList(procedure, params)
-            .map(result => result.map(v => serializer.fromJsonArray(v.toArray())));
-    }
+  sendRequestListSerialized<A>(
+    procedure: string,
+    params: List<string>,
+    serializer: JsonSerializer<A>,
+  ): Future<Either<string, List<A>>> {
+    return this.sendRequestList(procedure, params)
+      .map(result => result.map(v => serializer.fromJsonArray(v.toArray())));
+  }
 
-    sendRequestSerialized<A>(
-        procedure: string,
-        params: List<string>,
-        serializer: JsonSerializer<A>,
-    ): Future<Either<string, A>> {
-        return this.sendRequest(procedure, params)
-            .map(result => result.flatMap(v => EitherUtils.toEither(serializer.fromJsonImpl(v), 'Error serializing response from Database')));
-    }
+  sendRequestSerialized<A>(
+    procedure: string,
+    params: List<string>,
+    serializer: JsonSerializer<A>,
+  ): Future<Either<string, A>> {
+    return this.sendRequest(procedure, params)
+      .map(result => result.flatMap(v => EitherUtils.toEither(serializer.fromJsonImpl(v), 'Error serializing response from Database')));
+  }
 
-    sendRequestSet<A>(
-        procedure: string,
-        params: List<string>,
-    ): Future<Either<string, Set<any>>> {
-        return this.getConnection()
-            .map(connection => connection.query(`${procedure} ${params.join(',').trim()}`))
-            .flatMap(Future.fromPromise)
-            .map(result => this.getJsonFromRecordSet(result.recordset))
-            .map(v => v.map(Set));
-    }
+  sendRequestSet<A>(
+    procedure: string,
+    params: List<string>,
+  ): Future<Either<string, Set<any>>> {
+    return this.getConnection()
+      .map(connection => connection.query(`${procedure} ${params.join(',').trim()}`))
+      .flatMap(Future.fromPromise)
+      .map(result => this.getJsonFromRecordSet(result.recordset))
+      .map(v => v.map(Set));
+  }
 
-    sendRequestSetSerialized<A>(
-        procedure: string,
-        params: List<string>,
-        serializer: JsonSerializer<A>,
-    ): Future<Either<string, Set<A>>> {
-        return this.sendRequestSet(procedure, params)
-            .map(result => result.map(v => serializer.fromJsonArray(v.toArray()).toSet()));
-    }
+  sendRequestSetSerialized<A>(
+    procedure: string,
+    params: List<string>,
+    serializer: JsonSerializer<A>,
+  ): Future<Either<string, Set<A>>> {
+    return this.sendRequestSet(procedure, params)
+      .map(result => result.map(v => serializer.fromJsonArray(v.toArray()).toSet()));
+  }
 
 }

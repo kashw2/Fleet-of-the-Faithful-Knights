@@ -8,87 +8,87 @@ import {Future} from "funfix";
 
 export class GroupEndpoint extends AuthenticatedCrudEndpoint {
 
-    constructor(private db: Database) {
-        super('/group');
-    }
+  constructor(private db: Database) {
+    super('/group');
+  }
 
-    create(req: Request): Future<object> {
-        return EitherUtils.sequenceFuture(this.validate(req)
-            .map(v => {
-                this.db.cache.updateGroups(this.db.cache.groups.add(v));
-                return this.db.procedures.insert.insertGroup(v)(this.getRequestUsername(req));
-            }))
-            .flatMap(FutureUtils.fromEither)
-            .map(v => GroupJsonSerializer.instance.toJsonImpl(v));
-    }
+  create(req: Request): Future<object> {
+    return EitherUtils.sequenceFuture(this.validate(req)
+      .map(v => {
+        this.db.cache.updateGroups(this.db.cache.groups.add(v));
+        return this.db.procedures.insert.insertGroup(v)(this.getRequestUsername(req));
+      }))
+      .flatMap(FutureUtils.fromEither)
+      .map(v => GroupJsonSerializer.instance.toJsonImpl(v));
+  }
 
-    delete(req: Request): Future<object> {
-        return EitherUtils.sequenceFuture(this.getGroupId(req)
-            .map(gid => {
-                this.db.cache.updateGroups(this.db.cache.groups.removeIn(g => g.getId().contains(gid)));
-                return this.db.procedures.delete.deleteGroup(gid);
-            }))
-            .flatMap(FutureUtils.fromEither)
-            .map(v => GroupJsonSerializer.instance.toJsonImpl(v));
-    }
+  delete(req: Request): Future<object> {
+    return EitherUtils.sequenceFuture(this.getGroupId(req)
+      .map(gid => {
+        this.db.cache.updateGroups(this.db.cache.groups.removeIn(g => g.getId().contains(gid)));
+        return this.db.procedures.delete.deleteGroup(gid);
+      }))
+      .flatMap(FutureUtils.fromEither)
+      .map(v => GroupJsonSerializer.instance.toJsonImpl(v));
+  }
 
-    doesRequireAuthentication = (req: Request) => true;
+  doesRequireAuthentication = (req: Request) => true;
 
-    private getGroup(req: Request): Either<string, Group> {
-        return ApiUtils.parseBodyParamSerialized(req, 'group', GroupJsonSerializer.instance);
-    }
+  private getGroup(req: Request): Either<string, Group> {
+    return ApiUtils.parseBodyParamSerialized(req, 'group', GroupJsonSerializer.instance);
+  }
 
-    private getGroupId(req: Request): Either<string, string> {
-        return ApiUtils.parseStringQueryParam(req, 'group_id');
-    }
+  private getGroupId(req: Request): Either<string, string> {
+    return ApiUtils.parseStringQueryParam(req, 'group_id');
+  }
 
-    hasPermission(req: Request, res: Response, user: User): boolean {
-        switch (this.getHTTPMethod(req)) {
-            case 'POST':
-                return true;
-            case 'GET':
-                return true;
-            case 'PUT':
-                return true;
-            case 'DELETE':
-                return true;
-            default:
-                return false;
-        }
+  hasPermission(req: Request, res: Response, user: User): boolean {
+    switch (this.getHTTPMethod(req)) {
+      case 'POST':
+        return true;
+      case 'GET':
+        return true;
+      case 'PUT':
+        return true;
+      case 'DELETE':
+        return true;
+      default:
+        return false;
     }
+  }
 
-    read(req: Request): Future<object> {
-        if (this.getGroupId(req).isRight()) {
-            return Future.of(() => this.getGroupId(req).flatMap(gid => this.db.cache.groups.getGroupsById(gid)))
-                .flatMap(FutureUtils.fromEither)
-                .map(v => GroupJsonSerializer.instance.toJsonImpl(v));
-        }
-        return Future.of(() => EitherUtils.liftEither(this.db.cache.groups.getGroups(), "Group cache is empty"))
-            .flatMap(FutureUtils.fromEither)
-            .map(v => GroupJsonSerializer.instance.toJsonArray(v.toArray()));
+  read(req: Request): Future<object> {
+    if (this.getGroupId(req).isRight()) {
+      return Future.of(() => this.getGroupId(req).flatMap(gid => this.db.cache.groups.getGroupsById(gid)))
+        .flatMap(FutureUtils.fromEither)
+        .map(v => GroupJsonSerializer.instance.toJsonImpl(v));
     }
+    return Future.of(() => EitherUtils.liftEither(this.db.cache.groups.getGroups(), "Group cache is empty"))
+      .flatMap(FutureUtils.fromEither)
+      .map(v => GroupJsonSerializer.instance.toJsonArray(v.toArray()));
+  }
 
-    update(req: Request): Future<object> {
-        return EitherUtils.sequenceFuture(this.validate(req)
-            .map(g => {
-                this.db.cache.updateGroups(this.db.cache.groups.setIn(g, x => x.getId().equals(g.getId())));
-                return this.db.procedures.update.updateGroup(g)(this.getRequestUsername(req));
-            }))
-            .flatMap(FutureUtils.fromEither)
-            .map(v => GroupJsonSerializer.instance.toJsonImpl(v));
-    }
+  update(req: Request): Future<object> {
+    return EitherUtils.sequenceFuture(this.validate(req)
+      .map(g => {
+        this.db.cache.updateGroups(this.db.cache.groups.setIn(g, x => x.getId().equals(g.getId())));
+        return this.db.procedures.update.updateGroup(g)(this.getRequestUsername(req));
+      }))
+      .flatMap(FutureUtils.fromEither)
+      .map(v => GroupJsonSerializer.instance.toJsonImpl(v));
+  }
 
-    private validate(req: Request): Either<string, Group> {
-        switch (this.getHTTPMethod(req)) {
-            case 'POST':
-                return this.getGroup(req)
-                    .filterOrElse(g => g.getLabel().nonEmpty(), () => 'Group must have a label');
-            case 'PUT':
-                return this.getGroup(req)
-                    .filterOrElse(g => g.getId().nonEmpty(), () => 'Group must have an Id');
-            default:
-                return this.getGroup(req);
-        }
+  private validate(req: Request): Either<string, Group> {
+    switch (this.getHTTPMethod(req)) {
+      case 'POST':
+        return this.getGroup(req)
+          .filterOrElse(g => g.getLabel().nonEmpty(), () => 'Group must have a label');
+      case 'PUT':
+        return this.getGroup(req)
+          .filterOrElse(g => g.getId().nonEmpty(), () => 'Group must have an Id');
+      default:
+        return this.getGroup(req);
     }
+  }
 
 }

@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { FfkApiService } from './ffk-api.service';
+import {FfkApiService} from './ffk-api.service';
 
 describe('FfkApiService', () => {
   let service: FfkApiService;

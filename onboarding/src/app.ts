@@ -20,28 +20,28 @@ router.use(bodyParser.json());
 
 // TODO: When we have DNS setup, specify correct origins
 router.use((req: Request, res: Response, next: NextFunction) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', '*');
-    if (req.method.includes('OPTIONS')) {
-        res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE');
-        return res.status(200).json({});
-    }
-    next();
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', '*');
+  if (req.method.includes('OPTIONS')) {
+    res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE');
+    return res.status(200).json({});
+  }
+  next();
 });
 
 AllEndpoints.initialiseEndpoints(router);
 
 app.listen(process.env.PORT || 3002, () => {
 
-    EitherUtils.liftEither(process.env.FFK_DISCORD_CLIENT_SECRET, `Missing environment variables FFK_DISCORD_CLIENT_SECRET`)
-        .filterOrElse((_: string | undefined) => Option.of(process.env.FFK_DISCORD_REDIRECT).nonEmpty(), () => `Missing environment variable FFK_DISCORD_REDIRECT`)
-        .filterOrElse((_: string | undefined) => Option.of(process.env.FFK_DISCORD_BOT_TOKEN).nonEmpty(), () => `Missing environment variable FFK_DISCORD_BOT_TOKEN`)
-        .filterOrElse((_: string | undefined) => Option.of(process.env.FFK_API_SERVER).nonEmpty(), () => `Missing environment variable FFK_API_SERVER`)
-        .fold(
-            (error: string) => {
-                throw error;
-            },
-            () => console.log(`Listening on port 3002`)
-        );
+  EitherUtils.liftEither(process.env.FFK_DISCORD_CLIENT_SECRET, `Missing environment variables FFK_DISCORD_CLIENT_SECRET`)
+    .filterOrElse((_: string | undefined) => Option.of(process.env.FFK_DISCORD_REDIRECT).nonEmpty(), () => `Missing environment variable FFK_DISCORD_REDIRECT`)
+    .filterOrElse((_: string | undefined) => Option.of(process.env.FFK_DISCORD_BOT_TOKEN).nonEmpty(), () => `Missing environment variable FFK_DISCORD_BOT_TOKEN`)
+    .filterOrElse((_: string | undefined) => Option.of(process.env.FFK_API_SERVER).nonEmpty(), () => `Missing environment variable FFK_API_SERVER`)
+    .fold(
+      (error: string) => {
+        throw error;
+      },
+      () => console.log(`Listening on port 3002`)
+    );
 
 });

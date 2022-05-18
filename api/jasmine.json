@@ -8,5 +8,7 @@
     }
   ],
   "spec_dir": "tests",
-  "spec_files": ["**/*[sS]pec.ts"]
+  "spec_files": [
+    "**/*[sS]pec.ts"
+  ]
 }

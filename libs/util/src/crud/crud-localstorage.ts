@@ -6,22 +6,22 @@ import {Crud} from './crud';
  */
 export class CrudLocalStorage extends Crud {
 
-	public create(key: string, value: string): boolean {
-		localStorage.setItem(key, value);
-		return this.read(key).nonEmpty();
-	}
+  public create(key: string, value: string): boolean {
+    localStorage.setItem(key, value);
+    return this.read(key).nonEmpty();
+  }
 
-	public delete(key: string): boolean {
-		localStorage.removeItem(key);
-		return Option.of(localStorage.getItem(key)).isEmpty();
-	}
+  public delete(key: string): boolean {
+    localStorage.removeItem(key);
+    return Option.of(localStorage.getItem(key)).isEmpty();
+  }
 
-	public read(key: string): Option<string> {
-		return Option.of(localStorage.getItem(key));
-	}
+  public read(key: string): Option<string> {
+    return Option.of(localStorage.getItem(key));
+  }
 
-	public update(key: string, value: string): void {
-		return localStorage.setItem(key, value);
-	}
+  public update(key: string, value: string): void {
+    return localStorage.setItem(key, value);
+  }
 
 }

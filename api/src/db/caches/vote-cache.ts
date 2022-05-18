@@ -6,18 +6,18 @@ import {Either, Option} from "funfix-core";
 
 export class VoteCache extends Cache<Vote> {
 
-    constructor(private votes: List<Vote> = List()) {
-        super(votes);
-    }
+  constructor(private votes: List<Vote> = List()) {
+    super(votes);
+  }
 
-    private byVoteId: Map<string, Vote> = CollectionUtils.buildKeyedMap(this.getVotes(), v => v.getId());
+  private byVoteId: Map<string, Vote> = CollectionUtils.buildKeyedMap(this.getVotes(), v => v.getId());
 
-    getByVoteId(voteId: string): Either<string, Vote> {
-        return EitherUtils.toEither(Option.of(this.byVoteId.get(voteId)), `Vote with id ${voteId} does not exist`);
-    }
+  getByVoteId(voteId: string): Either<string, Vote> {
+    return EitherUtils.toEither(Option.of(this.byVoteId.get(voteId)), `Vote with id ${voteId} does not exist`);
+  }
 
-    getVotes(): List<Vote> {
-        return super.getValues();
-    }
+  getVotes(): List<Vote> {
+    return super.getValues();
+  }
 
 }

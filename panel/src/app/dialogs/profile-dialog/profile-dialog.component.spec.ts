@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ProfileDialogComponent } from './profile-dialog.component';
+import {ProfileDialogComponent} from './profile-dialog.component';
 
 describe('ProfileDialogComponent', () => {
   let component: ProfileDialogComponent;
@@ -8,9 +8,9 @@ describe('ProfileDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProfileDialogComponent ]
+      declarations: [ProfileDialogComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

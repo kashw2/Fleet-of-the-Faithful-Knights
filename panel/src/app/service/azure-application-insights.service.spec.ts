@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { AzureApplicationInsightsService } from './azure-application-insights.service';
+import {AzureApplicationInsightsService} from './azure-application-insights.service';
 
 describe('AzureApplicationInsightsService', () => {
   let service: AzureApplicationInsightsService;
