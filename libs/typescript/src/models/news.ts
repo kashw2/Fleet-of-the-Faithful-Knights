@@ -7,64 +7,64 @@ import {ccKey, contentKey, dateKey, idKey, titleKey, userKey} from '../misc/json
 
 export class News {
 
-	constructor(
-		private id: Option<string> = None,
-		private user: Option<User> = None,
-		private cc: Set<User> = Set(),
-		private title: Option<string> = None,
-		private content: Option<string> = None,
-		private date: Option<moment.Moment> = None,
-	) {
-	}
+  constructor(
+    private id: Option<string> = None,
+    private user: Option<User> = None,
+    private cc: Set<User> = Set(),
+    private title: Option<string> = None,
+    private content: Option<string> = None,
+    private date: Option<moment.Moment> = None,
+  ) {
+  }
 
-	public getCc(): Set<User> {
-		return this.cc;
-	}
+  public getCc(): Set<User> {
+    return this.cc;
+  }
 
-	public getContent(): Option<string> {
-		return this.content;
-	}
+  public getContent(): Option<string> {
+    return this.content;
+  }
 
-	public getDate(): Option<moment.Moment> {
-		return this.date;
-	}
+  public getDate(): Option<moment.Moment> {
+    return this.date;
+  }
 
-	public getId(): Option<string> {
-		return this.id;
-	}
+  public getId(): Option<string> {
+    return this.id;
+  }
 
-	public getTitle(): Option<string> {
-		return this.title;
-	}
+  public getTitle(): Option<string> {
+    return this.title;
+  }
 
-	public getUser(): Option<User> {
-		return this.user;
-	}
+  public getUser(): Option<User> {
+    return this.user;
+  }
 
 }
 
 export class NewsJsonSerializer extends JsonSerializer<News> {
 
-	static instance: NewsJsonSerializer = new NewsJsonSerializer();
+  static instance: NewsJsonSerializer = new NewsJsonSerializer();
 
-	fromJson(json: any): News {
-		return new News(
-			parseString(json[idKey]),
-			UserJsonSerializer.instance.fromJsonImpl(json[userKey]),
-			parseSetSerialized(json[ccKey], UserJsonSerializer.instance),
-			parseString(json[titleKey]),
-			parseString(json[contentKey]),
-			parseDate(json[dateKey]),
-		);
-	}
+  fromJson(json: any): News {
+    return new News(
+      parseString(json[idKey]),
+      UserJsonSerializer.instance.fromJsonImpl(json[userKey]),
+      parseSetSerialized(json[ccKey], UserJsonSerializer.instance),
+      parseString(json[titleKey]),
+      parseString(json[contentKey]),
+      parseDate(json[dateKey]),
+    );
+  }
 
-	toJson(value: News, builder: JsonBuilder): Record<string, any> {
-		return builder.addOptional(value.getId(), idKey)
-			.addOptionalSerialized(value.getUser(), userKey, UserJsonSerializer.instance)
-			.addIterableSerialized(value.getCc(), ccKey, UserJsonSerializer.instance)
-			.addOptional(value.getTitle(), titleKey)
-			.addOptional(value.getContent(), contentKey)
-			.addOptionalDate(value.getDate(), dateKey)
-			.build();
-	}
+  toJson(value: News, builder: JsonBuilder): Record<string, any> {
+    return builder.addOptional(value.getId(), idKey)
+      .addOptionalSerialized(value.getUser(), userKey, UserJsonSerializer.instance)
+      .addIterableSerialized(value.getCc(), ccKey, UserJsonSerializer.instance)
+      .addOptional(value.getTitle(), titleKey)
+      .addOptional(value.getContent(), contentKey)
+      .addOptionalDate(value.getDate(), dateKey)
+      .build();
+  }
 }

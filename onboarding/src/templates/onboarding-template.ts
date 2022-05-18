@@ -3,9 +3,9 @@ import {List} from "immutable";
 
 export abstract class OnboardingTemplate {
 
-    constructor() {
-    }
+  constructor() {
+  }
 
-    abstract importCandidate(): Promise<List<Candidate>>;
+  abstract importCandidate(): Promise<List<Candidate>>;
 
 }

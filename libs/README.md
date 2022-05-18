@@ -8,6 +8,7 @@
 All libraries that we develop belong in here.
 
 Libraries currently included:
+
 - External (lib-external)
 - Server (lib-server)
 - TypeScript (lib-ts)
@@ -16,6 +17,7 @@ Libraries currently included:
 ## Tidbits
 
 Certain libraries will require rebuild and publication of another version on the publication of another.
-This is the case of lib-ts and lib-util. As lib-ts utilises lib-util for its serialization upon build of lib-ts it will 
-build serialization stuff included inside of models and stuff in lib-ts, so if lib-util changes serialization stuff could be affected
+This is the case of lib-ts and lib-util. As lib-ts utilises lib-util for its serialization upon build of lib-ts it will
+build serialization stuff included inside of models and stuff in lib-ts, so if lib-util changes serialization stuff
+could be affected
 and inaccessible using the same type signature and method name that is needed for correct function.

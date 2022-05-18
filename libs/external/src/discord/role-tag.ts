@@ -4,45 +4,45 @@ import {botIdKey, integrationIdKey, premiumSubscriberKey} from './json-keys';
 
 export class DiscordRoleTag {
 
-	constructor(
-		readonly botId: Option<string> = None,
-		readonly integrationId: Option<string> = None,
-		readonly premiumSubscriber: Option<boolean> = None,
-	) {
-	}
+  constructor(
+    readonly botId: Option<string> = None,
+    readonly integrationId: Option<string> = None,
+    readonly premiumSubscriber: Option<boolean> = None,
+  ) {
+  }
 
-	public getBotId(): Option<string> {
-		return this.botId;
-	}
+  public getBotId(): Option<string> {
+    return this.botId;
+  }
 
-	public getIntegrationId(): Option<string> {
-		return this.integrationId;
-	}
+  public getIntegrationId(): Option<string> {
+    return this.integrationId;
+  }
 
-	public getPremiumSubscriber(): Option<boolean> {
-		return this.premiumSubscriber;
-	}
+  public getPremiumSubscriber(): Option<boolean> {
+    return this.premiumSubscriber;
+  }
 
 }
 
 export class DiscordRoleTagJsonSerializer extends JsonSerializer<DiscordRoleTag> {
 
-	static instance: DiscordRoleTagJsonSerializer = new DiscordRoleTagJsonSerializer();
+  static instance: DiscordRoleTagJsonSerializer = new DiscordRoleTagJsonSerializer();
 
-	fromJson(json: any): DiscordRoleTag {
-		return new DiscordRoleTag(
-			parseString(json[botIdKey]),
-			parseString(json[integrationIdKey]),
-			parseBoolean(json[premiumSubscriberKey]),
-		);
-	}
+  fromJson(json: any): DiscordRoleTag {
+    return new DiscordRoleTag(
+      parseString(json[botIdKey]),
+      parseString(json[integrationIdKey]),
+      parseBoolean(json[premiumSubscriberKey]),
+    );
+  }
 
-	toJson(value: DiscordRoleTag, builder: JsonBuilder): Record<string, any> {
-		return builder.addOptional(value.getBotId(), botIdKey)
-			.addOptional(value.getIntegrationId(), integrationIdKey)
-			.addOptional(value.getPremiumSubscriber(), premiumSubscriberKey)
-			.build();
-	}
+  toJson(value: DiscordRoleTag, builder: JsonBuilder): Record<string, any> {
+    return builder.addOptional(value.getBotId(), botIdKey)
+      .addOptional(value.getIntegrationId(), integrationIdKey)
+      .addOptional(value.getPremiumSubscriber(), premiumSubscriberKey)
+      .build();
+  }
 
 
 }

@@ -8,32 +8,32 @@ import {List} from "immutable";
 
 export class DiscordCandidateOnboardingEndpoint extends ApiEndpoint {
 
-    constructor() {
-        super('/candidate');
-    }
+  constructor() {
+    super('/candidate');
+  }
 
-    private getApiTemplate(req: Request): Either<string, ApiTemplate> {
-        return ApiUtils.parseBodyParamSerialized(req, 'template', ApiTemplateJsonSerializer.instance);
-    }
+  private getApiTemplate(req: Request): Either<string, ApiTemplate> {
+    return ApiUtils.parseBodyParamSerialized(req, 'template', ApiTemplateJsonSerializer.instance);
+  }
 
-    hasPermission(): boolean {
-        return true;
-    }
+  hasPermission(): boolean {
+    return true;
+  }
 
-    mount(router: Router): void {
-        router.post('/candidate', (req: Request, res: Response, next: NextFunction) => {
-            this.getApiTemplate(req)
-                .fold(
-                    (left) => ApiUtils.sendError(res, left, 400),
-                    async (template) => {
-                        const candidates = EitherUtils.toEither(template.getCode(), 'Unable to get template code')
-                            .flatMap(code => AllOnboardingTemplates.getOnbboardingTemplate(code))
-                            .map(tmpl => tmpl.importCandidate())
-                            .getOrElse(Promise.resolve(List<Candidate>()));
-                        candidates.then(v => ApiUtils.sendSerializedListResponse(res, v.toArray(), CandidateJsonSerializer.instance));
-                    }
-                );
-        });
-    }
+  mount(router: Router): void {
+    router.post('/candidate', (req: Request, res: Response, next: NextFunction) => {
+      this.getApiTemplate(req)
+        .fold(
+          (left) => ApiUtils.sendError(res, left, 400),
+          async (template) => {
+            const candidates = EitherUtils.toEither(template.getCode(), 'Unable to get template code')
+              .flatMap(code => AllOnboardingTemplates.getOnbboardingTemplate(code))
+              .map(tmpl => tmpl.importCandidate())
+              .getOrElse(Promise.resolve(List<Candidate>()));
+            candidates.then(v => ApiUtils.sendSerializedListResponse(res, v.toArray(), CandidateJsonSerializer.instance));
+          }
+        );
+    });
+  }
 
 }

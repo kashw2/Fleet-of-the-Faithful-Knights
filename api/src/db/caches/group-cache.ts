@@ -6,18 +6,18 @@ import {Either, Option} from "funfix-core";
 
 export class GroupCache extends Cache<Group> {
 
-    constructor(private groups: List<Group> = List()) {
-        super(groups);
-    }
+  constructor(private groups: List<Group> = List()) {
+    super(groups);
+  }
 
-    byId: Map<string, Group> = CollectionUtils.buildKeyedMap(this.getGroups(), (g) => g.getId());
+  byId: Map<string, Group> = CollectionUtils.buildKeyedMap(this.getGroups(), (g) => g.getId());
 
-    getGroups(): List<Group> {
-        return super.getValues();
-    }
+  getGroups(): List<Group> {
+    return super.getValues();
+  }
 
-    getGroupsById(groupId: string): Either<string, Group> {
-        return EitherUtils.toEither(Option.of(this.byId.get(groupId)), `Group with id ${groupId} does not exist`);
-    }
+  getGroupsById(groupId: string): Either<string, Group> {
+    return EitherUtils.toEither(Option.of(this.byId.get(groupId)), `Group with id ${groupId} does not exist`);
+  }
 
 }

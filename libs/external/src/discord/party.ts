@@ -5,37 +5,37 @@ import {idKey, sizeKey} from './json-keys';
 
 export class DiscordParty {
 
-	constructor(
-		readonly id: Option<string> = None,
-		readonly size: List<number> = List(),
-	) {
-	}
+  constructor(
+    readonly id: Option<string> = None,
+    readonly size: List<number> = List(),
+  ) {
+  }
 
-	public getId(): Option<string> {
-		return this.id;
-	}
+  public getId(): Option<string> {
+    return this.id;
+  }
 
-	public getSize(): List<number> {
-		return this.size;
-	}
+  public getSize(): List<number> {
+    return this.size;
+  }
 
 }
 
 export class DiscordPartyJsonSerializer extends JsonSerializer<DiscordParty> {
 
-	static instance: DiscordPartyJsonSerializer = new DiscordPartyJsonSerializer();
+  static instance: DiscordPartyJsonSerializer = new DiscordPartyJsonSerializer();
 
-	fromJson(json: any): DiscordParty {
-		return new DiscordParty(
-			parseString(json[idKey]),
-			parseList(json[sizeKey]),
-		);
-	}
+  fromJson(json: any): DiscordParty {
+    return new DiscordParty(
+      parseString(json[idKey]),
+      parseList(json[sizeKey]),
+    );
+  }
 
-	toJson(value: DiscordParty, builder: JsonBuilder): Record<string, any> {
-		return builder.addOptional(value.getId(), idKey)
-			.addIterable(value.getSize(), sizeKey)
-			.build();
-	}
+  toJson(value: DiscordParty, builder: JsonBuilder): Record<string, any> {
+    return builder.addOptional(value.getId(), idKey)
+      .addIterable(value.getSize(), sizeKey)
+      .build();
+  }
 
 }

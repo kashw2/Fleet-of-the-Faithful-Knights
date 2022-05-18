@@ -6,16 +6,16 @@ import {DbUpdate} from "./db-update";
 
 export class DbProcedures {
 
-    constructor(private requests: DbRequest) {
-        this.read = new DbRead(requests);
-        this.insert = new DbInsert(requests);
-        this.delete = new DbDelete(requests);
-        this.update = new DbUpdate(requests);
-    }
+  constructor(private requests: DbRequest) {
+    this.read = new DbRead(requests);
+    this.insert = new DbInsert(requests);
+    this.delete = new DbDelete(requests);
+    this.update = new DbUpdate(requests);
+  }
 
-    delete: DbDelete;
-    insert: DbInsert;
-    read: DbRead;
-    update: DbUpdate;
+  delete: DbDelete;
+  insert: DbInsert;
+  read: DbRead;
+  update: DbUpdate;
 
 }

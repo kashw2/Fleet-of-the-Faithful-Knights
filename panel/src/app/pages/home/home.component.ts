@@ -9,7 +9,7 @@ import {GroupService} from "../../service/group.service";
 import {CandidateService} from "../../service/candidate.service";
 import {VoteService} from "../../service/vote.service";
 import {EitherUtils, FutureUtils, OptionUtils} from "@kashw2/lib-util";
-import {User, Vote} from "@kashw2/lib-ts";
+import {Vote} from "@kashw2/lib-ts";
 import {Future, Right} from "funfix";
 import {of, switchMap} from "rxjs";
 import {List} from "immutable";

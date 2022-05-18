@@ -6,18 +6,18 @@ import {Either, Option} from "funfix-core";
 
 export class PermissionCache extends Cache<Permission> {
 
-    constructor(private permissions: List<Permission> = List()) {
-        super(permissions);
-    }
+  constructor(private permissions: List<Permission> = List()) {
+    super(permissions);
+  }
 
-    private byId: Map<string, Permission> = CollectionUtils.buildKeyedMap(this.getPermissions(), (p) => p.getId());
+  private byId: Map<string, Permission> = CollectionUtils.buildKeyedMap(this.getPermissions(), (p) => p.getId());
 
-    getByPermissionId(permissionId: string): Either<string, Permission> {
-        return EitherUtils.toEither(Option.of(this.byId.get(permissionId)), `Permission with id ${permissionId} does not exist`);
-    }
+  getByPermissionId(permissionId: string): Either<string, Permission> {
+    return EitherUtils.toEither(Option.of(this.byId.get(permissionId)), `Permission with id ${permissionId} does not exist`);
+  }
 
-    getPermissions(): List<Permission> {
-        return super.getValues();
-    }
+  getPermissions(): List<Permission> {
+    return super.getValues();
+  }
 
 }

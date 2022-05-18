@@ -2,7 +2,7 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {FfkApiService} from "../../service/ffk-api.service";
-import {filter, from} from "rxjs";
+import {from} from "rxjs";
 import {map} from "rxjs/operators";
 import {User, UserJsonSerializer} from "@kashw2/lib-ts";
 import {MatDialog} from "@angular/material/dialog";

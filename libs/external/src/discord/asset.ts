@@ -4,51 +4,51 @@ import {largeImageKey, largeTextKey, smallImageKey, smallTextKey} from './json-k
 
 export class DiscordAsset {
 
-	constructor(
-		readonly largeImage: Option<string> = None,
-		readonly largeText: Option<string> = None,
-		readonly smallImage: Option<string> = None,
-		readonly smallText: Option<string> = None,
-	) {
-	}
+  constructor(
+    readonly largeImage: Option<string> = None,
+    readonly largeText: Option<string> = None,
+    readonly smallImage: Option<string> = None,
+    readonly smallText: Option<string> = None,
+  ) {
+  }
 
-	public getLargeImage(): Option<string> {
-		return this.largeImage;
-	}
+  public getLargeImage(): Option<string> {
+    return this.largeImage;
+  }
 
-	public getLargeText(): Option<string> {
-		return this.largeText;
-	}
+  public getLargeText(): Option<string> {
+    return this.largeText;
+  }
 
-	public getSmallImage(): Option<string> {
-		return this.smallImage;
-	}
+  public getSmallImage(): Option<string> {
+    return this.smallImage;
+  }
 
-	public getSmallText(): Option<string> {
-		return this.smallText;
-	}
+  public getSmallText(): Option<string> {
+    return this.smallText;
+  }
 
 }
 
 export class DiscordAssetJsonSerializer extends JsonSerializer<DiscordAsset> {
 
-	static instance: DiscordAssetJsonSerializer = new DiscordAssetJsonSerializer();
+  static instance: DiscordAssetJsonSerializer = new DiscordAssetJsonSerializer();
 
-	fromJson(json: any): DiscordAsset {
-		return new DiscordAsset(
-			parseString(json[largeImageKey]),
-			parseString(json[largeTextKey]),
-			parseString(json[smallImageKey]),
-			parseString(json[smallTextKey])
-		);
-	}
+  fromJson(json: any): DiscordAsset {
+    return new DiscordAsset(
+      parseString(json[largeImageKey]),
+      parseString(json[largeTextKey]),
+      parseString(json[smallImageKey]),
+      parseString(json[smallTextKey])
+    );
+  }
 
-	toJson(value: DiscordAsset, builder: JsonBuilder): Record<string, any> {
-		return builder.addOptional(value.getLargeImage(), largeImageKey)
-			.addOptional(value.getLargeText(), largeTextKey)
-			.addOptional(value.getSmallImage(), smallImageKey)
-			.addOptional(value.getSmallText(), smallTextKey)
-			.build();
-	}
+  toJson(value: DiscordAsset, builder: JsonBuilder): Record<string, any> {
+    return builder.addOptional(value.getLargeImage(), largeImageKey)
+      .addOptional(value.getLargeText(), largeTextKey)
+      .addOptional(value.getSmallImage(), smallImageKey)
+      .addOptional(value.getSmallText(), smallTextKey)
+      .build();
+  }
 
 }

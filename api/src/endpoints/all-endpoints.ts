@@ -10,14 +10,14 @@ import {UserEndpoint} from "./user-endpoint";
 
 export class AllEndpoints {
 
-    static initialiseEndpoints(router: Router, db: Database): void {
-        new UserEndpoint(db).mount(router);
-        new GroupEndpoint(db).mount(router);
-        new PermissionsEndpoint(db).mount(router);
-        new UserPermissionMappingEndpoint(db).mount(router);
-        new VotesEndpoint(db).mount(router);
-        new BallotEndpoint(db).mount(router);
-        new CandidateEndpoint(db).mount(router);
-    }
+  static initialiseEndpoints(router: Router, db: Database): void {
+    new UserEndpoint(db).mount(router);
+    new GroupEndpoint(db).mount(router);
+    new PermissionsEndpoint(db).mount(router);
+    new UserPermissionMappingEndpoint(db).mount(router);
+    new VotesEndpoint(db).mount(router);
+    new BallotEndpoint(db).mount(router);
+    new CandidateEndpoint(db).mount(router);
+  }
 
 }
