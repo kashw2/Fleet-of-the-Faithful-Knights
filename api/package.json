@@ -33,7 +33,7 @@
   "dependencies": {
     "typescript": "4.6.4",
     "@types/mssql": "8.0.0",
-    "mssql": "8.1.0",
+    "mssql": "8.1.1",
     "@types/passport": "1.0.7",
     "passport": "0.5.3"
   },
