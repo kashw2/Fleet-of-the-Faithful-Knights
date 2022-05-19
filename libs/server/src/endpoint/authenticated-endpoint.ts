@@ -10,9 +10,8 @@ export abstract class AuthenticatedEndpoint extends ApiEndpoint {
     super(endpoint);
   }
 
-
   /**
-   * For use cases where a certain endpoint requires auth in 99% of it's functionality however not all
+   * For use cases where a certain endpoint requires auth in 99% of its functionality however not all
    * and allows for exceptions to be made.
    */
   abstract doesRequireAuthentication(req: Request): boolean;
