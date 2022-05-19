@@ -38,9 +38,7 @@ export abstract class JsonSerializer<A> {
   }
 
   public toJsonStringArray(values: A[]): string {
-    {
-      return JSON.stringify(this.toJsonArray(values), null, 2);
-    }
+    return JSON.stringify(this.toJsonArray(values), null, 2);
   }
 
 }

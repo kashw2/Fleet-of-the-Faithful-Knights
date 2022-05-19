@@ -23,7 +23,6 @@ export class ApiBase {
 
   protected hasError(status: number): boolean {
     switch (status.toString().charAt(0)) {
-      case '3':
       case '4':
       case '5':
         return true;
