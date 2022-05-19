@@ -15,7 +15,7 @@ on:
       - main
 
 jobs:
-  test-api:
+  test:
     if: github.event_name != 'push'
     runs-on: ubuntu-latest
     steps:
@@ -43,8 +43,9 @@ jobs:
 
       - name: test api
         run: lerna run test --scope=@ffk/api
-  build-api:
+  build:
     if: github.event_name != 'push'
+    needs: [test]
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -71,7 +72,7 @@ jobs:
 
       - name: build api
         run: lerna run build:dev --scope=@ffk/api
-  deploy-api:
+  deploy:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
