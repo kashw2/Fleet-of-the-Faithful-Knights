@@ -2,7 +2,7 @@ import {Request, Response, Router} from "express";
 import {User} from "@kashw2/lib-ts";
 import {ApiUtils} from "@kashw2/lib-util";
 import {AuthenticatedEndpoint} from "./authenticated-endpoint";
-import {Future} from "funfix";
+import {Future, IO} from "funfix";
 
 export abstract class AuthenticatedCrudEndpoint extends AuthenticatedEndpoint {
 
@@ -32,36 +32,36 @@ export abstract class AuthenticatedCrudEndpoint extends AuthenticatedEndpoint {
     router.post(this.getEndpoint(), (req: Request, res: Response) => {
       if (this.doesRequireAuthentication(req)) {
         this.getRequestUser(req)
-          .fold((error) => ApiUtils.sendError(res, error, 500), (user) => this.runImpl(req, res, user));
+          .fold((error) => ApiUtils.sendError(res, error, 500), (user) => this.runImpl(req, res, user).run());
       } else {
-        this.runImpl(req, res, new User());
+        this.runImpl(req, res, new User()).run();
       }
     });
     // R - Read
     router.get(this.getEndpoint(), (req: Request, res: Response) => {
       if (this.doesRequireAuthentication(req)) {
         this.getRequestUser(req)
-          .fold((error) => ApiUtils.sendError(res, error, 500), (user) => this.runImpl(req, res, user));
+          .fold((error) => ApiUtils.sendError(res, error, 500), (user) => this.runImpl(req, res, user).run());
       } else {
-        this.runImpl(req, res, new User());
+        this.runImpl(req, res, new User()).run();
       }
     });
     // U - Update
     router.put(this.getEndpoint(), (req: Request, res: Response) => {
       if (this.doesRequireAuthentication(req)) {
         this.getRequestUser(req)
-          .fold((error) => ApiUtils.sendError(res, error, 500), (user) => this.runImpl(req, res, user));
+          .fold((error) => ApiUtils.sendError(res, error, 500), (user) => this.runImpl(req, res, user).run());
       } else {
-        this.runImpl(req, res, new User());
+        this.runImpl(req, res, new User()).run();
       }
     });
     // D - Delete
     router.delete(this.getEndpoint(), (req: Request, res: Response) => {
       if (this.doesRequireAuthentication(req)) {
         this.getRequestUser(req)
-          .fold((error) => ApiUtils.sendError(res, error, 500), (user) => this.runImpl(req, res, user));
+          .fold((error) => ApiUtils.sendError(res, error, 500), (user) => this.runImpl(req, res, user).run());
       } else {
-        this.runImpl(req, res, new User());
+        this.runImpl(req, res, new User()).run();
       }
     });
   }
@@ -73,40 +73,42 @@ export abstract class AuthenticatedCrudEndpoint extends AuthenticatedEndpoint {
     return Future.raise(`${this.getHTTPMethod(req)} Not Implemented for ${this.getEndpoint()}`);
   }
 
-  runImpl(req: Request, res: Response, user: User): void {
+  runImpl(req: Request, res: Response, user: User): IO<void> {
     if (this.hasPermission(req, res, user)) {
-      try {
-        switch (this.getHTTPMethod(req)) {
-          case 'POST':
-            this.create(req)
-              .map(res.send)
-              .recover((err: string) => ApiUtils.sendError(res, err, 500));
-            break;
-          case 'GET':
-            this.read(req)
-              .map(res.send)
-              .recover((err: string) => ApiUtils.sendError(res, err, 500));
-            break;
-          case 'PUT':
-            this.update(req)
-              .map(res.send)
-              .recover((err: string) => ApiUtils.sendError(res, err, 500));
-            break;
-          case 'DELETE':
-            this.delete(req)
-              .map(res.send)
-              .recover((err: string) => ApiUtils.sendError(res, err, 500));
-            break;
-          default:
-            return ApiUtils.send505(res);
-        }
-      } catch (error) {
-        console.error(error);
-        return ApiUtils.send500(res);
-      }
+      return IO.of(() => this.getHTTPMethod(req))
+        .map(method => {
+          switch (method) {
+            case 'POST':
+              this.create(req)
+                .map(res.send)
+                .recover((err: string) => ApiUtils.sendError(res, err, 500));
+              break;
+            case 'GET':
+              this.read(req)
+                .map(res.send)
+                .recover((err: string) => ApiUtils.sendError(res, err, 500));
+              break;
+            case 'PUT':
+              this.update(req)
+                .map(res.send)
+                .recover((err: string) => ApiUtils.sendError(res, err, 500));
+              break;
+            case 'DELETE':
+              this.delete(req)
+                .map(res.send)
+                .recover((err: string) => ApiUtils.sendError(res, err, 500));
+              break;
+            default:
+              return ApiUtils.send505(res);
+          }
+        })
+        .recover(error => {
+          console.error(error);
+          IO.of(() => ApiUtils.send500(res));
+        });
     } else {
       console.log(`${this.getRequestUsername(req)} is not authorized to access ${this.getEndpoint()}`);
-      return ApiUtils.send401(res);
+      return IO.of(() => ApiUtils.send401(res));
     }
   }
 

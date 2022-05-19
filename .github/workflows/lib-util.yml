@@ -55,6 +55,7 @@ jobs:
           directory: libs/util
   build:
     if: github.event_name != 'push'
+    needs: [test]
     runs-on: ubuntu-latest
     steps:
       - name: checkout

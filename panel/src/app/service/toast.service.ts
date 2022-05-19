@@ -109,7 +109,6 @@ export class ToastService {
     success: string = '',
     lType: 'Error' | 'Warning' = 'Error',
     rType: 'Success' | 'Info' = 'Info',
-    title: Future<string> = input.map(v => v.isRight() ? rType : lType),
   ): Future<void> {
     return input.map(i => {
       if (i.isRight()) {
@@ -127,7 +126,6 @@ export class ToastService {
     success: string = '',
     lType: 'Error' | 'Warning' = 'Error',
     rType: 'Success' | 'Info' = 'Info',
-    title: Promise<string> = input.then(v => v.isRight() ? rType : lType),
   ): Promise<void> {
     return input.then(i => {
       if (i.isRight()) {

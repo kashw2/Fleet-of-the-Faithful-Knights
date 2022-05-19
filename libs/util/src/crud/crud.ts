@@ -1,11 +1,12 @@
+import {JsonSerializer} from '../json-serializer';
+import {Option} from 'funfix-core';
+
 /**
  * Crud represents Create Read Update and Delete functionality
  *
  * Features methods facilitating CRUD in both a serialized and normative manner
  *
  */
-import {JsonSerializer} from '../json-serializer';
-import {Option} from 'funfix-core';
 
 export abstract class Crud {
 

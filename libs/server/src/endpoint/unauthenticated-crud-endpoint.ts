@@ -28,21 +28,13 @@ export abstract class UnauthenticatedCrudEndpoint extends UnauthenticatedEndpoin
    */
   mount(router: Router): void {
     // C - Create
-    router.post(this.getEndpoint(), (req: Request, res: Response) => {
-      this.runImpl(req, res);
-    });
+    router.post(this.getEndpoint(), this.runImpl);
     // R - Read
-    router.get(this.getEndpoint(), (req: Request, res: Response) => {
-      this.runImpl(req, res);
-    });
+    router.get(this.getEndpoint(), this.runImpl);
     // U - Update
-    router.put(this.getEndpoint(), (req: Request, res: Response) => {
-      this.runImpl(req, res);
-    });
+    router.put(this.getEndpoint(), this.runImpl);
     // D - Delete
-    router.delete(this.getEndpoint(), (req: Request, res: Response) => {
-      this.runImpl(req, res);
-    });
+    router.delete(this.getEndpoint(), this.runImpl);
   }
 
   /**
