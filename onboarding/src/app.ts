@@ -1,5 +1,4 @@
 import express, {NextFunction, Request, Response} from "express";
-import bodyParser from "body-parser";
 import {AllEndpoints} from "./endpoints/all-endpoints";
 import {EitherUtils} from "@kashw2/lib-util";
 import {Option} from "funfix-core";
@@ -9,8 +8,7 @@ const router = express.Router();
 
 app.use("/", router);
 
-router.use(bodyParser.urlencoded({extended: false}));
-router.use(bodyParser.json());
+router.use(express.json());
 
 /**
  * We want to be initialising the endpoints with the same Router, as such we create an immutable variable for it,

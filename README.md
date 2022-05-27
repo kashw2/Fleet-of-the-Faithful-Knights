@@ -49,9 +49,6 @@ or ```usr/local/lib/node_modules``` on Linux.
 Once you have installed the above, run ```lerna bootstrap``` from the root of the repository to 'bootstrap' or install
 all dependencies for all projects in the repo.
 
-An optional installation is eslint for linting. At the time of writing the version of so is
-7.15.0. ```npm i -g eslint@7.15.0```
-
 #### Environment Variables
 
 For ease of use in terraform, also set up TF_VAR versions of these variables.

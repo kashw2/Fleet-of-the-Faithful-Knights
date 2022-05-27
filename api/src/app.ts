@@ -1,8 +1,7 @@
 import express, {NextFunction, Request, Response} from "express";
 import {Database} from "./db/database";
 import {AllEndpoints} from "./endpoints/all-endpoints";
-import bodyParser from "body-parser";
-import {UserJsonSerializer} from "@kashw2/lib-ts";
+import {User, UserJsonSerializer} from "@kashw2/lib-ts";
 import {Option} from "funfix-core";
 import {EitherUtils, FutureUtils} from "@kashw2/lib-util";
 
@@ -13,8 +12,7 @@ app.use("/", router);
 
 const db = new Database();
 
-router.use(bodyParser.urlencoded({extended: false}));
-router.use(bodyParser.json({limit: '100mb'}));
+router.use(express.json());
 
 /**
  * We want to be initialising the endpoints with the same Router, as such we create an immutable variable for it
@@ -38,7 +36,7 @@ router.use((req: Request, res: Response, next: NextFunction) => {
   discordId.map(id => {
     db.procedures.read.readUserByDiscordId(id)
       .flatMap(FutureUtils.fromEither)
-      .map(u => {
+      .map((u: User) => {
         req.user = UserJsonSerializer.instance.toJsonImpl(u);
         next();
       })

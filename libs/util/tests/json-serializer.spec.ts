@@ -79,4 +79,4 @@ test('JsonSerializer should convert from type to json string array', t => {
 test('JsonSerializer should convert from object string to type', t => {
   const result = TestUserJsonSerializer.instance.fromJsonString(TestUserJsonSerializer.instance.toJsonString(new TestUser(Some('hello'), Some('world'))));
   t.deepEqual(result, Some(new TestUser(Some('hello'), Some('world'))));
-})
+});
