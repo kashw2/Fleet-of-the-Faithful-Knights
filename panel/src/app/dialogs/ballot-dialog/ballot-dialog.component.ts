@@ -60,7 +60,7 @@ export class BallotDialogComponent implements OnInit {
         (error) => Future.of(() => this.toastService.show(error as string, "Error")),
         success => {
           this.voteService.setSelectedVote(this.voteService.getSelectedVote().map(v => v.withBallot(success)));
-          return Future.of(() => this.dialogRef.close())
+          return Future.of(() => this.dialogRef.close());
         }
       );
   }

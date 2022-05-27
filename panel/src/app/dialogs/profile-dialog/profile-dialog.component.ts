@@ -23,7 +23,7 @@ export class ProfileDialogComponent implements OnInit {
   }
 
   deleteUser(): void {
-    this.ffkApiService.deleteUser()
+    this.ffkApiService.deleteUser();
     if (this.getId().equals(this.userService.getUser().flatMap(u => u.getId()))) {
       this.crudLocalStorageService.delete('discordid');
       this.userService.clear();
