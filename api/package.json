@@ -34,7 +34,7 @@
     "typescript": "4.6.4",
     "@types/mssql": "8.0.1",
     "mssql": "8.1.2",
-    "@types/passport": "1.0.7",
+    "@types/passport": "1.0.8",
     "passport": "0.6.0"
   },
   "devDependencies": {
