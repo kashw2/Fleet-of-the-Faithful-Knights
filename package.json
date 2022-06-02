@@ -48,7 +48,7 @@
     "url-browser": "0.1.7",
     "util-browser": "0.0.2",
     "gh-pages": "4.0.0",
-    "typedoc": "0.22.16",
+    "typedoc": "0.22.17",
     "open-cli": "7.0.1",
     "tslint": "6.1.3",
     "@istanbuljs/nyc-config-typescript": "1.0.2",
