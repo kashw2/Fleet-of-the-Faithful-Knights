@@ -34,7 +34,7 @@
     "rxjs": "7.5.5",
     "ts-mixer": "6.0.1",
     "tslib": "2.4.0",
-    "typescript": "4.6.4",
+    "typescript": "4.7.2",
     "@microsoft/applicationinsights-web": "2.8.4"
   },
   "devDependencies": {
