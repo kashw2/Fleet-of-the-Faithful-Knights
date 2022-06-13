@@ -31,11 +31,7 @@
     "cov:json": "nyc report --reporter=json",
     "cov:ci": "run-s test cov:lcov cov:json && codecov -t $CODECOV_TOKEN --disable=gcov",
     "cov:show": "run-s build test && open-cli coverage/index.html",
-    "cov:check": "nyc report && nyc check-coverage --lines 100 --functions 100 --branches 100",
-    "doc": "npm run doc:html && open-cli dist/docs/index.html",
-    "doc:html": "typedoc src/ --exclude **/*.spec.ts --out dist/docs",
-    "doc:json": "typedoc src/ --exclude **/*.spec.ts --json dist/docs/typedoc.json",
-    "doc:publish": "gh-pages -m \"docs: update\" -d dist/docs"
+    "cov:check": "nyc report && nyc check-coverage --lines 100 --functions 100 --branches 100"
   },
   "engines": {
     "node": ">=14"
