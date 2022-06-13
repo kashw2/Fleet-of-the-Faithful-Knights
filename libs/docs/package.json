@@ -13,6 +13,11 @@
     "doc:json": "typedoc src/ --exclude **/*.spec.ts --json dist/docs/typedoc.json",
     "doc:publish": "gh-pages -m \"docs: update\" -d dist/docs"
   },
+  "dependencies": {
+    "typedoc": "0.22.17",
+    "open-cli": "7.0.1",
+    "gh-pages": "4.0.0"
+  },
   "engines": {
     "node": ">=14"
   }
