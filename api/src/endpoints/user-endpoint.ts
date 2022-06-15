@@ -227,12 +227,13 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
     if (this.shouldReadCurrentUser(req)) {
       return Future.pure(() => req.user);
     }
-    if (this.getUserId(req).isRight()) {
-      return Future.of(() => this.db.cache.users.getByDiscordId(this.getUserId(req).get()))
-        .flatMap(FutureUtils.fromEither)
-        .map(v => UserJsonSerializer.instance.toJsonImpl(v));
+    if (this.getUserId(req).isLeft()) {
+      return FutureUtils.fromEither(EitherUtils.liftEither(UserJsonSerializer.instance.toJsonArray(this.db.cache.users.getUsers().toArray()), "Users cache is empty"));
     }
-    return Future.of(() => EitherUtils.liftEither(UserJsonSerializer.instance.toJsonArray(this.db.cache.users.getUsers().toArray()), "Users cache is empty"));
+    return FutureUtils.fromEither(this.getUserId(req)
+      .map(uid => this.db.cache.users.getByDiscordId(uid)))
+      .flatMap(FutureUtils.fromEither)
+      .map(v => UserJsonSerializer.instance.toJsonImpl(v));
   }
 
   private shouldReadCurrentUser(req: Request): boolean {

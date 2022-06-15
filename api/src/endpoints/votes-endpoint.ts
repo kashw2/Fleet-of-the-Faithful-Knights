@@ -58,14 +58,14 @@ export class VotesEndpoint extends AuthenticatedCrudEndpoint {
   }
 
   read(req: Request): Future<object> {
-    if (this.getVoteId(req).isRight()) {
-      return Future.of(() => this.getVoteId(req).flatMap(vid => this.db.cache.votes.getByVoteId(vid)))
-        .flatMap(FutureUtils.fromEither)
-        .map(v => VoteJsonSerializer.instance.toJsonImpl(v));
+    if (this.getVoteId(req).isLeft()) {
+      return FutureUtils.fromEither(EitherUtils.liftEither(this.db.cache.votes.getVotes(), "Vote cache is empty"))
+        .map(v => VoteJsonSerializer.instance.toJsonArray(v.toArray()));
     }
-    return Future.of(() => EitherUtils.liftEither(this.db.cache.votes.getVotes(), "Vote cache is empty"))
+    return FutureUtils.fromEither(this.getVoteId(req))
+      .map(vid => this.db.cache.votes.getByVoteId(vid))
       .flatMap(FutureUtils.fromEither)
-      .map(v => VoteJsonSerializer.instance.toJsonArray(v.toArray()));
+      .map(v => VoteJsonSerializer.instance.toJsonImpl(v));
   }
 
   update(req: Request): Future<object> {

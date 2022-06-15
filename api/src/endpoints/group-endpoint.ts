@@ -58,14 +58,14 @@ export class GroupEndpoint extends AuthenticatedCrudEndpoint {
   }
 
   read(req: Request): Future<object> {
-    if (this.getGroupId(req).isRight()) {
-      return Future.of(() => this.getGroupId(req).flatMap(gid => this.db.cache.groups.getGroupsById(gid)))
-        .flatMap(FutureUtils.fromEither)
-        .map(v => GroupJsonSerializer.instance.toJsonImpl(v));
+    if (this.getGroupId(req).isLeft()) {
+      return FutureUtils.fromEither(EitherUtils.liftEither(this.db.cache.groups.getGroups(), "Group cache is empty"))
+        .map(v => GroupJsonSerializer.instance.toJsonArray(v.toArray()));
     }
-    return Future.of(() => EitherUtils.liftEither(this.db.cache.groups.getGroups(), "Group cache is empty"))
+    return FutureUtils.fromEither(this.getGroupId(req))
+      .map(gid => this.db.cache.groups.getGroupsById(gid))
       .flatMap(FutureUtils.fromEither)
-      .map(v => GroupJsonSerializer.instance.toJsonArray(v.toArray()));
+      .map(v => GroupJsonSerializer.instance.toJsonImpl(v));
   }
 
   update(req: Request): Future<object> {

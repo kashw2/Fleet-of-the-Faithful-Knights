@@ -6,7 +6,7 @@ import {Either, Option} from "funfix-core";
 
 export class GroupCache extends Cache<Group> {
 
-  constructor(private groups: List<Group> = List()) {
+  constructor(private groups: List<Group> = List<Group>()) {
     super(groups);
   }
 

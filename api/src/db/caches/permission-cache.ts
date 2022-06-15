@@ -6,7 +6,7 @@ import {Either, Option} from "funfix-core";
 
 export class PermissionCache extends Cache<Permission> {
 
-  constructor(private permissions: List<Permission> = List()) {
+  constructor(private permissions: List<Permission> = List<Permission>()) {
     super(permissions);
   }
 

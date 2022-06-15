@@ -54,7 +54,8 @@ export class BallotEndpoint extends AuthenticatedCrudEndpoint {
   }
 
   read(req: Request): Future<object> {
-    return Future.of(() => this.getVoteId(req).flatMap(vid => this.db.cache.ballots.getBallotById(vid)))
+    return FutureUtils.fromEither(this.getVoteId(req))
+      .map(vid => this.db.cache.ballots.getBallotById(vid))
       .flatMap(FutureUtils.fromEither)
       .map(v => BallotJsonSerializer.instance.toJsonImpl(v));
   }

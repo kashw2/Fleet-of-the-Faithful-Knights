@@ -6,7 +6,7 @@ import {CollectionUtils, EitherUtils} from "@kashw2/lib-util";
 
 export class CandidateCache extends Cache<Candidate> {
 
-  constructor(private candidates: List<Candidate>) {
+  constructor(private candidates: List<Candidate> = List<Candidate>()) {
     super(candidates);
   }
 
