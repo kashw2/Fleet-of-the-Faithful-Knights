@@ -71,11 +71,11 @@ export class CandidateEndpoint extends AuthenticatedCrudEndpoint {
 
   read(req: Request): Future<object> {
     if (this.getCandidateId(req).isLeft()) {
-      return Future.of(() => EitherUtils.liftEither(this.db.cache.candidates.getCandidates(), "Candidates cache is empty"))
-        .flatMap(FutureUtils.fromEither)
+      return FutureUtils.fromEither(EitherUtils.liftEither(this.db.cache.candidates.getCandidates(), "Candidate cache is empty"))
         .map(v => CandidateJsonSerializer.instance.toJsonArray(v.toArray()));
     }
-    return Future.of(() => this.getCandidateId(req).flatMap(cid => this.db.cache.candidates.getCandidateById(cid)))
+    return FutureUtils.fromEither(this.getCandidateId(req))
+      .map(cid => this.db.cache.candidates.getCandidateById(cid))
       .flatMap(FutureUtils.fromEither)
       .map(v => CandidateJsonSerializer.instance.toJsonImpl(v));
   }
