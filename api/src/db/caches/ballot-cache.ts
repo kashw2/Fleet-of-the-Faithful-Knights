@@ -6,7 +6,7 @@ import {Either, Option} from "funfix-core";
 
 export class BallotCache extends Cache<Ballot> {
 
-  constructor(private ballots: List<Ballot> = List()) {
+  constructor(private ballots: List<Ballot> = List<Ballot>()) {
     super(ballots);
   }
 

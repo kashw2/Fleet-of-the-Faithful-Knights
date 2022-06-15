@@ -19,19 +19,19 @@ export class DbCache {
       .subscribe(_ => this.cache().run());
   }
 
-  ballots: BallotCache = new BallotCache(List<Ballot>());
+  ballots: BallotCache = new BallotCache();
 
-  candidates: CandidateCache = new CandidateCache(List<Candidate>());
+  candidates: CandidateCache = new CandidateCache();
 
-  groups: GroupCache = new GroupCache(List<Group>());
+  groups: GroupCache = new GroupCache();
 
-  permissions: PermissionCache = new PermissionCache(List<Permission>());
+  permissions: PermissionCache = new PermissionCache();
 
   ready: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  users: UserCache = new UserCache(List<User>());
+  users: UserCache = new UserCache();
 
-  votes: VoteCache = new VoteCache(List<Vote>());
+  votes: VoteCache = new VoteCache();
 
   cache(): IO<void> {
     return IO.always(() => console.info('Starting Cache'))
