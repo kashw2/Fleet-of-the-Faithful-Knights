@@ -38,7 +38,7 @@
     "@microsoft/applicationinsights-web": "2.8.4"
   },
   "devDependencies": {
-    "lerna": "5.1.2",
+    "lerna": "5.1.4",
     "assert-browserify": "2.0.0",
     "browserify-zlib": "0.2.0",
     "os-browserify": "0.3.0",
