@@ -253,6 +253,12 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
 
   private validate(req: Request): Either<string, User> {
     switch (this.getHTTPMethod(req)) {
+      case 'POST':
+        if (!this.doesRequireAuthentication(req)) {
+          return Right(new User());
+        }
+        // In hindsight, we will probably never be creating a user where we know the user that is coming in externally
+        return this.getUser(req);
       case 'PUT':
         return this.getUser(req)
           .filterOrElse(u => u.getId().nonEmpty(), () => 'User must have an Id');
