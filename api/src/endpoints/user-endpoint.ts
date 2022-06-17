@@ -2,12 +2,10 @@ import {AuthenticatedCrudEndpoint} from "@kashw2/lib-server";
 import {Group, User, UserJsonSerializer} from "@kashw2/lib-ts";
 import {Request, Response} from "express";
 import {ApiUtils, EitherUtils, FutureUtils, OptionUtils} from "@kashw2/lib-util";
-import {Either, None, Option, Some} from "funfix-core";
+import {Either, None, Option, Right, Some} from "funfix-core";
 import {Database} from "../db/database";
 import {DiscordApi} from "@kashw2/lib-external";
-import {filter, map, switchMap, tap} from "rxjs/operators";
-import {List, Map} from "immutable";
-import {from, lastValueFrom, of} from "rxjs";
+import {Map} from "immutable";
 import {Future} from "funfix";
 
 const discordRoleIdToGroupMap: Map<string, Group> = Map(
@@ -113,32 +111,24 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
         process.env.FFK_DISCORD_REDIRECT!,
         process.env.FFK_DISCORD_BOT_TOKEN!,
       );
-      return Future.fromPromise(lastValueFrom(from(discordApi.getOAuth(this.getDiscordAuthToken(req).get()))
-        .pipe(map(v => v.toOption().flatMap(dt => dt.getAccessToken())))
-        .pipe(filter(v => v.nonEmpty()))
-        .pipe(map(v => v.get()))
-        .pipe(switchMap(token => {
-          return from(discordApi.getCurrentUser(token))
-            .pipe(switchMap(du => {
-              return of(du)
-                .pipe(map(v => v.toOption().flatMap(du2 => du2.getId())))
-                .pipe(filter(v => v.nonEmpty()))
-                .pipe(map(v => v.get()))
-                .pipe(switchMap(did => discordApi.getGuildMember(did, DiscordApi.getFfkGuildId())))
-                .pipe(map(v => v.toOption().map(dgm => dgm.getRoles()).getOrElse(List<string>())))
-                .pipe(map(roles => roles.map(r => Option.of(discordRoleIdToGroupMap.get(r)))))
-                .pipe(map(v => v.filterNot(gs => gs.isEmpty())))
-                .pipe(map((groups) => OptionUtils.flattenList(groups.toList())))
-                .pipe(map(groups => groups.sort((current, previous) => current.isLower(previous) ? 1 : -1).first<Group>()))
-                .pipe(map(group => User.fromDiscordUser(du.get()).withGroup(group)))
-                .pipe(tap(u => {
-                  this.db.cache.updateUsers(this.db.cache.users.add(u));
-                  this.db.procedures.insert.insertUser(u)('System');
-                }));
-            }));
-        })))
-      )
-        .map(u => EitherUtils.liftEither(UserJsonSerializer.instance.toJsonImpl(u), "Unable to create User"))
+      return discordApi.getOAuth(this.getDiscordAuthToken(req).get())
+        .flatMap(t => FutureUtils.fromOption(t.getAccessToken(), "Unable to get access token"))
+        .flatMap(token => discordApi.getCurrentUser(token))
+        .flatMap(user => {
+          return FutureUtils.fromOption(user.getId(), "Unable to get user id")
+            .flatMap(id => discordApi.getGuildMember(id, DiscordApi.getFfkGuildId()))
+            .map(member => member.getRoles())
+            .map(roles => roles.map(role => Option.of(discordRoleIdToGroupMap.get(role))))
+            .map(roles => OptionUtils.flattenSet(roles))
+            .map(groups => groups.sort((current, previous) => current.isLower(previous) ? 1 : -1).first<Group>())
+            .map(group => User.fromDiscordUser(user).withGroup(group));
+        })
+        .flatMap(user => {
+          this.db.cache.updateUsers(this.db.cache.users.add(user));
+          return this.db.procedures.insert.insertUser(user)('System');
+        })
+        .flatMap(FutureUtils.fromEither)
+        .map(user => EitherUtils.liftEither(UserJsonSerializer.instance.toJsonImpl(user), "Unable to create User"))
         .flatMap(FutureUtils.fromEither);
     }
     return EitherUtils.sequenceFuture(this.validate(req)
@@ -149,7 +139,6 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
       .flatMap(FutureUtils.fromEither)
       .map(v => UserJsonSerializer.instance.toJsonImpl(v));
   }
-
 
   delete(req: Request): Future<object> {
     if (this.getDiscordAuthToken(req).isRight()) {
