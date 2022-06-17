@@ -16,7 +16,6 @@ router.use(express.json());
  * each with their own router.
  */
 
-// TODO: When we have DNS setup, specify correct origins
 router.use((req: Request, res: Response, next: NextFunction) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', '*');
@@ -39,7 +38,7 @@ app.listen(process.env.PORT || 3002, () => {
       (error: string) => {
         throw error;
       },
-      () => console.log(`Listening on port 3002`)
+      () => console.log(`Listening on port ${process.env.PORT || 3002}`)
     );
 
 });
