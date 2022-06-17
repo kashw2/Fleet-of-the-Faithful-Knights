@@ -29,9 +29,9 @@ export class DiscordUser {
     readonly locale: Option<string> = None,
     readonly verified: Option<boolean> = None,
     readonly email: Option<string> = None,
-    readonly flags: Option<string> = None, // TODO: Implement Flags
+    readonly flags: Option<string> = None,
     readonly premiumType: Option<number> = None,
-    readonly publicFlags: Option<string> = None // TODO: Implement Flags
+    readonly publicFlags: Option<string> = None
   ) {
   }
 
