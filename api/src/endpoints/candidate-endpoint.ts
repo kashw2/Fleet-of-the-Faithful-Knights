@@ -17,7 +17,7 @@ export class CandidateEndpoint extends AuthenticatedCrudEndpoint {
     if (this.getCandidateId(req).isRight()) {
       return EitherUtils.sequenceFuture(this.getCandidate(req)
         .map(v => {
-          this.db.cache.updateCandidates(this.db.cache.candidates.add(v));
+          this.db.cache.updateCandidates(cache => cache.add(v));
           return this.db.procedures.insert.insertCandidate(v)(this.getRequestUsername(req));
         }))
         .flatMap(FutureUtils.fromEither)
@@ -25,7 +25,7 @@ export class CandidateEndpoint extends AuthenticatedCrudEndpoint {
     }
     return EitherUtils.sequenceFuture(this.getCandidates(req)
       .map(v => {
-        this.db.cache.updateCandidates(this.db.cache.candidates.update(v));
+        this.db.cache.updateCandidates(cache => cache.update(v));
         return this.db.procedures.insert.insertCandidates(v)(this.getRequestUsername(req));
       }))
       .flatMap(FutureUtils.fromEither)
@@ -35,7 +35,7 @@ export class CandidateEndpoint extends AuthenticatedCrudEndpoint {
   delete(req: Request): Future<object> {
     return EitherUtils.sequenceFuture(this.getCandidateId(req)
       .map(cid => {
-        this.db.cache.updateCandidates(this.db.cache.candidates.removeIn(c => c.getId().contains(cid)));
+        this.db.cache.updateCandidates(cache => cache.removeIn(c => c.getId().contains(cid)));
         return this.db.procedures.delete.deleteCandidate(cid);
       }))
       .flatMap(FutureUtils.fromEither)
@@ -85,7 +85,7 @@ export class CandidateEndpoint extends AuthenticatedCrudEndpoint {
       this.validate(req),
       this.getCandidateId(req),
       (c, cid) => {
-        this.db.cache.updateCandidates(this.db.cache.candidates.setIn(c, v => v.getId().contains(cid)));
+        this.db.cache.updateCandidates(cache => cache.setIn(c, v => v.getId().contains(cid)));
         return this.db.procedures.update.updateCandidate(c, cid)(this.getRequestUsername(req));
       }
     ))
