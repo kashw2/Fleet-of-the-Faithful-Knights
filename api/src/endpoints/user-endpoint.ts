@@ -124,7 +124,7 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
             .map(group => User.fromDiscordUser(user).withGroup(group));
         })
         .flatMap(user => {
-          this.db.cache.updateUsers(this.db.cache.users.add(user));
+          this.db.cache.updateUsers(cache => cache.add(user));
           return this.db.procedures.insert.insertUser(user)('System');
         })
         .flatMap(FutureUtils.fromEither)
@@ -133,7 +133,7 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
     }
     return EitherUtils.sequenceFuture(this.validate(req)
       .map(u => {
-        this.db.cache.updateUsers(this.db.cache.users.add(u));
+        this.db.cache.updateUsers(cache => cache.add(u));
         return this.db.procedures.insert.insertUser(u)(this.getModifiedBy(req));
       }))
       .flatMap(FutureUtils.fromEither)
@@ -146,7 +146,7 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
         .map(t => this.db.procedures.delete.deleteUser(t)))
         .flatMap(FutureUtils.fromEither)
         .map(v => {
-          this.db.cache.updateUsers(this.db.cache.users.removeIn(ru => ru.getDiscordId().equals(v.getDiscordId())));
+          this.db.cache.updateUsers(cache => cache.removeIn(ru => ru.getDiscordId().equals(v.getDiscordId())));
           return UserJsonSerializer.instance.toJsonImpl(v);
         });
     }
@@ -233,7 +233,7 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
   update(req: Request): Future<object> {
     return EitherUtils.sequenceFuture(this.validate(req)
       .map(u => {
-        this.db.cache.updateUsers(this.db.cache.users.add(u));
+        this.db.cache.updateUsers(cache => cache.add(u));
         return this.db.procedures.update.updateUser(u)(this.getRequestUsername(req));
       }))
       .flatMap(FutureUtils.fromEither)

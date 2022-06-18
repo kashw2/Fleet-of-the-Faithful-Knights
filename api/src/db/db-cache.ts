@@ -102,33 +102,33 @@ export class DbCache {
       .getValue();
   }
 
-  updateBallots(values: List<Ballot>): BallotCache {
-    this.ballots = new BallotCache(this.ballots.getBallots().concat(values));
+  updateBallots(thunk: (cache: BallotCache) => List<Ballot>): BallotCache {
+    this.ballots = new BallotCache(this.ballots.getBallots().concat(thunk(this.ballots)));
     return this.ballots;
   }
 
-  updateCandidates(values: List<Candidate>): CandidateCache {
-    this.candidates = new CandidateCache(this.candidates.getCandidates().concat(values));
+  updateCandidates(thunk: (cache: CandidateCache) => List<Candidate>): CandidateCache {
+    this.candidates = new CandidateCache(this.candidates.getCandidates().concat(thunk(this.candidates)));
     return this.candidates;
   }
 
-  updateGroups(values: List<Group>): GroupCache {
-    this.groups = new GroupCache(this.groups.getGroups().concat(values));
+  updateGroups(thunk: (cache: GroupCache) => List<Group>): GroupCache {
+    this.groups = new GroupCache(this.groups.getGroups().concat(thunk(this.groups)));
     return this.groups;
   }
 
-  updatePermissions(values: List<Permission>): PermissionCache {
-    this.permissions = new PermissionCache(this.permissions.getPermissions().concat(values));
+  updatePermissions(thunk: (cache: PermissionCache) => List<Permission>): PermissionCache {
+    this.permissions = new PermissionCache(this.permissions.getPermissions().concat(thunk(this.permissions)));
     return this.permissions;
   }
 
-  updateUsers(values: List<User>): UserCache {
-    this.users = new UserCache(this.users.getUsers().concat(values));
+  updateUsers(thunk: (cache: UserCache) => List<User>): UserCache {
+    this.users = new UserCache(this.users.getUsers().concat(thunk(this.users)));
     return this.users;
   }
 
-  updateVotes(values: List<Vote>): VoteCache {
-    this.votes = new VoteCache(this.votes.getVotes().concat(values));
+  updateVotes(thunk: (cache: VoteCache) => List<Vote>): VoteCache {
+    this.votes = new VoteCache(this.votes.getVotes().concat(thunk(this.votes)));
     return this.votes;
   }
 

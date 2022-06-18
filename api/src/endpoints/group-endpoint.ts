@@ -15,7 +15,7 @@ export class GroupEndpoint extends AuthenticatedCrudEndpoint {
   create(req: Request): Future<object> {
     return EitherUtils.sequenceFuture(this.validate(req)
       .map(v => {
-        this.db.cache.updateGroups(this.db.cache.groups.add(v));
+        this.db.cache.updateGroups(cache => cache.add(v));
         return this.db.procedures.insert.insertGroup(v)(this.getRequestUsername(req));
       }))
       .flatMap(FutureUtils.fromEither)
@@ -25,7 +25,7 @@ export class GroupEndpoint extends AuthenticatedCrudEndpoint {
   delete(req: Request): Future<object> {
     return EitherUtils.sequenceFuture(this.getGroupId(req)
       .map(gid => {
-        this.db.cache.updateGroups(this.db.cache.groups.removeIn(g => g.getId().contains(gid)));
+        this.db.cache.updateGroups(cache => cache.removeIn(g => g.getId().contains(gid)));
         return this.db.procedures.delete.deleteGroup(gid);
       }))
       .flatMap(FutureUtils.fromEither)
@@ -71,7 +71,7 @@ export class GroupEndpoint extends AuthenticatedCrudEndpoint {
   update(req: Request): Future<object> {
     return EitherUtils.sequenceFuture(this.validate(req)
       .map(g => {
-        this.db.cache.updateGroups(this.db.cache.groups.setIn(g, x => x.getId().equals(g.getId())));
+        this.db.cache.updateGroups(cache => cache.setIn(g, x => x.getId().equals(g.getId())));
         return this.db.procedures.update.updateGroup(g)(this.getRequestUsername(req));
       }))
       .flatMap(FutureUtils.fromEither)

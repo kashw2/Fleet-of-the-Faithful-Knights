@@ -15,7 +15,7 @@ export class PermissionsEndpoint extends AuthenticatedCrudEndpoint {
   create(req: Request): Future<object> {
     return EitherUtils.sequenceFuture(this.validate(req)
       .map(v => {
-        this.db.cache.updatePermissions(this.db.cache.permissions.add(v));
+        this.db.cache.updatePermissions(cache => cache.add(v));
         return this.db.procedures.insert.insertPermission(v)(this.getRequestUsername(req));
       }))
       .flatMap(FutureUtils.fromEither)
@@ -25,7 +25,7 @@ export class PermissionsEndpoint extends AuthenticatedCrudEndpoint {
   delete(req: Request): Future<object> {
     return EitherUtils.sequenceFuture(this.getPermissionId(req)
       .map(pid => {
-        this.db.cache.updatePermissions(this.db.cache.permissions.removeIn(p => p.getId().contains(pid)));
+        this.db.cache.updatePermissions(cache => cache.removeIn(p => p.getId().contains(pid)));
         return this.db.procedures.delete.deletePermission(pid);
       }))
       .flatMap(FutureUtils.fromEither)
@@ -71,7 +71,7 @@ export class PermissionsEndpoint extends AuthenticatedCrudEndpoint {
   update(req: Request): Future<object> {
     return EitherUtils.sequenceFuture(this.validate(req)
       .map(p => {
-        this.db.cache.updatePermissions(this.db.cache.permissions.setIn(p, v => v.getId().equals(p.getId())));
+        this.db.cache.updatePermissions(cache => cache.setIn(p, v => v.getId().equals(p.getId())));
         return this.db.procedures.update.updatePermission(p)(this.getRequestUsername(req));
       }))
       .flatMap(FutureUtils.fromEither)
