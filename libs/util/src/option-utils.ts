@@ -46,6 +46,9 @@ export class OptionUtils {
     return option;
   }
 
+  /**
+   * Functionally equivalent to the combination of scala.Option.toRight and scala.Option.toLeft however does not have a left or right association
+   */
   static toEither<T>(opt: Option<T>, left: string): Either<string, T> {
     if (opt.nonEmpty()) {
       return Right(opt.get());
@@ -66,5 +69,4 @@ export class OptionUtils {
   static when<A>(predicate: boolean, f: () => A): Option<A> {
     return predicate ? Option.of(f()) : None;
   }
-
 }
