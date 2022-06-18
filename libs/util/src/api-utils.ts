@@ -11,24 +11,24 @@ export class ApiUtils {
   }
 
   static parseBodyParamSerializedList<A>(req: Request, key: string, serializer: JsonSerializer<A>): Either<string, List<A>> {
-    return EitherUtils.liftEither(serializer.fromJsonArray(req.body[key]), `Unable to parse body param ${key}`);
+    return EitherUtils.lift(serializer.fromJsonArray(req.body[key]), `Unable to parse body param ${key}`);
   }
 
   static parseBooleanQueryParam(req: Request, key: string): Either<string, boolean> {
-    return EitherUtils.liftEither(req.query[key] as string, `Unable to parse query param ${key}`)
+    return EitherUtils.lift(req.query[key] as string, `Unable to parse query param ${key}`)
       .map(v => v.toLowerCase() === 'true');
   }
 
   static parseStringHeaderParam(req: Request, key: string): Either<string, string> {
-    return EitherUtils.liftEither(req.rawHeaders[key], `Unable to parse header ${key}`);
+    return EitherUtils.lift(req.rawHeaders[key], `Unable to parse header ${key}`);
   }
 
   static parseStringQueryParam(req: Request, key: string): Either<string, string> {
-    return EitherUtils.liftEither(req.query[key] as string, `Unable to parse query param ${key}`);
+    return EitherUtils.lift(req.query[key] as string, `Unable to parse query param ${key}`);
   }
 
   static parseUrlStringParam(req: Request, key: string): Either<string, string> {
-    return EitherUtils.liftEither(req.params[key], `Unable to parse url param ${key}`);
+    return EitherUtils.lift(req.params[key], `Unable to parse url param ${key}`);
   }
 
   static send401(res: Response): void {

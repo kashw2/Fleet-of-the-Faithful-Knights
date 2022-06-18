@@ -328,17 +328,17 @@ test('EitherUtils should leftTap', t => {
 });
 
 test('EitherUtils should lift', t => {
-  const result = EitherUtils.liftEither(1, 'Error');
+  const result = EitherUtils.lift(1, 'Error');
   t.deepEqual(result, Right(1));
 });
 
 test('EitherUtils should sequence', async t => {
-  const result = await EitherUtils.sequence(EitherUtils.liftEither(Promise.resolve(Right(1)), 'Error'));
+  const result = await EitherUtils.sequence(EitherUtils.lift(Promise.resolve(Right(1)), 'Error'));
   t.deepEqual(result, Right(1));
 });
 
 test('EitherUtils should fail to sequence', async t => {
-  const result = await EitherUtils.sequence(EitherUtils.liftEither(Promise.resolve(Left(1)), 'Error'));
+  const result = await EitherUtils.sequence(EitherUtils.lift(Promise.resolve(Left(1)), 'Error'));
   t.deepEqual(result, Left(1));
 });
 
@@ -348,12 +348,12 @@ test('EitherUtils should convert to either', t => {
 });
 
 test('EitherUtils should sequence future', async t => {
-  const result = await EitherUtils.sequenceFuture(EitherUtils.liftEither(Future.pure(Right(1)), 'Error'));
+  const result = await EitherUtils.sequenceFuture(EitherUtils.lift(Future.pure(Right(1)), 'Error'));
   t.deepEqual(result, Right(1));
 });
 
 test('EitherUtils should fail to sequence future', async t => {
-  const result = await EitherUtils.sequenceFuture(EitherUtils.liftEither(Future.pure(Left(1)), 'Error'));
+  const result = await EitherUtils.sequenceFuture(EitherUtils.lift(Future.pure(Left(1)), 'Error'));
   t.deepEqual(result, Left(1));
 });
 
