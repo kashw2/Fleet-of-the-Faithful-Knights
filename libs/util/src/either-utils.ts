@@ -118,7 +118,7 @@ export class EitherUtils {
     return e;
   }
 
-  static liftEither<A>(value: A, left: string): Either<string, A> {
+  static lift<A>(value: A, left: string): Either<string, A> {
     return Option.of(value).nonEmpty() ? Right(value) : Left(left);
   }
 

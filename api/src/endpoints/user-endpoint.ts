@@ -114,15 +114,13 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
       return discordApi.getOAuth(this.getDiscordAuthToken(req).get())
         .flatMap(t => FutureUtils.fromOption(t.getAccessToken(), "Unable to get access token"))
         .flatMap(token => discordApi.getCurrentUser(token))
-        .flatMap(user => {
-          return FutureUtils.fromOption(user.getId(), "Unable to get user id")
-            .flatMap(id => discordApi.getGuildMember(id, DiscordApi.getFfkGuildId()))
-            .map(member => member.getRoles())
-            .map(roles => roles.map(role => Option.of(discordRoleIdToGroupMap.get(role))))
-            .map(roles => OptionUtils.flattenSet(roles))
-            .map(groups => groups.sort((current, previous) => current.isLower(previous) ? 1 : -1).first<Group>())
-            .map(group => User.fromDiscordUser(user).withGroup(group));
-        })
+        .flatMap(user => FutureUtils.fromOption(user.getId(), "Unable to get user id")
+          .flatMap(id => discordApi.getGuildMember(id, DiscordApi.getFfkGuildId()))
+          .map(member => member.getRoles())
+          .map(roles => roles.map(role => Option.of(discordRoleIdToGroupMap.get(role))))
+          .map(roles => OptionUtils.flattenSet(roles))
+          .map(groups => groups.sort((current, previous) => current.isLower(previous) ? 1 : -1).first<Group>())
+          .map(group => User.fromDiscordUser(user).withGroup(group)))
         .flatMap(user => {
           this.db.cache.updateUsers(cache => cache.add(user));
           return this.db.procedures.insert.insertUser(user)('System');

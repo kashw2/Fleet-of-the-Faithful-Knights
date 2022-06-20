@@ -53,11 +53,10 @@ router.use((req: Request, res: Response, next: NextFunction) => {
 app.use((req: Request, res: Response, next: NextFunction) => {
   if (!req.route)
     res.status(404);
-  if (!db.cache.isReady()) {
+  if (!db.cache.isReady())
     res.json({error: 'API Server Starting'});
-  } else {
+  else
     res.json({message: 'Welcome to the Fleet of the Faithful Knights API Server'});
-  }
   next();
 });
 
@@ -78,6 +77,6 @@ app.listen(process.env.PORT || 3000, () => {
       (error: string) => {
         throw error;
       },
-      () => console.log(`Listening on port 3000`)
+      () => console.log(`Listening on port ${process.env.PORT || 3000}`)
     );
 });
