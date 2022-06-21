@@ -13,7 +13,7 @@ export class AllOnboardingTemplates {
   );
 
   static getOnbboardingTemplate(code: string): Either<string, OnboardingTemplate> {
-    return EitherUtils.liftEither(this.onboardingTemplates.get(code)!, `${code} does not exist in the template map`);
+    return EitherUtils.lift(this.onboardingTemplates.get(code)!, `${code} does not exist in the template map`);
   }
 
 }

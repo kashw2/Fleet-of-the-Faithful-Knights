@@ -54,10 +54,10 @@ export class HomeComponent implements OnInit {
               this.groupService.setGroups(groups);
             }
             if (this.candidateService.getCandidates().isEmpty()) {
-              this.candidateService.setCandidates(this.toastService.showAndRecoverList(EitherUtils.liftEither(candidates, 'Unable to load Candidates'), `Loaded ${candidates.size} Candidates`));
+              this.candidateService.setCandidates(this.toastService.showAndRecoverList(EitherUtils.lift(candidates, 'Unable to load Candidates'), `Loaded ${candidates.size} Candidates`));
             }
             if (this.voteService.getVotes().isEmpty()) {
-              this.voteService.setVotes(this.toastService.showAndRecoverList(EitherUtils.liftEither(votes, 'Unable to load Votes'), `Loaded ${votes.size} Votes`));
+              this.voteService.setVotes(this.toastService.showAndRecoverList(EitherUtils.lift(votes, 'Unable to load Votes'), `Loaded ${votes.size} Votes`));
             }
           }
         ))
@@ -81,10 +81,10 @@ export class HomeComponent implements OnInit {
                     this.groupService.setGroups(groups);
                   }
                   if (this.candidateService.getCandidates().isEmpty()) {
-                    this.candidateService.setCandidates(this.toastService.showAndRecoverList(EitherUtils.liftEither(candidates, 'Unable to load Candidates'), `Loaded ${candidates.size} Candidates`));
+                    this.candidateService.setCandidates(this.toastService.showAndRecoverList(EitherUtils.lift(candidates, 'Unable to load Candidates'), `Loaded ${candidates.size} Candidates`));
                   }
                   if (this.voteService.getVotes().isEmpty()) {
-                    this.voteService.setVotes(this.toastService.showAndRecoverList(EitherUtils.liftEither(votes, 'Unable to load Votes'), `Loaded ${votes.size} Votes`));
+                    this.voteService.setVotes(this.toastService.showAndRecoverList(EitherUtils.lift(votes, 'Unable to load Votes'), `Loaded ${votes.size} Votes`));
                   }
                 }
               )

@@ -65,7 +65,7 @@ AllEndpoints.initialiseEndpoints(router, db);
 
 app.listen(process.env.PORT || 3000, () => {
 
-  EitherUtils.liftEither(process.env.FFK_DATABASE_SERVER, `Missing environment variables FFK_DATABASE_SERVER`)
+  EitherUtils.lift(process.env.FFK_DATABASE_SERVER, `Missing environment variables FFK_DATABASE_SERVER`)
     .filterOrElse((_: string | undefined) => Option.of(process.env.FFK_DATABASE_PORT).nonEmpty(), () => `Missing environment variable FFK_DATABASE_PORT`)
     .filterOrElse((_: string | undefined) => Option.of(process.env.FFK_DATABASE_NAME).nonEmpty(), () => `Missing environment variable FFK_DATABASE_NAME`)
     .filterOrElse((_: string | undefined) => Option.of(process.env.FFK_DATABASE_USERNAME).nonEmpty(), () => `Missing environment variable FFK_DATABASE_USERNAME`)
