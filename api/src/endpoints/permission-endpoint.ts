@@ -59,7 +59,7 @@ export class PermissionsEndpoint extends AuthenticatedCrudEndpoint {
 
   read(req: Request): Future<object> {
     if (this.getPermissionId(req).isLeft()) {
-      return FutureUtils.fromEither(EitherUtils.liftEither(this.db.cache.permissions.getPermissions(), "Permission cache is empty"))
+      return FutureUtils.fromEither(EitherUtils.lift(this.db.cache.permissions.getPermissions(), "Permission cache is empty"))
         .map(v => PermissionJsonSerializer.instance.toJsonArray(v.toArray()));
     }
     return FutureUtils.fromEither(this.getPermissionId(req))

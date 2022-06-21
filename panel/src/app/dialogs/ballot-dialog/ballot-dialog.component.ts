@@ -42,10 +42,7 @@ export class BallotDialogComponent implements OnInit {
       && this.vote.exists(v => v.getBallots().size < 4);
   }
 
-  castBallot(
-    type: number,
-    description: string,
-  ): void {
+  castBallot(type: number, description: string): void {
     const ballot = new Ballot(
       None,
       this.userService.getUser(),
@@ -58,8 +55,8 @@ export class BallotDialogComponent implements OnInit {
       .flatMap(vid => this.ffkApiService.writeBallot(ballot, vid))
       .transformWith(
         (error) => Future.of(() => this.toastService.show(error as string, "Error")),
-        success => {
-          this.voteService.setSelectedVote(this.voteService.getSelectedVote().map(v => v.withBallot(success)));
+        b => {
+          this.voteService.setSelectedVote(this.voteService.getSelectedVote().map(v => v.withBallot(b)));
           return Future.of(() => this.dialogRef.close());
         }
       );

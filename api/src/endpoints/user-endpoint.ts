@@ -126,7 +126,7 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
           return this.db.procedures.insert.insertUser(user)('System');
         })
         .flatMap(FutureUtils.fromEither)
-        .map(user => EitherUtils.liftEither(UserJsonSerializer.instance.toJsonImpl(user), "Unable to create User"))
+        .map(user => EitherUtils.lift(UserJsonSerializer.instance.toJsonImpl(user), "Unable to create User"))
         .flatMap(FutureUtils.fromEither);
     }
     return EitherUtils.sequenceFuture(this.validate(req)
@@ -215,7 +215,7 @@ export class UserEndpoint extends AuthenticatedCrudEndpoint {
       return Future.pure(() => req.user);
     }
     if (this.getUserId(req).isLeft()) {
-      return FutureUtils.fromEither(EitherUtils.liftEither(UserJsonSerializer.instance.toJsonArray(this.db.cache.users.getUsers().toArray()), "Users cache is empty"));
+      return FutureUtils.fromEither(EitherUtils.lift(UserJsonSerializer.instance.toJsonArray(this.db.cache.users.getUsers().toArray()), "Users cache is empty"));
     }
     return FutureUtils.fromEither(this.getUserId(req)
       .map(uid => this.db.cache.users.getByDiscordId(uid)))

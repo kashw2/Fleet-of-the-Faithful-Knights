@@ -59,7 +59,7 @@ export class GroupEndpoint extends AuthenticatedCrudEndpoint {
 
   read(req: Request): Future<object> {
     if (this.getGroupId(req).isLeft()) {
-      return FutureUtils.fromEither(EitherUtils.liftEither(this.db.cache.groups.getGroups(), "Group cache is empty"))
+      return FutureUtils.fromEither(EitherUtils.lift(this.db.cache.groups.getGroups(), "Group cache is empty"))
         .map(v => GroupJsonSerializer.instance.toJsonArray(v.toArray()));
     }
     return FutureUtils.fromEither(this.getGroupId(req))
