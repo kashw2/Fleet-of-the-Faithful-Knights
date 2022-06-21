@@ -2,13 +2,6 @@
   "name": "fleet-of-the-faithful-knights",
   "version": "1.0.0",
   "description": "Fleet of the Faithful Knights Monorepo",
-  "scripts": {
-    "build": "run-p build:*",
-    "build:util": "lerna run build --scope=@kashw2/lib-util",
-    "build:external": "lerna run build --scope=@kashw2/lib-external",
-    "build:server": "lerna run build --scope=@kashw2/lib-server",
-    "build:ts": "lerna run build --scope=@kashw2/lib-ts"
-  },
   "private": true,
   "repository": {
     "type": "git",
