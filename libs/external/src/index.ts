@@ -17,6 +17,7 @@ export * from './discord/user';
 export * from './discord/voice-state';
 export * from './discord/token';
 export * from './discord/api/discord-api';
+export * from './discord/util/discord-utils';
 // Star Citizen
 export * from './star-citizen/user';
 export * from './star-citizen/organisation';
