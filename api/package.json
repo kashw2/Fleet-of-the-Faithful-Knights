@@ -32,7 +32,7 @@
   "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights#readme",
   "dependencies": {
     "typescript": "4.7.4",
-    "@types/mssql": "8.0.2",
+    "@types/mssql": "8.0.3",
     "mssql": "8.1.2",
     "@types/passport": "1.0.9",
     "passport": "0.6.0"
