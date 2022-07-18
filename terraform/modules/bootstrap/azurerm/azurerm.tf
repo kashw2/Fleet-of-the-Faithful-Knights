@@ -9,6 +9,15 @@ resource "azurerm_storage_account" "terraform" {
   location                 = azurerm_resource_group.terraform.location
   name                     = "ffktfstorageaccount"
   resource_group_name      = azurerm_resource_group.terraform.name
+
+  queue_properties {
+    logging {
+      delete  = true
+      read    = true
+      version = "1.0"
+      write   = true
+    }
+  }
 }
 
 resource "azurerm_storage_container" "terraform" {
