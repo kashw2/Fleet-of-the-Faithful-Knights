@@ -29,6 +29,21 @@ on:
       - main
 
 jobs:
+  security:
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./terraform
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: tfsec
+        uses: aquasecurity/tfsec-pr-commenter-action@v1.2.0
+        with:
+          github_token: ${{ github.token }}
   plan:
     if: github.event_name != 'push'
     runs-on: ubuntu-latest
