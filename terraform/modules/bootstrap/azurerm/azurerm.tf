@@ -10,6 +10,8 @@ resource "azurerm_storage_account" "terraform" {
   name                     = "ffktfstorageaccount"
   resource_group_name      = azurerm_resource_group.terraform.name
 
+  min_tls_version = "TLS1_2"
+
   queue_properties {
     logging {
       delete  = true
