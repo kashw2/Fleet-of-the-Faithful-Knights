@@ -52,17 +52,18 @@ all dependencies for all projects in the repo.
 
 For ease of use in terraform, also set up TF_VAR versions of these variables.
 
-|  Variable                       | Description                                   |
-|---------------------------------|-----------------------------------------------|
-|  FFK_DATABASE_USERNAME          | The database login username.                  |
-|  FFK_DATABASE_PASSWORD          | The database login password.                  |
-|  FFK_DATABASE_NAME              | The name of the database.                     |
-|  FFK_DATABASE_SERVER            | The ip or dns that the database is stored on. |
-|  FFK_DATABASE_PORT              | The port used to connect via UDP or TCP.      |
-|  FFK_API_SERVER                 | The url for the API                           |
-|  FFK_DISCORD_CLIENT_SECRET      | The discord bots client secret                |
-|  FFK_DISCORD_BOT_TOKEN          | The discord bots token                        |
-|  FFK_DISCORD_REDIRECT           | A valid discord bot oauth2 redirect url       |
+| Variable                  | Description                                              |
+|---------------------------|----------------------------------------------------------|
+| FFK_DATABASE_USERNAME     | The database login username.                             |
+| FFK_DATABASE_PASSWORD     | The database login password.                             |
+| FFK_DATABASE_NAME         | The name of the database.                                |
+| FFK_DATABASE_SERVER       | The ip or dns that the database is stored on.            |
+| FFK_DATABASE_PORT         | The port used to connect via UDP or TCP.                 |
+| FFK_API_SERVER            | The url for the API                                      |
+| FFK_DISCORD_CLIENT_SECRET | The discord bots client secret                           |
+| FFK_DISCORD_BOT_TOKEN     | The discord bots token                                   |
+| FFK_DISCORD_REDIRECT      | A valid discord bot oauth2 redirect url                  |
+| GH_TOKEN                  | A GitHub token with R/W package and registry permissions |
 
 #### Debugging Workflows:
 
