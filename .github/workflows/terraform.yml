@@ -30,6 +30,34 @@ on:
       - main
 
 jobs:
+  infracost:
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+    env:
+      TF_ROOT: .
+
+    steps:
+      - name: setup infracost
+        uses: infracost/actions/setup@v2
+        with:
+          api-key: ${{ secrets.INFRACOST_API_KEY }}
+
+      - name: checkout base branch
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
+
+      - name: generate cost breakdown
+        run: infracost breakdown --path=${TF_ROOT} --format=json --out-file=/tmp/infracost-base.json
+
+      - name: checkout pr branch
+        uses: actions/checkout@v3
+
+      - name: generate cost diff
+        run: infracost diff --path=${TF_ROOT} --format=json --compare-to=/tmp/infracost-base.json --out-file=/tmp/infracost.json
+
+      - name: post comment
+        run: infracost comment github --path=/tmp/infracost.json --repo=$GITHUB_REPOSITORY --github-token=${{github.token}} --pull-request=${{github.event.pull_request.number}} --behavior=update
   security:
     if: github.event_name != 'push'
     runs-on: ubuntu-latest
