@@ -73,6 +73,31 @@ jobs:
         uses: aquasecurity/tfsec-pr-commenter-action@v1.2.0
         with:
           github_token: ${{ github.token }}
+  lint:
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/cache@v3
+        name: cache plugin
+        with:
+          path: ~/.tflint.d/plugins
+          key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
+
+      - uses: terraform-linters/setup-tflint@v2
+        with:
+          tflint_version: latest
+
+      - name: show version
+        run: tflint --version
+
+      - name: init
+        run: tflint --init
+
+      - name: lint
+        run: tflint -f compact
   plan:
     if: github.event_name != 'push'
     runs-on: ubuntu-latest
