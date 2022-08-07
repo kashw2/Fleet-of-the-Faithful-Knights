@@ -75,9 +75,9 @@ jobs:
       - name: deploy
         uses: docker/login-action@v2
         with:
-          registry: ghcr.io/kashw2
-          username: ${{ secrets.ACR_USERNAME }}
-          password: ${{ secrets.ACR_PASSWORD }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GH_TOKEN }}
       - run: |
           docker build -t ghcr.io/kashw2/onboarding.faithfulknights.com:${{ github.sha }} -t ghcr.io/kashw2/onboarding.faithfulknights.com:latest -f Dockerfile .
           docker push ghcr.io/kashw2/onboarding.faithfulknights.com:${{ github.sha }}
