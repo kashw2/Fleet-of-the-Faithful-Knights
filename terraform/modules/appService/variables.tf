@@ -6,9 +6,13 @@ variable "location" {}
 
 variable "resource_group_name" {}
 
-variable "server" {}
+variable "server" {
+  default = "https://ghcr.io"
+}
 
-variable "username" {}
+variable "username" {
+  default = "kashw2"
+}
 
 variable "password" {}
 

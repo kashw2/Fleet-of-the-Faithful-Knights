@@ -37,3 +37,7 @@ variable "FFK_DISCORD_BOT_TOKEN" {
 variable "FFK_API_SERVER" {
   type = string
 }
+
+variable "GH_TOKEN" {
+  type = string
+}

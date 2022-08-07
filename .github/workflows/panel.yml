@@ -77,12 +77,12 @@ jobs:
       - name: deploy
         uses: docker/login-action@v2
         with:
-          registry: ffkcontainerregistry.azurecr.io
+          registry: ghcr.io/kashw2
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
       - run: |
-          docker build -t ffkcontainerregistry.azurecr.io/panel.faithfulknights.com:${{ github.sha }} -t ffkcontainerregistry.azurecr.io/panel.faithfulknights.com:latest -f Dockerfile .
-          docker push ffkcontainerregistry.azurecr.io/panel.faithfulknights.com:${{ github.sha }}
-          docker push ffkcontainerregistry.azurecr.io/panel.faithfulknights.com:latest
+          docker build -t ghcr.io/kashw2/panel.faithfulknights.com:${{ github.sha }} -t ghcr.io/kashw2/panel.faithfulknights.com:latest -f Dockerfile .
+          docker push ghcr.io/kashw2/panel.faithfulknights.com:${{ github.sha }}
+          docker push ghcr.io/kashw2/panel.faithfulknights.com:latest
         working-directory: panel
 

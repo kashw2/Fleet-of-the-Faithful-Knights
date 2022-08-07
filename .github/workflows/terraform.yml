@@ -14,6 +14,7 @@ env:
   TF_VAR_FFK_DISCORD_REDIRECT: ${{ secrets.FFK_DISCORD_REDIRECT }}
   TF_VAR_FFK_DISCORD_BOT_TOKEN: ${{ secrets.FFK_DISCORD_BOT_TOKEN }}
   TF_VAR_FFK_API_SERVER: ${{ secrets.FFK_API_SERVER }}
+  TF_VAR_GH_TOKEN: ${{ secrets.NPM_PACKAGE_TOKEN }}
 
 on:
   workflow_dispatch:
