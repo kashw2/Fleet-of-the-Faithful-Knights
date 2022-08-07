@@ -30,7 +30,7 @@ jobs:
       - name: npm auth
         run: |
           npm config set @kashw2:registry https://npm.pkg.github.com/
-          npm config set //npm.pkg.github.com/:_authToken=${{ secrets.NPM_PACKAGE_TOKEN }}
+          npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}
           npm config set registry https://registry.npmjs.org/
 
       - name: install globals
@@ -69,7 +69,7 @@ jobs:
       - name: npm auth
         run: |
           npm config set @kashw2:registry https://npm.pkg.github.com/
-          npm config set //npm.pkg.github.com/:_authToken=${{ secrets.NPM_PACKAGE_TOKEN }}
+          npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}
           npm config set registry https://registry.npmjs.org/
 
       - name: install globals
@@ -97,7 +97,7 @@ jobs:
       - name: npm auth
         run: |
           npm config set @kashw2:registry https://npm.pkg.github.com/
-          npm config set //npm.pkg.github.com/:_authToken=${{ secrets.NPM_PACKAGE_TOKEN }}
+          npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}
           npm config set registry https://registry.npmjs.org/
 
       - name: install globals
@@ -114,6 +114,6 @@ jobs:
       - name: publish
         uses: JS-DevTools/npm-publish@v1
         with:
-          token: ${{ secrets.NPM_PACKAGE_TOKEN }}
+          token: ${{ secrets.GH_TOKEN }}
           package: ./libs/server/package.json
           registry: https://npm.pkg.github.com/
