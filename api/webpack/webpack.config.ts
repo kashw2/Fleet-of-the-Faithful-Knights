@@ -2,9 +2,7 @@ module.exports = {
   entry: "./src/app.ts",
   mode: "production",
   target: "node",
-  externals: {
-    "express": "express"
-  },
+
   module: {
     rules: [
       {
