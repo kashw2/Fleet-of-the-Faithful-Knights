@@ -38,6 +38,6 @@ variable "FFK_API_SERVER" {
   type = string
 }
 
-variable "GH_TOKEN" {
+variable "GITHUB_TOKEN" {
   type = string
 }
