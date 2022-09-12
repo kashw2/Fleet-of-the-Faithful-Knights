@@ -31,7 +31,7 @@ export class Cache<A> {
   }
 
   /**
-   * Allows for the concatination of values into the cache.
+   * Allows for the concatenation of values into the cache.
    *
    * Time Complexity: O(n)
    *
@@ -87,8 +87,8 @@ export class Cache<A> {
   }
 
   /**
-   * Allows for updating the values inside of the Cache.
-   * This method does not perform a transformation internally, instead it is assumed that the input has already
+   * Allows for updating the values inside the Cache.
+   * This method does not perform a transformation internally, instead it is assumed that the input already
    * has a transformation applied to it, this is to keep this method as quick and unopinionated as possible
    *
    * Time Complexity: O(log n)
