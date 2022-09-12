@@ -31,5 +31,4 @@ provider "azurerm" {
       permanently_delete_on_destroy = true
     }
   }
-  subscription_id = "e608fd59-f3db-4b75-9dfb-ba60889b45f3"
 }
