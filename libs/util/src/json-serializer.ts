@@ -10,7 +10,6 @@ export abstract class JsonSerializer<A> {
   public fromJsonArray(obj: object[] | undefined): List<A> {
     return OptionUtils.toList(Option.of(obj))
       .flatMap(o => OptionUtils.toList(...o.map(x => this.fromJsonImpl(x))));
-
   }
 
   public fromJsonImpl(value: any): Option<A> {
