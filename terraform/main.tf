@@ -2,17 +2,17 @@ module "bootstrap" {
   source = "./modules/bootstrap"
 }
 
-module "guest_user" {
-  source = "./modules/guestUser"
-}
+#module "guest_user" {
+#  source = "./modules/guestUser"
+#}
 
-module "role_based_access_control" {
-  source               = "./modules/roleBasedAccessControl"
-  bship_id             = module.guest_user.bship_id
-  grandmaster_flash_id = module.guest_user.grandmaster_flash_id
-  spindizzy_id         = module.guest_user.spindizzy_id
-  depends_on           = [module.guest_user]
-}
+#module "role_based_access_control" {
+#  source               = "./modules/roleBasedAccessControl"
+#  bship_id             = module.guest_user.bship_id
+#  grandmaster_flash_id = module.guest_user.grandmaster_flash_id
+#  spindizzy_id         = module.guest_user.spindizzy_id
+#  depends_on           = [module.guest_user]
+#}
 
 module "resource_group" {
   source     = "./modules/resourceGroup"

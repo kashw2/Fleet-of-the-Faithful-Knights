@@ -14,15 +14,16 @@ terraform {
       version = "~> 2.28.0"
     }
   }
-  backend "azurerm" {
-    storage_account_name = "ffktfstorageaccount"
-    resource_group_name  = "terraform-resource-group"
-    container_name       = "terraform-state-container"
-    key                  = "terraform.tfstate"
-  }
+#  backend "azurerm" {
+#    storage_account_name = "stffktf"
+#    resource_group_name  = "rg-terraform"
+#    container_name       = "terraform"
+#    key                  = "terraform.tfstate"
+#  }
 }
 
 provider "azurerm" {
+  subscription_id = "e608fd59-f3db-4b75-9dfb-ba60889b45f3"
   features {
     resource_group {
       prevent_deletion_if_contains_resources = false

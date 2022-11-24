@@ -1,5 +1,5 @@
 resource "azuread_application" "terraform" {
-  display_name = "Terraform"
+  display_name = "Terraform (Fleet of the Faithful Knights)"
 }
 
 resource "azuread_service_principal" "terraform" {

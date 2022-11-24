@@ -1,6 +1,6 @@
 resource "azurerm_app_service_plan" "basic" {
   location            = var.location
-  name                = "ffk-basic-app-service-plan"
+  name                = "plan-basic"
   resource_group_name = var.resource_group_name
 
   reserved = true
@@ -15,7 +15,7 @@ resource "azurerm_app_service_plan" "basic" {
 
 resource "azurerm_app_service_plan" "free" {
   location            = var.location
-  name                = "ffk-free-app-service-plan"
+  name                = "plan-free"
   resource_group_name = var.resource_group_name
 
   reserved = true
