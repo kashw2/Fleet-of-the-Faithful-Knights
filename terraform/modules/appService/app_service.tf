@@ -1,7 +1,7 @@
 resource "azurerm_app_service" "panel" {
   app_service_plan_id = var.basic_app_service_plan_id
   location            = var.location
-  name                = "ffk-panel"
+  name                = "app-ffk-panel"
   resource_group_name = var.resource_group_name
   https_only          = true
   enabled             = true
@@ -26,7 +26,7 @@ resource "azurerm_app_service" "panel" {
 resource "azurerm_app_service" "api" {
   app_service_plan_id = var.free_app_service_plan_id
   location            = var.location
-  name                = "ffk-api"
+  name                = "app-ffk-api"
   resource_group_name = var.resource_group_name
   https_only          = true
   enabled             = true
@@ -60,7 +60,7 @@ resource "azurerm_app_service" "api" {
 resource "azurerm_app_service" "onboarding" {
   app_service_plan_id = var.free_app_service_plan_id
   location            = var.location
-  name                = "ffk-onboarding"
+  name                = "app-ffk-onboarding"
   resource_group_name = var.resource_group_name
   https_only          = true
   enabled             = true
