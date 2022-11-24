@@ -121,26 +121,26 @@ jobs:
 
       - name: plan
         run: terraform plan -refresh=false
-  apply:
-    if: github.event_name == 'push'
-    runs-on: ubuntu-latest
-    env:
-      ARM_CLIENT_ID: ${{ secrets.AZ_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.AZ_CLIENT_SECRET }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.AZ_SUBSCRIPTION_ID }}
-      ARM_TENANT_ID: ${{ secrets.AZ_TENANT_ID }}
-    steps:
-      - uses: actions/checkout@v3
-      - uses: hashicorp/setup-terraform@v2
-
-      - name: format
-        run: terraform fmt -recursive
-
-      - name: init
-        run: terraform init
-
-      - name: validate
-        run: terraform validate
-
-      - name: apply
-        run: terraform apply -auto-approve -refresh=false
+#  apply:
+#    if: github.event_name == 'push'
+#    runs-on: ubuntu-latest
+#    env:
+#      ARM_CLIENT_ID: ${{ secrets.AZ_CLIENT_ID }}
+#      ARM_CLIENT_SECRET: ${{ secrets.AZ_CLIENT_SECRET }}
+#      ARM_SUBSCRIPTION_ID: ${{ secrets.AZ_SUBSCRIPTION_ID }}
+#      ARM_TENANT_ID: ${{ secrets.AZ_TENANT_ID }}
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: hashicorp/setup-terraform@v2
+#
+#      - name: format
+#        run: terraform fmt -recursive
+#
+#      - name: init
+#        run: terraform init
+#
+#      - name: validate
+#        run: terraform validate
+#
+#      - name: apply
+#        run: terraform apply -auto-approve -refresh=false
