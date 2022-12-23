@@ -12,7 +12,7 @@ export class CollectionUtils {
   static buildKeyedMap<K, V>(input: Collection<any, V>, f: (v: V) => Option<K>): Map<K, V> {
     return input.filter(v => f(v).nonEmpty())
       .map<[K, V]>(v => [f(v).get(), v])
-      .reduce((acc, [k, v]) => acc.set(k, v), Map());
+      .reduce((acc, [k, v]) => acc.set(k, v), Map<K, V>());
   }
 
   /**

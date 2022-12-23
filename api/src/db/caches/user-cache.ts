@@ -10,9 +10,9 @@ export class UserCache extends Cache<User> {
     super(users);
   }
 
-  private byDiscordId: Map<string, User> = CollectionUtils.buildKeyedMap(this.getUsers(), u => u.getDiscordId());
+  private byDiscordId: Map<string, User> = CollectionUtils.buildKeyedMap(this.getUsers(), (u: User) => u.getDiscordId());
 
-  private byUserId: Map<string, User> = CollectionUtils.buildKeyedMap(this.getUsers(), u => u.getId());
+  private byUserId: Map<string, User> = CollectionUtils.buildKeyedMap(this.getUsers(), (u: User) => u.getId());
 
   getByDiscordId(discordId: string): Either<string, User> {
     return EitherUtils.toEither(Option.of(this.byDiscordId.get(discordId)), `User with discord id ${discordId} does not exist`);

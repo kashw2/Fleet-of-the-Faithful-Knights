@@ -10,7 +10,7 @@ export class PermissionCache extends Cache<Permission> {
     super(permissions);
   }
 
-  private byId: Map<string, Permission> = CollectionUtils.buildKeyedMap(this.getPermissions(), (p) => p.getId());
+  private byId: Map<string, Permission> = CollectionUtils.buildKeyedMap(this.getPermissions(), (p: Permission) => p.getId());
 
   getByPermissionId(permissionId: string): Either<string, Permission> {
     return EitherUtils.toEither(Option.of(this.byId.get(permissionId)), `Permission with id ${permissionId} does not exist`);

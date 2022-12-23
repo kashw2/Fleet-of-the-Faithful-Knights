@@ -10,7 +10,7 @@ export class BallotCache extends Cache<Ballot> {
     super(ballots);
   }
 
-  byId: Map<string, Ballot> = CollectionUtils.buildKeyedMap(this.getBallots(), (g) => g.getId());
+  byId: Map<string, Ballot> = CollectionUtils.buildKeyedMap(this.getBallots(), (g: Ballot) => g.getId());
 
   getBallotById(ballotId: string): Either<string, Ballot> {
     return EitherUtils.toEither(Option.of(this.byId.get(ballotId)), `Ballot with id ${ballotId} does not exist`);

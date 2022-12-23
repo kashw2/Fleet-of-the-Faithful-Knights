@@ -10,7 +10,7 @@ export class CandidateCache extends Cache<Candidate> {
     super(candidates);
   }
 
-  private byCandidateId: Map<string, Candidate> = CollectionUtils.buildKeyedMap(this.getCandidates(), v => v.getId());
+  private byCandidateId: Map<string, Candidate> = CollectionUtils.buildKeyedMap(this.getCandidates(), (v: Candidate) => v.getId());
 
 
   getCandidateById(candidateId: string): Either<string, Candidate> {

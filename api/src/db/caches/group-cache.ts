@@ -10,7 +10,7 @@ export class GroupCache extends Cache<Group> {
     super(groups);
   }
 
-  byId: Map<string, Group> = CollectionUtils.buildKeyedMap(this.getGroups(), (g) => g.getId());
+  byId: Map<string, Group> = CollectionUtils.buildKeyedMap(this.getGroups(), (g: Group) => g.getId());
 
   getGroups(): List<Group> {
     return super.getValues();
