@@ -14,7 +14,7 @@
     "doc:publish": "gh-pages -m \"docs: update\" -d dist/docs"
   },
   "dependencies": {
-    "typedoc": "0.23.25",
+    "typedoc": "0.23.26",
     "open-cli": "7.1.0",
     "gh-pages": "5.0.0"
   },
