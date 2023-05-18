@@ -112,7 +112,7 @@ jobs:
         run: lerna run build --scope=@kashw2/lib-util
 
       - name: publish
-        uses: JS-DevTools/npm-publish@v1
+        uses: JS-DevTools/npm-publish@v2
         with:
           token: ${{ secrets.GH_TOKEN }}
           package: ./libs/util/package.json
