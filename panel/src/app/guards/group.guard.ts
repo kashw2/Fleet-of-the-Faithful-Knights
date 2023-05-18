@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import {from, map, mergeMap, Observable, of, switchMap, tap} from 'rxjs';
 import {GroupService} from "../service/group.service";
 import {NavigationService} from "../service/navigation.service";
@@ -8,7 +8,7 @@ import {FfkApiService} from "../service/ffk-api.service";
 @Injectable({
   providedIn: 'root'
 })
-export class GroupGuard implements CanActivate {
+export class GroupGuard  {
 
   constructor(
     private groupService: GroupService,

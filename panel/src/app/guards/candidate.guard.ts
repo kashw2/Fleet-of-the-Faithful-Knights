@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import {from, map, mergeMap, Observable, of, switchMap, tap} from 'rxjs';
 import {CandidateService} from "../service/candidate.service";
 import {NavigationService} from "../service/navigation.service";
@@ -8,7 +8,7 @@ import {FfkApiService} from "../service/ffk-api.service";
 @Injectable({
   providedIn: 'root'
 })
-export class CandidateGuard implements CanActivate {
+export class CandidateGuard  {
 
   constructor(
     private candidateService: CandidateService,

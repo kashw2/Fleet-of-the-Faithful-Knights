@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import {map, Observable, of, switchMap, tap} from 'rxjs';
 import {UserService} from "../service/user.service";
 import {NavigationService} from "../service/navigation.service";
@@ -7,7 +7,7 @@ import {NavigationService} from "../service/navigation.service";
 @Injectable({
   providedIn: 'root'
 })
-export class UserGuard implements CanActivate {
+export class UserGuard  {
 
   constructor(
     private userService: UserService,
