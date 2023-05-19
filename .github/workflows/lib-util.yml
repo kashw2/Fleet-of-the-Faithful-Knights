@@ -117,3 +117,4 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
           package: ./libs/util/package.json
           registry: https://npm.pkg.github.com/
+          strategy: all
