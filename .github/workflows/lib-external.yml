@@ -73,8 +73,9 @@ jobs:
         run: lerna run build --scope=@kashw2/lib-external
 
       - name: publish
-        uses: JS-DevTools/npm-publish@v1
+        uses: JS-DevTools/npm-publish@v2
         with:
           token: ${{ secrets.GH_TOKEN }}
           package: ./libs/external/package.json
           registry: https://npm.pkg.github.com/
+          strategy: all

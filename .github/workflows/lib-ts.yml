@@ -73,8 +73,9 @@ jobs:
         run: lerna run build --scope=@kashw2/lib-ts
 
       - name: publish
-        uses: JS-DevTools/npm-publish@v1
+        uses: JS-DevTools/npm-publish@v2
         with:
           token: ${{ secrets.GH_TOKEN }}
           package: ./libs/typescript/package.json
           registry: https://npm.pkg.github.com/
+          strategy: all
