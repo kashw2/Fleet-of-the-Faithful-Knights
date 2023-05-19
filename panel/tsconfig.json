@@ -39,6 +39,9 @@
       ],
       "querystring": [
         "../node_modules/querystring-browser"
+      ],
+      "immutable": [
+        "../node_modules/immutable"
       ]
     },
     "lib": [

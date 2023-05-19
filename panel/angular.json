@@ -15,7 +15,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:browser-esbuild",
           "options": {
             "preserveSymlinks": true,
             "outputPath": "dist/panel",
@@ -110,7 +110,6 @@
       }
     }
   },
-  "defaultProject": "panel",
   "cli": {
     "analytics": "4268aab3-5b25-4964-8f80-0befddb8b70f"
   }
