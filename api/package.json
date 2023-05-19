@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights#readme",
   "dependencies": {
-    "typescript": "4.9.5",
+    "typescript": "5.0.4",
     "@types/mssql": "8.1.2",
     "mssql": "9.1.1",
     "@types/passport": "1.0.12",
