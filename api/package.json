@@ -43,7 +43,7 @@
     "jasmine-spec-reporter": "7.0.0",
     "jasmine-ts": "0.4.0",
     "ts-node": "10.9.1",
-    "ts-loader": "9.4.2",
+    "ts-loader": "9.4.3",
     "webpack": "5.83.1",
     "webpack-cli": "5.1.1"
   }
