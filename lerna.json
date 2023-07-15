@@ -16,13 +16,13 @@
   },
   "packages": [
     ".",
-    "./libs/util",
-    "./libs/typescript",
-    "./libs/server",
-    "./libs/external",
-    "./libs/docs",
-    "./panel",
-    "./api",
-    "./onboarding"
+    "libs/util",
+    "libs/typescript",
+    "libs/server",
+    "libs/external",
+    "libs/docs",
+    "panel",
+    "api",
+    "onboarding"
   ]
 }
