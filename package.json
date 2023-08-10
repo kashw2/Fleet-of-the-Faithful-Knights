@@ -16,7 +16,7 @@
     "@kashw2/lib-external": "6.1.0",
     "@kashw2/lib-server": "6.0.0",
     "@kashw2/lib-ts": "5.0.0",
-    "@kashw2/lib-util": "7.0.0",
+    "@kashw2/lib-util": "7.0.1",
     "@types/express": "4.17.17",
     "@types/node": "18.17.3",
     "axios": "1.4.0",
