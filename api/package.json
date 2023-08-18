@@ -5,7 +5,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "test": "jasmine-ts --config=jasmine.json",
-    "build": "esbuild ./src/app.ts --bundle --minified --platform=node --outfile=./dist/api.js --external:express",
+    "build": "esbuild ./src/app.ts --bundle --minify --platform=node --outfile=./dist/api.js --external:express",
     "build:dev": "esbuild ./src/app.ts --bundle --platform=node --outfile=./dist/api.js --external:express",
     "start:watch": "nodemon --inspect ./dist/api.js",
     "start": "nodemon --inspect ./dist/api.js",
@@ -29,7 +29,6 @@
   },
   "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights#readme",
   "dependencies": {
-    "typescript": "5.0.4",
     "@types/mssql": "8.1.2",
     "mssql": "9.1.3",
     "@types/passport": "1.0.12",
