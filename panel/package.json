@@ -10,9 +10,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "docker-build": "docker build -t ghcr.io/kashw2/panel.faithfulknights.com:$(git rev-parse --verify HEAD) -t ghcr.io/kashw2/panel.faithfulknights.com:latest -f Dockerfile .",
-    "docker-run": "docker run -p 4200:80 ghcr.io/kashw2/panel.faithfulknights.com:$(git rev-parse --verify HEAD)",
-    "docker-publish": "docker push ghcr.io/kashw2/panel.faithfulknights.com:$(git rev-parse --verify HEAD) && docker push ghcr.io/kashw2/panel.faithfulknights.com:latest"
+    "docker:build": "docker build -t ghcr.io/kashw2/panel.faithfulknights.com:$(git rev-parse --verify HEAD) -t ghcr.io/kashw2/panel.faithfulknights.com:latest -f Dockerfile .",
+    "docker:run": "docker run -p 4200:80 ghcr.io/kashw2/panel.faithfulknights.com:$(git rev-parse --verify HEAD)",
+    "docker:publish": "docker push ghcr.io/kashw2/panel.faithfulknights.com:$(git rev-parse --verify HEAD) && docker push ghcr.io/kashw2/panel.faithfulknights.com:latest"
   },
   "dependencies": {
     "@angular/animations": "16.2.1",
