@@ -5,7 +5,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "test": "jasmine-ts --config=jasmine.json",
-    "build": "esbuild ./src/app.ts --bundle --minify --platform=node --outfile=./dist/api.js --external:express",
+    "build": "esbuild ./src/app.ts --bundle --minify --platform=node --outfile=./dist/api.js",
     "build:dev": "esbuild ./src/app.ts --bundle --platform=node --outfile=./dist/api.js --external:express",
     "start:watch": "nodemon --inspect ./dist/api.js",
     "start": "nodemon --inspect ./dist/api.js",
