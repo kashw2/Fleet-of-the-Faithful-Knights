@@ -27,20 +27,20 @@ thing or two.
 
 #### Dependencies:
 
-| Name                                                  | Version  |
-|-------------------------------------------------------|----------|
-| TypeScript                                            | 4.x.x    |
-| Node                                                  | 14.x.x   |
-| Lerna                                                 | 4.0.0    |
-| Webpack                                               | 5.x.x    |
-| [Terraform](https://www.terraform.io/downloads.html)  | 1.0.0    |
-| [Docker](https://docs.docker.com/get-docker/)         | 20.x.x   |
+| Name                                                 | Version |
+|------------------------------------------------------|---------|
+| TypeScript                                           | 4.x.x   |
+| Node                                                 | 14.x.x  |
+| Lerna                                                | 4.0.0   |
+| Esbuild                                              | 19.x.x  |
+| [Terraform](https://www.terraform.io/downloads.html) | 1.0.0   |
+| [Docker](https://docs.docker.com/get-docker/)        | 20.x.x  |
 
 This ensures that you will be able to compile, build, run and deploy all projects in the repo.
 
 Here's a one line install for all node packages. Do note that it is a global install.
 
-```npm i typescript lerna webpack -g```
+```npm i typescript lerna esbuild -g```
 
 These packages can be located at the default locations at either ```AppData/npm/node_modules``` on Windows machines
 or ```usr/local/lib/node_modules``` on Linux.
