@@ -2,12 +2,10 @@
   "name": "@ffk/onboarding",
   "version": "1.0.0",
   "description": "Fleet of the Faithful Knights Onboarding Server",
-  "main": "index.js",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "webpack --config ./webpack/webpack.config.ts",
-    "build:dev": "webpack --config ./webpack/webpack.dev.config.ts",
-    "build:watch": "webpack --stats-error-details true --watch --config ./webpack/webpack.dev.config.ts",
+    "build": "esbuild ./src/app.ts --bundle --minify --platform=node --outfile=./dist/onboarding.js --external:express",
+    "build:dev": "esbuild ./src/app.ts --bundle --platform=node --outfile=./dist/onboarding.js --external:express",
     "start:watch": "nodemon --inspect ./dist/onboarding.js",
     "start": "nodemon --inspect ./dist/onboarding.js",
     "docker:build": "docker build -t ghcr.io/kashw2/onboarding.faithfulknights.com:$(git rev-parse --verify HEAD) -t ghcr.io/kashw2/onboarding.faithfulknights.com:latest -f Dockerfile .",
@@ -31,12 +29,7 @@
     "url": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights/issues"
   },
   "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights#readme",
-  "dependencies": {
-    "typescript": "5.0.4"
-  },
   "devDependencies": {
-    "ts-loader": "9.4.4",
-    "webpack": "5.88.2",
-    "webpack-cli": "5.1.4"
+    "esbuild": "0.19.2"
   }
 }
