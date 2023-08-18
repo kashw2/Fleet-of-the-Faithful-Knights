@@ -2,7 +2,6 @@
   "name": "@ffk/api",
   "version": "1.0.0",
   "description": "Fleet of the Faithful Knights API",
-  "main": "index.js",
   "scripts": {
     "prebuild": "rimraf dist",
     "test": "jasmine-ts --config=jasmine.json",
