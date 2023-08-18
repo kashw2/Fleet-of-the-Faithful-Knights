@@ -10,9 +10,9 @@
     "build:watch": "webpack --stats-error-details true --watch --config ./webpack/webpack.dev.config.ts",
     "start:watch": "nodemon --inspect ./dist/onboarding.js",
     "start": "nodemon --inspect ./dist/onboarding.js",
-    "docker-build": "docker build -t ghcr.io/kashw2/onboarding.faithfulknights.com:$(git rev-parse --verify HEAD) -t ghcr.io/kashw2/onboarding.faithfulknights.com:latest -f Dockerfile .",
-    "docker-run": "docker run -i --net='host' -e FFK_DISCORD_CLIENT_SECRET=$FFK_DISCORD_CLIENT_SECRET -e FFK_DISCORD_REDIRECT=FFK_DISCORD_REDIRECT -e FFK_DISCORD_BOT_TOKEN=$FFK_DISCORD_BOT_TOKEN -e FFK_API_SERVER=$FFK_API_SERVER ghcr.io/kashw2/onboarding.faithfulknights.com:latest",
-    "docker-publish": "docker push ghcr.io/kashw2/onboarding.faithfulknights.com:$(git rev-parse --verify HEAD) && docker push ghcr.io/kashw2/onboarding.faithfulknights.com:latest"
+    "docker:build": "docker build -t ghcr.io/kashw2/onboarding.faithfulknights.com:$(git rev-parse --verify HEAD) -t ghcr.io/kashw2/onboarding.faithfulknights.com:latest -f Dockerfile .",
+    "docker:run": "docker run -i --net='host' -e FFK_DISCORD_CLIENT_SECRET=$FFK_DISCORD_CLIENT_SECRET -e FFK_DISCORD_REDIRECT=FFK_DISCORD_REDIRECT -e FFK_DISCORD_BOT_TOKEN=$FFK_DISCORD_BOT_TOKEN -e FFK_API_SERVER=$FFK_API_SERVER ghcr.io/kashw2/onboarding.faithfulknights.com:latest",
+    "docker:publish": "docker push ghcr.io/kashw2/onboarding.faithfulknights.com:$(git rev-parse --verify HEAD) && docker push ghcr.io/kashw2/onboarding.faithfulknights.com:latest"
   },
   "repository": {
     "type": "git",
