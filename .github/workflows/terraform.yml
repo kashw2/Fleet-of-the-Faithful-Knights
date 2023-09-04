@@ -43,7 +43,7 @@ jobs:
           api-key: ${{ secrets.INFRACOST_API_KEY }}
 
       - name: checkout base branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.base.ref }}
 
@@ -51,7 +51,7 @@ jobs:
         run: infracost breakdown --path=${TF_ROOT} --format=json --out-file=/tmp/infracost-base.json
 
       - name: checkout pr branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: generate cost diff
         run: infracost diff --path=${TF_ROOT} --format=json --compare-to=/tmp/infracost-base.json --out-file=/tmp/infracost.json
@@ -67,7 +67,7 @@ jobs:
         working-directory: ./terraform
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: tfsec
         uses: aquasecurity/tfsec-pr-commenter-action@v1.3.1
@@ -78,7 +78,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: actions/cache@v3
         name: cache plugin
@@ -107,7 +107,7 @@ jobs:
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZ_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZ_TENANT_ID }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: hashicorp/setup-terraform@v2
 
       - name: format
