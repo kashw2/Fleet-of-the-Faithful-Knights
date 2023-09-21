@@ -52,3 +52,7 @@ updates:
     directory: /terraform
     schedule:
       interval: daily
+  - package-ecosystem: github-actions
+    directory: /.github/workflow
+    schedule:
+      interval: daily
