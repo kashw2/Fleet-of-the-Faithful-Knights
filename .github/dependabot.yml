@@ -1,0 +1,47 @@
+version: 2
+registries:
+  github:
+    type: npm-registry
+    url: https://npm.pkg.github.com/
+    token: "wcFMA/xDdHCJBTolAQ//ZORgKx5NEabu5BXr4AtAjQELygZXn5ZdM2ZVdh5DopQuXNNeFLSxuhCJUIwMl7hcjEh+xPdnlIGORlFLAGND0kk1MNfYZnGGQ1/XYydAhqb1NvkQFkF4WX60VAd0cCNsJtABdkGTHqhl8dMoZMvncIxGNAO/B6a/UukYX1YvEixNlYbFUztu7MAgpFGZAuwEUb0pWsJqbaMWL39+3TeRFPn7i5OeM5B0dP9u/ftjrbiMqxPu9Hl6ZY48+7mu/WRoEv4rOaGj4tKDbMGoEs9cdyoolUUV3kSvSqyQFeK88bOL2qB0MGILgVgNULVF5WlKNRUlEreuSkCCt5O/nAIiLV1t3BFH8Vveru6SXfb1ze4La2VkrME92EZiheUbKDCBGxBy3pCqiucLjkEoNI0MRJs+UxuQ/SNZe4GKcbgSVZMVQwAyYfnFB/4pSDLgyQOZPC2+V+LrPUO9LzG5tUo5r3VTEOI9VuSUUxtgcw4p+XE6521d9okj/G5JCjntkD+48yBdYw/RgvikgX72VtwEK4AnPS9rTRykEOueovP+KMojwVBl+IhnYXoIxffOYUq/NCsPhPy/rYyanekPG3/smDBKze402d9Bp2JhDWgA2+shE6xGQw3oKSAulzDnaJJqcxLjzHb2ij3UGCFUXu71hAiJkP72dDCUe9vssKC4D+rSdQEHTQ5YYMccdo/vn4QTnROY2ekLlfrCNBvDCmmtGe1VaifF1n2q5JZpK+pUgaMznY9upMRMqLQsK1yEUPrtOUSlRxFHjrYxK84nnrFgnsSVATACd5bNPlL0cvuiP+wyyVw4u9Cqe9+WwVE5Dg9FEe8SXIg4cw"
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /api
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /libs/docs
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /libs/external
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /libs/server
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /libs/typescript
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /libs/util
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /onboarding
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /panel
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /terraform
+    schedule:
+      interval: daily
