@@ -1,24 +1,32 @@
 version: 2
 updates:
   - package-ecosystem: npm
+    labels:
+      - "dependencies"
     reviewers:
       - kashw2
     directory: /
     schedule:
       interval: daily
   - package-ecosystem: docker
+    labels:
+      - "dependencies"
     reviewers:
       - kashw2
     directory: /
     schedule:
       interval: daily
   - package-ecosystem: terraform
+    labels:
+      - "dependencies"
     reviewers:
       - kashw2
     directory: /
     schedule:
       interval: daily
   - package-ecosystem: github-actions
+    labels:
+      - "dependencies"
     reviewers:
       - kashw2
     directory: /
