@@ -28,7 +28,7 @@
     "ts-mixer": "6.0.3",
     "tslib": "2.6.2",
     "typescript": "5.0.4",
-    "@microsoft/applicationinsights-web": "3.0.2"
+    "@microsoft/applicationinsights-web": "3.0.3"
   },
   "devDependencies": {
     "lerna": "7.3.0",
