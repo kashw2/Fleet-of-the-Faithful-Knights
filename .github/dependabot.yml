@@ -13,7 +13,23 @@ updates:
       - "dependencies"
     reviewers:
       - kashw2
-    directory: /
+    directory: /api
+    schedule:
+      interval: daily
+  - package-ecosystem: docker
+    labels:
+      - "dependencies"
+    reviewers:
+      - kashw2
+    directory: /onboarding
+    schedule:
+      interval: daily
+  - package-ecosystem: docker
+    labels:
+      - "dependencies"
+    reviewers:
+      - kashw2
+    directory: /panel
     schedule:
       interval: daily
   - package-ecosystem: terraform
