@@ -39,7 +39,7 @@ jobs:
       - name: npm install
         run: |
           lerna exec npm install --scope=fleet-of-the-faithful-knights -- --force
-          lerna exec npm install --scope=@kashw2/lib-server
+          lerna exec npm install --scope=@kashw2/lib-server -- --force
 
       - name: test server
         run: lerna run test --scope=@kashw2/lib-server
@@ -78,7 +78,7 @@ jobs:
       - name: npm install
         run: |
           lerna exec npm install --scope=fleet-of-the-faithful-knights -- --force
-          lerna exec npm install --scope=@kashw2/lib-server
+          lerna exec npm install --scope=@kashw2/lib-server -- --force
 
       - name: build
         run: lerna run build --scope=@kashw2/lib-server
@@ -106,7 +106,7 @@ jobs:
       - name: npm install
         run: |
           lerna exec npm install --scope=fleet-of-the-faithful-knights -- --force
-          lerna exec npm install --scope=@kashw2/lib-server
+          lerna exec npm install --scope=@kashw2/lib-server -- --force
 
       - name: build
         run: lerna run build --scope=@kashw2/lib-server
