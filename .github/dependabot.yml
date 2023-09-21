@@ -36,7 +36,7 @@ updates:
     directory: /panel
     schedule:
       interval: daily
-  - package-ecosystem: npm
+  - package-ecosystem: terraform
     directory: /terraform
     schedule:
       interval: daily
