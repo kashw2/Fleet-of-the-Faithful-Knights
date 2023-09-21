@@ -8,6 +8,10 @@ updates:
     directory: /api
     schedule:
       interval: daily
+  - package-ecosystem: docker
+    directory: /api
+    schedule:
+      interval: daily
   - package-ecosystem: npm
     directory: /libs/docs
     schedule:
@@ -32,7 +36,15 @@ updates:
     directory: /onboarding
     schedule:
       interval: daily
+  - package-ecosystem: docker
+    directory: /onboarding
+    schedule:
+      interval: daily
   - package-ecosystem: npm
+    directory: /panel
+    schedule:
+      interval: daily
+  - package-ecosystem: docker
     directory: /panel
     schedule:
       interval: daily
