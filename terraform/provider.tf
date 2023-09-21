@@ -3,15 +3,15 @@ When creating this infrastructure for the first time you will have to remove the
 */
 
 terraform {
-  required_version = ">= 1.0.0"
+  required_version = "1.5.7"
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.73.0"
+      version = "3.73.0"
     }
     azuread = {
       source  = "hashicorp/azuread"
-      version = "~> 2.42.0"
+      version = "2.42.0"
     }
   }
 #  backend "azurerm" {
