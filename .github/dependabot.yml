@@ -1,0 +1,48 @@
+version: 2
+registries:
+  github:
+    type: npm-registry
+    username: kashw2
+    url: https://npm.pkg.github.com/
+    password: ${{ secrets.GH_TOKEN }}
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /api
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /libs/docs
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /libs/external
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /libs/server
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /libs/typescript
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /libs/util
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /onboarding
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /panel
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /terraform
+    schedule:
+      interval: daily
