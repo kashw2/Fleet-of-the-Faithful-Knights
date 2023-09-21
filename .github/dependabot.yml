@@ -1,58 +1,86 @@
 version: 2
 updates:
   - package-ecosystem: npm
+    reviewers:
+      - kashw2
     directory: /
     schedule:
       interval: daily
   - package-ecosystem: npm
+    reviewers:
+      - kashw2
     directory: /api
     schedule:
       interval: daily
   - package-ecosystem: docker
+    reviewers:
+      - kashw2
     directory: /api
     schedule:
       interval: daily
   - package-ecosystem: npm
+    reviewers:
+      - kashw2
     directory: /libs/docs
     schedule:
       interval: daily
   - package-ecosystem: npm
+    reviewers:
+      - kashw2
     directory: /libs/external
     schedule:
       interval: daily
   - package-ecosystem: npm
+    reviewers:
+      - kashw2
     directory: /libs/server
     schedule:
       interval: daily
   - package-ecosystem: npm
+    reviewers:
+      - kashw2
     directory: /libs/typescript
     schedule:
       interval: daily
   - package-ecosystem: npm
+    reviewers:
+      - kashw2
     directory: /libs/util
     schedule:
       interval: daily
   - package-ecosystem: npm
+    reviewers:
+      - kashw2
     directory: /onboarding
     schedule:
       interval: daily
   - package-ecosystem: docker
+    reviewers:
+      - kashw2
     directory: /onboarding
     schedule:
       interval: daily
   - package-ecosystem: npm
+    reviewers:
+      - kashw2
     directory: /panel
     schedule:
       interval: daily
   - package-ecosystem: docker
+    reviewers:
+      - kashw2
     directory: /panel
     schedule:
       interval: daily
   - package-ecosystem: terraform
+    reviewers:
+      - kashw2
     directory: /terraform
     schedule:
       interval: daily
   - package-ecosystem: github-actions
+    reviewers:
+      - kashw2
     directory: /.github/workflow
     schedule:
       interval: daily
