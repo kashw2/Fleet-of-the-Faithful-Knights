@@ -100,7 +100,6 @@ jobs:
       TF_VAR_FFK_DISCORD_CLIENT_SECRET: ${{ secrets.FFK_DISCORD_CLIENT_SECRET }}
       TF_VAR_FFK_DISCORD_REDIRECT: ${{ secrets.FFK_DISCORD_REDIRECT }}
       TF_VAR_FFK_DISCORD_BOT_TOKEN: ${{ secrets.FFK_DISCORD_BOT_TOKEN }}
-      TF_VAR_FFK_API_SERVER: ${{ secrets.FFK_API_SERVER }}
       TF_VAR_GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
       - uses: actions/checkout@v4
@@ -133,7 +132,6 @@ jobs:
 #      TF_VAR_FFK_DISCORD_CLIENT_SECRET: ${{ secrets.FFK_DISCORD_CLIENT_SECRET }}
 #      TF_VAR_FFK_DISCORD_REDIRECT: ${{ secrets.FFK_DISCORD_REDIRECT }}
 #      TF_VAR_FFK_DISCORD_BOT_TOKEN: ${{ secrets.FFK_DISCORD_BOT_TOKEN }}
-#      TF_VAR_FFK_API_SERVER: ${{ secrets.FFK_API_SERVER }}
 #      TF_VAR_GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 #    steps:
 #      - uses: actions/checkout@v3
