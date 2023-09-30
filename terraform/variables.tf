@@ -24,6 +24,7 @@ variable "FFK_DISCORD_CLIENT_SECRET" {
 
 variable "FFK_DISCORD_REDIRECT" {
   type = string
+  default = "http://localhost:4200"
 }
 
 variable "FFK_DISCORD_BOT_TOKEN" {
@@ -32,6 +33,7 @@ variable "FFK_DISCORD_BOT_TOKEN" {
 
 variable "FFK_API_SERVER" {
   type = string
+  default = "http://localhost:3000"
 }
 
 variable "GITHUB_TOKEN" {
