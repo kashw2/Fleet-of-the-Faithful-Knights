@@ -4,18 +4,6 @@ defaults:
   run:
     working-directory: terraform
 
-env:
-  TF_VAR_FFK_DATABASE_USERNAME: ${{ secrets.FFK_DATABASE_USERNAME }}
-  TF_VAR_FFK_DATABASE_PASSWORD: ${{ secrets.FFK_DATABASE_PASSWORD }}
-  TF_VAR_FFK_DATABASE_NAME: ${{ secrets.FFK_DATABASE_NAME }}
-  TF_VAR_FFK_DATABASE_SERVER: ${{ secrets.FFK_DATABASE_SERVER }}
-  TF_VAR_FFK_DATABASE_PORT: ${{ secrets.FFK_DATABASE_PORT }}
-  TF_VAR_FFK_DISCORD_CLIENT_SECRET: ${{ secrets.FFK_DISCORD_CLIENT_SECRET }}
-  TF_VAR_FFK_DISCORD_REDIRECT: ${{ secrets.FFK_DISCORD_REDIRECT }}
-  TF_VAR_FFK_DISCORD_BOT_TOKEN: ${{ secrets.FFK_DISCORD_BOT_TOKEN }}
-  TF_VAR_FFK_API_SERVER: ${{ secrets.FFK_API_SERVER }}
-  TF_VAR_GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-
 on:
   workflow_dispatch:
   pull_request:
@@ -35,6 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TF_ROOT: .
+      INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
 
     steps:
       - name: setup infracost
@@ -49,9 +38,6 @@ jobs:
 
       - name: generate cost breakdown
         run: infracost breakdown --path=${TF_ROOT} --format=json --out-file=/tmp/infracost-base.json
-
-      - name: checkout pr branch
-        uses: actions/checkout@v4
 
       - name: generate cost diff
         run: infracost diff --path=${TF_ROOT} --format=json --compare-to=/tmp/infracost-base.json --out-file=/tmp/infracost.json
@@ -106,6 +92,16 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.AZ_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZ_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZ_TENANT_ID }}
+      TF_VAR_FFK_DATABASE_USERNAME: ${{ secrets.FFK_DATABASE_USERNAME }}
+      TF_VAR_FFK_DATABASE_PASSWORD: ${{ secrets.FFK_DATABASE_PASSWORD }}
+      TF_VAR_FFK_DATABASE_NAME: ${{ secrets.FFK_DATABASE_NAME }}
+      TF_VAR_FFK_DATABASE_SERVER: ${{ secrets.FFK_DATABASE_SERVER }}
+      TF_VAR_FFK_DATABASE_PORT: ${{ secrets.FFK_DATABASE_PORT }}
+      TF_VAR_FFK_DISCORD_CLIENT_SECRET: ${{ secrets.FFK_DISCORD_CLIENT_SECRET }}
+      TF_VAR_FFK_DISCORD_REDIRECT: ${{ secrets.FFK_DISCORD_REDIRECT }}
+      TF_VAR_FFK_DISCORD_BOT_TOKEN: ${{ secrets.FFK_DISCORD_BOT_TOKEN }}
+      TF_VAR_FFK_API_SERVER: ${{ secrets.FFK_API_SERVER }}
+      TF_VAR_GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: hashicorp/setup-terraform@v2
@@ -129,6 +125,16 @@ jobs:
 #      ARM_CLIENT_SECRET: ${{ secrets.AZ_CLIENT_SECRET }}
 #      ARM_SUBSCRIPTION_ID: ${{ secrets.AZ_SUBSCRIPTION_ID }}
 #      ARM_TENANT_ID: ${{ secrets.AZ_TENANT_ID }}
+#      TF_VAR_FFK_DATABASE_USERNAME: ${{ secrets.FFK_DATABASE_USERNAME }}
+#      TF_VAR_FFK_DATABASE_PASSWORD: ${{ secrets.FFK_DATABASE_PASSWORD }}
+#      TF_VAR_FFK_DATABASE_NAME: ${{ secrets.FFK_DATABASE_NAME }}
+#      TF_VAR_FFK_DATABASE_SERVER: ${{ secrets.FFK_DATABASE_SERVER }}
+#      TF_VAR_FFK_DATABASE_PORT: ${{ secrets.FFK_DATABASE_PORT }}
+#      TF_VAR_FFK_DISCORD_CLIENT_SECRET: ${{ secrets.FFK_DISCORD_CLIENT_SECRET }}
+#      TF_VAR_FFK_DISCORD_REDIRECT: ${{ secrets.FFK_DISCORD_REDIRECT }}
+#      TF_VAR_FFK_DISCORD_BOT_TOKEN: ${{ secrets.FFK_DISCORD_BOT_TOKEN }}
+#      TF_VAR_FFK_API_SERVER: ${{ secrets.FFK_API_SERVER }}
+#      TF_VAR_GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 #    steps:
 #      - uses: actions/checkout@v3
 #      - uses: hashicorp/setup-terraform@v2
