@@ -23,7 +23,7 @@
     "@angular/forms": "16.2.6",
     "@angular/material": "16.2.5",
     "@angular/platform-browser": "16.2.8",
-    "@angular/platform-browser-dynamic": "16.2.6",
+    "@angular/platform-browser-dynamic": "16.2.8",
     "@angular/router": "16.2.6",
     "@fortawesome/fontawesome-free": "6.4.2",
     "animate.css": "4.1.1",
