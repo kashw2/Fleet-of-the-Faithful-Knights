@@ -38,8 +38,8 @@ jobs:
 
       - name: npm install
         run: |
-          lerna exec npm install --scope=fleet-of-the-faithful-knights -- --force
-          lerna exec npm install --scope=@ffk/api -- --force
+          lerna exec npm ci --scope=fleet-of-the-faithful-knights -- --force
+          lerna exec npm ci --scope=@ffk/api -- --force
 
       - name: test api
         run: lerna run test --scope=@ffk/api
@@ -67,8 +67,8 @@ jobs:
 
       - name: npm install
         run: |
-          lerna exec npm install --scope=fleet-of-the-faithful-knights -- --force
-          lerna exec npm install --scope=@ffk/api -- --force
+          lerna exec npm ci --scope=fleet-of-the-faithful-knights -- --force
+          lerna exec npm ci --scope=@ffk/api -- --force
 
       - name: build api
         run: lerna run build:dev --scope=@ffk/api
@@ -95,8 +95,8 @@ jobs:
 
       - name: npm install
         run: |
-          lerna exec npm install --scope=fleet-of-the-faithful-knights -- --force
-          lerna exec npm install --scope=@ffk/api -- --force
+          lerna exec npm ci --scope=fleet-of-the-faithful-knights -- --force
+          lerna exec npm ci --scope=@ffk/api -- --force
 
       - name: build api
         run: lerna run build:dev --scope=@ffk/api
