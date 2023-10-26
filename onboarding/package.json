@@ -30,6 +30,6 @@
   },
   "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights#readme",
   "devDependencies": {
-    "esbuild": "0.19.4"
+    "esbuild": "0.19.5"
   }
 }
