@@ -39,7 +39,7 @@
     "@angular/cli": "16.2.5",
     "@angular/compiler-cli": "16.2.9",
     "@types/jasmine": "4.3.6",
-    "@types/node": "20.8.6",
+    "@types/node": "20.8.9",
     "codelyzer": "6.0.2",
     "jasmine-core": "5.1.1",
     "jasmine-spec-reporter": "7.0.0",
