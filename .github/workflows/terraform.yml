@@ -103,7 +103,7 @@ jobs:
       TF_VAR_GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-      - uses: hashicorp/setup-terraform@v2
+      - uses: hashicorp/setup-terraform@v3
 
       - name: format
         run: terraform fmt -recursive
@@ -135,7 +135,7 @@ jobs:
 #      TF_VAR_GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 #    steps:
 #      - uses: actions/checkout@v3
-#      - uses: hashicorp/setup-terraform@v2
+#      - uses: hashicorp/setup-terraform@v3
 #
 #      - name: format
 #        run: terraform fmt -recursive
