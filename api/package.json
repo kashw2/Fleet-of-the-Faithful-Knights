@@ -35,8 +35,8 @@
     "passport": "0.6.0"
   },
   "devDependencies": {
-    "@types/jasmine": "4.3.6",
-    "jasmine": "3.99.0",
+    "@types/jasmine": "5.1.1",
+    "jasmine": "5.1.0",
     "jasmine-spec-reporter": "7.0.0",
     "jasmine-ts": "0.4.0",
     "esbuild": "0.19.5"
