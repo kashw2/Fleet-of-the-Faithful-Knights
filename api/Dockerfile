@@ -1,4 +1,4 @@
-FROM node:21.3.0-alpine3.17
+FROM node:21.4.0-alpine3.17
 
 COPY ./dist/api.js ./
 
