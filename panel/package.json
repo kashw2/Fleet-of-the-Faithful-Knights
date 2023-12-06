@@ -15,7 +15,7 @@
     "docker:publish": "docker push ghcr.io/kashw2/panel.faithfulknights.com:$(git rev-parse --verify HEAD) && docker push ghcr.io/kashw2/panel.faithfulknights.com:latest"
   },
   "dependencies": {
-    "@angular/animations": "16.2.11",
+    "@angular/animations": "17.0.6",
     "@angular/cdk": "17.0.1",
     "@angular/common": "16.2.11",
     "@angular/compiler": "16.2.9",
