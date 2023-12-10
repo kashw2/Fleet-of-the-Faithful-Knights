@@ -64,18 +64,18 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "disableHostCheck": true,
-            "browserTarget": "panel:build"
+            "buildTarget": "panel:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "panel:build:production"
+              "buildTarget": "panel:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "panel:build"
+            "buildTarget": "panel:build"
           }
         },
         "test": {
