@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights#readme",
   "dependencies": {
-    "@types/mssql": "9.1.4",
+    "@types/mssql": "9.1.5",
     "mssql": "10.0.2",
     "@types/passport": "1.0.16",
     "passport": "0.7.0"
