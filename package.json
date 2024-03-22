@@ -20,7 +20,7 @@
     "@types/express": "4.17.21",
     "@types/node": "20.11.30",
     "axios": "1.6.8",
-    "express": "4.19.0",
+    "express": "4.19.1",
     "funfix": "7.0.1",
     "immutable": "4.3.5",
     "moment": "2.30.1",
