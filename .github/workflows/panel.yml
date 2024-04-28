@@ -39,6 +39,9 @@ jobs:
       - name: npm install
         run: npm i --force
 
+      - name: build libraries
+        run: npm run build -w @kashw2/lib-util -w @kashw2/lib-external -w @kashw2/lib-ts
+
       - name: build panel
         run: lerna run build --scope=@ffk/panel
   deploy:
@@ -65,6 +68,9 @@ jobs:
 
       - name: npm install
         run: npm i --force
+
+      - name: build libraries
+        run: npm run build -w @kashw2/lib-util -w @kashw2/lib-external -w @kashw2/lib-ts
 
       - name: build panel
         run: lerna run build:prod --scope=@ffk/panel
