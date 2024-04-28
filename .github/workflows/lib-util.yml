@@ -37,9 +37,7 @@ jobs:
         run: npm install -g lerna
 
       - name: npm install
-        run: |
-          lerna exec npm ci --scope=fleet-of-the-faithful-knights -- --force
-          lerna exec npm ci --scope=@kashw2/lib-util -- --force
+        run: npm i --force
 
       - name: test util
         run: lerna run test --scope=@kashw2/lib-util
@@ -76,9 +74,7 @@ jobs:
         run: npm install -g lerna rimraf typescript
 
       - name: npm install
-        run: |
-          lerna exec npm ci --scope=fleet-of-the-faithful-knights -- --force
-          lerna exec npm ci --scope=@kashw2/lib-util -- --force
+        run: npm i --force
 
       - name: build
         run: lerna run build --scope=@kashw2/lib-util
@@ -104,9 +100,7 @@ jobs:
         run: npm install -g lerna rimraf typescript
 
       - name: npm install
-        run: |
-          lerna exec npm ci --scope=fleet-of-the-faithful-knights -- --force
-          lerna exec npm ci --scope=@kashw2/lib-util -- --force
+        run: npm i --force
 
       - name: build
         run: lerna run build --scope=@kashw2/lib-util

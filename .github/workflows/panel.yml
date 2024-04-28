@@ -37,9 +37,7 @@ jobs:
         run: npm install -g lerna @angular/cli &> /dev/null
 
       - name: npm install
-        run: |
-          lerna exec npm ci --scope=fleet-of-the-faithful-knights -- --force
-          lerna exec npm ci --scope=@ffk/panel -- --force
+        run: npm i --force
 
       - name: build panel
         run: lerna run build --scope=@ffk/panel
@@ -66,9 +64,7 @@ jobs:
         run: npm install -g lerna @angular/cli &> /dev/null
 
       - name: npm install
-        run: |
-          lerna exec npm ci --scope=fleet-of-the-faithful-knights -- --force
-          lerna exec npm ci --scope=@ffk/panel -- --force
+        run: npm i --force
 
       - name: build panel
         run: lerna run build:prod --scope=@ffk/panel
