@@ -37,7 +37,7 @@ jobs:
         run: npm install -g lerna rimraf typescript
 
       - name: npm install
-        run: npm i --force
+        run: npm ci --force
 
       - name: build libraries
         run: npm run build -w @kashw2/lib-util
@@ -66,7 +66,7 @@ jobs:
         run: npm install -g lerna rimraf typescript
 
       - name: npm install
-        run: npm i --force
+        run: npm ci --force
 
       - name: build libraries
         run: npm run build -w @kashw2/lib-util

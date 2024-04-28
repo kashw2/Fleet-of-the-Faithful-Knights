@@ -37,7 +37,7 @@ jobs:
         run: npm install -g lerna
 
       - name: npm install
-        run: npm i --force
+        run: npm ci --force
 
       - name: test server
         run: lerna run test --scope=@kashw2/lib-server
@@ -74,7 +74,7 @@ jobs:
         run: npm install -g lerna rimraf typescript
 
       - name: npm install
-        run: npm i --force
+        run: npm ci --force
 
       - name: build
         run: lerna run build --scope=@kashw2/lib-server
@@ -100,7 +100,7 @@ jobs:
         run: npm install -g lerna rimraf typescript
 
       - name: npm install
-        run: npm i --force
+        run: npm ci --force
 
       - name: build
         run: lerna run build --scope=@kashw2/lib-server
