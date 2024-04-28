@@ -39,7 +39,7 @@
     "mssql": "10.0.2",
     "passport": "0.7.0",
     "tslib": "2.6.2",
-    "typescript": "5.0.4"
+    "typescript": "5.4.5"
   },
   "devDependencies": {
     "@types/express": "4.17.21",
