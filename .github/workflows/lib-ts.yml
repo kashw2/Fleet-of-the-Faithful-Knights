@@ -39,6 +39,9 @@ jobs:
       - name: npm install
         run: npm i --force
 
+      - name: build libraries
+        run: npm run build -w @kashw2/lib-util -w @kashw2/lib-external
+
       - name: build
         run: lerna run build --scope=@kashw2/lib-ts
   publish:
@@ -64,6 +67,9 @@ jobs:
 
       - name: npm install
         run: npm i --force
+
+      - name: build libraries
+        run: npm run build -w @kashw2/lib-util -w @kashw2/lib-external
 
       - name: build
         run: lerna run build --scope=@kashw2/lib-ts
