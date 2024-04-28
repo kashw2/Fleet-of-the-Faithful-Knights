@@ -29,12 +29,12 @@ thing or two.
 
 | Name                                                 | Version |
 |------------------------------------------------------|---------|
-| TypeScript                                           | 4.x.x   |
-| Node                                                 | 14.x.x  |
-| Lerna                                                | 4.0.0   |
+| TypeScript                                           | 5.x.x   |
+| Node                                                 | 22.x.x  |
+| Lerna                                                | 8.0.0   |
 | Esbuild                                              | 19.x.x  |
 | [Terraform](https://www.terraform.io/downloads.html) | 1.0.0   |
-| [Docker](https://docs.docker.com/get-docker/)        | 20.x.x  |
+| [Docker](https://docs.docker.com/get-docker/)        | 24.x.x  |
 
 This ensures that you will be able to compile, build, run and deploy all projects in the repo.
 
