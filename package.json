@@ -12,6 +12,13 @@
     "url": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights/issues"
   },
   "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights#readme",
+  "workspaces": [
+    "./",
+    "./api",
+    "./libs/*",
+    "./onboarding",
+    "./panel"
+  ],
   "dependencies": {
     "@kashw2/lib-external": "6.1.0",
     "@kashw2/lib-server": "6.1.0",
