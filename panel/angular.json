@@ -28,12 +28,12 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/ngx-toastr/toastr.css",
+              "../node_modules/ngx-toastr/toastr.css",
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/easy-pie-chart/dist/easypiechart.js",
-              "node_modules/screenfull/dist/screenfull.js"
+              "../node_modules/easy-pie-chart/dist/easypiechart.js",
+              "../node_modules/screenfull/dist/screenfull.js"
             ],
             "vendorChunk": true,
             "extractLicenses": false,
