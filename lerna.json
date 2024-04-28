@@ -2,18 +2,7 @@
   "version": "1.0.0",
   "npmClient": "npm",
   "parallel": true,
-  "command": {
-    "bootstrap": {
-      "npmClientArgs": [
-        "--no-package-lock"
-      ]
-    },
-    "exec": {
-      "npmClientArgs": [
-        "--no-package-lock"
-      ]
-    }
-  },
+  "command": {},
   "packages": [
     ".",
     "libs/util",
