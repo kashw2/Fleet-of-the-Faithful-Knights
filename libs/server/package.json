@@ -33,8 +33,11 @@
     "cov:show": "run-s build test && open-cli coverage/index.html",
     "cov:check": "nyc report && nyc check-coverage --lines 100 --functions 100 --branches 100"
   },
-  "engines": {
-    "node": ">=14"
+  "dependencies": {
+    "express": "4.19.2",
+    "funfix": "7.0.1",
+    "@kashw2/lib-util": "7.0.1",
+    "@kashw2/lib-ts": "5.0.0"
   },
   "devDependencies": {
     "ava": "6.1.2",
