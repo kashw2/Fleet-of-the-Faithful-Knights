@@ -39,6 +39,9 @@ jobs:
       - name: npm install
         run: npm ci --force
 
+      - name: build libraries
+        run: npm run build -w @kashw2/lib-util
+
       - name: test server
         run: lerna run test --scope=@kashw2/lib-server
 
@@ -76,6 +79,9 @@ jobs:
       - name: npm install
         run: npm ci --force
 
+      - name: build libraries
+        run: npm run build -w @kashw2/lib-util
+
       - name: build
         run: lerna run build --scope=@kashw2/lib-server
   publish:
@@ -101,6 +107,9 @@ jobs:
 
       - name: npm install
         run: npm ci --force
+
+      - name: build libraries
+        run: npm run build -w @kashw2/lib-util
 
       - name: build
         run: lerna run build --scope=@kashw2/lib-server
