@@ -43,7 +43,7 @@ jobs:
         run: npm run build -w @kashw2/lib-util
 
       - name: test server
-        run: lerna run test --scope=@kashw2/lib-server
+        run: npm run build -w @kashw2/lib-util -w @kashw2/lib-ts
 
       - name: generate coverage
         run: |
@@ -83,7 +83,7 @@ jobs:
         run: npm run build -w @kashw2/lib-util
 
       - name: build
-        run: lerna run build --scope=@kashw2/lib-server
+        run: npm run build -w @kashw2/lib-util -w @kashw2/lib-ts
   publish:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
@@ -109,7 +109,7 @@ jobs:
         run: npm ci --force
 
       - name: build libraries
-        run: npm run build -w @kashw2/lib-util
+        run: npm run build -w @kashw2/lib-util -w @kashw2/lib-ts
 
       - name: build
         run: lerna run build --scope=@kashw2/lib-server
