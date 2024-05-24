@@ -31,7 +31,7 @@
   "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights#readme",
   "dependencies": {
     "funfix": "7.0.1",
-    "immutable": "4.3.5",
+    "immutable": "4.3.6",
     "express": "4.19.2",
     "passport": "0.7.0",
     "tslib": "2.6.2",

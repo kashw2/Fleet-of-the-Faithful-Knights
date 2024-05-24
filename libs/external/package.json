@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "funfix": "7.0.1",
-    "immutable": "4.3.5",
+    "immutable": "4.3.6",
     "@kashw2/lib-util": "7.0.1"
   },
   "devDependencies": {
