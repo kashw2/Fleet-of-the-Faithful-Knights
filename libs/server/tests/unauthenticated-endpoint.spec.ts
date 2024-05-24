@@ -1,6 +1,6 @@
-import test from "ava";
 import {UnauthenticatedEndpoint} from "../src";
 import {Request, Response, Router} from "express";
+import {describe, test} from "vitest";
 
 class TestEndpoint extends UnauthenticatedEndpoint {
 
@@ -26,7 +26,9 @@ class TestEndpoint extends UnauthenticatedEndpoint {
 
 }
 
-test('UnauthenticatedEndpoint should create endpoint', t => {
-  const endpoint = new TestEndpoint('test');
-  t.is(endpoint.getEndpointName(), 'test');
+describe('UnauthenticatedEndpoint', () => {
+  test('UnauthenticatedEndpoint should create endpoint', t => {
+    const endpoint = new TestEndpoint('test');
+    t.expect(endpoint.getEndpointName()).toEqual('test');
+  });
 });

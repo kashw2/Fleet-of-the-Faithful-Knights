@@ -1,7 +1,6 @@
-import test from "ava";
 import {ApiEndpoint} from "../src";
 import {Router} from "express";
-
+import {describe, test} from 'vitest';
 
 class TestEndpoint extends ApiEndpoint {
 
@@ -19,12 +18,14 @@ class TestEndpoint extends ApiEndpoint {
 
 }
 
-test('ApiEndpoint should create endpoint', t => {
-  const endpoint = new TestEndpoint('test');
-  t.is(endpoint.getEndpointName(), 'test');
-});
+describe('ApiEndpoint', () => {
+  test('ApiEndpoint should create endpoint', t => {
+    const endpoint = new TestEndpoint('test');
+    t.expect(endpoint.getEndpointName()).toEqual('test');
+  });
 
-test('ApiEndpoint should return endpoint name without /', t => {
-  const endpoint = new TestEndpoint('/test');
-  t.is(endpoint.getEndpointName(), 'test');
+  test('ApiEndpoint should return endpoint name without /', t => {
+    const endpoint = new TestEndpoint('/test');
+    t.expect(endpoint.getEndpointName()).toEqual('test');
+  });
 });
