@@ -1,9 +1,11 @@
-import test from "ava";
 import moment from "moment";
 import {Some} from "funfix-core";
 import {MomentUtils} from "../src";
+import {describe, test} from "vitest";
 
-test('MomentUtils should format', t => {
-  const result = MomentUtils.format(Some(moment('22 Jan 2021')), 'DMY');
-  t.deepEqual(result, Some('22/01/2021'));
+describe('MomentUtils', () => {
+  test('MomentUtils should format', t => {
+    const result = MomentUtils.format(Some(moment('22 Jan 2021')), 'DMY');
+    t.expect(result).toEqual(Some('22/01/2021'));
+  });
 });
