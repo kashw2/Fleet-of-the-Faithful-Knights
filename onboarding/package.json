@@ -43,7 +43,7 @@
     "@microsoft/applicationinsights-web": "3.2.2"
   },
   "devDependencies": {
-    "esbuild": "0.21.3",
+    "esbuild": "0.21.5",
     "nodemon": "3.1.3"
   }
 }
