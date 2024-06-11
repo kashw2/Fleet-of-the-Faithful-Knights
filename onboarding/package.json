@@ -34,7 +34,7 @@
     "immutable": "4.3.6",
     "express": "4.19.2",
     "passport": "0.7.0",
-    "tslib": "2.6.2",
+    "tslib": "2.6.3",
     "typescript": "5.4.5",
     "@kashw2/lib-server": "6.1.0",
     "@kashw2/lib-external": "6.1.0",
