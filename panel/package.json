@@ -18,7 +18,7 @@
     "@kashw2/lib-external": "6.1.0",
     "@kashw2/lib-ts": "5.0.0",
     "@kashw2/lib-util": "7.0.1",
-    "@microsoft/applicationinsights-web": "3.2.2",
+    "@microsoft/applicationinsights-web": "3.3.0",
     "funfix": "7.0.1",
     "immutable": "4.3.6",
     "moment": "2.30.1",
