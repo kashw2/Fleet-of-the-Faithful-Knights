@@ -36,7 +36,7 @@
     "express": "4.19.2",
     "funfix": "7.0.1",
     "immutable": "4.3.6",
-    "mssql": "11.0.0",
+    "mssql": "11.0.1",
     "passport": "0.7.0",
     "tslib": "2.6.3",
     "typescript": "5.4.5"
