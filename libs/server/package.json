@@ -45,7 +45,7 @@
     "nyc": "17.0.0",
     "codecov": "3.8.3",
     "rimraf": "5.0.7",
-    "vitest": "1.6.0"
+    "vitest": "2.0.1"
   },
   "nyc": {
     "extends": "@istanbuljs/nyc-config-typescript",
