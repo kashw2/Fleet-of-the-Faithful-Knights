@@ -35,7 +35,7 @@
     "express": "4.19.2",
     "passport": "0.7.0",
     "tslib": "2.6.3",
-    "typescript": "5.4.5",
+    "typescript": "5.5.3",
     "@kashw2/lib-server": "6.1.0",
     "@kashw2/lib-external": "6.1.0",
     "@kashw2/lib-ts": "5.0.0",
