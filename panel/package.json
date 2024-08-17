@@ -29,7 +29,7 @@
     "@angular/core": "18.2.0",
     "@angular/forms": "18.2.0",
     "@angular/material": "18.2.0",
-    "@angular/platform-browser": "18.1.4",
+    "@angular/platform-browser": "18.2.0",
     "@angular/platform-browser-dynamic": "18.2.0",
     "@angular/router": "18.2.0",
     "@fortawesome/fontawesome-free": "6.6.0",
