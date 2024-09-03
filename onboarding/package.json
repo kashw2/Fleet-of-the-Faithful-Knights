@@ -40,7 +40,7 @@
     "@kashw2/lib-external": "6.1.0",
     "@kashw2/lib-ts": "5.0.0",
     "@kashw2/lib-util": "7.0.1",
-    "@microsoft/applicationinsights-web": "3.3.1"
+    "@microsoft/applicationinsights-web": "3.3.2"
   },
   "devDependencies": {
     "esbuild": "0.23.1",
