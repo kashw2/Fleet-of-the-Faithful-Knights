@@ -2,7 +2,8 @@
   "name": "@ffk/panel",
   "version": "1.0.0",
   "scripts": {
-    "prebuild": "rimraf dist",
+    "prebuild": "rimraf dist .angular",
+    "prestart": "rimraf dist .angular",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
