@@ -6,10 +6,10 @@ import {Candidate, Group, Vote} from "@kashw2/lib-ts";
 import {None, Option, Some} from "funfix-core";
 import {UserService} from "../../service/user.service";
 import {BehaviorSubject} from "rxjs";
-import * as moment from "moment";
 import {VoteService} from "../../service/vote.service";
 import {GroupService} from "../../service/group.service";
 import {ToastService} from "../../service/toast.service";
+import moment from "moment";
 
 @Component({
   selector: 'app-create-vote',
