@@ -34,7 +34,7 @@
     "cov:check": "nyc report && nyc check-coverage --lines 100 --functions 100 --branches 100"
   },
   "dependencies": {
-    "express": "4.20.0",
+    "express": "4.21.0",
     "funfix": "7.0.1",
     "@kashw2/lib-util": "7.0.1",
     "@kashw2/lib-ts": "5.0.0"
