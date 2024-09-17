@@ -32,7 +32,7 @@
   "dependencies": {
     "funfix": "7.0.1",
     "immutable": "4.3.7",
-    "express": "4.20.0",
+    "express": "4.21.0",
     "passport": "0.7.0",
     "tslib": "2.7.0",
     "typescript": "5.5.4",
