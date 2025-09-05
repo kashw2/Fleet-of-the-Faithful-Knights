@@ -15,34 +15,29 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "preserveSymlinks": true,
-            "outputPath": {
-              "base": "dist/panel"
-            },
+            "outputPath": "dist/panel",
             "index": "src/index.html",
-            "polyfills": [
-              "src/polyfills.ts"
-            ],
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "../node_modules/ngx-toastr/toastr.css",
+              "node_modules/ngx-toastr/toastr.css",
               "src/styles.scss"
             ],
-            "scripts": [
-              "../node_modules/easy-pie-chart/dist/easypiechart.js",
-              "../node_modules/screenfull/dist/screenfull.js"
-            ],
+            "scripts": [],
+            "vendorChunk": true,
             "extractLicenses": false,
+            "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true,
-            "browser": "src/main.ts"
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -56,25 +51,28 @@
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
-              "extractLicenses": true
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "panel:build"
+            "disableHostCheck": true,
+            "browserTarget": "panel:build"
           },
           "configurations": {
             "production": {
-              "buildTarget": "panel:build:production"
+              "browserTarget": "panel:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "panel:build"
+            "browserTarget": "panel:build"
           }
         },
         "test": {
@@ -109,6 +107,7 @@
       }
     }
   },
+  "defaultProject": "panel",
   "cli": {
     "analytics": "4268aab3-5b25-4964-8f80-0befddb8b70f"
   }
