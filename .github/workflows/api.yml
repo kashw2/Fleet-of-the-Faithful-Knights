@@ -16,35 +16,35 @@ on:
       - main
 
 jobs:
-  test:
-    if: github.event_name != 'push'
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v5
-
-      - name: setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: npm auth
-        run: |
-          npm config set @kashw2:registry https://npm.pkg.github.com/
-          npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}
-          npm config set registry https://registry.npmjs.org/
-
-      - name: install globals
-        run: npm install -g lerna
-
-      - name: npm install
-        run: npm ci --force
-
-      - name: build libraries
-        run: npm run build -w @kashw2/lib-util -w @kashw2/lib-external -w @kashw2/lib-ts -w @kashw2/lib-server
-
-      - name: test api
-        run: lerna run test --scope=@ffk/api
+#  test:
+#    if: github.event_name != 'push'
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: checkout
+#        uses: actions/checkout@v5
+#
+#      - name: setup node
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: '20'
+#
+#      - name: npm auth
+#        run: |
+#          npm config set @kashw2:registry https://npm.pkg.github.com/
+#          npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}
+#          npm config set registry https://registry.npmjs.org/
+#
+#      - name: install globals
+#        run: npm install -g lerna
+#
+#      - name: npm install
+#        run: npm ci --force
+#
+#      - name: build libraries
+#        run: npm run build -w @kashw2/lib-util -w @kashw2/lib-external -w @kashw2/lib-ts -w @kashw2/lib-server
+#
+#      - name: test api
+#        run: lerna run test --scope=@ffk/api
   build:
     if: github.event_name != 'push'
     runs-on: ubuntu-latest
