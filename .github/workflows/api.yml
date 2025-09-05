@@ -5,6 +5,7 @@ on:
   pull_request:
     paths:
       - package.json
+      - package-lock.json
       - api/**
     branches:
       - main
@@ -46,7 +47,6 @@ jobs:
         run: lerna run test --scope=@ffk/api
   build:
     if: github.event_name != 'push'
-    needs: [test]
     runs-on: ubuntu-latest
     steps:
       - name: checkout
