@@ -44,6 +44,6 @@
   },
   "devDependencies": {
     "esbuild": "0.25.0",
-    "nodemon": "3.1.7"
+    "nodemon": "3.1.10"
   }
 }
