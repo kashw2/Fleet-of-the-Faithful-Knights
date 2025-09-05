@@ -1,41 +1,45 @@
 <img src="./assets/images/Fleet_of_the_Faithful_Knights_Shield.png" class="img-fluid c-pointer m-1"
-     (click)="navigationService.home()">
-<img *ngIf="userService.getUser().nonEmpty()"
-     [src]="getUserAvatar().getOrElse('./assets/images/discord.jpg')"
-     matTooltip="Profile"
-     id="nav-profile"
-     class="rounded-circle c-pointer mt-4"
-     height="50"
-     width="50"
-     (click)="navigationService.home()">
-<img *ngIf="userService.getUser().isEmpty()"
-     [src]="getUserAvatar().getOrElse('./assets/images/discord.jpg')"
-     matTooltip="Profile"
-     id="nav-profile"
-     class="rounded-circle c-pointer mt-4"
-     height="50"
-     width="50"
-     (click)="signIn()">
+  (click)="navigationService.home()">
+@if (userService.getUser().nonEmpty()) {
+  <img
+    [src]="getUserAvatar().getOrElse('./assets/images/discord.jpg')"
+    matTooltip="Profile"
+    id="nav-profile"
+    class="rounded-circle c-pointer mt-4"
+    height="50"
+    width="50"
+    (click)="navigationService.home()">
+}
+@if (userService.getUser().isEmpty()) {
+  <img
+    [src]="getUserAvatar().getOrElse('./assets/images/discord.jpg')"
+    matTooltip="Profile"
+    id="nav-profile"
+    class="rounded-circle c-pointer mt-4"
+    height="50"
+    width="50"
+    (click)="signIn()">
+}
 <div matTooltip="Home"
-     class="d-flex container-fluid align-items-center justify-content-center nav-action ffk-content-bg c-pointer ffk-icon-shade hover rounded mt-4 mb-2"
-     (click)="navigationService.home()">
+  class="d-flex container-fluid align-items-center justify-content-center nav-action ffk-content-bg c-pointer ffk-icon-shade hover rounded mt-4 mb-2"
+  (click)="navigationService.home()">
   <mat-icon class="ffk-content-shade ffk-icon-fg">home</mat-icon>
 </div>
 <div matTooltip="Votes"
-     class="d-flex container-fluid align-items-center justify-content-center nav-action ffk-content-bg c-pointer ffk-icon-shade hover rounded my-2"
-     (click)="navigationService.votes()">
+  class="d-flex container-fluid align-items-center justify-content-center nav-action ffk-content-bg c-pointer ffk-icon-shade hover rounded my-2"
+  (click)="navigationService.votes()">
   <mat-icon class="ffk-content-shade ffk-icon-fg">how_to_vote</mat-icon>
 </div>
 <div matTooltip="Users"
-     class="d-flex container-fluid align-items-center justify-content-center nav-action ffk-content-bg c-pointer ffk-icon-shade hover rounded my-2"
-     (click)="navigationService.users()">
+  class="d-flex container-fluid align-items-center justify-content-center nav-action ffk-content-bg c-pointer ffk-icon-shade hover rounded my-2"
+  (click)="navigationService.users()">
   <mat-icon class="ffk-content-shade ffk-icon-fg">people</mat-icon>
 </div>
 <div matTooltip="Permissions"
-     class="d-flex container-fluid align-items-center justify-content-center nav-action ffk-content-bg c-pointer ffk-icon-shade hover rounded my-2">
+  class="d-flex container-fluid align-items-center justify-content-center nav-action ffk-content-bg c-pointer ffk-icon-shade hover rounded my-2">
   <mat-icon class="ffk-content-shade ffk-icon-fg">tune</mat-icon>
 </div>
 <div matTooltip="Settings"
-     class="d-flex container-fluid align-items-center justify-content-center nav-action ffk-content-bg c-pointer ffk-icon-shade hover rounded my-2">
+  class="d-flex container-fluid align-items-center justify-content-center nav-action ffk-content-bg c-pointer ffk-icon-shade hover rounded my-2">
   <mat-icon class="ffk-content-shade ffk-icon-fg">settings</mat-icon>
 </div>

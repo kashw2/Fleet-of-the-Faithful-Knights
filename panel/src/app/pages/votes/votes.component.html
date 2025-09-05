@@ -20,10 +20,12 @@
                 <div class="d-flex container-fluid flex-column h-100 ffk-content-bg">
                   <div class="row flex-grow-1">
                     <div class="d-flex col flex-column align-items-center justify-content-between">
-                      <ng-container *ngFor="let label of getHierarchicalGroupLabels(); let idx = index">
-                        <h2 *ngIf="label.nonEmpty()" class="ffk-text-fg my-auto c-pointer"
-                            (click)="setSelectedGroup(label)">{{label.get()}}</h2>
-                      </ng-container>
+                      @for (label of getHierarchicalGroupLabels(); track label; let idx = $index) {
+                        @if (label.nonEmpty()) {
+                          <h2 class="ffk-text-fg my-auto c-pointer"
+                          (click)="setSelectedGroup(label)">{{label.get()}}</h2>
+                        }
+                      }
                     </div>
                   </div>
                 </div>
@@ -52,12 +54,12 @@
               </ng-container>
               <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
               <tr mat-row
-                  class="c-pointer"
-                  *matRowDef="let row; columns: getDisplayedColumns();"
-                  (click)="setAndNavigateToVote(row.id - 1)"></tr>
+                class="c-pointer"
+                *matRowDef="let row; columns: getDisplayedColumns();"
+              (click)="setAndNavigateToVote(row.id - 1)"></tr>
             </table>
             <mat-paginator [pageSizeOptions]="[5, 10, 15]"
-                           showFirstLastButtons>
+              showFirstLastButtons>
             </mat-paginator>
           </div>
         </div>

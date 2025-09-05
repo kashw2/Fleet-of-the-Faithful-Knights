@@ -7,9 +7,10 @@ import {UserService} from "../../service/user.service";
 import {CrudLocalStorageService} from "../../service/crud.service";
 
 @Component({
-  selector: 'app-profile-dialog',
-  templateUrl: './profile-dialog.component.html',
-  styleUrls: ['./profile-dialog.component.scss']
+    selector: 'app-profile-dialog',
+    templateUrl: './profile-dialog.component.html',
+    styleUrls: ['./profile-dialog.component.scss'],
+    standalone: false
 })
 export class ProfileDialogComponent implements OnInit {
 

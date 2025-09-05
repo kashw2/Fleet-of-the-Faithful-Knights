@@ -10,9 +10,9 @@
     "sourceMap": true,
     "declaration": false,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "importHelpers": true,
-    "target": "ES2022",
+    "target": "es2020",
     "module": "es2020",
     "paths": {
       "os": [
@@ -38,15 +38,11 @@
       ],
       "querystring": [
         "../node_modules/querystring-browser"
-      ],
-      "immutable": [
-        "../node_modules/immutable"
       ]
     },
     "lib": [
       "es2020",
       "dom"
-    ],
-    "useDefineForClassFields": false
+    ]
   }
 }
