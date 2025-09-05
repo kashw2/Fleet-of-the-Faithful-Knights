@@ -45,9 +45,9 @@ jobs:
       - name: test server
         run: lerna run test --scope=@kashw2/lib-server
 
-      - name: generate coverage
-        run: |
-          lerna run cov:ci --scope=@kashw2/lib-server
+#      - name: generate coverage
+#        run: |
+#          lerna run cov:ci --scope=@kashw2/lib-server
 
       - name: setup codecov
         uses: codecov/codecov-action@v5
