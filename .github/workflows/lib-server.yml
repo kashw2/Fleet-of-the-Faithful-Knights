@@ -45,9 +45,9 @@ jobs:
       - name: test server
         run: lerna run test --scope=@kashw2/lib-server
 
-      - name: generate coverage
-        run: |
-          lerna run cov:ci --scope=@kashw2/lib-server
+#      - name: generate coverage
+#        run: |
+#          lerna run cov:ci --scope=@kashw2/lib-server
 
       - name: setup codecov
         uses: codecov/codecov-action@v5
@@ -65,7 +65,7 @@ jobs:
       - name: setup node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: npm auth
         run: |
@@ -94,7 +94,7 @@ jobs:
       - name: setup node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: npm auth
         run: |
