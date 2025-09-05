@@ -7,9 +7,10 @@ import {MatDialog} from "@angular/material/dialog";
 import {BallotDialogComponent} from "../../dialogs/ballot-dialog/ballot-dialog.component";
 
 @Component({
-  selector: 'app-vote',
-  templateUrl: './vote.component.html',
-  styleUrls: ['./vote.component.scss']
+    selector: 'app-vote',
+    templateUrl: './vote.component.html',
+    styleUrls: ['./vote.component.scss'],
+    standalone: false
 })
 export class VoteComponent implements OnInit {
 

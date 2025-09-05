@@ -11,9 +11,10 @@ import {VoteService} from "../../service/vote.service";
 import {Future} from "funfix";
 
 @Component({
-  selector: 'app-ballot-dialog',
-  templateUrl: './ballot-dialog.component.html',
-  styleUrls: ['./ballot-dialog.component.scss']
+    selector: 'app-ballot-dialog',
+    templateUrl: './ballot-dialog.component.html',
+    styleUrls: ['./ballot-dialog.component.scss'],
+    standalone: false
 })
 export class BallotDialogComponent implements OnInit {
 

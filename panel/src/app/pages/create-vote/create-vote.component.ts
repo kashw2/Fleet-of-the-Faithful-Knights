@@ -12,9 +12,10 @@ import {ToastService} from "../../service/toast.service";
 import moment from "moment";
 
 @Component({
-  selector: 'app-create-vote',
-  templateUrl: './create-vote.component.html',
-  styleUrls: ['./create-vote.component.scss'],
+    selector: 'app-create-vote',
+    templateUrl: './create-vote.component.html',
+    styleUrls: ['./create-vote.component.scss'],
+    standalone: false
 })
 export class CreateVoteComponent implements OnInit {
 
