@@ -12,9 +12,10 @@ import {map} from "rxjs/operators";
 import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
-  selector: 'app-votes',
-  templateUrl: './votes.component.html',
-  styleUrls: ['./votes.component.scss'],
+    selector: 'app-votes',
+    templateUrl: './votes.component.html',
+    styleUrls: ['./votes.component.scss'],
+    standalone: false
 })
 export class VotesComponent implements OnInit, AfterViewInit {
 

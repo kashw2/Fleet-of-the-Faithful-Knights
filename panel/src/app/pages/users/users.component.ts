@@ -9,9 +9,10 @@ import {MatDialog} from "@angular/material/dialog";
 import {ProfileDialogComponent} from "../../dialogs/profile-dialog/profile-dialog.component";
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+    selector: 'app-users',
+    templateUrl: './users.component.html',
+    styleUrls: ['./users.component.scss'],
+    standalone: false
 })
 export class UsersComponent implements OnInit, AfterViewInit {
 

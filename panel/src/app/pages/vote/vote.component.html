@@ -7,8 +7,10 @@
         <div class="d-flex container-fluid flex-column">
           <div class="row">
             <div class="col-3">
-              <h2 *ngIf="getCandidateUsername().nonEmpty()"
-                  class="font-weight-bold mt-2">{{getCandidateUsername().get()}}'s Vote</h2>
+              @if (getCandidateUsername().nonEmpty()) {
+                <h2
+                class="font-weight-bold mt-2">{{getCandidateUsername().get()}}'s Vote</h2>
+              }
             </div>
           </div>
           <div class="row flex-grow-1">
@@ -16,48 +18,66 @@
               <div class="d-flex container-fluid flex-column ffk-content-bg flex-grow-1 rounded shadow px-0">
                 <div class="row">
                   <div class="col-auto">
-                    <img *ngIf="getFormattedCandidateAvatar().nonEmpty()"
-                         [src]="getFormattedCandidateAvatar().get()"
-                         width="300"
-                         height="300"
-                         class="ms-3 my-1">
+                    @if (getFormattedCandidateAvatar().nonEmpty()) {
+                      <img
+                        [src]="getFormattedCandidateAvatar().get()"
+                        width="300"
+                        height="300"
+                        class="ms-3 my-1">
+                    }
                   </div>
                   <div class="d-flex col flex-column">
-                    <h1 *ngIf="getCandidateUsername().nonEmpty()">{{getCandidateUsername().get()}}</h1>
-                    <h2
-                      *ngIf="getCandidateGroup().nonEmpty() && getCandidatePromotionGroup().nonEmpty()">{{getCandidateGroup().get()}}
+                    @if (getCandidateUsername().nonEmpty()) {
+                      <h1>{{getCandidateUsername().get()}}</h1>
+                    }
+                    @if (getCandidateGroup().nonEmpty() && getCandidatePromotionGroup().nonEmpty()) {
+                      <h2
+                        >{{getCandidateGroup().get()}}
                       - {{getCandidatePromotionGroup().get()}}</h2>
-                    <p *ngIf="getVoteDescription().nonEmpty()">{{getVoteDescription().get()}}</p>
+                    }
+                    @if (getVoteDescription().nonEmpty()) {
+                      <p>{{getVoteDescription().get()}}</p>
+                    }
                   </div>
-                  <div *ngIf="isVotable()" class="col-auto">
-                    <button mat-button class="mx-2 my-1 br-none" (click)="openBallotDialog()">Vote</button>
-                  </div>
+                  @if (isVotable()) {
+                    <div class="col-auto">
+                      <button mat-button class="mx-2 my-1 br-none" (click)="openBallotDialog()">Vote</button>
+                    </div>
+                  }
                 </div>
                 <div class="row flex-grow-1">
-                  <div *ngFor="let ballot of getBallots()" class="d-flex col m-3">
-                    <div
-                      [class.border-success]="ballot.getPreparedResponse().contains('Affirm')"
-                      [class.border-danger]="ballot.getPreparedResponse().contains('Deny')"
-                      class="d-flex container-fluid flex-column h-100 align-self-center ffk-content-bg shadow px-0 border">
-                      <div class="row">
-                        <div class="col">
-                          <img *ngIf="ballot.getFormattedVoterDiscordAvatar().nonEmpty()"
-                               [src]="ballot.getFormattedVoterDiscordAvatar().get()"
-                               height="50"
-                               width="50"
-                               class="my-4 mx-2">
-                          <h1 *ngIf="ballot.getVoterUsername().nonEmpty()"
-                              class="d-inline my-4">{{ballot.getVoterUsername().get()}}</h1>
-                        </div>
-                        <div class="row flex-grow-1">
+                  @for (ballot of getBallots(); track ballot) {
+                    <div class="d-flex col m-3">
+                      <div
+                        [class.border-success]="ballot.getPreparedResponse().contains('Affirm')"
+                        [class.border-danger]="ballot.getPreparedResponse().contains('Deny')"
+                        class="d-flex container-fluid flex-column h-100 align-self-center ffk-content-bg shadow px-0 border">
+                        <div class="row">
                           <div class="col">
-                            <p *ngIf="ballot.getDescription().nonEmpty()"
-                               class="mx-2">{{ballot.getDescription().get()}}</p>
+                            @if (ballot.getFormattedVoterDiscordAvatar().nonEmpty()) {
+                              <img
+                                [src]="ballot.getFormattedVoterDiscordAvatar().get()"
+                                height="50"
+                                width="50"
+                                class="my-4 mx-2">
+                            }
+                            @if (ballot.getVoterUsername().nonEmpty()) {
+                              <h1
+                              class="d-inline my-4">{{ballot.getVoterUsername().get()}}</h1>
+                            }
+                          </div>
+                          <div class="row flex-grow-1">
+                            <div class="col">
+                              @if (ballot.getDescription().nonEmpty()) {
+                                <p
+                                class="mx-2">{{ballot.getDescription().get()}}</p>
+                              }
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  }
                 </div>
               </div>
             </div>

@@ -2,13 +2,19 @@
   <div class="row">
     <div class="col-auto">
       <img [src]="getAvatar().getOrElse('./assets/images/discord.jpg')"
-           height="200"
-           width="200">
+        height="200"
+        width="200">
     </div>
     <div class="col">
-      <h2 *ngIf="getUsername().nonEmpty()" class="mb-0">{{getUsername().get()}}</h2>
-      <h3 *ngIf="getGroupName().nonEmpty()" class="mb-0">{{getGroupName().get()}}</h3>
-      <h3 *ngIf="getMemberSince().nonEmpty()" class="mb-0">{{getMemberSince().get() | date:'short'}}</h3>
+      @if (getUsername().nonEmpty()) {
+        <h2 class="mb-0">{{getUsername().get()}}</h2>
+      }
+      @if (getGroupName().nonEmpty()) {
+        <h3 class="mb-0">{{getGroupName().get()}}</h3>
+      }
+      @if (getMemberSince().nonEmpty()) {
+        <h3 class="mb-0">{{getMemberSince().get() | date:'short'}}</h3>
+      }
     </div>
     <div class="d-flex col-auto flex-column">
       <button mat-button color="error" (click)="deleteUser()">Delete</button>
