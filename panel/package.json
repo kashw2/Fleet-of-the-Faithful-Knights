@@ -24,7 +24,7 @@
     "@angular/material": "20.2.2",
     "@angular/platform-browser": "20.2.4",
     "@angular/platform-browser-dynamic": "20.2.4",
-    "@angular/router": "20.2.4",
+    "@angular/router": "20.3.0",
     "@fortawesome/fontawesome-free": "7.0.1",
     "animate.css": "4.1.1",
     "ngx-toastr": "19.0.0",
