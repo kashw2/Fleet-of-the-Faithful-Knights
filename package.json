@@ -20,7 +20,7 @@
     "./panel"
   ],
   "devDependencies": {
-    "lerna": "9.0.0",
+    "lerna": "9.0.3",
     "assert-browserify": "2.0.0",
     "browserify-zlib": "0.2.0",
     "os-browserify": "0.3.0",
