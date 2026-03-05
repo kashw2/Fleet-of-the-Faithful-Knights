@@ -31,7 +31,7 @@
               "src/assets"
             ],
             "styles": [
-              "../node_modules/ngx-toastr/toastr.css",
+              "node_modules/ngx-toastr/toastr.css",
               "src/styles.scss"
             ],
             "scripts": [],
@@ -90,18 +90,6 @@
               "src/styles.scss"
             ],
             "scripts": []
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "panel:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "panel:serve:production"
-            }
           }
         }
       }

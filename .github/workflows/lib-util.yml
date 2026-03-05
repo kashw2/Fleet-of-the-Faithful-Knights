@@ -1,5 +1,4 @@
 name: Utility Library
-
 on:
   workflow_dispatch:
   pull_request:
@@ -13,7 +12,6 @@ on:
       - libs/util/**
     branches:
       - main
-
 jobs:
   test:
     if: github.event_name != 'push'
@@ -21,51 +19,42 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v6
-
       - name: setup node
         uses: actions/setup-node@v6
         with:
-          node-version: '20'
-
+          node-version: 24
       - name: npm auth
         run: |
           npm config set @kashw2:registry https://npm.pkg.github.com/
           npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}
           npm config set registry https://registry.npmjs.org/
-
       - name: install globals
         run: npm install -g lerna
-
       - name: npm install
         run: npm ci --force
-
       - name: test util
         run: lerna run test --scope=@kashw2/lib-util
   build:
     if: github.event_name != 'push'
-    needs: [test]
+    needs:
+      - test
     runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v6
-
       - name: setup node
         uses: actions/setup-node@v6
         with:
-          node-version: '20'
-
+          node-version: 24
       - name: npm auth
         run: |
           npm config set @kashw2:registry https://npm.pkg.github.com/
           npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}
           npm config set registry https://registry.npmjs.org/
-
       - name: install globals
         run: npm install -g lerna rimraf typescript
-
       - name: npm install
         run: npm ci --force
-
       - name: build
         run: lerna run build --scope=@kashw2/lib-util
   publish:
@@ -74,27 +63,21 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v6
-
       - name: setup node
         uses: actions/setup-node@v6
         with:
-          node-version: '20'
-
+          node-version: 24
       - name: npm auth
         run: |
           npm config set @kashw2:registry https://npm.pkg.github.com/
           npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}
           npm config set registry https://registry.npmjs.org/
-
       - name: install globals
         run: npm install -g lerna rimraf typescript
-
       - name: npm install
         run: npm ci --force
-
       - name: build
         run: lerna run build --scope=@kashw2/lib-util
-
       - name: publish
         uses: JS-DevTools/npm-publish@v4
         with:
