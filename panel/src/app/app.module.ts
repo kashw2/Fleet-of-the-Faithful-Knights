@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {ErrorHandler, NgModule} from '@angular/core';
+import {ErrorHandler, NgModule, provideZoneChangeDetection} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {ToastrModule} from 'ngx-toastr';
@@ -50,6 +50,7 @@ import {ProfileDialogComponent} from './dialogs/profile-dialog/profile-dialog.co
     MatTabsModule,
   ],
   providers: [
+    provideZoneChangeDetection({eventCoalescing: true}),
     {provide: 'ffkApiServer', useValue: environment.FFK_API_SERVER},
     {provide: 'applicationInsightsKey', useValue: environment.applicationInsightsKey},
     {provide: ErrorHandler, useClass: AzureApplicationInsightsService},
