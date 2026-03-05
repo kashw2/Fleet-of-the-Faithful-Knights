@@ -1,5 +1,4 @@
 name: TypeScript Library
-
 on:
   workflow_dispatch:
   pull_request:
@@ -13,7 +12,6 @@ on:
       - libs/typescript/**
     branches:
       - main
-
 jobs:
   build:
     if: github.event_name != 'push'
@@ -21,27 +19,21 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v6
-
       - name: setup node
         uses: actions/setup-node@v6
         with:
-          node-version: '20'
-
+          node-version: 24
       - name: npm auth
         run: |
           npm config set @kashw2:registry https://npm.pkg.github.com/
           npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}
           npm config set registry https://registry.npmjs.org/
-
       - name: install globals
         run: npm install -g lerna rimraf typescript
-
       - name: npm install
         run: npm ci --force
-
       - name: build libraries
         run: npm run build -w @kashw2/lib-util -w @kashw2/lib-external
-
       - name: build
         run: lerna run build --scope=@kashw2/lib-ts
   publish:
@@ -50,30 +42,23 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v6
-
       - name: setup node
         uses: actions/setup-node@v6
         with:
-          node-version: '20'
-
+          node-version: 24
       - name: npm auth
         run: |
           npm config set @kashw2:registry https://npm.pkg.github.com/
           npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}
           npm config set registry https://registry.npmjs.org/
-
       - name: install globals
         run: npm install -g lerna rimraf typescript
-
       - name: npm install
         run: npm ci --force
-
       - name: build libraries
         run: npm run build -w @kashw2/lib-util -w @kashw2/lib-external
-
       - name: build
         run: lerna run build --scope=@kashw2/lib-ts
-
       - name: publish
         uses: JS-DevTools/npm-publish@v4
         with:
