@@ -44,7 +44,7 @@
   "devDependencies": {
     "@types/express": "5.0.6",
     "@types/jasmine": "6.0.0",
-    "@types/mssql": "9.1.8",
+    "@types/mssql": "9.1.9",
     "@types/node": "25.3.5",
     "@types/passport": "1.0.17",
     "esbuild": "0.27.3",
