@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "typedoc": "0.28.18",
-    "open-cli": "8.0.0",
+    "open-cli": "9.0.0",
     "gh-pages": "6.3.0"
   },
   "engines": {
