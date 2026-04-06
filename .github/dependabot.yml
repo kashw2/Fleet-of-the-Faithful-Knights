@@ -2,50 +2,38 @@ version: 2
 updates:
   - package-ecosystem: npm
     labels:
-      - "dependencies"
-    reviewers:
-      - kashw2
+      - dependencies
     directory: /
     schedule:
       interval: daily
     open-pull-requests-limit: 10
   - package-ecosystem: docker
     labels:
-      - "dependencies"
-    reviewers:
-      - kashw2
+      - dependencies
     directory: /api
     schedule:
       interval: daily
   - package-ecosystem: docker
     labels:
-      - "dependencies"
-    reviewers:
-      - kashw2
+      - dependencies
     directory: /onboarding
     schedule:
       interval: daily
   - package-ecosystem: docker
     labels:
-      - "dependencies"
-    reviewers:
-      - kashw2
+      - dependencies
     directory: /panel
     schedule:
       interval: daily
   - package-ecosystem: terraform
     labels:
-      - "dependencies"
-    reviewers:
-      - kashw2
+      - dependencies
     directory: /terraform
     schedule:
       interval: daily
   - package-ecosystem: github-actions
     labels:
-      - "dependencies"
-    reviewers:
-      - kashw2
+      - dependencies
     directory: /
     schedule:
       interval: daily
