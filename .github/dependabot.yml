@@ -4,6 +4,11 @@ updates:
     labels:
       - dependencies
     directory: /
+    groups:
+      angular:
+        patterns:
+          - '@angular/*'
+          - '@angular-devkit/*'
     schedule:
       interval: daily
     open-pull-requests-limit: 10
