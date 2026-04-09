@@ -45,7 +45,7 @@
     "@types/express": "5.0.6",
     "@types/jasmine": "6.0.0",
     "@types/mssql": "9.1.11",
-    "@types/node": "25.5.0",
+    "@types/node": "25.5.2",
     "@types/passport": "1.0.17",
     "esbuild": "0.28.0",
     "jasmine": "6.1.0",
