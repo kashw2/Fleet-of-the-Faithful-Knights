@@ -29,13 +29,13 @@ jobs:
           npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}
           npm config set registry https://registry.npmjs.org/
       - name: install globals
-        run: npm install -g lerna rimraf typescript
+        run: npm install -g rimraf typescript
       - name: npm install
         run: npm ci --force
       - name: build libraries
         run: npm run build -w @kashw2/lib-util -w @kashw2/lib-external
       - name: build
-        run: lerna run build --scope=@kashw2/lib-ts
+        run: npm run build -w @kashw2/lib-ts
   publish:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
@@ -52,13 +52,13 @@ jobs:
           npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}
           npm config set registry https://registry.npmjs.org/
       - name: install globals
-        run: npm install -g lerna rimraf typescript
+        run: npm install -g rimraf typescript
       - name: npm install
         run: npm ci --force
       - name: build libraries
         run: npm run build -w @kashw2/lib-util -w @kashw2/lib-external
       - name: build
-        run: lerna run build --scope=@kashw2/lib-ts
+        run: npm run build -w @kashw2/lib-ts
       - name: publish
         uses: JS-DevTools/npm-publish@v4
         with:

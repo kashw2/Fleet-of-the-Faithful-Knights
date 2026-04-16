@@ -28,14 +28,12 @@ jobs:
           npm config set @kashw2:registry https://npm.pkg.github.com/
           npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}
           npm config set registry https://registry.npmjs.org/
-      - name: install globals
-        run: npm install -g lerna
       - name: npm install
         run: npm ci --force
       - name: build libraries
         run: npm run build -w @kashw2/lib-util -w @kashw2/lib-external -w @kashw2/lib-ts
       - name: test server
-        run: lerna run test --scope=@kashw2/lib-server
+        run: npm run test -w @kashw2/lib-server
   build:
     if: github.event_name != 'push'
     needs:
@@ -54,7 +52,7 @@ jobs:
           npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}
           npm config set registry https://registry.npmjs.org/
       - name: install globals
-        run: npm install -g lerna rimraf typescript
+        run: npm install -g rimraf typescript
       - name: npm install
         run: npm ci --force
       - name: build libraries
@@ -77,13 +75,13 @@ jobs:
           npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}
           npm config set registry https://registry.npmjs.org/
       - name: install globals
-        run: npm install -g lerna rimraf typescript
+        run: npm install -g rimraf typescript
       - name: npm install
         run: npm ci --force
       - name: build libraries
         run: npm run build -w @kashw2/lib-util -w @kashw2/lib-external -w @kashw2/lib-ts
       - name: build
-        run: lerna run build --scope=@kashw2/lib-server
+        run: npm run build -w @kashw2/lib-server
       - name: publish
         uses: JS-DevTools/npm-publish@v4
         with:
