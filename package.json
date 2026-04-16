@@ -13,14 +13,12 @@
   },
   "homepage": "https://github.com/kashw2/Fleet-of-the-Faithful-Knights#readme",
   "workspaces": [
-    "./",
     "./api",
     "./libs/*",
     "./onboarding",
     "./panel"
   ],
   "devDependencies": {
-    "lerna": "9.0.7",
     "assert-browserify": "2.0.0",
     "browserify-zlib": "0.2.0",
     "os-browserify": "0.3.0",

@@ -32,9 +32,6 @@ jobs:
   #          npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}
   #          npm config set registry https://registry.npmjs.org/
   #
-  #      - name: install globals
-  #        run: npm install -g lerna
-  #
   #      - name: npm install
   #        run: npm ci --force
   #
@@ -42,7 +39,7 @@ jobs:
   #        run: npm run build -w @kashw2/lib-util -w @kashw2/lib-external -w @kashw2/lib-ts -w @kashw2/lib-server
   #
   #      - name: test api
-  #        run: lerna run test --scope=@ffk/api
+  #        run: npm run test -w @ffk/api
   build:
     if: github.event_name != 'push'
     runs-on: ubuntu-latest
@@ -58,14 +55,12 @@ jobs:
           npm config set @kashw2:registry https://npm.pkg.github.com/
           npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}
           npm config set registry https://registry.npmjs.org/
-      - name: install globals
-        run: npm install -g lerna
       - name: npm install
         run: npm ci --force
       - name: build libraries
         run: npm run build -w @kashw2/lib-util -w @kashw2/lib-external -w @kashw2/lib-ts -w @kashw2/lib-server
       - name: build api
-        run: lerna run build:dev --scope=@ffk/api
+        run: npm run build:dev -w @ffk/api
   deploy:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
@@ -81,14 +76,12 @@ jobs:
           npm config set @kashw2:registry https://npm.pkg.github.com/
           npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}
           npm config set registry https://registry.npmjs.org/
-      - name: install globals
-        run: npm install -g lerna
       - name: npm install
         run: npm ci --force
       - name: build libraries
         run: npm run build -w @kashw2/lib-util -w @kashw2/lib-external -w @kashw2/lib-ts -w @kashw2/lib-server
       - name: build api
-        run: lerna run build:dev --scope=@ffk/api
+        run: npm run build:dev -w @ffk/api
       - name: deploy
         uses: docker/login-action@v4
         with:

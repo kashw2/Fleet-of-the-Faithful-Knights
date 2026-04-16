@@ -29,7 +29,6 @@ thing or two.
 |------------------------------------------------------|---------|
 | TypeScript                                           | 5.x.x   |
 | Node                                                 | 22.x.x  |
-| Lerna                                                | 8.0.0   |
 | Esbuild                                              | 19.x.x  |
 | [Terraform](https://www.terraform.io/downloads.html) | 1.0.0   |
 | [Docker](https://docs.docker.com/get-docker/)        | 24.x.x  |
@@ -38,13 +37,13 @@ This ensures that you will be able to compile, build, run and deploy all project
 
 Here's a one line install for all node packages. Do note that it is a global install.
 
-```npm i typescript lerna esbuild -g```
+```npm i typescript esbuild -g```
 
 These packages can be located at the default locations at either ```AppData/npm/node_modules``` on Windows machines
 or ```usr/local/lib/node_modules``` on Linux.
 
-Once you have installed the above, run ```lerna bootstrap``` from the root of the repository to 'bootstrap' or install
-all dependencies for all projects in the repo.
+This repo is an npm workspaces monorepo, so once the globals above are installed, just run ```npm install``` from the
+root of the repository to install all dependencies for every package — no separate bootstrap step is required.
 
 #### Environment Variables
 
