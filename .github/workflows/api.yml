@@ -83,7 +83,7 @@ jobs:
       - name: build api
         run: npm run build:dev -w @ffk/api
       - name: deploy
-        uses: docker/login-action@v4
+        uses: docker/login-action@v4.5.2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
