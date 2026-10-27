@@ -33,7 +33,7 @@
     "@kashw2/lib-ts": "5.0.0",
     "@kashw2/lib-util": "7.0.1",
     "@microsoft/applicationinsights-web": "3.4.4",
-    "express": "5.2.1",
+    "express": "5.3.0",
     "funfix": "7.0.1",
     "immutable": "5.1.9",
     "mssql": "12.7.2",
