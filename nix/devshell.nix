@@ -1,7 +1,7 @@
 { ... }:
 {
   perSystem =
-    { pkgs, ... }:
+    { pkgs, self', ... }:
     {
       devShells.default = pkgs.mkShell {
         name = "default";
@@ -20,7 +20,7 @@
 
         packages = [
           pkgs.nodejs_24
-          pkgs.act
+          self'.packages.act
         ];
       };
     };

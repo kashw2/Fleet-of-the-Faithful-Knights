@@ -69,7 +69,8 @@
         "flake-parts": "flake-parts",
         "import-tree": "import-tree",
         "nixpkgs": "nixpkgs",
-        "systems": "systems"
+        "systems": "systems",
+        "wrapper-modules": "wrapper-modules"
       }
     },
     "systems": {
@@ -84,6 +85,26 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "wrapper-modules": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794276898,
+        "narHash": "sha256-qZFj4NtE55eMxSu0qU8D1BDQmC7HIrb+pc/0XRgPNkM=",
+        "owner": "birdeehub",
+        "repo": "nix-wrapper-modules",
+        "rev": "4b4c2a737b0717df0a9b03a83e0cde6d036c1ec9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "birdeehub",
+        "repo": "nix-wrapper-modules",
         "type": "github"
       }
     }
