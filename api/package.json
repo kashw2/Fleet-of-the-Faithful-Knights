@@ -35,7 +35,7 @@
     "@microsoft/applicationinsights-web": "3.4.6",
     "express": "5.2.1",
     "funfix": "7.0.1",
-    "immutable": "5.1.9",
+    "immutable": "5.1.10",
     "mssql": "12.7.14",
     "passport": "0.7.0",
     "tslib": "2.8.1",
