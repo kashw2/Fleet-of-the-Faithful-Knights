@@ -29,7 +29,7 @@
     "@kashw2/lib-util": "7.0.1",
     "@kashw2/lib-external": "6.1.0",
     "funfix": "7.0.1",
-    "immutable": "5.1.9",
+    "immutable": "5.1.10",
     "moment": "2.31.0"
   },
   "devDependencies": {
